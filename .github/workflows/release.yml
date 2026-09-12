@@ -1,0 +1,57 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Tag matches VERSION
+        run: |
+          version=$(cat VERSION)
+          tag="${GITHUB_REF_NAME#v}"
+          [ "$tag" = "$version" ] || { echo "tag $GITHUB_REF_NAME does not match VERSION $version"; exit 1; }
+
+      - name: Validate before publishing
+        run: |
+          pip install -r tests/requirements.txt
+          python tests/validate.py
+          python tests/evals/run_evals.py
+          for d in skills/*/; do agentskills validate "$d" || exit 1; done
+
+      - name: Build tarball
+        run: npm pack
+
+      - name: GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" ./*.tgz --generate-notes
+
+      - name: Publish to npmjs
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public
+
+      - name: Publish to GitHub Packages
+        # Note: GitHub Packages requires a token even to READ a public package,
+        # so README points customers at npmjs. This is a secondary mirror.
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+        run: npm publish --access public --registry=https://npm.pkg.github.com

@@ -1,0 +1,69 @@
+suite: lifecycle
+description: Retention, win-back, lifecycle mapping and replenishment — including the boundaries between them.
+
+cases:
+  - id: life-001
+    prompt: Our repeat purchase rate is dropping.
+    expect_skill: customer-retention
+    expect_composes: [audience-discovery, automation-architect]
+    must_cite:
+      - global-rules.md#G6
+      - frequency-rules.md#F6
+    must_not:
+      - Use a fixed store-wide interval to define at-risk
+      - Open with a discount to customers who have not yet lapsed
+      - Propose a new journey without checking existing coverage
+    notes: >-
+      Customers are still active. Intervention here is cheaper than win-back later.
+
+  - id: life-002
+    prompt: Win back our lapsed customers.
+    expect_skill: customer-winback
+    expect_composes: [audience-discovery]
+    must_cite:
+      - safety-rules.md#S6
+      - safety-rules.md#S7
+    must_not:
+      - Mail the entire lapsed base because it is technically reachable
+      - Leave the attempt count open-ended
+      - Present suppression as a loss-free cleanup
+    notes: >-
+      Suppression of the unreachable tail is part of the answer, and it is destructive risk.
+
+  - id: life-003
+    prompt: Should we keep emailing our dormant list?
+    expect_skill: customer-winback
+    must_cite:
+      - safety-rules.md#S6
+    must_not:
+      - Answer without stating the deliverability cost imposed on every other send
+    notes: >-
+      A list-health question framed as a sending question. The answer is usually a bounded
+      attempt followed by suppression.
+
+  - id: life-004
+    prompt: Map our customer lifecycle and tell me where we are losing people.
+    expect_skill: customer-lifecycle
+    expect_composes: [customer-retention, customer-winback, automation-strategy]
+    must_cite:
+      - global-rules.md#G3
+      - audience-rules.md#A1
+    must_not:
+      - Import generic stage boundaries instead of deriving them from this store's intervals
+      - Leave customers unassigned to any stage without reporting the count
+    notes: >-
+      Whole-journey mapping. customer-retention would answer for one stage cluster only.
+
+  - id: life-005
+    prompt: Set up reorder reminders for our consumables.
+    expect_skill: product-replenishment
+    expect_composes: [automation-architect, audience-discovery]
+    must_cite:
+      - global-rules.md#G3
+      - automation-rules.md#R13
+    must_not:
+      - Apply one store-wide reorder interval across every product
+      - Assign a default interval to a product with insufficient repeat evidence
+      - Fire the reminder after the expected run-out point
+    notes: >-
+      Intervals derive per product AND size. This is the most common way the lever is wasted.

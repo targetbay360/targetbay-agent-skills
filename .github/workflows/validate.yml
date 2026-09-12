@@ -1,0 +1,63 @@
+name: validate
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip && pip install -r tests/requirements.txt
+
+      - name: Package contracts
+        run: python tests/validate.py
+
+      - name: Golden prompts
+        run: python tests/evals/run_evals.py
+
+      - name: Agent Skills specification
+        # Independent of tests/validate.py's in-process `spec` group: this runs the
+        # reference CLI, so a drift between the two surfaces here rather than silently.
+        run: |
+          fail=0
+          for d in skills/*/; do
+            agentskills validate "$d" || fail=1
+          done
+          exit $fail
+
+      - name: Manifests parse
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('.claude-plugin/plugin.json'))"
+          node -e "JSON.parse(require('fs').readFileSync('.claude-plugin/marketplace.json'))"
+          node -e "JSON.parse(require('fs').readFileSync('package.json'))"
+          node --check scripts/install.mjs
+          sh -n scripts/install.sh
+
+      - name: Versions agree
+        run: |
+          version=$(cat VERSION)
+          for f in package.json .claude-plugin/plugin.json; do
+            declared=$(node -p "require('./$f').version")
+            [ "$declared" = "$version" ] || { echo "$f is $declared, VERSION is $version"; exit 1; }
+          done
+          echo "all manifests at $version"
+
+      - name: Installer works
+        run: |
+          node scripts/install.mjs --dest "$RUNNER_TEMP/skills"
+          count=$(find "$RUNNER_TEMP/skills" -maxdepth 1 -mindepth 1 -type d | wc -l)
+          [ "$count" -eq 24 ] || { echo "installed $count skills, expected 24"; exit 1; }

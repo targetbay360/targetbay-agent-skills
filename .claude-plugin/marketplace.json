@@ -1,0 +1,19 @@
+{
+  "name": "targetbay",
+  "owner": {
+    "name": "TargetBay",
+    "email": "support@targetbay.com",
+    "url": "https://targetbay.com"
+  },
+  "plugins": [
+    {
+      "name": "bayengage-marketing",
+      "source": "./",
+      "description": "Email and SMS marketing skills for BayEngage stores: planning, audience selection, automation design, win-back, holiday sequencing and campaign diagnosis.",
+      "version": "2.0.0",
+      "author": { "name": "TargetBay" },
+      "homepage": "https://targetbay.com",
+      "keywords": ["email-marketing", "sms-marketing", "ecommerce", "bayengage"]
+    }
+  ]
+}

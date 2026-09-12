@@ -1,0 +1,99 @@
+# TargetBay Email & SMS Marketing Skills — Capability Registry
+#
+# Single source of truth for the abstract capability identifiers that skills declare
+# in their `requires:` frontmatter.
+#
+# These are CAPABILITY names, not tool names. This package deliberately does not know
+# the BayEngage MCP tool signatures. Every `mcp_tools` value is TODO until the real
+# BayEngage MCP surface is inspected and mapped. See docs/mcp-integration.md.
+#
+# Never add a capability here to justify a skill. Add it only when the underlying
+# BayEngage platform genuinely exposes that class of data or action.
+
+version: 1.0.0
+
+# access values:
+#   read   - retrieves data, no state change
+#   write  - creates or modifies platform state
+#   send   - dispatches messages to real people (always HIGH_IMPACT)
+access_levels: [read, write, send]
+
+capabilities:
+  - id: bayengage.store_profile
+    description: Store identity, vertical, currency, locale, catalogue size, sending history, plan limits.
+    access: read
+    mcp_tools: TODO
+
+  - id: bayengage.customer_intelligence
+    description: Customer profiles, lifecycle stage, RFM, AOV, LTV, engagement history, churn and purchase propensity signals.
+    access: read
+    mcp_tools: TODO
+
+  - id: bayengage.product_intelligence
+    description: Products, categories, attributes, price bands, margin signals, inventory posture, affinity and co-purchase relationships.
+    access: read
+    mcp_tools: TODO
+
+  - id: bayengage.order_intelligence
+    description: Orders, order items, purchase frequency, repeat intervals, discount usage, revenue attribution.
+    access: read
+    mcp_tools: TODO
+
+  - id: bayengage.segmentation
+    description: Existing segments and lists, their definitions and sizes; creation and modification of segments.
+    access: write
+    mcp_tools: TODO
+
+  - id: bayengage.campaign_management
+    description: Existing campaigns, their configuration, drafts; creation, modification and scheduling of campaigns.
+    access: write
+    mcp_tools: TODO
+
+  - id: bayengage.campaign_analytics
+    description: Campaign performance — revenue, conversion, AOV, engagement, unsubscribe and complaint rates, per-variant results.
+    access: read
+    mcp_tools: TODO
+
+  - id: bayengage.automation
+    description: Existing automations, their topology, triggers, timing and channels; creation and modification of automations.
+    access: write
+    mcp_tools: TODO
+
+  - id: bayengage.automation_analytics
+    description: Automation performance — entry and completion rates, per-node drop-off, revenue per entrant, goal attainment.
+    access: read
+    mcp_tools: TODO
+
+  - id: bayengage.template_management
+    description: Email and SMS templates and content blocks; creation and modification of templates.
+    access: write
+    mcp_tools: TODO
+
+  - id: bayengage.messaging_email
+    description: Dispatch of email to real recipients — sending or activating a scheduled send.
+    access: send
+    mcp_tools: TODO
+
+  - id: bayengage.messaging_sms
+    description: Dispatch of SMS to real recipients — sending or activating a scheduled send.
+    access: send
+    mcp_tools: TODO
+    notes: >-
+      UNVERIFIED. No local BayEngage implementation of SMS dispatch has been inspected.
+      Skills must confirm this capability is present before planning SMS execution and
+      degrade to email-only when it is absent. See docs/mcp-integration.md.
+
+  - id: bayengage.suppression_and_consent
+    description: Suppression lists, consent state per channel, quiet-hours and frequency-cap configuration.
+    access: read
+    mcp_tools: TODO
+
+  - id: bayengage.marketing_calendar
+    description: Scheduled and in-flight campaigns and automations across a date range; calendar occupancy and collisions.
+    access: read
+    mcp_tools: TODO
+
+  - id: bayengage.experimentation
+    description: A/B and multivariate test configuration and results, including winner selection state.
+    access: write
+    mcp_tools: TODO
