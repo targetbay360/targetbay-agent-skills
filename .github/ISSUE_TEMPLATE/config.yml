@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Report a security vulnerability
-    url: https://github.com/targetbay360/targetbay-email-sms-marketing-skills/security/advisories/new
+    url: https://github.com/targetbay360/targetbay-agent-skills/security/advisories/new
     about: Report privately. Never open a public issue for a vulnerability — see SECURITY.md.
-  - name: BayEngage product support
+  - name: TargetBay Email & SMS product support
     url: mailto:support@targetbay.com
-    about: Questions about your BayEngage account, billing or deliverability rather than this package.
+    about: Questions about your TargetBay Email & SMS account, billing or deliverability rather than this package.

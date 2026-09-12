@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://targetbay.com/schemas/targetbay-email-sms/recommendation.schema.json",
+  "title": "Recommendation",
+  "description": "The single shape every skill uses to propose an action. A recommendation without evidence is an opinion; this contract makes that structurally visible.",
+  "type": "object",
+  "required": [
+    "id",
+    "skill",
+    "recommendation",
+    "reason",
+    "evidence",
+    "confidence",
+    "data_period",
+    "sample_size",
+    "risks",
+    "next_actions"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Identifier unique within one skill result.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "skill": {
+      "description": "Name of the skill that produced this recommendation.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "recommendation": {
+      "description": "The proposed action, stated as an action, not a topic.",
+      "type": "string",
+      "minLength": 1
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["high", "medium", "low"]
+    },
+    "reason": {
+      "description": "Why this action follows from the evidence. One entry per independent line of reasoning.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "evidence": {
+      "description": "Observed facts supporting the recommendation. May be empty only when confidence is low and the gap is declared in risks.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/evidenceItem" }
+    },
+    "confidence": {
+      "description": "0 = speculation, 1 = directly measured and unambiguous.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "data_period": {
+      "description": "Period the evidence covers, as an ISO 8601 date or interval, or the literal 'unknown'.",
+      "type": "string",
+      "minLength": 1
+    },
+    "sample_size": {
+      "description": "Number of customers, orders or sends the evidence rests on. 0 means no observed sample.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "risks": {
+      "description": "What could go wrong, including data gaps that weaken the recommendation.",
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "next_actions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/nextAction" }
+    }
+  },
+  "$defs": {
+    "evidenceItem": {
+      "type": "object",
+      "required": ["metric", "value", "source_capability"],
+      "additionalProperties": false,
+      "properties": {
+        "metric": { "type": "string", "minLength": 1 },
+        "value": { "type": ["string", "number", "boolean"] },
+        "unit": { "type": "string" },
+        "source_capability": {
+          "description": "Abstract capability the value came from. Must exist in capabilities.yaml.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*\\.[a-z0-9_]+$"
+        },
+        "period": { "type": "string" },
+        "comparison": {
+          "description": "Optional baseline the value is being judged against.",
+          "type": "string"
+        }
+      }
+    },
+    "nextAction": {
+      "type": "object",
+      "required": ["action", "risk_level"],
+      "additionalProperties": false,
+      "properties": {
+        "action": { "type": "string", "minLength": 1 },
+        "risk_level": {
+          "type": "string",
+          "enum": ["read_only", "analysis", "recommendation", "plan", "mutation", "high_impact", "destructive"]
+        },
+        "requires_capability": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9_]*\\.[a-z0-9_]+$" }
+        },
+        "requires_approval": { "type": "boolean" },
+        "depends_on": {
+          "description": "Ids of recommendations or actions that must complete first.",
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

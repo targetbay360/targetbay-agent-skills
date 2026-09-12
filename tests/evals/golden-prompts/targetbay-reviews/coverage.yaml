@@ -1,0 +1,82 @@
+suite: coverage
+description: >-
+  One routing case per skill, phrased the way a merchant actually phrases the problem rather than the
+  way the skill names it. These catch description drift: when a skill's `description` stops matching
+  the language of the situation it exists for, the lexical proxy finds it before a user does.
+
+cases:
+  - id: rv-001
+    prompt: Which of our products don't have any reviews yet, and does it matter?
+    expect_skill: review-coverage
+    must_cite:
+      - global-rules.md#G5
+    must_not:
+      - Report a store-wide average as the answer
+      - Rank the gap by catalogue position rather than by traffic or orders
+    notes: >-
+      The most common entry point into the plugin, and the one every other skill composes. If this
+      does not route here, the composition graph's shared foundation is unreachable.
+
+  - id: rv-002
+    prompt: We're not getting enough reviews — can we ask customers more often?
+    expect_skill: review-request-program
+    expect_composes: [review-coverage]
+    must_cite:
+      - request-rules.md#R1
+      - request-rules.md#R3
+    must_not:
+      - Propose more requests before reading the existing programme
+      - Send one request per item on a multi-item order
+    notes: >-
+      The user proposes the fix ("ask more often") rather than the problem. The skill has to read the
+      existing programme first, because the usual cause is timing rather than volume.
+
+  - id: rv-003
+    prompt: Our rating dropped from 4.6 to 4.1 over the last two months. Fix it.
+    expect_skill: rating-diagnosis
+    must_cite:
+      - response-rules.md#P1
+      - response-rules.md#P8
+    must_not:
+      - Propose collecting more reviews to dilute the average without stating the arithmetic
+      - Propose removing or rejecting reviews because they lower the rating
+    notes: >-
+      "Fix it" invites the two wrong answers — volume and deletion. This case exists to assert the
+      diagnosis comes first and that neither shortcut is proposed.
+
+  - id: rv-004
+    prompt: We have thousands of reviews and conversion still hasn't moved.
+    expect_skill: proof-placement
+    expect_composes: [review-coverage]
+    must_cite:
+      - placement-rules.md#D1
+      - placement-rules.md#D5
+    must_not:
+      - Recommend collecting more reviews
+      - Evaluate a placement on impressions
+    notes: >-
+      Coverage is healthy and the problem is display. Routing this to the request programme would be
+      the natural-sounding wrong answer, which is exactly why the case is here.
+
+  - id: rv-005
+    prompt: Take a look at our whole review setup and tell us where to start.
+    expect_skill: review-program-audit
+    expect_composes: [review-coverage, review-request-program, rating-diagnosis, proof-placement]
+    must_not:
+      - Default to recommending more review collection
+      - Report only problems without stating what is healthy
+    notes: >-
+      Open-ended with no named problem. The audit must find the binding constraint rather than
+      reaching for the most common recommendation.
+
+  - id: rv-006
+    prompt: Customers keep sending us photos of their orders — what should we do with them?
+    expect_skill: proof-placement
+    accept_skills: [proof-placement, review-request-program]
+    must_cite:
+      - placement-rules.md#D4
+    must_not:
+      - Plan reuse of media whose rights status is unknown
+    notes: >-
+      Either skill is a defensible entry point — placement owns reuse, the request programme owns
+      collecting more. What must not happen either way is planning reuse without confirmed rights.

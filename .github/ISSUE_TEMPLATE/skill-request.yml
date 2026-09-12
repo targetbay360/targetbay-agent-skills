@@ -1,13 +1,26 @@
 name: Missing skill or capability
-description: There is a marketing outcome an agent cannot reach with the current skills.
+description: There is an outcome an agent cannot reach with the current skills.
 labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        Skills describe **how an agent should accomplish a marketing outcome**. Please frame
-        this as an outcome rather than a feature — "the agent can't build a post-purchase
-        replenishment sequence for consumables" rather than "add a replenishment field".
+        Skills describe **how an agent should accomplish an outcome**. Please frame this as an
+        outcome rather than a feature — "the agent can't build a post-purchase replenishment
+        sequence for consumables" rather than "add a replenishment field".
+
+  - type: dropdown
+    id: plugin
+    attributes:
+      label: Which product
+      options:
+        - "targetbay-email-sms — email and SMS"
+        - "targetbay-reviews — reviews and UGC"
+        - "targetbay-loyalty — loyalty and referrals"
+        - "targetbay-personalization — onsite personalization"
+        - "Spans several, or none of them"
+    validations:
+      required: true
 
   - type: textarea
     id: outcome
@@ -21,7 +34,7 @@ body:
     id: closest
     attributes:
       label: Closest existing skill
-      description: The directory under `skills/` that comes nearest, and why it falls short. `none` is a valid answer.
+      description: The directory under that plugin's `skills/` that comes nearest, and why it falls short. `none` is a valid answer.
       placeholder: customer-lifecycle
     validations:
       required: true
@@ -30,10 +43,10 @@ body:
     id: capability
     attributes:
       label: Does this need a new capability?
-      description: A capability is something the BayEngage MCP must be able to do. See `capabilities.yaml`.
+      description: A capability is something the product's MCP must be able to do. See that plugin's `capabilities.yaml`.
       options:
         - "No — it composes existing capabilities"
-        - "Yes — it needs something BayEngage cannot do yet"
+        - "Yes — it needs something the platform cannot do yet"
         - "Not sure"
     validations:
       required: true

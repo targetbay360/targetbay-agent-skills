@@ -1,108 +1,60 @@
-# TargetBay Email & SMS Marketing Skills
+# TargetBay Agent Skills
 
-A vendor-neutral AI Agent Skills package that teaches agents **how to accomplish email and SMS marketing
-outcomes** using BayEngage.
+A marketplace of vendor-neutral AI Agent Skills packages, one per TargetBay product. Each teaches agents
+**how to accomplish an objective** on that product — the reasoning the MCP server does not carry.
 
-[![version](https://img.shields.io/badge/version-2.0.0-blue)](VERSION)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![agent skills](https://img.shields.io/badge/Agent%20Skills-conformant-7c3aed)](https://agentskills.io/specification)
-[![validate](https://github.com/targetbay360/targetbay-email-sms-marketing-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/targetbay360/targetbay-email-sms-marketing-skills/actions/workflows/validate.yml)
+[![validate](https://github.com/targetbay360/targetbay-agent-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/targetbay360/targetbay-agent-skills/actions/workflows/validate.yml)
 
 ---
 
 ## Install
 
-<table>
-<tr><th>Claude Code</th><td>
+Add the marketplace once, then install the products you actually use.
 
 ```
-/plugin marketplace add targetbay360/targetbay-email-sms-marketing-skills
-/plugin install bayengage-marketing@targetbay
+/plugin marketplace add targetbay360/targetbay-agent-skills
 ```
 
-Installs the 24 skills and six slash commands.
+| Plugin | Decides | Skills | Version | MCP |
+|---|---|---|---|---|
+| [**targetbay-email-sms**](plugins/targetbay-email-sms/README.md) | How a store plans, targets, sequences and optimises email and SMS marketing | 24 | `2.1.0` | mapping TODO |
+| [**targetbay-reviews**](plugins/targetbay-reviews/README.md) | When to ask for a review, which products lack proof, how to answer a falling rating, where proof belongs | 5 | `0.1.0` | mapping TODO |
+| [**targetbay-loyalty**](plugins/targetbay-loyalty/README.md) | Whether to run a programme, what a point is worth, where tier thresholds go, which members are leaving | 6 | `0.1.0` | mapping TODO |
+| [**targetbay-personalization**](plugins/targetbay-personalization/README.md) | Which surfaces to personalise, who sees what, what failing searches mean, whether a change can be proved | 6 | `0.1.0` | mapping TODO |
 
-</td></tr>
-<tr><th>npm</th><td>
-
-```bash
-npx @targetbay/targetbay-email-sms-marketing-skills --global
+```
+/plugin install targetbay-email-sms@targetbay
+/plugin install targetbay-reviews@targetbay
+/plugin install targetbay-loyalty@targetbay
+/plugin install targetbay-personalization@targetbay
 ```
 
-`--global` writes to `~/.claude/skills`. Omit it for `./.claude/skills`, or pass
-`--dest <dir>` for any other host (Cursor, Codex, your own agent).
-
-</td></tr>
-<tr><th>curl</th><td>
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/targetbay360/targetbay-email-sms-marketing-skills/main/scripts/install.sh | sh
-```
-
-No npm, no plugin system. Takes an optional destination argument.
-
-</td></tr>
-<tr><th>manual</th><td>
-
-Download the tarball from [Releases](https://github.com/targetbay360/targetbay-email-sms-marketing-skills/releases)
-and copy `skills/` into your agent's skills directory.
-
-</td></tr>
-</table>
-
-The package is also mirrored to GitHub Packages. That registry requires a GitHub token even to read a
-public package, so npmjs above is the path to use unless your organisation already standardises on it.
+Each plugin also publishes to npm for hosts without a plugin system —
+`npx @targetbay/reviews-skills --global`, and so on. See the plugin's own README.
 
 ### Try it
 
-```
-/bayengage-marketing:plan-month next month
-/bayengage-marketing:what-now
-/bayengage-marketing:win-back
-```
+Ask in plain language: *"Win back our lapsed customers."* · *"Which products need reviews?"* ·
+*"Can we double our points earn rate?"* · *"Our widget recommends things people just bought."*
 
-Or just ask: *"Win back our lapsed customers."* · *"Why did this campaign underperform?"* ·
-*"Prepare a Diwali campaign."*
-
-With no BayEngage MCP connected, a skill will report itself **`blocked`** and name the capability it is
-missing. That is the correct answer, and it is the quickest confirmation that the skills loaded.
-
-### Commands
-
-| Command | Does |
-|---|---|
-| `/bayengage-marketing:plan-month` | A dated calendar for the period, campaign count derived not templated |
-| `/bayengage-marketing:what-now` | Open-ended scan; ranks what is most worth fixing or building |
-| `/bayengage-marketing:win-back` | Who among the lapsed is worth recovering, and where to stop |
-| `/bayengage-marketing:holiday <name>` | Whether a holiday is worth doing here, then the sequence |
-| `/bayengage-marketing:diagnose <campaign>` | Why a campaign underperformed, and a testable fix |
-| `/bayengage-marketing:audit-automations` | Portfolio audit; gaps, splits, retirements, sequenced |
+With no MCP connected, a skill reports itself **`blocked`** and names the capability it is missing. That is
+the correct answer, and the quickest confirmation that the skills loaded.
 
 ---
 
-## What this is
+## What these are
 
-BayEngage already exposes its platform capabilities through an MCP server. That tells an agent *what it
-can do*. It does not tell the agent which customers to target, whether an objective needs one automation
-or four, how many stages a holiday sequence should have, or when to stop and ask a human.
-
-This package is that second half.
+Each TargetBay product exposes its platform capabilities through an MCP server. That tells an agent *what
+it can do*. It does not tell the agent which customers to target, when a review request should arrive,
+whether the value distribution supports three tiers, or whether this store's traffic can resolve the test
+somebody wants to run.
 
 ```
-BayEngage MCP    =  what the agent CAN do
-BayEngage Skills =  how the agent SHOULD accomplish a marketing objective
+TargetBay MCP    =  what the agent CAN do
+TargetBay Skills =  how the agent SHOULD accomplish an objective
 ```
-
-## What this is not
-
-- **Not** BayEngage MCP — no tools, no resources, no server
-- **Not** the BayEngage API — no clients, endpoints or request code
-- **Not** a campaign engine, customer database or automation engine
-- **Not** a collection of prompt files — it is a versioned package with contracts, schemas and validation
-
-No file in this repository makes a network call.
-
-## Architecture
 
 ```
 ┌──────────────────────────────────────────────┐
@@ -110,169 +62,78 @@ No file in this repository makes a network call.
 └──────────────────┬───────────────────────────┘
                    ▼
 ┌──────────────────────────────────────────────┐
-│ TargetBay Email & SMS Marketing Skills       │  ← this package
+│ TargetBay Agent Skills                       │  ← this repository
 │   skills · rules · knowledge · playbooks     │     HOW to decide
 └──────────────────┬───────────────────────────┘
                    ▼  declares required capabilities
 ┌──────────────────────────────────────────────┐
-│ BayEngage MCP                                │  ← separate repository
+│ Product MCP servers                          │  ← separate repositories
 └──────────────────┬───────────────────────────┘
                    ▼
 ┌──────────────────────────────────────────────┐
-│ BayEngage platform                           │
+│ TargetBay platform                           │
 └──────────────────────────────────────────────┘
 ```
 
-Skills declare **abstract capabilities** — `bayengage.customer_intelligence`, not a tool name — so the two
-repositories version independently. Full reasoning in [docs/architecture.md](docs/architecture.md).
+Skills declare abstract capability identifiers — `email_sms.customer_intelligence`,
+`reviews.product_coverage`, `loyalty.points_ledger`, `onsite.consent_and_tracking` — never tool names. Each
+plugin carries its own `capabilities.yaml` and its own `docs/mcp-integration.md` recording what is mapped
+and what is not.
 
-## Example
+## What these are not
 
-```
-User: "Plan next month's marketing."
-```
+- **Not** MCP servers — no tools, no resources, no server code
+- **Not** API clients — no endpoints, no request code
+- **Not** campaign, review, points or recommendation engines
+- **Not** collections of prompt files — each plugin is a versioned package with contracts, schemas and
+  validation
 
-```
-monthly-marketing-planner
-        │
-        ├── reads store context via BayEngage MCP
-        │     campaign analytics · customer intelligence
-        │     product intelligence · automations · calendar
-        │
-        ├── establishes cadence capacity BEFORE selecting campaigns
-        │
-        ├── composes  audience-discovery      → who, ranked and sized
-        │             holiday-marketing       → is the holiday in the window worth it?
-        │             product-launch          → wave-sequenced launch
-        │             campaign-optimization   → what worked last time
-        │
-        └── returns a dated calendar: date · campaign · objective · audience ·
-            channel · product · offer · content direction · expected outcome ·
-            dependencies · risk
-                │
-                └── each send stops for explicit human approval
-```
+No file in this repository makes a network call.
 
-The campaign count is **derived**, not templated. An empty week is a valid output. See
-[examples/plan-next-month.md](examples/plan-next-month.md) for the full trace.
-
-## The 24 skills
-
-| | Skills |
-|---|---|
-| **Revenue** | [revenue-growth](skills/revenue-growth/SKILL.md) · [revenue-analysis](skills/revenue-analysis/SKILL.md) · [opportunity-discovery](skills/opportunity-discovery/SKILL.md) · [aov-growth](skills/aov-growth/SKILL.md) · [cross-sell](skills/cross-sell/SKILL.md) · [upsell](skills/upsell/SKILL.md) |
-| **Retention & lifecycle** | [customer-lifecycle](skills/customer-lifecycle/SKILL.md) · [customer-retention](skills/customer-retention/SKILL.md) · [customer-winback](skills/customer-winback/SKILL.md) · [product-replenishment](skills/product-replenishment/SKILL.md) |
-| **Automation** | [automation-strategy](skills/automation-strategy/SKILL.md) · [automation-architect](skills/automation-architect/SKILL.md) · [automation-optimization](skills/automation-optimization/SKILL.md) |
-| **Planning** | [marketing-calendar](skills/marketing-calendar/SKILL.md) · [monthly-marketing-planner](skills/monthly-marketing-planner/SKILL.md) · [store-onboarding](skills/store-onboarding/SKILL.md) |
-| **Seasonal & launch** | [holiday-marketing](skills/holiday-marketing/SKILL.md) · [holiday-drip-campaign](skills/holiday-drip-campaign/SKILL.md) · [product-launch](skills/product-launch/SKILL.md) |
-| **Optimisation & content** | [campaign-optimization](skills/campaign-optimization/SKILL.md) · [content-optimization](skills/content-optimization/SKILL.md) · [channel-optimization](skills/channel-optimization/SKILL.md) · [ab-testing](skills/ab-testing/SKILL.md) |
-| **Audience** | [audience-discovery](skills/audience-discovery/SKILL.md) |
-
-Index, composition graph and the question-to-skill table: [skills/README.md](skills/README.md).
-
-## Layout
+## Repository layout
 
 ```
-skills/        24 skills, one SKILL.md each — objective → decisions → plan
-rules/         8 numbered, citable rule sets that bind every skill
-knowledge/     9 marketing principles documents, vendor-agnostic
-playbooks/     5 vertical overlays that adjust defaults without editing skills
-schemas/       4 JSON Schemas — skill, recommendation, workflow, skill-result
-commands/      6 slash commands that route a plain request to the right skill
-docs/          architecture, authoring, MCP integration, rules, versioning, examples
-examples/      5 narrated traces of skills reasoning end to end
-tests/         two runners — structural validation, and golden-prompt evaluations
-scripts/       install.mjs (npm) and install.sh (curl) — no dependencies
-capabilities.yaml   the abstract capability registry
-.claude-plugin/     plugin and marketplace manifests
+.claude-plugin/marketplace.json   one entry per plugin
+tests/                            shared validation and golden prompts
+plugins/<name>/                   a product plugin — self-contained
+  skills/  rules/  knowledge/  schemas/  docs/  commands/
+  capabilities.yaml  VERSION  CHANGELOG.md  package.json
 ```
 
-## What the skills refuse to do
+Every plugin is self-contained because Claude Code ships only what lives under a plugin's `source`
+directory. A skill links to its own plugin's rules by relative path; anything outside the plugin is
+referenced by full URL. `tests/validate.py` sweeps the whole repository and fails on a relative link that
+does not resolve, so the boundary is enforced rather than remembered.
 
-The package is defined as much by its constraints as its content. Every skill:
+Plugins version and release independently, tagged `<plugin>@<version>`.
 
-- **Never assumes one objective means one automation**, or that an automation has a fixed node count
-- **Never fixes a sequence length** — holiday drips, calendars and journeys all derive their size
-- **Never invents customer, product or performance data** — a missing figure is reported, not filled in
-- **Never optimises on open rate** — revenue, conversion, AOV and unsubscribe risk lead
-- **Never targets an audience without confirming it exists and is large enough**
-- **Never sends, activates or deletes anything without explicit human approval**
-- **Never personalises on data BayEngage cannot verify for that contact**
+## What every plugin has in common
 
-`blocked` and `partial` are first-class results. See [rules/](rules/README.md).
+Different products, same contract:
 
-## Status
-
-**2.0.0 — foundation, published.** Contracts established, reasoning real, workflows not yet hardened
-against a live BayEngage MCP. Every objective area named in the product brief now has a skill, and the
-package now installs four ways.
-
-**No capability is mapped to a real MCP tool yet.** Every entry in
-[capabilities.yaml](capabilities.yaml) carries `mcp_tools: TODO`. Skills can plan; they cannot execute
-until that mapping exists — deliberately, because inventing tool names would produce confident, wrong
-documentation. See [docs/mcp-integration.md](docs/mcp-integration.md) for the mapping checklist.
-
-`bayengage.messaging_sms` is declared but **unverified** — no inspected BayEngage implementation exposes
-SMS dispatch. Skills degrade to email-only when it is absent.
-
-## Validate
-
-```bash
-python3 -m pip install -r tests/requirements.txt
-python3 tests/validate.py            # structure and contracts
-python3 tests/evals/run_evals.py     # golden prompts
-```
-
-`validate.py` — eight groups: structure, **spec**, skill metadata, playbooks, references and link
-resolution, duplication, schemas, versioning. The `spec` group runs the Agent Skills reference validator
-over every skill, so conformance is a test rather than a claim. Invalid fixtures must be *rejected*, so a
-green run means the checks are doing work.
-
-`run_evals.py` — 38 golden prompts asserting which skill answers which question, what it composes, and
-what it must never do. Its selection check is a lexical proxy with a documented ceiling, not a model;
-the model-dependent half is emitted as prompt packs via `--emit`. It found six skill descriptions that
-did not contain the words users actually type.
-
-See [tests/README.md](tests/README.md) and [tests/evals/README.md](tests/evals/README.md).
-
-## Using it
-
-Every skill conforms to the [Agent Skills specification](https://agentskills.io/specification), so any
-host implementing that format loads this package unmodified — Claude Code, Claude.ai, and the other
-clients listed at [agentskills.io/clients](https://agentskills.io/clients).
-
-The specification closes the top level of the frontmatter to `name`, `description`, `license`,
-`compatibility`, `metadata` and `allowed-tools`, and its reference validator rejects anything else.
-Everything this package adds therefore lives under `metadata`, namespaced `targetbay.`:
-
-```yaml
----
-name: customer-winback
-description: Use when targeting customers who have already lapsed — dormant or churned contacts who …
-license: MIT
-metadata:
-  targetbay.display_name: Customer Win-back
-  targetbay.version: "1.0.0"
-  targetbay.category: retention
-  targetbay.requires: bayengage.customer_intelligence, bayengage.order_intelligence, …
-  targetbay.composes: audience-discovery
-  targetbay.risk_level: recommendation
-  targetbay.execution_mode: plan_then_execute
-  targetbay.status: foundation
----
-```
-
-A host that reads none of that sees a well-formed skill with a `name` and a `description`, which is the
-point. A host that reads it gets the capability contract, the composition graph and the risk class.
-
-The agent also needs access to BayEngage MCP. Without it, skills will correctly report themselves as
-`blocked` rather than guessing.
+- **Fourteen sections per skill**, in order — including `When Not to Use`, `Approval Requirements` and
+  `Failure Handling`, because a skill that cannot say what it will not do is not finished
+- **A composition graph with one skill at the bottom**, so "which products", "which members", "which
+  surfaces" each has exactly one implementation and does not drift between skills
+- **`blocked` and `partial` as first-class results.** A skill that cannot get the data it needs says so
+  rather than filling the gap
+- **Rules cited by number, never restated.** A constraint copied into six skills drifts in six directions
+- **Nothing invented.** No tool names before the MCP is inspected, no thresholds asserted as universal, no
+  benchmark presented as this store's data
+- **`high_impact` always stops for a human**, with the blast radius shown before the question is asked
 
 ## Contributing
 
-[CONTRIBUTING.md](CONTRIBUTING.md) · [docs/skill-authoring.md](docs/skill-authoring.md) ·
-[SECURITY.md](SECURITY.md) · [CHANGELOG.md](CHANGELOG.md)
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the per-plugin contract, how to add a product plugin, and what
+validation checks. [SECURITY.md](SECURITY.md) covers credential handling and the agent-safety posture.
 
-## License
+```bash
+python3 -m pip install -r tests/requirements.txt
+python3 tests/validate.py
+python3 tests/evals/run_evals.py
+```
 
-MIT — see [LICENSE](LICENSE).
+---
+
+[CONTRIBUTING.md](CONTRIBUTING.md) · [SECURITY.md](SECURITY.md) ·
+[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) · [CHANGELOG.md](CHANGELOG.md)

@@ -1,57 +1,11 @@
 {
-  "name": "@targetbay/targetbay-email-sms-marketing-skills",
-  "version": "2.0.0",
-  "description": "Agent Skills package teaching AI agents how to plan, target, sequence and optimise email and SMS marketing for BayEngage stores.",
-  "keywords": [
-    "agent-skills",
-    "claude",
-    "mcp",
-    "email-marketing",
-    "sms-marketing",
-    "ecommerce",
-    "bayengage",
-    "targetbay",
-    "marketing-automation"
-  ],
-  "homepage": "https://github.com/targetbay360/targetbay-email-sms-marketing-skills#readme",
-  "bugs": {
-    "url": "https://github.com/targetbay360/targetbay-email-sms-marketing-skills/issues",
-    "email": "support@targetbay.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/targetbay360/targetbay-email-sms-marketing-skills.git"
-  },
+  "name": "@targetbay/agent-skills-workspace",
+  "private": true,
+  "description": "Workspace root for the TargetBay Agent Skills marketplace. Each product ships as its own plugin and its own npm package under plugins/.",
   "license": "MIT",
-  "author": {
-    "name": "TargetBay",
-    "email": "support@targetbay.com",
-    "url": "https://targetbay.com"
-  },
   "type": "module",
-  "bin": {
-    "bayengage-skills": "scripts/install.mjs"
-  },
-  "files": [
-    "skills",
-    "rules",
-    "knowledge",
-    "playbooks",
-    "schemas",
-    "commands",
-    ".claude-plugin",
-    "scripts/install.mjs",
-    "scripts/install.sh",
-    "capabilities.yaml",
-    "VERSION",
-    "CHANGELOG.md"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "engines": {
-    "node": ">=18"
-  },
+  "workspaces": ["plugins/*"],
+  "engines": { "node": ">=18" },
   "scripts": {
     "validate": "python3 tests/validate.py && python3 tests/evals/run_evals.py"
   }

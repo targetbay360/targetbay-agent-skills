@@ -8,7 +8,7 @@ agent to do, not what it does itself.
 
 ## Reporting a vulnerability
 
-Use [private vulnerability reporting](https://github.com/targetbay360/targetbay-email-sms-marketing-skills/security/advisories/new),
+Use [private vulnerability reporting](https://github.com/targetbay360/targetbay-agent-skills/security/advisories/new),
 or email `support@targetbay.com` if you cannot. **Do not open a public issue.**
 
 Please include what the problem is, which files are involved, and what an attacker or a misconfigured
@@ -30,15 +30,17 @@ fictional one — never anonymise real data, which is frequently reversible.
 
 ## Credentials
 
-Skills never handle credentials. Authentication to BayEngage is the agent host's and the MCP's
-responsibility. No skill should ever instruct an agent to read, store, transmit or log a credential.
+Skills never handle credentials. Authentication to a TargetBay product is the agent host's and the
+product MCP's responsibility. No skill should ever instruct an agent to read, store, transmit or log a credential.
 
-See [docs/mcp-integration.md](docs/mcp-integration.md).
+See each plugin's `docs/mcp-integration.md`, for example
+[targetbay-email-sms](plugins/targetbay-email-sms/docs/mcp-integration.md).
 
 ## Agent safety
 
-The safety-relevant content of this package is [rules/safety-rules.md](rules/safety-rules.md). Treat a
-change that weakens it as a security change:
+The safety-relevant content of a plugin is its `rules/safety-rules.md`, for example
+[targetbay-email-sms](plugins/targetbay-email-sms/rules/safety-rules.md). Treat a change that weakens one
+as a security change:
 
 - `high_impact` actions — anything reaching real recipients or spending budget — always stop for explicit
   human approval
@@ -70,4 +72,5 @@ by enumerating people.
 
 ## Supported versions
 
-The current MINOR release line receives fixes. See [CHANGELOG.md](CHANGELOG.md).
+Each plugin versions independently; the current MINOR release line of a plugin receives fixes. See that
+plugin's `CHANGELOG.md`, and [CHANGELOG.md](CHANGELOG.md) for repository-level changes.
