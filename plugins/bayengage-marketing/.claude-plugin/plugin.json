@@ -1,0 +1,22 @@
+{
+  "name": "bayengage-marketing",
+  "description": "24 skills that decide how a store should plan, target, sequence and optimise its email and SMS marketing on BayEngage. Vendor-neutral reasoning; the BayEngage MCP supplies the capabilities.",
+  "version": "2.1.0",
+  "author": {
+    "name": "TargetBay",
+    "email": "support@targetbay.com",
+    "url": "https://targetbay.com"
+  },
+  "homepage": "https://targetbay.com",
+  "repository": "https://github.com/targetbay360/targetbay-agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "email-marketing",
+    "sms-marketing",
+    "ecommerce",
+    "bayengage",
+    "targetbay",
+    "agent-skills",
+    "marketing-automation"
+  ]
+}

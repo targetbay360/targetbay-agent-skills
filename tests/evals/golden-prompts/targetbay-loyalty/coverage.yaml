@@ -1,0 +1,104 @@
+suite: coverage
+description: >-
+  One routing case per skill, phrased the way a merchant actually phrases the problem. These catch
+  description drift: when a skill's `description` stops matching the language of the situation it
+  exists for, the lexical proxy finds it before a user does.
+
+cases:
+  - id: ly-001
+    prompt: Is our loyalty programme actually working, or are we just paying our best customers?
+    expect_skill: program-diagnosis
+    must_cite:
+      - global-rules.md#G5
+      - economics-rules.md#E9
+    must_not:
+      - Report the member versus non-member spend gap as programme effect
+      - Report enrolment count as the measure of participation
+    notes: >-
+      The user has named the selection problem themselves. This is the foundation skill every other
+      loyalty skill composes; if it does not route here, the shared baseline is unreachable.
+
+  - id: ly-002
+    prompt: Our competitor just launched a rewards programme. Design one for us.
+    expect_skill: program-design
+    expect_composes: [program-diagnosis, points-economics, tier-structure, referral-program]
+    must_cite:
+      - global-rules.md#G2
+      - global-rules.md#G7
+    must_not:
+      - Treat a competitor's programme as evidence that one is warranted here
+      - Include tiers, multipliers or challenges in a first version without justifying each
+    notes: >-
+      "A competitor has one" is the weakest possible input and the most common one. The skill has to
+      test feasibility against this store's own purchase behaviour first, and may correctly conclude
+      that no programme should exist.
+
+  - id: ly-003
+    prompt: Can we double how many points customers earn per order?
+    expect_skill: points-economics
+    expect_composes: [program-diagnosis]
+    must_cite:
+      - economics-rules.md#E3
+      - safety-rules.md#S3
+    must_not:
+      - Recommend an earn rate without projecting its effect on outstanding liability
+      - Cost issuance against revenue instead of margin
+    notes: >-
+      A generosity change stated as a simple multiplier. The arithmetic — point value, redemption
+      rate, liability — is the entire answer, and skipping it is the failure this case catches.
+
+  - id: ly-004
+    prompt: We want gold, silver and bronze tiers. Where should the cut-offs be?
+    expect_skill: tier-structure
+    expect_composes: [program-diagnosis, points-economics]
+    must_cite:
+      - tier-rules.md#T1
+      - tier-rules.md#T2
+    must_not:
+      - Accept three tiers as given without reading the value distribution
+      - Propose a threshold without stating what proportion of the base sits under it
+    notes: >-
+      The tier count arrives pre-decided. The skill's job is to derive it from where customers
+      actually cluster, which frequently produces a different and smaller answer.
+
+  - id: ly-005
+    prompt: Referral sign-ups are way up but revenue hasn't moved at all.
+    expect_skill: referral-program
+    expect_composes: [program-diagnosis, points-economics]
+    must_cite:
+      - referral-rules.md#F2
+      - referral-rules.md#F6
+    must_not:
+      - Treat referral volume as the outcome measure
+      - Leave the qualifying event on a signup rather than a retained order
+    notes: >-
+      The symptom names the cause: a programme qualifying on signup buys signups. Measuring
+      referred-cohort retention rather than volume is the fix and the case.
+
+  - id: ly-006
+    prompt: A lot of our members haven't earned anything in months. What do we do about them?
+    expect_skill: member-recovery
+    expect_composes: [program-diagnosis]
+    must_cite:
+      - global-rules.md#G3
+      - global-rules.md#G13
+    must_not:
+      - Apply a store-wide threshold instead of each member's own interval
+      - Contact every quiet member without stating which groups are not worth contacting
+    notes: >-
+      "Quiet" is relative to the member, and a large share of quiet members usually never activated
+      at all — a reachability problem that belongs to points-economics, not to recovery.
+
+  - id: ly-007
+    prompt: Our points liability has doubled this year. Should we start expiring points?
+    expect_skill: points-economics
+    accept_skills: [points-economics, program-diagnosis]
+    must_cite:
+      - economics-rules.md#E8
+      - safety-rules.md#S2
+    must_not:
+      - Propose expiry without stating how many members and how much value it affects
+      - Treat rising liability as a problem without reading its ageing
+    notes: >-
+      Either skill is a defensible entry — diagnosis owns the ageing read, economics owns the expiry
+      decision. What must not happen either way is expiry proposed as routine cleanup.

@@ -11,11 +11,24 @@ body:
         **Never paste API keys, real customer records, real email addresses or phone numbers,
         or real store identifiers.** See [SECURITY.md](../../SECURITY.md).
 
+  - type: dropdown
+    id: plugin
+    attributes:
+      label: Which plugin
+      options:
+        - "bayengage-marketing — email and SMS"
+        - "targetbay-reviews — reviews and UGC"
+        - "targetbay-loyalty — loyalty and referrals"
+        - "targetbay-personalization — onsite personalization"
+        - "Repository tooling — validation, install, marketplace"
+    validations:
+      required: true
+
   - type: input
     id: skill
     attributes:
       label: Which skill
-      description: The directory under `skills/`, or `n/a` if this is an install or validation failure.
+      description: The directory under that plugin's `skills/`, or `n/a` if this is an install or validation failure.
       placeholder: audience-discovery
     validations:
       required: true
@@ -54,9 +67,9 @@ body:
   - type: input
     id: version
     attributes:
-      label: Package version
-      description: Contents of `VERSION`, or the npm version you installed.
-      placeholder: "2.0.0"
+      label: Plugin version
+      description: Contents of that plugin's `VERSION`, or the npm version you installed.
+      placeholder: "2.1.0"
     validations:
       required: true
 
