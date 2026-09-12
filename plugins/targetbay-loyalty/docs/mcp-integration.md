@@ -62,7 +62,7 @@ execute — they can only plan.
 ## The questions this mapping has to settle
 
 **Who sends?** `loyalty.messaging` is declared here because the skills need programme communication —
-tier changes, balance and expiry notices. It may well be owned by BayEngage rather than by Loyalty. A
+tier changes, balance and expiry notices. It may well be owned by TargetBay Email & SMS rather than by Loyalty. A
 store running both must not end up with two systems independently contacting the same member
 ([../rules/global-rules.md#G13](../rules/global-rules.md)). Where the reconciliation lives has to be
 recorded here before any skill plans a send.
@@ -112,7 +112,7 @@ approximate or bypass them ([../rules/global-rules.md#G10](../rules/global-rules
 - [ ] Confirm whether outstanding liability and its ageing are directly readable
 - [ ] Confirm whether `loyalty.points_adjustment` supports a preview or dry run; without one, bulk
       adjustment is out of scope for every skill here
-- [ ] Confirm whether programme messaging is owned by Loyalty or by BayEngage, and where frequency is
+- [ ] Confirm whether programme messaging is owned by Loyalty or by TargetBay Email & SMS, and where frequency is
       reconciled between them
 - [ ] Confirm whether margin data is reachable, and from which system
 - [ ] Confirm how tier qualification windows are configured and whether they are changeable in-flight

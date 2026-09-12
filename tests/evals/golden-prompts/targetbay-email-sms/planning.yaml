@@ -1,0 +1,94 @@
+suite: planning
+description: Calendar horizons, single-period planning, seasonal moments, launches and onboarding.
+
+cases:
+  - id: plan-001
+    prompt: Plan next month's marketing.
+    expect_skill: monthly-marketing-planner
+    expect_composes: [audience-discovery, holiday-marketing, product-launch, revenue-growth]
+    must_cite:
+      - frequency-rules.md#F2
+      - campaign-rules.md#C1
+      - campaign-rules.md#C8
+    must_not:
+      - Produce a fixed number of campaigns because a month usually has that many
+      - Plan campaigns before establishing cadence capacity
+      - Fill an empty week that should stay empty
+      - Treat approval of the calendar as approval of its sends
+    notes: >-
+      The campaign count is derived. An empty week is a valid output.
+
+  - id: plan-002
+    prompt: Plan our marketing for the year.
+    expect_skill: marketing-calendar
+    expect_composes: [monthly-marketing-planner, holiday-marketing, product-launch]
+    must_cite:
+      - frequency-rules.md#F10
+      - frequency-rules.md#F12
+    must_not:
+      - Use a generic retail calendar instead of this store's own seasonality
+      - Allocate every period at peak intensity
+      - Omit recovery windows after peaks
+    notes: >-
+      A horizon longer than one period. Capacity is borrowed between periods, not created.
+
+  - id: plan-003
+    prompt: We've just moved to TargetBay — what should we set up?
+    expect_skill: store-onboarding
+    expect_composes: [automation-strategy, audience-discovery, monthly-marketing-planner]
+    must_cite:
+      - global-rules.md#G3
+      - global-rules.md#G15
+      - safety-rules.md#S7
+    must_not:
+      - Present a default interval as a derived one
+      - Send to a migrated list without confirming consent and planning a ramp-up
+      - Propose branching or variants with no data to justify them
+    notes: >-
+      Almost every threshold in this package needs history a new store does not have. Saying so
+      is the deliverable.
+
+  - id: plan-004
+    prompt: Should we do anything for this holiday?
+    expect_skill: holiday-marketing
+    expect_composes: [audience-discovery, holiday-drip-campaign]
+    must_cite:
+      - global-rules.md#G2
+      - campaign-rules.md#C1
+    must_not:
+      - Assume the holiday matters because the date exists
+      - Force a product association customers would find arbitrary
+      - Treat non-participation as an invalid answer
+    notes: >-
+      Relevance is derived from prior-period revenue, catalogue fit and audience locale.
+
+  - id: plan-005
+    prompt: Prepare a Diwali campaign.
+    expect_skill: holiday-drip-campaign
+    expect_composes: [audience-discovery]
+    must_cite:
+      - content-rules.md#N3
+      - frequency-rules.md#F12
+    must_not:
+      - Produce a fixed-length sequence regardless of the store's situation
+      - Include a stage that duplicates another stage's message
+      - Send last-chance urgency to someone who already purchased
+      - Invent a delivery cut-off date to justify an urgency stage
+    notes: >-
+      Stage count is derived and the derivation must be stated. holiday-marketing may run first
+      to establish relevance; both are acceptable entry points.
+    accept_skills: [holiday-drip-campaign, holiday-marketing]
+
+  - id: plan-006
+    prompt: We're launching a new collection next month.
+    expect_skill: product-launch
+    expect_composes: [audience-discovery, cross-sell]
+    must_cite:
+      - audience-rules.md#A4
+      - personalization-rules.md#P9
+    must_not:
+      - Announce to the entire list at once
+      - Market depth the store cannot supply
+      - Commit later waves before the first wave provides evidence
+    notes: >-
+      Wave sequencing is an information decision as much as a revenue one.

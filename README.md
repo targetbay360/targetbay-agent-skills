@@ -19,13 +19,13 @@ Add the marketplace once, then install the products you actually use.
 
 | Plugin | Decides | Skills | Version | MCP |
 |---|---|---|---|---|
-| [**bayengage-marketing**](plugins/bayengage-marketing/README.md) | How a store plans, targets, sequences and optimises email and SMS marketing | 24 | `2.1.0` | mapping TODO |
+| [**targetbay-email-sms**](plugins/targetbay-email-sms/README.md) | How a store plans, targets, sequences and optimises email and SMS marketing | 24 | `2.1.0` | mapping TODO |
 | [**targetbay-reviews**](plugins/targetbay-reviews/README.md) | When to ask for a review, which products lack proof, how to answer a falling rating, where proof belongs | 5 | `0.1.0` | mapping TODO |
 | [**targetbay-loyalty**](plugins/targetbay-loyalty/README.md) | Whether to run a programme, what a point is worth, where tier thresholds go, which members are leaving | 6 | `0.1.0` | mapping TODO |
 | [**targetbay-personalization**](plugins/targetbay-personalization/README.md) | Which surfaces to personalise, who sees what, what failing searches mean, whether a change can be proved | 6 | `0.1.0` | mapping TODO |
 
 ```
-/plugin install bayengage-marketing@targetbay
+/plugin install targetbay-email-sms@targetbay
 /plugin install targetbay-reviews@targetbay
 /plugin install targetbay-loyalty@targetbay
 /plugin install targetbay-personalization@targetbay
@@ -75,7 +75,7 @@ TargetBay Skills =  how the agent SHOULD accomplish an objective
 └──────────────────────────────────────────────┘
 ```
 
-Skills declare abstract capability identifiers — `bayengage.customer_intelligence`,
+Skills declare abstract capability identifiers — `email_sms.customer_intelligence`,
 `reviews.product_coverage`, `loyalty.points_ledger`, `onsite.consent_and_tracking` — never tool names. Each
 plugin carries its own `capabilities.yaml` and its own `docs/mcp-integration.md` recording what is mapped
 and what is not.

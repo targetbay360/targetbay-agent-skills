@@ -13,14 +13,14 @@
       "metric": "second_purchase_rate",
       "value": 0.18,
       "unit": "ratio",
-      "source_capability": "bayengage.order_intelligence",
+      "source_capability": "email_sms.order_intelligence",
       "period": "2026-01-01/2026-06-30",
       "comparison": "prior six months: 0.24"
     },
     {
       "metric": "first_time_buyer_count",
       "value": 4120,
-      "source_capability": "bayengage.customer_intelligence",
+      "source_capability": "email_sms.customer_intelligence",
       "period": "2026-04-01/2026-06-30"
     }
   ],
@@ -35,13 +35,13 @@
     {
       "action": "Design the journey topology",
       "risk_level": "plan",
-      "requires_capability": ["bayengage.automation", "bayengage.order_intelligence"],
+      "requires_capability": ["email_sms.automation", "email_sms.order_intelligence"],
       "requires_approval": false
     },
     {
       "action": "Activate the journey",
       "risk_level": "high_impact",
-      "requires_capability": ["bayengage.automation"],
+      "requires_capability": ["email_sms.automation"],
       "requires_approval": true,
       "depends_on": ["rec-001"]
     }

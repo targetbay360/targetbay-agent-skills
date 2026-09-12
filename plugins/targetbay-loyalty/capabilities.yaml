@@ -91,7 +91,7 @@ capabilities:
     access: send
     mcp_tools: TODO
     notes: >-
-      UNVERIFIED. Programme messaging may be owned by BayEngage rather than by
+      UNVERIFIED. Programme messaging may be owned by TargetBay Email & SMS rather than by
       TargetBay Loyalty. Skills must confirm which system sends before planning
       programme communication, and must not plan a send twice across two products.
 

@@ -7,13 +7,13 @@
   },
   "plugins": [
     {
-      "name": "bayengage-marketing",
-      "source": "./plugins/bayengage-marketing",
-      "description": "Email and SMS marketing skills for BayEngage stores: planning, audience selection, automation design, win-back, holiday sequencing and campaign diagnosis.",
-      "version": "2.1.0",
+      "name": "targetbay-email-sms",
+      "source": "./plugins/targetbay-email-sms",
+      "description": "Email and SMS marketing skills for TargetBay Email & SMS: planning, audience selection, automation design, win-back, holiday sequencing and campaign diagnosis.",
+      "version": "3.0.0",
       "author": { "name": "TargetBay" },
       "homepage": "https://targetbay.com",
-      "keywords": ["email-marketing", "sms-marketing", "ecommerce", "bayengage"]
+      "keywords": ["email-marketing", "sms-marketing", "ecommerce", "targetbay"]
     },
     {
       "name": "targetbay-reviews",

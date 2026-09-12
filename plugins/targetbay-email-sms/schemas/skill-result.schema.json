@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://targetbay.com/schemas/targetbay-email-sms/skill-result.schema.json",
+  "title": "Skill result",
+  "description": "What a skill returns when it finishes, whether it succeeded, partially succeeded, or could not proceed. Blocked and partial are first-class outcomes so that missing data surfaces instead of being filled in.",
+  "type": "object",
+  "required": [
+    "skill",
+    "skill_version",
+    "status",
+    "execution_mode",
+    "risk_level",
+    "summary",
+    "recommendations",
+    "warnings",
+    "unmet_requirements",
+    "approval_required"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "skill": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "skill_version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$"
+    },
+    "status": {
+      "description": "blocked means required context was unavailable and no output was produced. partial means some of the objective was addressed and the gaps are listed in unmet_requirements.",
+      "type": "string",
+      "enum": ["completed", "partial", "blocked"]
+    },
+    "execution_mode": {
+      "type": "string",
+      "enum": ["analyze_only", "recommend_only", "plan_then_execute", "execute_with_approval"]
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": ["read_only", "analysis", "recommendation", "plan", "mutation", "high_impact", "destructive"]
+    },
+    "summary": { "type": "string", "minLength": 1 },
+    "composed_skills": {
+      "description": "Skills this run delegated to, in the order they were used.",
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }
+    },
+    "capabilities_used": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9_]*\\.[a-z0-9_]+$" }
+    },
+    "data_period": { "type": "string" },
+    "recommendations": {
+      "description": "Recommendation objects conforming to recommendation.schema.json.",
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "plan": {
+      "description": "Workflow plan conforming to workflow.schema.json, when the skill produced one.",
+      "type": "object"
+    },
+    "warnings": {
+      "description": "Things the operator should know that did not stop the run — small samples, stale data, calendar collisions.",
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "unmet_requirements": {
+      "description": "Required context or capabilities that were unavailable. Must be non-empty when status is blocked or partial.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["requirement", "impact"],
+        "additionalProperties": false,
+        "properties": {
+          "requirement": { "type": "string", "minLength": 1 },
+          "capability": { "type": "string", "pattern": "^[a-z][a-z0-9_]*\\.[a-z0-9_]+$" },
+          "impact": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "approval_required": { "type": "boolean" },
+    "approval_scope": {
+      "description": "Exactly what the human is being asked to approve. Required when approval_required is true.",
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "approval_required": { "const": true } }, "required": ["approval_required"] },
+      "then": { "required": ["approval_scope"] }
+    },
+    {
+      "if": { "properties": { "status": { "enum": ["blocked", "partial"] } }, "required": ["status"] },
+      "then": { "properties": { "unmet_requirements": { "minItems": 1 } } }
+    }
+  ]
+}

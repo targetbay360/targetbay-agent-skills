@@ -14,7 +14,7 @@ body:
     attributes:
       label: Which product
       options:
-        - "bayengage-marketing — email and SMS"
+        - "targetbay-email-sms — email and SMS"
         - "targetbay-reviews — reviews and UGC"
         - "targetbay-loyalty — loyalty and referrals"
         - "targetbay-personalization — onsite personalization"

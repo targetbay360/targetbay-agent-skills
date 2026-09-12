@@ -5,6 +5,35 @@ own changelog under `plugins/<name>/CHANGELOG.md`, and versions independently.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2026-09-12] BayEngage renamed to TargetBay Email & SMS
+
+The restructure below left one plugin naming itself differently from the other three. This entry closes
+that gap: `bayengage-marketing` is now `targetbay-email-sms`, and all four plugins name themselves the
+same way.
+
+Entries below this one still say BayEngage. They record what the names were when they were written; this
+entry is the mapping.
+
+### Changed
+
+- **`bayengage-marketing` renamed** to `targetbay-email-sms`, directory and all. `marketplace.json`, the
+  plugin's `plugin.json` and the directory name must agree — `tests/validate.py` asserts it — so the
+  three moved together, as did `tests/evals/golden-prompts/`, whose subdirectory `run_evals.py` derives
+  from the plugin directory name. The plugin went to `3.0.0`; the rename breaks its install command, its
+  npm name, its command namespace and its capability identifiers.
+- **Capability namespaces are now uniform.** The plugin's registry moved from `bayengage.*` to
+  `email_sms.*`, so every plugin's identifiers are prefixed with its bare product word — `reviews.*`,
+  `loyalty.*`, `personalization.*`, `email_sms.*`. The two fixtures under `tests/fixtures/valid/` moved
+  with it, since the `references` group resolves them against the plugin's own `capabilities.yaml`.
+- **The eval stopword list lost `bayengage`** (`tests/evals/run_evals.py`). `email` and `sms` were
+  deliberately not added in its place: the list strips brand noise from TF-IDF ranking, and those two
+  words genuinely discriminate between this plugin's skills. The one golden prompt that named the product
+  — `plan-003`, the known-fragile `store-onboarding` case — was reworded to say TargetBay rather than
+  TargetBay Email & SMS, so the rename does not quietly reshape what that case measures.
+- **Changelogs were not rewritten.** Dated entries in this file and in each plugin's changelog still say
+  BayEngage, because they record what the names were at the time. The new names are recorded here and in
+  `plugins/targetbay-email-sms/CHANGELOG.md`.
+
 ## [2026-09-12] Marketplace restructure
 
 The repository became a marketplace of product plugins. It previously held exactly one package at its
