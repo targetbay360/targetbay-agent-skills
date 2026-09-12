@@ -19,6 +19,20 @@ drifts in fourteen directions. Skills link to rules; they do not copy them.
 | [content-rules.md](content-rules.md) | Subject lines, body content, offers, claims, accessibility. |
 | [frequency-rules.md](frequency-rules.md) | Contact cadence, fatigue, channel pressure, collisions. |
 
+## Contact ownership across products
+
+This plugin is not the only TargetBay product that can decide to contact a customer. Email & SMS,
+Reviews and Loyalty each have their own frequency limits, and a customer receives the sum of all three —
+a total no single product can see.
+
+Which moment belongs to which product is settled once, in
+[contact-ownership-rules.md](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-onboarding/rules/contact-ownership-rules.md), which ships with the
+`targetbay-onboarding` plugin because it is the only one whose registry may span all four products.
+**Owns the lifecycle and promotional moment, and dispatches loyalty programme messages on Loyalty's behalf until `loyalty.messaging` is confirmed (X2, X5).**
+
+Those rules are not installed with this plugin. When a store runs more than one TargetBay product, read
+them alongside the rules here — the frequency rules in this file bound this product only.
+
 ## Precedence
 
 When two rules conflict, the higher layer wins:

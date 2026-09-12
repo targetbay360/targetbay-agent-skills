@@ -1,0 +1,655 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://targetbay.com/schemas/targetbay-onboarding/context-pack.schema.json",
+  "title": "Store Context Pack",
+  "description": "The derived view of one store that makes onboarding store-specific rather than a default checklist. Assembled by the platform from the store's own data and returned through the `onboarding.store_context` capability. Every quantity is a derivedValue carrying how it was arrived at, so a skill can never confuse a measurement with a playbook default (global-rules.md#G3, #G14).",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "store_id",
+    "computed_at",
+    "identity",
+    "readiness"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "description": "Version of this schema the pack was produced against.",
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
+    },
+    "store_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "computed_at": {
+      "description": "When the pack was derived. Cited alongside any value taken from it, because a decision made on stale evidence is a different decision.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "ttl_seconds": {
+      "description": "How long the pack may be treated as current. Beyond it a skill degrades to partial and says so, rather than silently reasoning on stale data.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "source_window": {
+      "description": "The observation period the derivations cover, as an ISO 8601 interval.",
+      "type": "string",
+      "minLength": 1
+    },
+    "identity": {
+      "$ref": "#/$defs/identity"
+    },
+    "vertical": {
+      "$ref": "#/$defs/vertical"
+    },
+    "catalogue": {
+      "$ref": "#/$defs/catalogue"
+    },
+    "customers": {
+      "$ref": "#/$defs/customers"
+    },
+    "brand": {
+      "$ref": "#/$defs/brand"
+    },
+    "coverage": {
+      "$ref": "#/$defs/coverage"
+    },
+    "intake": {
+      "$ref": "#/$defs/intake"
+    },
+    "readiness": {
+      "description": "One row per capability across all four product namespaces. This is what lets a skill populate unmet_requirements precisely instead of discovering gaps one failed call at a time.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/readinessRow"
+      }
+    }
+  },
+  "$defs": {
+    "derivedValue": {
+      "description": "A quantity and the account of how it was arrived at. The load-bearing type of this schema: `basis` is what stops a playbook default from being read as a measurement.",
+      "type": "object",
+      "required": [
+        "basis"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "Null when and only when basis is `absent`.",
+          "type": [
+            "number",
+            "string",
+            "boolean",
+            "null"
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "basis": {
+          "description": "derived = computed from this store's data. provisional = a vertical default standing in. stated = the store told us, via intake. absent = not derivable and not defaulted.",
+          "type": "string",
+          "enum": [
+            "derived",
+            "provisional",
+            "stated",
+            "absent"
+          ]
+        },
+        "n": {
+          "description": "Sample size behind a derived value. Required when basis is `derived`.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "source": {
+          "description": "For a stated value, the intake question it came from, e.g. `intake:Q3`.",
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "description": "A strict subset of recommendation.schema.json's evidenceItem \u2014 same field names and meanings, minus `comparison`, which a pack has nothing to compare against. A skill can therefore lift evidence out of the pack straight into a recommendation without transforming it. Kept as a local definition rather than a $ref because tests/validate.py compiles each schema standalone, with no cross-file resolver.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "metric",
+              "value",
+              "source_capability"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "metric": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": [
+                  "number",
+                  "string",
+                  "boolean"
+                ]
+              },
+              "unit": {
+                "type": "string"
+              },
+              "period": {
+                "type": "string"
+              },
+              "source_capability": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*\\.[a-z0-9_]+$"
+              }
+            }
+          }
+        },
+        "replaced_by": {
+          "description": "The observation that would turn this into a derived value, stated in observable terms \u2014 a count of orders or repeat purchases, never a date (global-rules.md#G14).",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "basis": {
+                "const": "derived"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value",
+              "n",
+              "evidence"
+            ],
+            "properties": {
+              "value": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "basis": {
+                "const": "provisional"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value",
+              "replaced_by"
+            ],
+            "properties": {
+              "replaced_by": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "basis": {
+                "const": "stated"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value",
+              "source"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "basis": {
+                "const": "absent"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "replaced_by"
+            ],
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "identity": {
+      "type": "object",
+      "required": [
+        "currency",
+        "platform_age_days"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "currency": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 3
+        },
+        "locales": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "markets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "platform_age_days": {
+          "description": "Days since the store connected to TargetBay. The single strongest predictor of how much of this pack can be derived at all.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "migrated_from": {
+          "description": "Prior platform when the store arrived by migration, or null. A migrated store is not a greenfield store (global-rules.md#G5).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "plan_limits": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "number",
+              "string",
+              "boolean",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "vertical": {
+      "type": "object",
+      "required": [
+        "detected",
+        "playbook"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "detected": {
+          "$ref": "#/$defs/derivedValue"
+        },
+        "playbook": {
+          "description": "Which TargetBay Email & SMS playbook overlay applies. `none` is a valid and expected answer: picking one on thin evidence is worse than picking none (global-rules.md#G2).",
+          "type": "string",
+          "enum": [
+            "ecommerce",
+            "retail",
+            "fashion",
+            "beauty",
+            "b2b",
+            "none"
+          ]
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "playbook",
+              "confidence"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "playbook": {
+                "type": "string"
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "catalogue": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "size": {
+          "$ref": "#/$defs/derivedValue"
+        },
+        "consumability": {
+          "description": "consumable, durable or mixed. Decides whether replenishment journeys apply at all.",
+          "$ref": "#/$defs/derivedValue"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "product_count"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "product_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "revenue_share": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        },
+        "price_deciles": {
+          "description": "Raw deciles, not named bands. Naming a band is a decision and belongs to a skill.",
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 9,
+          "maxItems": 9
+        },
+        "replenishment_candidates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "product_ref",
+              "observed_interval"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "product_ref": {
+                "type": "string"
+              },
+              "observed_interval": {
+                "$ref": "#/$defs/derivedValue"
+              }
+            }
+          }
+        }
+      }
+    },
+    "customers": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "total": {
+          "$ref": "#/$defs/derivedValue"
+        },
+        "lifecycle_counts": {
+          "description": "Raw counts per lifecycle stage, plus `unknown`. Counts, not shares: a share hides the sample size.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "consent": {
+          "description": "Per channel and three-way. The `unknown` bucket is the point: a migrated list's consent is usually unknown, and unknown is not granted (safety-rules.md#S7).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "granted",
+              "denied",
+              "unknown"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "granted": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "denied": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "unknown": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "engagement_recency": {
+          "description": "Histogram buckets with raw counts. A store with a large never-engaged bucket is a deliverability decision before it is a targeting one.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "bucket",
+              "count"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "bucket": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "boundaries": {
+          "description": "The derived thresholds every downstream skill would otherwise invent. Each is computed only above a published minimum sample; below it the value is absent, never a round number.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "lapse_point": {
+              "$ref": "#/$defs/derivedValue"
+            },
+            "vip_boundary": {
+              "$ref": "#/$defs/derivedValue"
+            },
+            "first_to_second_gap": {
+              "$ref": "#/$defs/derivedValue"
+            },
+            "repeat_rate": {
+              "$ref": "#/$defs/derivedValue"
+            }
+          }
+        }
+      }
+    },
+    "brand": {
+      "description": "Derived from the store's existing TargetBay templates. With no send history every field is absent \u2014 a store that has never sent has no observable voice, and inventing one is global-rules.md#G3.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "sender_identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from_name": {
+              "$ref": "#/$defs/derivedValue"
+            },
+            "reply_to": {
+              "$ref": "#/$defs/derivedValue"
+            },
+            "footer_address": {
+              "$ref": "#/$defs/derivedValue"
+            }
+          }
+        },
+        "palette": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "hex",
+              "template_count"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "hex": {
+                "type": "string",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              },
+              "template_count": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        "logo_asset_ref": {
+          "$ref": "#/$defs/derivedValue"
+        },
+        "voice": {
+          "description": "Measurable signals only \u2014 sentence length, emoji density, exclamation density, second-person rate, discount-language frequency. Never an adjective the pack cannot evidence.",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/derivedValue"
+          }
+        },
+        "templates_analysed": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "coverage": {
+      "description": "What already exists, per product. Onboarding that assumes a greenfield store duplicates what is already there (global-rules.md#G5).",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "configured"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "configured": {
+            "type": "boolean"
+          },
+          "resources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "kind",
+                "name"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "live",
+                    "paused",
+                    "archived"
+                  ]
+                },
+                "audience_size": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "intake": {
+      "description": "Answers to what the platform cannot observe. Present as stated values so a skill can always tell being told from having measured.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "answered_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "answers": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/derivedValue"
+          }
+        }
+      }
+    },
+    "readinessRow": {
+      "type": "object",
+      "required": [
+        "capability",
+        "status"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "capability": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*\\.[a-z0-9_]+$"
+        },
+        "status": {
+          "description": "available = usable now. unavailable = the product has it, this store does not. unverified = the platform's own support is unconfirmed. absent = the platform does not have it.",
+          "type": "string",
+          "enum": [
+            "available",
+            "unavailable",
+            "unverified",
+            "absent"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "n": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blocks": {
+          "description": "Skills that cannot run, or can only run partially, without this capability.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

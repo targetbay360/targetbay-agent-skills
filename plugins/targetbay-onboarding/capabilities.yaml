@@ -1,0 +1,68 @@
+# TargetBay Onboarding Skills — Capability Registry
+#
+# Single source of truth for the abstract capability identifiers that skills declare
+# in their `requires:` frontmatter.
+#
+# These are CAPABILITY names, not tool names. This plugin is deliberately narrow: it does
+# not re-declare the fifty-five product capabilities that live in the four product
+# registries. It declares the four things onboarding needs that no single product owns —
+# a derived view of the whole store, the answers the platform cannot observe, a
+# cross-product apply path, and activation.
+#
+# Every `mcp_tools` value is TODO until the real TargetBay MCP surface is inspected and
+# mapped. See docs/mcp-integration.md.
+
+version: 0.1.0
+
+# access values:
+#   read   - retrieves data, no state change
+#   write  - creates or modifies platform state
+#   send   - dispatches messages to real people (always HIGH_IMPACT)
+access_levels: [read, write, send]
+
+capabilities:
+  - id: onboarding.store_context
+    description: >-
+      The derived Store Context Pack — identity, detected vertical, catalogue shape, customer shape,
+      brand profile, existing coverage across all four products, and the per-capability data-readiness
+      matrix. Every value carries its basis, sample size and evidence.
+    access: read
+    mcp_tools: TODO
+    notes: >-
+      The pack is derived, not stored. Derivation belongs on the platform side: computing a lapse point
+      means reading a full inter-purchase-interval distribution, and a skill that never sees the raw
+      distribution cannot invent a threshold from it. Where the platform exposes only raw reads, the
+      affected values are absent rather than estimated (global-rules.md#G3).
+
+  - id: onboarding.intake
+    description: >-
+      Structured answers to what the platform cannot observe — objectives, margin posture, capacity,
+      brand policy, channel and market restrictions, and real seasonality. Read and write.
+    access: write
+    mcp_tools: TODO
+    notes: >-
+      Stored on the store record rather than in the session, because the answers must outlive a single
+      agent run and must be readable by every product's skills through their own store_profile
+      capability.
+
+  - id: onboarding.provisioning
+    description: >-
+      Dry-run and application of a cross-product configuration plan — segments, journeys, templates,
+      review triggers, loyalty configuration and onsite placements — and verification of what was
+      created against what was approved.
+    access: write
+    mcp_tools: TODO
+    notes: >-
+      UNVERIFIED. No TargetBay write surface has been inspected. Skills must confirm this capability is
+      present before planning execution, and degrade to a plan plus a build checklist when it is absent.
+      Creation and activation must be separate operations; see safety-rules.md#S2.
+
+  - id: onboarding.activation
+    description: >-
+      Activation of provisioned resources that can reach a real person — switching a journey, review
+      trigger or onsite offer from draft to live.
+    access: send
+    mcp_tools: TODO
+    notes: >-
+      Separate from onboarding.provisioning on purpose. A single capability covering both would make the
+      approval gate in safety-rules.md#S5 a request rather than an enforcement.

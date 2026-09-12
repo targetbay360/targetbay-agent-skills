@@ -11,6 +11,20 @@ because a constraint restated in six skills drifts in six directions.
 | [tier-rules.md](tier-rules.md) | Tier count, thresholds, benefits, qualification | `tier-rules.md#T2` |
 | [referral-rules.md](referral-rules.md) | Referral structure, incentives, fraud, measurement | `referral-rules.md#F2` |
 
+## Contact ownership across products
+
+This plugin is not the only TargetBay product that can decide to contact a customer. Email & SMS,
+Reviews and Loyalty each have their own frequency limits, and a customer receives the sum of all three —
+a total no single product can see.
+
+Which moment belongs to which product is settled once, in
+[contact-ownership-rules.md](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-onboarding/rules/contact-ownership-rules.md), which ships with the
+`targetbay-onboarding` plugin because it is the only one whose registry may span all four products.
+**Owns the programme-state moment — points, tiers, rewards, referrals — though the messages themselves may dispatch through Email & SMS (X2, X5).**
+
+Those rules are not installed with this plugin. When a store runs more than one TargetBay product, read
+them alongside the rules here — the frequency rules in this file bound this product only.
+
 ## Precedence
 
 ```

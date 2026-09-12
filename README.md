@@ -1,7 +1,8 @@
 # TargetBay Agent Skills
 
-A marketplace of vendor-neutral AI Agent Skills packages, one per TargetBay product. Each teaches agents
-**how to accomplish an objective** on that product — the reasoning the MCP server does not carry.
+A marketplace of vendor-neutral AI Agent Skills packages — one per TargetBay product, plus one that
+onboards a store across all of them. Each teaches agents **how to accomplish an objective** — the
+reasoning the MCP server does not carry.
 
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![agent skills](https://img.shields.io/badge/Agent%20Skills-conformant-7c3aed)](https://agentskills.io/specification)
@@ -19,16 +20,18 @@ Add the marketplace once, then install the products you actually use.
 
 | Plugin | Decides | Skills | Version | MCP |
 |---|---|---|---|---|
-| [**targetbay-email-sms**](plugins/targetbay-email-sms/README.md) | How a store plans, targets, sequences and optimises email and SMS marketing | 24 | `2.1.0` | mapping TODO |
+| [**targetbay-email-sms**](plugins/targetbay-email-sms/README.md) | How a store plans, targets, sequences and optimises email and SMS marketing | 24 | `3.1.0` | mapping TODO |
 | [**targetbay-reviews**](plugins/targetbay-reviews/README.md) | When to ask for a review, which products lack proof, how to answer a falling rating, where proof belongs | 5 | `0.1.0` | mapping TODO |
 | [**targetbay-loyalty**](plugins/targetbay-loyalty/README.md) | Whether to run a programme, what a point is worth, where tier thresholds go, which members are leaving | 6 | `0.1.0` | mapping TODO |
 | [**targetbay-personalization**](plugins/targetbay-personalization/README.md) | Which surfaces to personalise, who sees what, what failing searches mean, whether a change can be proved | 6 | `0.1.0` | mapping TODO |
+| [**targetbay-onboarding**](plugins/targetbay-onboarding/README.md) | What a new store actually is, what to ask it, and what to set up first across all four products | 4 | `0.1.0` | mapping TODO |
 
 ```
 /plugin install targetbay-email-sms@targetbay
 /plugin install targetbay-reviews@targetbay
 /plugin install targetbay-loyalty@targetbay
 /plugin install targetbay-personalization@targetbay
+/plugin install targetbay-onboarding@targetbay
 ```
 
 Each plugin also publishes to npm for hosts without a plugin system —
@@ -37,10 +40,15 @@ Each plugin also publishes to npm for hosts without a plugin system —
 ### Try it
 
 Ask in plain language: *"Win back our lapsed customers."* · *"Which products need reviews?"* ·
-*"Can we double our points earn rate?"* · *"Our widget recommends things people just bought."*
+*"Can we double our points earn rate?"* · *"Our widget recommends things people just bought."* ·
+*"We just signed up — set up everything across email, reviews, loyalty and onsite."*
 
 With no MCP connected, a skill reports itself **`blocked`** and names the capability it is missing. That is
 the correct answer, and the quickest confirmation that the skills loaded.
+
+Every capability across the five plugins is still unmapped. The worksheet that closes that gap is
+[docs/mcp-capability-inventory.md](docs/mcp-capability-inventory.md) — one row per capability, filled in
+against the real MCP surface, plus the three answers that decide how far the onboarding pipeline can go.
 
 ---
 
@@ -76,9 +84,13 @@ TargetBay Skills =  how the agent SHOULD accomplish an objective
 ```
 
 Skills declare abstract capability identifiers — `email_sms.customer_intelligence`,
-`reviews.product_coverage`, `loyalty.points_ledger`, `onsite.consent_and_tracking` — never tool names. Each
-plugin carries its own `capabilities.yaml` and its own `docs/mcp-integration.md` recording what is mapped
-and what is not.
+`reviews.product_coverage`, `loyalty.points_ledger`, `onsite.consent_and_tracking`,
+`onboarding.store_context` — never tool names. Each plugin carries its own `capabilities.yaml` and its
+own `docs/mcp-integration.md` recording what is mapped and what is not.
+
+Four plugins cover one product each. `targetbay-onboarding` is the exception: it sequences all four for a
+store that has just arrived, and it is where the cross-product questions no single product can answer —
+chiefly who is allowed to contact a customer, and how often — get settled.
 
 ## What these are not
 

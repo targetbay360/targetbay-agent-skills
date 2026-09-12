@@ -1,0 +1,29 @@
+{
+  "schema_version": "0.1.0",
+  "store_id": "store_bad",
+  "computed_at": "2026-09-12T04:15:00Z",
+  "identity": {
+    "currency": "USD",
+    "platform_age_days": 3
+  },
+  "customers": {
+    "boundaries": {
+      "lapse_point": {
+        "value": 90,
+        "unit": "days",
+        "basis": "derived"
+      },
+      "vip_boundary": {
+        "value": 400,
+        "unit": "currency",
+        "basis": "provisional"
+      },
+      "repeat_rate": {
+        "value": 0.22,
+        "basis": "absent",
+        "replaced_by": "90 days of order history"
+      }
+    }
+  },
+  "readiness": []
+}

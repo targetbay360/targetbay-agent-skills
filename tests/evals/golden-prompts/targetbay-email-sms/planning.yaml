@@ -32,8 +32,23 @@ cases:
     notes: >-
       A horizon longer than one period. Capacity is borrowed between periods, not created.
 
+  - id: plan-007
+    prompt: Onboard this new store on email and SMS.
+    expect_skill: store-onboarding
+    must_cite:
+      - global-rules.md#G3
+      - safety-rules.md#S7
+    must_not:
+      - Present a default interval as a derived one
+      - Plan reviews, loyalty or onsite work; this skill is scoped to email and SMS
+    notes: >-
+      Pins the selection fix. `store` and `new` are both in run_evals.py's STOPWORDS, so this prompt
+      reduces to the single term `onboard` — which this skill did not contain until 2.0.0, leaving it
+      ranked 23rd of 24 against its own subject while its other golden prompt passed. Without this case
+      the word can be removed again with the suite still green.
+
   - id: plan-003
-    prompt: We've just moved to TargetBay — what should we set up?
+    prompt: We've just moved to TargetBay — what email and SMS should we set up first?
     expect_skill: store-onboarding
     expect_composes: [automation-strategy, audience-discovery, monthly-marketing-planner]
     must_cite:
@@ -44,6 +59,7 @@ cases:
       - Present a default interval as a derived one
       - Send to a migrated list without confirming consent and planning a ramp-up
       - Propose branching or variants with no data to justify them
+      - Plan reviews, loyalty or onsite work; this skill is scoped to email and SMS
     notes: >-
       Almost every threshold in this package needs history a new store does not have. Saying so
       is the deliverable.

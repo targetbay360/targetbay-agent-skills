@@ -102,11 +102,17 @@ approximate or bypass them ([../rules/global-rules.md#G10](../rules/global-rules
 
 - [ ] Inspect the TargetBay Reviews MCP tool and resource surface
 - [ ] Map every capability in [../capabilities.yaml](../capabilities.yaml) to real tools; replace `TODO`
-- [ ] Confirm whether review requests are dispatched by Reviews or by TargetBay Email & SMS, and where request
-      frequency is reconciled between them
+- [x] **Confirm whether review requests are dispatched by Reviews or by TargetBay Email & SMS, and where
+      request frequency is reconciled between them.** Answered in
+      [contact-ownership-rules.md](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-onboarding/rules/contact-ownership-rules.md) — X2 gives Reviews the post-purchase and delivery moment, so
+      the first ask is Reviews'; X6 reconciles its frequency against the one cross-product contact
+      budget rather than against a Reviews-only cap. Which system physically dispatches is still an MCP
+      question; who owns the moment is not.
 - [ ] Confirm whether fulfilment and delivery timing is reachable, and from which system
 - [ ] Confirm whether syndication exists at all, and to which destinations
 - [ ] Establish how verified-buyer state is determined and exposed
-- [ ] Define how the MCP signals "capability unavailable" so skills can degrade rather than fabricate
+- [ ] Define how the MCP signals "capability unavailable" so skills can degrade rather than fabricate,
+      and how it distinguishes an empty result from an unavailable one — "this product has no reviews"
+      and "the review read failed" must not arrive looking identical
 - [ ] Record whether merchant replies are published immediately or queued for moderation, since the risk
       classification in [../rules/safety-rules.md#S1](../rules/safety-rules.md) depends on the answer
