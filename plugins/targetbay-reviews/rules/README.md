@@ -11,6 +11,20 @@ because a constraint restated in seven skills drifts in seven directions.
 | [response-rules.md](response-rules.md) | Replying to reviews; responding to a rating problem | `response-rules.md#P2` |
 | [placement-rules.md](placement-rules.md) | Where and how proof is displayed and reused | `placement-rules.md#D2` |
 
+## Contact ownership across products
+
+This plugin is not the only TargetBay product that can decide to contact a customer. Email & SMS,
+Reviews and Loyalty each have their own frequency limits, and a customer receives the sum of all three —
+a total no single product can see.
+
+Which moment belongs to which product is settled once, in
+[contact-ownership-rules.md](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-onboarding/rules/contact-ownership-rules.md), which ships with the
+`targetbay-onboarding` plugin because it is the only one whose registry may span all four products.
+**Owns the post-purchase and delivery moment, so the first review request is this product's — and its frequency reconciles against the whole budget, never a Reviews-only cap (X2, X6).**
+
+Those rules are not installed with this plugin. When a store runs more than one TargetBay product, read
+them alongside the rules here — the frequency rules in this file bound this product only.
+
 ## Precedence
 
 ```

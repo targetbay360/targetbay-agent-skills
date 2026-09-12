@@ -112,8 +112,14 @@ approximate or bypass them ([../rules/global-rules.md#G10](../rules/global-rules
 - [ ] Confirm whether outstanding liability and its ageing are directly readable
 - [ ] Confirm whether `loyalty.points_adjustment` supports a preview or dry run; without one, bulk
       adjustment is out of scope for every skill here
-- [ ] Confirm whether programme messaging is owned by Loyalty or by TargetBay Email & SMS, and where frequency is
-      reconciled between them
+- [x] **Confirm whether programme messaging is owned by Loyalty or by TargetBay Email & SMS, and where
+      frequency is reconciled between them.** Answered in
+      [contact-ownership-rules.md](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-onboarding/rules/contact-ownership-rules.md) — X2 gives Loyalty the programme-state moment, and X5
+      dispatches those messages through Email & SMS until the capability manifest confirms
+      `loyalty.messaging` for a store, so they are counted once against the one cross-product contact
+      budget. Ownership of the moment is settled; the dispatch capability is still an MCP question.
 - [ ] Confirm whether margin data is reachable, and from which system
 - [ ] Confirm how tier qualification windows are configured and whether they are changeable in-flight
-- [ ] Define how the MCP signals "capability unavailable" so skills can degrade rather than fabricate
+- [ ] Define how the MCP signals "capability unavailable" so skills can degrade rather than fabricate,
+      and how it distinguishes an empty result from an unavailable one — "this member has no points"
+      and "the ledger read failed" must not arrive looking identical

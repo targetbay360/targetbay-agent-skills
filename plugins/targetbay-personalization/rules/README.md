@@ -11,6 +11,20 @@ because a constraint restated in six skills drifts in six directions.
 | [surface-rules.md](surface-rules.md) | Placements and the pages carrying them | `surface-rules.md#U2` |
 | [measurement-rules.md](measurement-rules.md) | How an onsite change is evaluated | `measurement-rules.md#M4` |
 
+## Contact ownership across products
+
+This plugin is not the only TargetBay product that can decide to contact a customer. Email & SMS,
+Reviews and Loyalty each have their own frequency limits, and a customer receives the sum of all three —
+a total no single product can see.
+
+Which moment belongs to which product is settled once, in
+[contact-ownership-rules.md](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-onboarding/rules/contact-ownership-rules.md), which ships with the
+`targetbay-onboarding` plugin because it is the only one whose registry may span all four products.
+**Acts on a visitor already present and so consumes no contact budget at all, which is why onsite work can proceed independently (X3).**
+
+Those rules are not installed with this plugin. When a store runs more than one TargetBay product, read
+them alongside the rules here — the frequency rules in this file bound this product only.
+
 ## Precedence
 
 ```

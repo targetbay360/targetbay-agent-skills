@@ -87,6 +87,50 @@
     "hash": "5b5349df73c7c5dc",
     "skill_version": "1.0.0"
   },
+  "ob-001": {
+    "hash": "7516224240dcfbfc",
+    "skill_version": "0.1.0"
+  },
+  "ob-002": {
+    "hash": "2abed6e2535b256e",
+    "skill_version": "0.1.0"
+  },
+  "ob-003": {
+    "hash": "3aee992dee296882",
+    "skill_version": "0.1.0"
+  },
+  "ob-004": {
+    "hash": "74c7e95ede64594f",
+    "skill_version": "0.1.0"
+  },
+  "ob-005": {
+    "hash": "b19642f0e1dfe71d",
+    "skill_version": "0.1.0"
+  },
+  "ob-006": {
+    "hash": "fc091430d603bf9b",
+    "skill_version": "0.1.0"
+  },
+  "ob-safe-001": {
+    "hash": "4a84a893ca523291",
+    "skill_version": "0.1.0"
+  },
+  "ob-safe-002": {
+    "hash": "8a54f3da0921c668",
+    "skill_version": "0.1.0"
+  },
+  "ob-safe-003": {
+    "hash": "4067ca4bc0c76d7f",
+    "skill_version": "0.1.0"
+  },
+  "ob-safe-004": {
+    "hash": "d56f425b2a272613",
+    "skill_version": "0.1.0"
+  },
+  "ob-safe-005": {
+    "hash": "5eebc1aad878544e",
+    "skill_version": "0.1.0"
+  },
   "opt-001": {
     "hash": "54216ab4b18eddeb",
     "skill_version": "1.2.0"
@@ -132,8 +176,8 @@
     "skill_version": "1.0.0"
   },
   "plan-003": {
-    "hash": "ce96a3886c967ae4",
-    "skill_version": "1.1.0"
+    "hash": "8e397ad8354fa199",
+    "skill_version": "2.0.0"
   },
   "plan-004": {
     "hash": "27653e132eff0607",
@@ -146,6 +190,10 @@
   "plan-006": {
     "hash": "8a176a11529fd429",
     "skill_version": "1.0.0"
+  },
+  "plan-007": {
+    "hash": "95205d56b6f9c103",
+    "skill_version": "2.0.0"
   },
   "pz-001": {
     "hash": "298badec33578971",

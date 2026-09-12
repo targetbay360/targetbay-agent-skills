@@ -125,4 +125,6 @@ them ([../rules/global-rules.md#G10](../rules/global-rules.md)).
 - [ ] Establish whether cannibalisation is observable, since incrementality claims depend on it
 - [ ] Confirm how a placement behaves when its strategy returns too few results, so the empty state can be
       designed rather than discovered
-- [ ] Define how the MCP signals "capability unavailable" so skills can degrade rather than fabricate
+- [ ] Define how the MCP signals "capability unavailable" so skills can degrade rather than fabricate,
+      and how it distinguishes an empty result from an unavailable one — "this surface has no visitors" and "the visitor read failed"
+      must not arrive looking identical

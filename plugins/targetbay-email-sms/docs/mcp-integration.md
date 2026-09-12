@@ -112,7 +112,9 @@ hard frequency caps. Skills plan within these; they do not approximate or bypass
 - [ ] Confirm whether SMS dispatch exists, and its consent and quiet-hours semantics
 - [ ] Enumerate the Hydra OAuth scopes each capability requires
 - [ ] Decide which layer enforces suppression and frequency caps, and record the decision
-- [ ] Define how the MCP signals "capability unavailable" so skills can degrade rather than fabricate
+- [ ] Define how the MCP signals "capability unavailable" so skills can degrade rather than fabricate,
+      and how it distinguishes an empty result from an unavailable one — "this campaign has no results" and "the results read failed"
+      must not arrive looking identical
 - [ ] Confirm the concrete automation node types the platform supports, against the abstract vocabulary in
       [../schemas/workflow.schema.json](../schemas/workflow.schema.json)
 - [ ] Confirm whether `email_sms.marketing_calendar` is a real capability or must be assembled from

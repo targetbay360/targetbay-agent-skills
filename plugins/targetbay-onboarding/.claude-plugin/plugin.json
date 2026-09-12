@@ -1,0 +1,23 @@
+{
+  "name": "targetbay-onboarding",
+  "description": "Skills that turn a newly signed-up store into a store-specific programme across all four TargetBay products — auditing what the platform actually knows about this store, asking only what it cannot observe, sequencing the first ninety days so the four products do not compete for the same customer, and provisioning the result behind explicit approval. Vendor-neutral reasoning; the TargetBay MCP supplies the capabilities.",
+  "version": "0.1.0",
+  "author": {
+    "name": "TargetBay",
+    "email": "support@targetbay.com",
+    "url": "https://targetbay.com"
+  },
+  "homepage": "https://targetbay.com",
+  "repository": "https://github.com/targetbay360/targetbay-agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "claude",
+    "mcp",
+    "onboarding",
+    "implementation",
+    "activation",
+    "ecommerce",
+    "targetbay"
+  ]
+}
