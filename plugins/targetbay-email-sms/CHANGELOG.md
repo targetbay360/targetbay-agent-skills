@@ -23,7 +23,8 @@ were at the time; the mapping to the new ones is in this entry.
   `/targetbay-email-sms:*`, and installation is `/plugin install targetbay-email-sms@targetbay`. The six
   command names themselves are unchanged.
 - **npm package renamed** to `@targetbay/email-sms-skills`, matching `@targetbay/reviews-skills` and its
-  siblings. `@targetbay/bayengage-marketing-skills` is deprecated. The bin is now
+  siblings. Nothing was ever published under `@targetbay/bayengage-marketing-skills`, so there is no
+  deprecation to honour — this release is the first the scope has carried. The bin is now
   `targetbay-email-sms-skills` rather than `bayengage-skills`.
 - **Capability namespace moved** from `bayengage.*` to `email_sms.*` — all 15 identifiers, and every
   `targetbay.requires` line that names them. The namespace is the bare product word, as
