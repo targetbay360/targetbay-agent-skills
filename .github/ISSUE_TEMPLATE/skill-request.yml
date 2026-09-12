@@ -1,0 +1,47 @@
+name: Missing skill or capability
+description: There is a marketing outcome an agent cannot reach with the current skills.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Skills describe **how an agent should accomplish a marketing outcome**. Please frame
+        this as an outcome rather than a feature — "the agent can't build a post-purchase
+        replenishment sequence for consumables" rather than "add a replenishment field".
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: The outcome the agent cannot reach today
+      description: What should a store owner be able to ask for, and what should the agent produce?
+    validations:
+      required: true
+
+  - type: input
+    id: closest
+    attributes:
+      label: Closest existing skill
+      description: The directory under `skills/` that comes nearest, and why it falls short. `none` is a valid answer.
+      placeholder: customer-lifecycle
+    validations:
+      required: true
+
+  - type: dropdown
+    id: capability
+    attributes:
+      label: Does this need a new capability?
+      description: A capability is something the BayEngage MCP must be able to do. See `capabilities.yaml`.
+      options:
+        - "No — it composes existing capabilities"
+        - "Yes — it needs something BayEngage cannot do yet"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else
+      description: Prior art, a rough outline, or the shape of the output you'd expect.
+    validations:
+      required: false

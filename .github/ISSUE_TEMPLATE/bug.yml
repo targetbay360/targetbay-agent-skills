@@ -1,0 +1,69 @@
+name: Skill behaves wrong
+description: An agent followed a skill and did the wrong thing, or the package failed to validate or install.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This package is Markdown, YAML and JSON Schema — it has no runtime. Most bugs are
+        "the skill told the agent to do X and X was wrong", so please include the prompt.
+
+        **Never paste API keys, real customer records, real email addresses or phone numbers,
+        or real store identifiers.** See [SECURITY.md](../../SECURITY.md).
+
+  - type: input
+    id: skill
+    attributes:
+      label: Which skill
+      description: The directory under `skills/`, or `n/a` if this is an install or validation failure.
+      placeholder: audience-discovery
+    validations:
+      required: true
+
+  - type: textarea
+    id: prompt
+    attributes:
+      label: What you asked the agent
+      description: The prompt or command, as close to verbatim as you can.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What the agent did
+      description: What it produced, recommended or attempted. Trim and redact freely.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What it should have done
+    validations:
+      required: true
+
+  - type: input
+    id: host
+    attributes:
+      label: Agent host
+      placeholder: Claude Code 2.x / Claude Desktop / other
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      description: Contents of `VERSION`, or the npm version you installed.
+      placeholder: "2.0.0"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety
+      options:
+        - label: This bug let an agent skip an approval gate, reach real recipients, spend budget, or bypass consent or opt-out. (If checked, stop and report it privately instead — see SECURITY.md.)
+          required: false

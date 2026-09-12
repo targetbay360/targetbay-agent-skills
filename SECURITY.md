@@ -8,7 +8,8 @@ agent to do, not what it does itself.
 
 ## Reporting a vulnerability
 
-Report privately to the TargetBay security contact. **Do not open a public issue.**
+Use [private vulnerability reporting](https://github.com/targetbay360/targetbay-email-sms-marketing-skills/security/advisories/new),
+or email `support@targetbay.com` if you cannot. **Do not open a public issue.**
 
 Please include what the problem is, which files are involved, and what an attacker or a misconfigured
 agent could cause. If the issue is that a skill could lead an agent to take an unsafe action, describe the
