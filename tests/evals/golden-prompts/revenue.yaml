@@ -1,0 +1,96 @@
+suite: revenue
+description: Revenue framing — strategy, analysis, open-ended discovery and order value.
+
+cases:
+  - id: rev-001
+    prompt: Increase revenue this month.
+    expect_skill: revenue-growth
+    expect_composes: [revenue-analysis, audience-discovery]
+    must_cite:
+      - global-rules.md#G1
+      - campaign-rules.md#C4
+    must_not:
+      - Produce a calendar before deciding what the calendar is for
+      - State an expected percentage lift that is not traceable to this store's data
+      - Recommend a sitewide discount without stating its margin cost
+    notes: >-
+      The objective is revenue with no instrument named, so the question is where growth can come from.
+      Scheduling comes later, from monthly-marketing-planner.
+
+  - id: rev-002
+    prompt: We need 30% more revenue next quarter.
+    expect_skill: revenue-growth
+    expect_composes: [revenue-analysis]
+    must_cite:
+      - global-rules.md#G3
+      - global-rules.md#G15
+    must_not:
+      - Close the gap between the target and the evidence with optimistic assumptions
+      - Pad the plan with campaigns that exist only to reach the number
+    notes: >-
+      The correct behaviour is to plan the supportable portion and state the gap explicitly.
+
+  - id: rev-003
+    prompt: Why did revenue drop last month?
+    expect_skill: revenue-analysis
+    must_cite:
+      - global-rules.md#G2
+      - global-rules.md#G3
+    must_not:
+      - Propose actions before explaining the decline
+      - Name a cause without testing mix shift and order-size alternatives
+      - Redistribute unattributed revenue to make the attribution tidy
+    notes: >-
+      A "why" question about the past. revenue-growth would answer the wrong question.
+
+  - id: rev-004
+    prompt: What should we be working on?
+    expect_skill: opportunity-discovery
+    expect_composes: [revenue-analysis, automation-strategy, campaign-optimization]
+    must_cite:
+      - global-rules.md#G14
+    must_not:
+      - Rank findings before scanning every lens
+      - Report only problems without saying what was checked and found healthy
+      - Return a finding with no owning skill attached
+    notes: >-
+      Nobody has named the problem. Breadth before ranking is the whole discipline.
+
+  - id: rev-005
+    prompt: Raise our average order value.
+    expect_skill: aov-growth
+    expect_composes: [upsell, cross-sell]
+    must_cite:
+      - campaign-rules.md#C5
+    must_not:
+      - Work from the average instead of the distribution
+      - Set a threshold at a round number rather than above the dense cluster
+      - Push premium options at customers with no evidenced headroom
+    notes: >-
+      AOV as an objective, mechanism undecided. upsell would assume the tier-move mechanism.
+
+  - id: rev-006
+    prompt: Promote our premium tier to customers who might upgrade.
+    expect_skill: upsell
+    expect_composes: [audience-discovery]
+    must_cite:
+      - campaign-rules.md#C5
+      - audience-rules.md#A1
+    must_not:
+      - Target the whole base rather than the segment with evidenced headroom
+      - Omit the conversion risk of pushing value at price-sensitive customers
+    notes: >-
+      The mechanism is already chosen, so aov-growth would be a level too high.
+
+  - id: rev-007
+    prompt: How do we get more customers buying across categories?
+    expect_skill: cross-sell
+    expect_composes: [audience-discovery]
+    must_cite:
+      - personalization-rules.md#P5
+      - audience-rules.md#A4
+    must_not:
+      - Build pairings from catalogue adjacency instead of observed co-purchase
+      - Recommend a product to customers who already own it
+    notes: >-
+      Category breadth, not a higher-value version of the same thing.

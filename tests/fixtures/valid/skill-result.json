@@ -1,0 +1,27 @@
+{
+  "skill": "audience-discovery",
+  "skill_version": "1.0.0",
+  "status": "partial",
+  "execution_mode": "recommend_only",
+  "risk_level": "recommendation",
+  "summary": "Two email audiences returned and ranked. SMS audiences could not be produced because consent data was unavailable.",
+  "composed_skills": [],
+  "capabilities_used": [
+    "bayengage.customer_intelligence",
+    "bayengage.order_intelligence",
+    "bayengage.segmentation"
+  ],
+  "data_period": "2026-03-01/2026-09-01",
+  "recommendations": [],
+  "warnings": [
+    "The dormant audience definition uses a 180-day lookback derived from a single year of order history."
+  ],
+  "unmet_requirements": [
+    {
+      "requirement": "Per-channel consent state",
+      "capability": "bayengage.suppression_and_consent",
+      "impact": "SMS audiences were not produced; no SMS send may be planned from this result."
+    }
+  ],
+  "approval_required": false
+}

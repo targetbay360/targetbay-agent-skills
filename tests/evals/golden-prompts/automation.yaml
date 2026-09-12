@@ -1,0 +1,84 @@
+suite: automation
+description: Automation portfolio, topology and tuning — the three levels and the boundaries between them.
+
+cases:
+  - id: auto-001
+    prompt: What automations do we need?
+    expect_skill: automation-strategy
+    expect_composes: [automation-architect, audience-discovery]
+    must_cite:
+      - global-rules.md#G6
+      - automation-rules.md#R6
+    must_not:
+      - Recommend a journey without sizing its audience
+      - Add a new journey where an existing one already triggers on the same event
+    notes: >-
+      Portfolio level. automation-architect would design one journey rather than deciding which
+      journeys should exist.
+
+  - id: auto-002
+    prompt: Improve our post-purchase marketing.
+    expect_skill: automation-strategy
+    expect_composes: [automation-architect, audience-discovery]
+    must_cite:
+      - automation-rules.md#R1
+      - automation-rules.md#R4
+      - automation-rules.md#R5
+    must_not:
+      - Assume one objective means one automation
+      - Build every technically possible variant
+      - Use a uniform node count across variants
+    notes: >-
+      Either automation-strategy or automation-architect is defensible here. Strategy is preferred
+      because "improve" implies the current shape is in question.
+    accept_skills: [automation-strategy, automation-architect]
+
+  - id: auto-003
+    prompt: Design a welcome journey for first-time buyers.
+    expect_skill: automation-architect
+    expect_composes: [audience-discovery]
+    must_cite:
+      - automation-rules.md#R8
+      - automation-rules.md#R15
+    must_not:
+      - Produce a fixed-length sequence
+      - Include a node that cannot state why it exists
+      - Omit the goal or the exit criteria
+    notes: >-
+      The objective is agreed and a topology is wanted.
+
+  - id: auto-004
+    prompt: Should we split our abandoned cart automation by order value?
+    expect_skill: automation-architect
+    must_cite:
+      - automation-rules.md#R4
+      - automation-rules.md#R11
+    must_not:
+      - Recommend the split without sizing the resulting audiences
+      - Recommend the split when both branches would receive the same treatment
+    notes: >-
+      A variant question. The correct answer may well be no.
+
+  - id: auto-005
+    prompt: Our welcome series isn't converting.
+    expect_skill: automation-optimization
+    expect_composes: [ab-testing]
+    must_cite:
+      - automation-rules.md#R18
+      - safety-rules.md#S5
+    must_not:
+      - Add a node at the end of a journey people already abandoned
+      - Blame content before checking the entry audience
+      - Change a live journey without stating the effect on in-flight contacts
+    notes: >-
+      Tuning, not redesign. The largest per-node loss is the target.
+
+  - id: auto-006
+    prompt: Abandoned cart revenue is down since March.
+    expect_skill: automation-optimization
+    must_cite:
+      - automation-rules.md#R18
+    must_not:
+      - Conclude the strategy is wrong before checking for expired offers and dead links
+    notes: >-
+      Decay is the most common cause of a journey that used to work.

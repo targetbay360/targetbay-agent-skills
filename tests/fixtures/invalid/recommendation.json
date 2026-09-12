@@ -1,0 +1,18 @@
+{
+  "id": "rec-002",
+  "skill": "Revenue Growth",
+  "recommendation": "Send more email.",
+  "reason": [],
+  "evidence": [
+    {
+      "metric": "open_rate",
+      "value": 0.31,
+      "source_capability": "get_campaign_stats"
+    }
+  ],
+  "confidence": 1.4,
+  "data_period": "recently",
+  "sample_size": -5,
+  "risks": [],
+  "next_actions": []
+}

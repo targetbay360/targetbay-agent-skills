@@ -1,0 +1,117 @@
+suite: optimization
+description: Campaign diagnosis, content, channel mix, testing and targeting.
+
+cases:
+  - id: opt-001
+    prompt: This campaign underperformed — fix the subject line.
+    expect_skill: campaign-optimization
+    expect_composes: [audience-discovery, ab-testing, content-optimization]
+    must_cite:
+      - global-rules.md#G1
+    must_not:
+      - Rewrite the subject line before walking the funnel
+      - Accept the user's diagnosis without checking it against the evidence
+      - Optimise on open rate alone
+    notes: >-
+      The user has named a fix, not a problem. The skill must check whether the named fix
+      addresses the actual failure point, and say so when it does not.
+
+  - id: opt-002
+    prompt: Our weekly newsletter engagement keeps declining.
+    expect_skill: campaign-optimization
+    must_cite:
+      - frequency-rules.md#F11
+    must_not:
+      - Recommend a content rewrite before checking cadence
+      - Ignore the unsubscribe trend alongside the engagement trend
+    notes: >-
+      Rising opt-outs at stable content quality is a frequency finding, not a copy finding.
+
+  - id: opt-003
+    prompt: This copy reads badly and the offer confused people.
+    expect_skill: content-optimization
+    expect_composes: [ab-testing]
+    must_cite:
+      - content-rules.md#N7
+      - content-rules.md#N8
+    must_not:
+      - Produce finished creative rather than content direction
+      - Leave a claim in the direction that the store cannot support
+      - Omit the empty state for a personalised element
+    notes: >-
+      The failure point is already known to be the message itself.
+
+  - id: opt-004
+    prompt: We're adding SMS — what should we send on it?
+    expect_skill: channel-optimization
+    expect_composes: [audience-discovery]
+    must_cite:
+      - audience-rules.md#A10
+      - frequency-rules.md#F7
+    must_not:
+      - Assume email consent covers SMS
+      - Duplicate email content onto SMS at the same moment
+      - Plan SMS without confirming the capability is available
+    notes: >-
+      The most common SMS mistake is treating it as a second copy of the email programme.
+
+  - id: opt-005
+    prompt: Our SMS costs are up but revenue isn't.
+    expect_skill: channel-optimization
+    must_cite:
+      - frequency-rules.md#F7
+    must_not:
+      - Recommend cuts without stating the reach being given up
+    notes: >-
+      Cost against value per message, and an explicit statement of what is lost.
+
+  - id: opt-006
+    prompt: Set up an A/B test on these two subject lines.
+    expect_skill: ab-testing
+    expect_composes: [audience-discovery]
+    must_cite:
+      - campaign-rules.md#C10
+    must_not:
+      - Run the test without checking the audience can resolve a difference worth acting on
+      - Set the decision threshold after seeing results
+      - Use opens as the success metric
+      - Omit the unsubscribe guard metric
+    notes: >-
+      Reporting that the test is not resolvable at this volume is a correct and common outcome.
+
+  - id: opt-007
+    prompt: Variant B won, let's roll it out.
+    expect_skill: ab-testing
+    must_cite:
+      - campaign-rules.md#C10
+    must_not:
+      - Declare a winner without checking the outcome metric and the guard metric
+      - Read the result against a threshold moved after the run
+    notes: >-
+      A variant that wins on clicks and loses on revenue selected the wrong winner.
+
+  - id: opt-008
+    prompt: Who should we target for this campaign?
+    expect_skill: audience-discovery
+    must_cite:
+      - audience-rules.md#A1
+      - audience-rules.md#A4
+      - audience-rules.md#A11
+    must_not:
+      - Return an audience that has not been resolved and sized
+      - Return an unordered list of audiences
+      - Omit exclusions from an audience definition
+    notes: >-
+      Returning one audience is frequently the correct answer.
+
+  - id: opt-009
+    prompt: Should we split our win-back list into separate segments?
+    expect_skill: audience-discovery
+    must_cite:
+      - audience-rules.md#A3
+      - audience-rules.md#A2
+    must_not:
+      - Recommend a split where both groups would receive identical treatment
+      - Recommend a split producing groups too small to read a result from
+    notes: >-
+      A segmentation question. The test is whether treatment actually differs.

@@ -1,0 +1,81 @@
+{
+  "objective": "Convert first-time buyers into repeat buyers",
+  "produced_by": "automation-architect",
+  "workflow_type": "automation",
+  "variants": [
+    {
+      "name": "First-time buyer — second purchase",
+      "audience": "Customers with exactly one completed order, excluding contacts already in the win-back journey",
+      "estimated_audience_size": 4120,
+      "rationale": "The objective for this group is conversion to a second purchase, which differs from the expansion objective that applies to repeat buyers.",
+      "channels": ["email"],
+      "nodes": [
+        {
+          "id": "trigger",
+          "type": "trigger",
+          "purpose": "Entry on the customer's first completed order"
+        },
+        {
+          "id": "wait-delivery",
+          "type": "wait",
+          "purpose": "Do not sell again before the first order has arrived",
+          "timing": "observed median delivery time"
+        },
+        {
+          "id": "usage",
+          "type": "email",
+          "purpose": "Reassurance and product usage guidance; sets up the relationship before selling",
+          "content_direction": "How to use what they bought, with care guidance and support routes"
+        },
+        {
+          "id": "wait-interval",
+          "type": "wait",
+          "purpose": "Arrive just before the observed first-to-second purchase gap",
+          "timing": "observed first-to-second gap minus a lead buffer"
+        },
+        {
+          "id": "next-purchase",
+          "type": "email",
+          "purpose": "Affinity-selected next purchase, personalised on the first order",
+          "content_direction": "One recommended next product, chosen from observed co-purchase data"
+        },
+        {
+          "id": "goal",
+          "type": "goal",
+          "purpose": "Second order placed"
+        },
+        {
+          "id": "exit",
+          "type": "exit",
+          "purpose": "Remove on purchase or on entry into a higher-priority journey"
+        }
+      ],
+      "edges": [
+        { "from": "trigger", "to": "wait-delivery" },
+        { "from": "wait-delivery", "to": "usage" },
+        { "from": "usage", "to": "wait-interval" },
+        { "from": "wait-interval", "to": "next-purchase" },
+        { "from": "next-purchase", "to": "goal", "condition": "purchased" },
+        { "from": "next-purchase", "to": "exit", "condition": "did not purchase" }
+      ],
+      "exit_criteria": [
+        "Second order placed",
+        "Contact enters the win-back journey",
+        "Contact unsubscribes or is suppressed"
+      ],
+      "success_metric": "Second-purchase rate among entrants, measured over one full observed interval"
+    }
+  ],
+  "rejected_variants": [
+    {
+      "name": "High-AOV first-time buyer",
+      "reason": "Treatment would be identical to the general first-time buyer journey; the split fails the difference test.",
+      "estimated_audience_size": 610
+    },
+    {
+      "name": "VIP post-purchase",
+      "reason": "Audience is below the size needed to read a result; folded in as a branch instead.",
+      "estimated_audience_size": 88
+    }
+  ]
+}

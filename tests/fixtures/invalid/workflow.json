@@ -1,0 +1,14 @@
+{
+  "objective": "Post-purchase",
+  "variants": [
+    {
+      "name": "Everyone",
+      "audience": "All customers",
+      "rationale": "Standard six-message post-purchase sequence.",
+      "nodes": [
+        { "id": "n1", "type": "send_email", "purpose": "Message one" }
+      ],
+      "edges": []
+    }
+  ]
+}

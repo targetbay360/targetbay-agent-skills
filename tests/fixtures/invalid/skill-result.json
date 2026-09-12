@@ -1,0 +1,12 @@
+{
+  "skill": "audience-discovery",
+  "skill_version": "1.0",
+  "status": "blocked",
+  "execution_mode": "recommend_only",
+  "risk_level": "recommendation",
+  "summary": "Blocked.",
+  "recommendations": [],
+  "warnings": [],
+  "unmet_requirements": [],
+  "approval_required": true
+}
