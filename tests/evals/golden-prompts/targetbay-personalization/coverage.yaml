@@ -1,0 +1,88 @@
+suite: coverage
+description: >-
+  One routing case per skill, phrased the way a merchant actually phrases the problem. These catch
+  description drift: when a skill's `description` stops matching the language of the situation it
+  exists for, the lexical proxy finds it before a user does.
+
+cases:
+  - id: pz-001
+    prompt: Nobody here can tell me what's actually personalised on our site right now.
+    expect_skill: surface-inventory
+    must_cite:
+      - global-rules.md#G5
+      - surface-rules.md#U1
+    must_not:
+      - Report configuration without reading what consent currently permits
+      - Judge an element by its impressions rather than its outcome
+    notes: >-
+      The foundation skill every other personalization skill composes. It also carries the consent
+      read, which bounds everything the other skills could propose.
+
+  - id: pz-002
+    prompt: Our "you may also like" widget keeps showing things the customer already bought.
+    expect_skill: recommendation-strategy
+    expect_composes: [surface-inventory]
+    must_cite:
+      - surface-rules.md#U4
+      - surface-rules.md#U3
+    must_not:
+      - Change the algorithm without designing the exclusions
+      - Choose a strategy from what is available rather than from the decision the surface hosts
+    notes: >-
+      The single most visible personalization failure. Exclusions are designed before the strategy,
+      and the surface's decision chooses the strategy — not the other way round.
+
+  - id: pz-003
+    prompt: We want an exit-intent popup offering 10% off. Who should see it?
+    expect_skill: offer-targeting
+    expect_composes: [surface-inventory]
+    must_cite:
+      - targeting-rules.md#T4
+      - measurement-rules.md#M3
+    must_not:
+      - Design the audience before testing whether the offer should exist
+      - Omit the exclusions for visitors who already converted or already dismissed it
+    notes: >-
+      The question assumes the offer. The skill has to check the no-offer baseline first, because an
+      offer shown to visitors who were converting anyway is a discount on existing demand.
+
+  - id: pz-004
+    prompt: Loads of searches on our site come back with no results.
+    expect_skill: onsite-search
+    expect_composes: [surface-inventory]
+    must_cite:
+      - global-rules.md#G1
+    must_not:
+      - Rank failing queries by failure count rather than by volume times failure
+      - Fix a catalogue gap with a synonym or a redirect to an unrelated product
+    notes: >-
+      Zero-result queries split into vocabulary mismatches and genuine catalogue gaps, and the fixes
+      are opposite. Classifying before fixing is the whole case.
+
+  - id: pz-005
+    prompt: The new layout is up 18% after three days. Can we roll it out to everyone?
+    expect_skill: experience-experimentation
+    expect_composes: [surface-inventory]
+    must_cite:
+      - safety-rules.md#S10
+      - measurement-rules.md#M4
+      - measurement-rules.md#M8
+    must_not:
+      - Treat a favourable interim result as a result
+      - Stop a test before its declared stopping condition because it is winning
+    notes: >-
+      Three days is inside the novelty window and short of any plausible stopping condition. This is
+      the most common way noise becomes a shipped decision.
+
+  - id: pz-006
+    prompt: Have a look at our site and tell us what to do about personalization.
+    expect_skill: personalization-audit
+    expect_composes: [surface-inventory, recommendation-strategy, offer-targeting, onsite-search, experience-experimentation]
+    must_cite:
+      - global-rules.md#G7
+    must_not:
+      - Default to recommending more personalization
+      - Report only problems without stating what is healthy
+    notes: >-
+      Open-ended with no named problem. Removing an element that costs attention and earns nothing is
+      frequently the highest-value finding and the one least often proposed.

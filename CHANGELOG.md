@@ -1,221 +1,83 @@
 # Changelog
 
-All notable changes to TargetBay Email & SMS Marketing Skills are recorded here.
+Repository-level changes: the marketplace, shared tooling and the plugin boundary. Each plugin keeps its
+own changelog under `plugins/<name>/CHANGELOG.md`, and versions independently.
 
-The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this package adheres to
-[Semantic Versioning](https://semver.org/spec/v2.0.0.html). See [docs/versioning.md](docs/versioning.md)
-for how package and per-skill versions relate.
+The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [2.0.0] - 2026-09-12
+## [2026-09-12] BayEngage renamed to TargetBay Email & SMS
 
-Conforms to the [Agent Skills specification](https://agentskills.io/specification), and ships. The
-package was content-complete but uninstallable: no git repository, no manifests, no release, and
-frontmatter the spec's own reference validator rejects.
+The restructure below left one plugin naming itself differently from the other three. This entry closes
+that gap: `bayengage-marketing` is now `targetbay-email-sms`, and all four plugins name themselves the
+same way.
 
-### Changed — BREAKING
-
-- **Skill frontmatter now matches the Agent Skills specification exactly.** The reference validator
-  (`skills_ref.validator.ALLOWED_FIELDS`) permits only `name`, `description`, `license`,
-  `compatibility`, `metadata` and `allowed-tools` at the top level, so all 24 skills failed it. The
-  eight package-specific keys — `display_name`, `version`, `category`, `requires`, `composes`,
-  `risk_level`, `execution_mode`, `status` — moved under `metadata` as `targetbay.*` string values.
-  Lists are comma-separated because `metadata` admits no other type.
-- `schemas/skill.schema.json` rewritten around that shape: the top level is closed to the six spec
-  fields, and the former patterns and enums now constrain the `metadata.targetbay.*` strings.
-- Anything reading a skill's `requires` or `composes` must now read
-  `metadata["targetbay.requires"]` and split on commas. `tests/validate.py` and
-  `tests/evals/run_evals.py` do this through a shared `meta_list` helper.
-- Folded (`>-`) descriptions flattened to single-line scalars. The spec parser is `strictyaml`, not
-  PyYAML; single-line plain scalars remove any question about how it treats folded blocks.
-- `VERSION` 1.2.0 → 2.0.0.
-
-### Added
-
-- **Claude Code plugin.** `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` make the
-  repository a self-hosting one-plugin marketplace:
-  `/plugin marketplace add targetbay360/targetbay-email-sms-marketing-skills`, then
-  `/plugin install bayengage-marketing@targetbay`.
-- **Six slash commands** in `commands/` — `/plan-month`, `/what-now`, `/win-back`, `/holiday`,
-  `/diagnose`, `/audit-automations`. Thin routers to the skills that already own the reasoning, so a
-  customer does not have to know 24 skill names. Each restates the plan-only constraint.
-- **npm package** `@targetbay/targetbay-email-sms-marketing-skills`, with a zero-dependency installer
-  (`scripts/install.mjs`) that copies skills into `./.claude/skills`, `~/.claude/skills` or any
-  `--dest`. Mirrored to GitHub Packages, which needs a token even for public reads — npmjs is the
-  documented path.
-- **`scripts/install.sh`** — POSIX `curl | sh` install from the latest release tarball, for hosts with
-  neither a plugin system nor npm.
-- **CI.** `.github/workflows/validate.yml` runs both test suites, the `agentskills validate` CLI over
-  every skill, manifest parsing, a VERSION-agreement check and a live installer run.
-  `.github/workflows/release.yml` publishes on a `v*` tag and refuses a tag that disagrees with
-  `VERSION`.
-- **`spec` check group** in `tests/validate.py`, running the reference validator in process, so the
-  specification is enforced locally and not only in CI. `skills-ref>=0.1.1` added to
-  `tests/requirements.txt`.
-
-### Unchanged
-
-Every skill's reasoning, rules, knowledge, playbooks and per-skill `targetbay.version`. Only the
-location of the metadata changed, not a single decision any skill makes.
-
-`capabilities.yaml` still carries `mcp_tools: TODO` for all 15 capabilities. Skills plan; they cannot
-execute. See [docs/mcp-integration.md](docs/mcp-integration.md).
-
-## [1.2.0] - 2026-09-11
-
-Adds the evaluation layer, and fixes the six skill descriptions it immediately exposed.
-
-### Added
-
-- `tests/evals/` — 38 golden prompts across 6 suites (revenue, lifecycle, automation, planning,
-  optimization, safety), each declaring the expected skill, expected composition, rules that must be
-  honoured, and behaviours that must not occur
-- `tests/evals/run_evals.py` — deterministic runner covering schema, skill references, rule-anchor
-  resolution, a lexical selection proxy, per-skill coverage and regression locking. No model, no
-  network
-- `tests/evals/expectations.lock` — ties each case's expectations to the target skill's version, so an
-  expectation cannot be quietly edited until it passes
-- `--emit` prompt packs — one self-contained file per case with the skill catalogue as a host would
-  present it, the prompt, and the rubric, for scoring against a real model
-- `tests/evals/rubric.md` — four-axis scoring (selection, composition, rules honoured, must-not), with
-  must-not binary and safety cases scored on it alone
+Entries below this one still say BayEngage. They record what the names were when they were written; this
+entry is the mapping.
 
 ### Changed
 
-Six descriptions lacked the vocabulary users actually type, which the selection check surfaced
-immediately. `store-onboarding` ranked 23rd of 24 against *"we've just moved to BayEngage, what should
-we set up?"*. Fixing the descriptions rather than the test raised lexical top-1 agreement from roughly
-40% to 64%.
+- **`bayengage-marketing` renamed** to `targetbay-email-sms`, directory and all. `marketplace.json`, the
+  plugin's `plugin.json` and the directory name must agree — `tests/validate.py` asserts it — so the
+  three moved together, as did `tests/evals/golden-prompts/`, whose subdirectory `run_evals.py` derives
+  from the plugin directory name. The plugin went to `3.0.0`; the rename breaks its install command, its
+  npm name, its command namespace and its capability identifiers.
+- **Capability namespaces are now uniform.** The plugin's registry moved from `bayengage.*` to
+  `email_sms.*`, so every plugin's identifiers are prefixed with its bare product word — `reviews.*`,
+  `loyalty.*`, `personalization.*`, `email_sms.*`. The two fixtures under `tests/fixtures/valid/` moved
+  with it, since the `references` group resolves them against the plugin's own `capabilities.yaml`.
+- **The eval stopword list lost `bayengage`** (`tests/evals/run_evals.py`). `email` and `sms` were
+  deliberately not added in its place: the list strips brand noise from TF-IDF ranking, and those two
+  words genuinely discriminate between this plugin's skills. The one golden prompt that named the product
+  — `plan-003`, the known-fragile `store-onboarding` case — was reworded to say TargetBay rather than
+  TargetBay Email & SMS, so the rename does not quietly reshape what that case measures.
+- **Changelogs were not rewritten.** Dated entries in this file and in each plugin's changelog still say
+  BayEngage, because they record what the names were at the time. The new names are recorded here and in
+  `plugins/targetbay-email-sms/CHANGELOG.md`.
 
-- `automation-architect@1.1.0` — now names welcome, post-purchase, abandoned cart, replenishment and
-  win-back journeys, and the "should we split this flow?" question
-- `automation-optimization@1.2.0` — now names the symptoms: not converting, revenue down, falling
-  completion, decayed journey
-- `campaign-optimization@1.2.0` — now names newsletters, blasts, declining engagement and rising
-  unsubscribes
-- `audience-discovery@1.1.0` — now names lists, segments and "should we segment this?"
-- `store-onboarding@1.1.0` — now names getting started, newly signed up, just migrated, from scratch
-- `opportunity-discovery@1.1.0` — now names "what should we be working on?" and "where should we focus?"
+## [2026-09-12] Marketplace restructure
 
-Documentation updated to run both checkers: `tests/README.md`, `CONTRIBUTING.md`,
-`docs/skill-authoring.md`, `docs/versioning.md` (which now states that a description change is at least
-MINOR, because the description is the trigger surface).
-
-### Notes
-
-The selection check is a lexical proxy with a stated ceiling, not a model. Semantic distinctions —
-`upsell` versus `aov-growth` on *"raise our average order value"* — are not resolvable by any bag of
-words, which is why the gate is a rank threshold and top-1 agreement is reported rather than enforced.
-Safety cases set `selection: skip` because they assert refusal rather than routing.
-
-### Known gaps
-
-Unchanged: no MCP tool mappings, `bayengage.messaging_sms` still unverified, no Hydra scope names. The
-model-dependent half of evaluation is emitted but not executed — running it requires a model this
-package deliberately does not depend on.
-
-## [1.1.0] - 2026-09-11
-
-Completes objective coverage. Ten skills added, covering every area named in the product brief that 1.0.0
-documented as a roadmap. Four existing skills gained composition edges to the new skills.
-
-Still foundation-phase: no capability is mapped to a real BayEngage MCP tool, and no new capability was
-needed — all ten new skills declare capabilities that already existed in `capabilities.yaml`.
-
-### Added
-
-- `revenue-analysis@1.0.0` — read-only revenue decomposition, attribution and period comparison, with
-  alternative explanations tested before a cause is stated
-- `opportunity-discovery@1.0.0` — open-ended nine-lens scan for the unframed "what should we be working
-  on?"; weights list-health findings above ordinary revenue findings
-- `aov-growth@1.0.0` — chooses between threshold, bundle, tier and attachment levers by decomposing AOV
-  into items-per-order and item value
-- `customer-lifecycle@1.0.0` — derives the store's own stage boundaries and maps transition leakage
-- `product-replenishment@1.0.0` — derives reorder intervals per product *and* size, never store-wide
-- `marketing-calendar@1.0.0` — multi-period horizon planning, capacity allocation and recovery windows
-- `store-onboarding@1.0.0` — new-store baseline that labels every provisional value and sets a
-  data-based review point instead of inventing defaults
-- `channel-optimization@1.0.0` — email/SMS division of work, sequencing and cost-per-message discipline
-- `content-optimization@1.0.0` — content direction once the funnel shows the message is the failure point
-- `ab-testing@1.0.0` — test design with size, duration and threshold fixed before the run, and
-  unresolvable tests reported as unresolvable
+The repository became a marketplace of product plugins. It previously held exactly one package at its
+root; it now holds four under `plugins/`, and can hold more without any of them interfering.
 
 ### Changed
 
-- `revenue-growth@1.1.0` — now composes `revenue-analysis` for decomposition and `aov-growth` for the AOV
-  term, rather than handling both inline
-- `campaign-optimization@1.1.0` — now composes `ab-testing` for test design and `content-optimization`
-  for content-level fixes
-- `automation-optimization@1.1.0` — now composes `ab-testing`
-- `customer-retention@1.1.0` — now composes `product-replenishment` for consumable reorder timing
-- `skills/README.md` — regrouped by decision area; roadmap section replaced with a coverage statement
-
-### Known gaps
-
-Unchanged from 1.0.0: no MCP tool mappings, `bayengage.messaging_sms` still unverified, no Hydra scope
-names, no LLM evaluation harness. *(Evaluation layer added in 1.2.0.)*
-
-## [1.0.0] - 2026-09-11
-
-Foundation release. Establishes the skill contract, the separation between skills, rules, knowledge and
-playbooks, the execution and risk model, the machine-readable schemas, and validation.
-
-All skills ship at `status: foundation`: the contracts are established and the reasoning is real, but the
-workflows have not been hardened against a live BayEngage MCP. No capability is mapped to a real MCP tool
-yet — see [docs/mcp-integration.md](docs/mcp-integration.md).
+- **Repository renamed** from `targetbay-email-sms-marketing-skills` to `targetbay-agent-skills`. GitHub
+  redirects the old URL, so an existing `/plugin marketplace add` keeps resolving — re-adding the new
+  source is still recommended.
+- **`bayengage-marketing` moved** from the repository root to `plugins/bayengage-marketing/`, whole. Every
+  skill's relative links are unchanged because the entire package moved together; no skill content was
+  edited. Its npm package was renamed to `@targetbay/bayengage-marketing-skills`, and the old name is
+  deprecated.
+- **`tests/validate.py` now runs per plugin.** Structure, spec conformance, skill contracts, playbooks,
+  references, duplication, schemas and versioning all iterate over `plugins/*`. Three checks stay
+  repo-wide: the relative-link sweep, which is the safety net for moving content between directories; a
+  new `marketplace` group asserting that every listed plugin exists, every existing plugin is listed, and
+  sources, names and versions agree; and the repo-level structure checks.
+- **Duplication is scoped per plugin**, since two products may legitimately both want a skill of the same
+  name.
+- **Releases are tagged `<plugin>@<version>`** rather than `v<version>`, so products ship independently.
+- **`playbooks/`, `examples/` and `commands/` are optional** per plugin, validated only when present. A
+  new plugin should not invent five vertical playbooks it has no evidence for — the same discipline the
+  repository already applies to MCP tool names.
+- **Capability-id patterns in the schemas are namespace-agnostic.** Membership is enforced by each
+  plugin's `capabilities.yaml` and the validator's `references` group, which is stronger than a regex, and
+  a new `structure` check asserts a plugin's capability ids do not straddle namespaces.
 
 ### Added
 
-**Skills** — 14, all at `1.0.0`
-
-- `revenue-growth@1.0.0` — opportunity identification against the revenue equation
-- `customer-retention@1.0.0` — repeat purchase and churn prevention for active customers
-- `customer-winback@1.0.0` — recovery of lapsed customers, including when to stop and suppress
-- `automation-strategy@1.0.0` — automation portfolio audit and roadmap
-- `automation-architect@1.0.0` — automation variant and topology design
-- `automation-optimization@1.0.0` — per-node diagnosis and tuning of live journeys
-- `monthly-marketing-planner@1.0.0` — derived marketing calendar for a period
-- `holiday-marketing@1.0.0` — holiday relevance, participation decision and strategy
-- `holiday-drip-campaign@1.0.0` — derived-length seasonal message sequences
-- `campaign-optimization@1.0.0` — funnel diagnosis and hypothesis-led testing
-- `audience-discovery@1.0.0` — ranked, sized, exclusion-aware targeting
-- `cross-sell@1.0.0` — category expansion from observed co-purchase data
-- `upsell@1.0.0` — order value growth from observed price-band behaviour
-- `product-launch@1.0.0` — wave-sequenced launch planning
-
-**Rules** — `global`, `safety`, `audience`, `campaign`, `automation`, `personalization`, `content`,
-`frequency`, with numbered, citable rules and a defined precedence order.
-
-**Knowledge** — marketing principles, customer lifecycle, segmentation, campaign, automation, email, SMS,
-personalisation and experimentation principles.
-
-**Playbooks** — `ecommerce` (baseline), `retail`, `fashion`, `beauty`, `b2b`, with a defined overlay
-contract that may tighten but never loosen rules.
-
-**Schemas** — `skill`, `recommendation`, `workflow`, `skill-result` (JSON Schema 2020-12).
-
-**Capability registry** — `capabilities.yaml` with 15 abstract `bayengage.*` capabilities, every
-`mcp_tools` mapping marked `TODO`.
-
-**Documentation** — architecture, skill authoring, MCP integration, rules, versioning, examples.
-
-**Examples** — five narrated traces covering revenue growth, monthly planning, holiday drip, automation
-strategy and win-back.
-
-**Validation** — `tests/validate.py` covering structure, skill metadata, section integrity, capability and
-skill references, composition acyclicity, name uniqueness, schema compilation, fixture validation and
-repository-wide link resolution.
+- **Three product plugins** at `0.1.0`: `targetbay-reviews`, `targetbay-loyalty` and
+  `targetbay-personalization`. Seventeen skills, three capability registries, and the rules and knowledge
+  they cite. No MCP surface has been inspected for any of them, so every capability maps to `TODO` and the
+  skills plan rather than execute.
+- **A repository-level README** as the product catalogue, and this changelog for structural changes.
 
 ### Known gaps
 
-- No capability is mapped to a real BayEngage MCP tool. Skills can plan; they cannot execute.
-- `bayengage.messaging_sms` is declared but unverified — no inspected BayEngage implementation exposes SMS
-  dispatch. Skills degrade to email-only when it is absent.
-- No Hydra OAuth scope names are recorded; no canonical list was found during inspection.
-- Ten objective areas from the product brief are documented as a roadmap in
-  [skills/README.md](skills/README.md) rather than shipped as placeholder skills. *(Resolved in 1.1.0.)*
-- No LLM evaluation harness. The repository is structured to accept one under `tests/` without
-  restructuring.
-
-[1.2.0]: https://github.com/targetbay/targetbay-email-sms-marketing-skills/releases/tag/v1.2.0
-[1.1.0]: https://github.com/targetbay/targetbay-email-sms-marketing-skills/releases/tag/v1.1.0
-[1.0.0]: https://github.com/targetbay/targetbay-email-sms-marketing-skills/releases/tag/v1.0.0
+- **No shared layer yet.** `rules/global-rules.md`, `rules/safety-rules.md`, the JSON Schemas and parts of
+  the knowledge layer are near-identical across plugins and are currently duplicated. Extracting them to a
+  `shared/` directory with a sync step was deliberately deferred until a second plugin's files proved
+  identical in practice rather than in expectation — which they now have, for the schemas at least. This
+  is the next structural change.
+- **Cross-product contact is unreconciled.** BayEngage, Reviews and Loyalty can each decide to contact the
+  same customer. Each plugin's `docs/mcp-integration.md` records the question; none of them can answer it
+  alone.

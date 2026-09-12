@@ -1,0 +1,100 @@
+# TargetBay Reviews Skills — Capability Registry
+#
+# Single source of truth for the abstract capability identifiers that skills declare
+# in their `requires:` frontmatter.
+#
+# These are CAPABILITY names, not tool names. This package deliberately does not know
+# the TargetBay Reviews MCP tool signatures. Every `mcp_tools` value is TODO until the
+# real MCP surface is inspected and mapped. See docs/mcp-integration.md.
+#
+# Never add a capability here to justify a skill. Add it only when the underlying
+# TargetBay Reviews platform genuinely exposes that class of data or action.
+
+version: 1.0.0
+
+# access values:
+#   read   - retrieves data, no state change
+#   write  - creates or modifies platform state
+#   send   - dispatches messages to real people (always HIGH_IMPACT)
+access_levels: [read, write, send]
+
+capabilities:
+  - id: reviews.store_profile
+    description: Store identity, vertical, currency, locale, catalogue size, review programme age and plan limits.
+    access: read
+    mcp_tools: TODO
+
+  - id: reviews.product_coverage
+    description: Per-product review count, rating, recency and media presence; which products and categories carry no proof at all.
+    access: read
+    mcp_tools: TODO
+
+  - id: reviews.review_content
+    description: Individual reviews — rating, text, author, verified-buyer state, product, date, helpfulness and reply state.
+    access: read
+    mcp_tools: TODO
+
+  - id: reviews.ratings_analytics
+    description: Rating distribution and its movement over time, per product, category and store; review volume and velocity.
+    access: read
+    mcp_tools: TODO
+
+  - id: reviews.review_requests
+    description: Review request configuration — trigger, delay, channel, template, follow-up count — and its creation or modification.
+    access: write
+    mcp_tools: TODO
+
+  - id: reviews.request_analytics
+    description: Review request performance — delivery, open, click, submission and abandonment rates, by trigger, delay and product.
+    access: read
+    mcp_tools: TODO
+
+  - id: reviews.ugc_media
+    description: Photo and video attached to reviews — presence, moderation state, rights status and where it is currently used.
+    access: read
+    mcp_tools: TODO
+
+  - id: reviews.moderation
+    description: Moderation queue, policy configuration, publish, reject and flag actions on submitted reviews and media.
+    access: write
+    mcp_tools: TODO
+
+  - id: reviews.review_replies
+    description: Merchant replies to reviews — existing replies, and the creation of new ones.
+    access: write
+    mcp_tools: TODO
+    notes: >-
+      A reply is publicly visible the moment it is created, so every skill treats this
+      as customer-facing output requiring explicit approval, not a routine mutation.
+
+  - id: reviews.display_placement
+    description: Where proof is currently displayed — product page widgets, carousels, badges, galleries — and the configuration of those placements.
+    access: write
+    mcp_tools: TODO
+
+  - id: reviews.syndication
+    description: Distribution of reviews beyond the store — Google Shopping, product feeds, marketplace channels — and its current state.
+    access: write
+    mcp_tools: TODO
+    notes: >-
+      UNVERIFIED. No TargetBay Reviews syndication surface has been inspected. Skills
+      must confirm this capability is present before planning distribution and must
+      degrade to onsite-only when it is absent.
+
+  - id: reviews.messaging
+    description: Dispatch of a review request to real recipients — sending or activating a scheduled request.
+    access: send
+    mcp_tools: TODO
+
+  - id: reviews.suppression_and_consent
+    description: Suppression lists, per-channel consent, quiet hours and request frequency caps for review outreach.
+    access: read
+    mcp_tools: TODO
+
+  - id: reviews.order_intelligence
+    description: Orders, order items, delivery and fulfilment timing — what a customer bought and when it actually arrived.
+    access: read
+    mcp_tools: TODO
+    notes: >-
+      Needed because review request timing is a function of delivery, not of order date.
+      May be satisfied by the commerce platform rather than by TargetBay Reviews itself.

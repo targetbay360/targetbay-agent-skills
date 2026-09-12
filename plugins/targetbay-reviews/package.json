@@ -1,0 +1,57 @@
+{
+  "name": "@targetbay/reviews-skills",
+  "version": "0.1.0",
+  "description": "Agent Skills package teaching AI agents how to build and run a product review and UGC programme on TargetBay Reviews.",
+  "keywords": [
+    "agent-skills",
+    "claude",
+    "mcp",
+    "reviews",
+    "ugc",
+    "social-proof",
+    "ratings",
+    "ecommerce",
+    "targetbay"
+  ],
+  "homepage": "https://github.com/targetbay360/targetbay-agent-skills#readme",
+  "bugs": {
+    "url": "https://github.com/targetbay360/targetbay-agent-skills/issues",
+    "email": "support@targetbay.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/targetbay360/targetbay-agent-skills.git",
+    "directory": "plugins/targetbay-reviews"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "TargetBay",
+    "email": "support@targetbay.com",
+    "url": "https://targetbay.com"
+  },
+  "type": "module",
+  "bin": {
+    "targetbay-reviews-skills": "scripts/install.mjs"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "skills",
+    "rules",
+    "knowledge",
+    "schemas",
+    "commands",
+    ".claude-plugin",
+    "scripts/install.mjs",
+    "scripts/install.sh",
+    "capabilities.yaml",
+    "VERSION",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
