@@ -1,7 +1,7 @@
 name: release
 
 # Plugins release independently, tagged <plugin>@<version> — for example
-# `bayengage-marketing@2.1.0`. The tag names which directory is published.
+# `targetbay-email-sms@2.1.0`. The tag names which directory is published.
 on:
   push:
     tags: ["*@*"]

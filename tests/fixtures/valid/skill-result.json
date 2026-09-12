@@ -7,9 +7,9 @@
   "summary": "Two email audiences returned and ranked. SMS audiences could not be produced because consent data was unavailable.",
   "composed_skills": [],
   "capabilities_used": [
-    "bayengage.customer_intelligence",
-    "bayengage.order_intelligence",
-    "bayengage.segmentation"
+    "email_sms.customer_intelligence",
+    "email_sms.order_intelligence",
+    "email_sms.segmentation"
   ],
   "data_period": "2026-03-01/2026-09-01",
   "recommendations": [],
@@ -19,7 +19,7 @@
   "unmet_requirements": [
     {
       "requirement": "Per-channel consent state",
-      "capability": "bayengage.suppression_and_consent",
+      "capability": "email_sms.suppression_and_consent",
       "impact": "SMS audiences were not produced; no SMS send may be planned from this result."
     }
   ],

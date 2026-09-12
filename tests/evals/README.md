@@ -51,8 +51,8 @@ tf-idf over a crude stemmer, then asserts the expected skill ranks near the top.
 This is **not** a model and does not predict one. It catches a specific, real failure: a skill whose
 description has drifted so far from how users actually talk that it no longer lexically relates to its
 own canonical prompt. When this package's descriptions were first written, six skills failed that
-bar — `store-onboarding` ranked 23rd of 24 in `bayengage-marketing` against *"we've just moved to
-BayEngage, what should we set up?"*, because its description contained none of the words a person would
+bar — `store-onboarding` ranked 23rd of 24 in `targetbay-email-sms` against *"we've just moved to
+TargetBay, what should we set up?"*, because its description contained none of the words a person would
 use. Fixing the descriptions, not the test, raised top-1 agreement from roughly 40% to 64%.
 
 Its ceiling is equally real. Distinguishing `upsell` from `aov-growth` on *"raise our average order

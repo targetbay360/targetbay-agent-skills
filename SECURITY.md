@@ -34,12 +34,12 @@ Skills never handle credentials. Authentication to a TargetBay product is the ag
 product MCP's responsibility. No skill should ever instruct an agent to read, store, transmit or log a credential.
 
 See each plugin's `docs/mcp-integration.md`, for example
-[bayengage-marketing](plugins/bayengage-marketing/docs/mcp-integration.md).
+[targetbay-email-sms](plugins/targetbay-email-sms/docs/mcp-integration.md).
 
 ## Agent safety
 
 The safety-relevant content of a plugin is its `rules/safety-rules.md`, for example
-[bayengage-marketing](plugins/bayengage-marketing/rules/safety-rules.md). Treat a change that weakens one
+[targetbay-email-sms](plugins/targetbay-email-sms/rules/safety-rules.md). Treat a change that weakens one
 as a security change:
 
 - `high_impact` actions — anything reaching real recipients or spending budget — always stop for explicit

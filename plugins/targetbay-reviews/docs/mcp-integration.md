@@ -65,11 +65,11 @@ execute — they can only plan.
 other than TargetBay Reviews.
 
 Request timing depends on fulfilment, which the commerce platform owns
-([../rules/request-rules.md#R1](../rules/request-rules.md)). Request delivery may be owned by BayEngage
+([../rules/request-rules.md#R1](../rules/request-rules.md)). Request delivery may be owned by TargetBay Email & SMS
 rather than by Reviews. Both are declared here because the skills genuinely need them; where they turn out
 to be supplied elsewhere, this document records which system answers, and the skills are unchanged.
 
-A store running both BayEngage and Reviews must not end up with two systems independently deciding to
+A store running both TargetBay Email & SMS and Reviews must not end up with two systems independently deciding to
 contact the same customer. Whichever system sends, request frequency is reconciled in one place, and this
 document must record where.
 
@@ -102,7 +102,7 @@ approximate or bypass them ([../rules/global-rules.md#G10](../rules/global-rules
 
 - [ ] Inspect the TargetBay Reviews MCP tool and resource surface
 - [ ] Map every capability in [../capabilities.yaml](../capabilities.yaml) to real tools; replace `TODO`
-- [ ] Confirm whether review requests are dispatched by Reviews or by BayEngage, and where request
+- [ ] Confirm whether review requests are dispatched by Reviews or by TargetBay Email & SMS, and where request
       frequency is reconciled between them
 - [ ] Confirm whether fulfilment and delivery timing is reachable, and from which system
 - [ ] Confirm whether syndication exists at all, and to which destinations

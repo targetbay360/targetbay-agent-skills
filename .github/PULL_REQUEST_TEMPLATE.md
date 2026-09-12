@@ -1,6 +1,6 @@
 ## Plugin
 
-<!-- Which plugin does this touch? bayengage-marketing / targetbay-reviews / targetbay-loyalty /
+<!-- Which plugin does this touch? targetbay-email-sms / targetbay-reviews / targetbay-loyalty /
      targetbay-personalization / repository-level (tooling, marketplace, CI). -->
 
 ## What changed

@@ -25,7 +25,7 @@ plugins/<name>/                   a product plugin — self-contained
 ```
 
 A plugin is **self-contained** because Claude Code ships only what lives under its `source` directory. A
-skill inside `plugins/bayengage-marketing/skills/` may link to `../../rules/safety-rules.md` because that
+skill inside `plugins/targetbay-email-sms/skills/` may link to `../../rules/safety-rules.md` because that
 file lives inside the same plugin. It may **not** link to a repository-root file such as `SECURITY.md` by
 relative path — that link is dead for anyone who installed the plugin. Use the full GitHub URL instead.
 
