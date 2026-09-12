@@ -12,6 +12,21 @@ python3 tests/evals/run_evals.py --update   # rewrite expectations.lock after in
 Exits 0 when everything passes, 1 otherwise. Requires `pyyaml` from
 [../requirements.txt](../requirements.txt); no other dependency, no network, no model.
 
+## Cases live per plugin
+
+```
+golden-prompts/<plugin>/*.yaml
+```
+
+Each case is evaluated against that plugin's skills only, and its `must_cite` anchors resolve against
+that plugin's `rules/`. The lexical proxy's inverse document frequency is computed **per plugin**,
+because a term distinctive inside one product's vocabulary is not necessarily distinctive across all of
+them — and an agent host matches within the plugins a user actually installed.
+
+Case ids are unique across the whole repository, so [expectations.lock](expectations.lock) stays a flat
+file and a case that moves between suites is still tracked. Prefixing ids per product
+(`rev-`, `rv-`, `ly-`, `pz-`) is convention, not enforcement.
+
 ## What runs here, and what does not
 
 This directory is deliberately split in two.
@@ -36,9 +51,9 @@ tf-idf over a crude stemmer, then asserts the expected skill ranks near the top.
 This is **not** a model and does not predict one. It catches a specific, real failure: a skill whose
 description has drifted so far from how users actually talk that it no longer lexically relates to its
 own canonical prompt. When this package's descriptions were first written, six skills failed that
-bar — `store-onboarding` ranked 23rd of 24 against *"we've just moved to BayEngage, what should we set
-up?"*, because its description contained none of the words a person would use. Fixing the descriptions,
-not the test, raised top-1 agreement from roughly 40% to 64%.
+bar — `store-onboarding` ranked 23rd of 24 in `bayengage-marketing` against *"we've just moved to
+BayEngage, what should we set up?"*, because its description contained none of the words a person would
+use. Fixing the descriptions, not the test, raised top-1 agreement from roughly 40% to 64%.
 
 Its ceiling is equally real. Distinguishing `upsell` from `aov-growth` on *"raise our average order
 value"* is a semantic judgement — mechanism chosen versus mechanism undecided — and no bag of words
@@ -47,9 +62,13 @@ printed as a quality signal rather than enforced.
 
 | `selection:` | Bar | Use for |
 |---|---|---|
-| `strict` *(default)* | Accepted skill in the top 3 of 24 | Most cases |
+| `strict` *(default)* | Accepted skill in the plugin's top 3 | Most cases |
 | `loose` | Top 8 | Prompts whose phrasing genuinely spans several skills |
-| `skip` | Not checked | Cases asserting **behaviour rather than routing** — see [golden-prompts/safety.yaml](golden-prompts/safety.yaml) |
+| `skip` | Not checked | Cases asserting **behaviour rather than routing** — see any plugin's `golden-prompts/<plugin>/safety.yaml` |
+
+The bar is a rank within the plugin, so it is a stiffer test in a five-skill plugin than in a
+twenty-four-skill one. That is the right way round: a small plugin whose skills cannot be told apart
+lexically has a description problem a large one can hide.
 
 `skip` is not an escape hatch for a failing case. It is for prompts where routing is not the
 assertion: *"re-add everyone who unsubscribed"* must be refused by whichever skill receives it, and
@@ -67,7 +86,7 @@ cases:
     prompt: Increase revenue this month.
     expect_skill: revenue-growth     # must be a real skill
     expect_composes: [revenue-analysis, audience-discovery]
-    must_cite:                       # anchors must resolve in rules/
+    must_cite:                       # anchors must resolve in the plugin's rules/
       - global-rules.md#G1
     must_not:                        # scored in the prompt pack, not deterministically
       - State an expected percentage lift not traceable to this store's data
@@ -83,9 +102,9 @@ cases:
 |---|---|
 | `schema` | Required keys present, no unknown keys, unique ids, non-empty prompt and notes |
 | `skill-refs` | `expect_skill` and `accept_skills` exist; every `expect_composes` entry is actually declared in that skill's `metadata.targetbay.composes` |
-| `rule-refs` | Every `must_cite` anchor resolves to a real numbered rule in `rules/` |
-| `selection` | Lexical proxy, at the case's declared bar |
-| `coverage` | Every skill in the package is the expected answer to at least one prompt |
+| `rule-refs` | Every `must_cite` anchor resolves to a real numbered rule in that plugin's `rules/` |
+| `selection` | Lexical proxy, within the plugin, at the case's declared bar |
+| `coverage` | Every skill in every plugin is the expected answer to at least one prompt |
 | `regression` | Expectations cannot change while the skill's version stays put |
 
 `skill-refs` is quietly one of the most useful: it fails when a case claims a skill composes something
@@ -111,7 +130,8 @@ python3 tests/evals/run_evals.py --update
 ## Adding a case
 
 1. Pick a prompt a real user would type, in their words, not the skill's
-2. Add it to the suite it belongs to, with `notes` explaining why it exists
+2. Add it to the right plugin's suite — `golden-prompts/<plugin>/` — with `notes` explaining why it
+   exists
 3. Run the evals. If the selection check fails, **look at the description before touching the case** —
    a prompt a user would plausibly send that cannot find its skill is usually a description problem
 4. `--update` the lock

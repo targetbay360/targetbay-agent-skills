@@ -37,30 +37,50 @@ jobs:
         # reference CLI, so a drift between the two surfaces here rather than silently.
         run: |
           fail=0
-          for d in skills/*/; do
+          for d in plugins/*/skills/*/; do
             agentskills validate "$d" || fail=1
           done
           exit $fail
 
       - name: Manifests parse
         run: |
-          node -e "JSON.parse(require('fs').readFileSync('.claude-plugin/plugin.json'))"
           node -e "JSON.parse(require('fs').readFileSync('.claude-plugin/marketplace.json'))"
           node -e "JSON.parse(require('fs').readFileSync('package.json'))"
-          node --check scripts/install.mjs
-          sh -n scripts/install.sh
+          for p in plugins/*/; do
+            node -e "JSON.parse(require('fs').readFileSync('$p/.claude-plugin/plugin.json'))"
+            node -e "JSON.parse(require('fs').readFileSync('$p/package.json'))"
+            node --check "$p/scripts/install.mjs"
+            sh -n "$p/scripts/install.sh"
+          done
 
       - name: Versions agree
+        # tests/validate.py asserts this too; keeping it here means a version mismatch is
+        # named in its own step rather than buried in a 2000-check summary.
         run: |
-          version=$(cat VERSION)
-          for f in package.json .claude-plugin/plugin.json; do
-            declared=$(node -p "require('./$f').version")
-            [ "$declared" = "$version" ] || { echo "$f is $declared, VERSION is $version"; exit 1; }
+          for p in plugins/*/; do
+            name=$(basename "$p")
+            version=$(cat "$p/VERSION")
+            for f in package.json .claude-plugin/plugin.json; do
+              declared=$(node -p "require('./$p/$f').version")
+              [ "$declared" = "$version" ] || { echo "$p$f is $declared, VERSION is $version"; exit 1; }
+            done
+            listed=$(node -p "
+              const m = require('./.claude-plugin/marketplace.json');
+              const e = m.plugins.find(p => p.name === '$name');
+              e ? e.version : 'MISSING';
+            ")
+            [ "$listed" = "$version" ] || { echo "marketplace lists $name at $listed, VERSION is $version"; exit 1; }
+            echo "$name at $version"
           done
-          echo "all manifests at $version"
 
-      - name: Installer works
+      - name: Installers work
         run: |
-          node scripts/install.mjs --dest "$RUNNER_TEMP/skills"
-          count=$(find "$RUNNER_TEMP/skills" -maxdepth 1 -mindepth 1 -type d | wc -l)
-          [ "$count" -eq 24 ] || { echo "installed $count skills, expected 24"; exit 1; }
+          for p in plugins/*/; do
+            name=$(basename "$p")
+            dest="$RUNNER_TEMP/skills-$name"
+            node "$p/scripts/install.mjs" --dest "$dest"
+            expected=$(find "$p/skills" -maxdepth 1 -mindepth 1 -type d | wc -l)
+            actual=$(find "$dest" -maxdepth 1 -mindepth 1 -type d | wc -l)
+            [ "$actual" -eq "$expected" ] || { echo "$name: installed $actual skills, expected $expected"; exit 1; }
+            echo "$name: $actual skills installed"
+          done

@@ -1,0 +1,101 @@
+# TargetBay Loyalty Skills — Capability Registry
+#
+# Single source of truth for the abstract capability identifiers that skills declare
+# in their `requires:` frontmatter.
+#
+# These are CAPABILITY names, not tool names. This package deliberately does not know
+# the TargetBay Loyalty MCP tool signatures. Every `mcp_tools` value is TODO until the
+# real MCP surface is inspected and mapped. See docs/mcp-integration.md.
+#
+# Never add a capability here to justify a skill. Add it only when the underlying
+# TargetBay Loyalty platform genuinely exposes that class of data or action.
+
+version: 1.0.0
+
+# access values:
+#   read   - retrieves data, no state change
+#   write  - creates or modifies platform state
+#   send   - dispatches messages to real people (always HIGH_IMPACT)
+access_levels: [read, write, send]
+
+capabilities:
+  - id: loyalty.store_profile
+    description: Store identity, vertical, currency, locale, margin posture, programme age and plan limits.
+    access: read
+    mcp_tools: TODO
+
+  - id: loyalty.program_config
+    description: Whether a programme exists and its current shape — earn rules, tiers, expiry policy, enrolment model and branding.
+    access: write
+    mcp_tools: TODO
+
+  - id: loyalty.member_profile
+    description: Member identity, enrolment date, tier, lifetime points earned and burned, current balance and activity recency.
+    access: read
+    mcp_tools: TODO
+
+  - id: loyalty.points_ledger
+    description: Individual earn and burn events with their source, value and date; outstanding liability and its ageing.
+    access: read
+    mcp_tools: TODO
+
+  - id: loyalty.points_adjustment
+    description: Manual credit or debit of a member's balance, and bulk adjustments across a segment.
+    access: write
+    mcp_tools: TODO
+    notes: >-
+      Directly changes something a customer can see and spend. Skills treat every
+      adjustment as requiring explicit, per-action approval, and a bulk adjustment as
+      requiring the affected count to be shown before it is applied.
+
+  - id: loyalty.tier_config
+    description: Tier definitions — thresholds, qualification window, benefits, downgrade policy — and their creation or modification.
+    access: write
+    mcp_tools: TODO
+
+  - id: loyalty.reward_catalog
+    description: Redeemable rewards, their point price, cost, stock, eligibility rules and availability window.
+    access: write
+    mcp_tools: TODO
+
+  - id: loyalty.redemption
+    description: Redemption events and their outcome — what was redeemed, by whom, and whether it converted to an order.
+    access: read
+    mcp_tools: TODO
+
+  - id: loyalty.program_analytics
+    description: Programme performance — enrolment rate, active member share, earn and burn rates, repeat rate and spend by tier, incremental revenue.
+    access: read
+    mcp_tools: TODO
+
+  - id: loyalty.referral_program
+    description: Referral configuration — incentive split, qualification event, sharing channels, fraud controls — and its results.
+    access: write
+    mcp_tools: TODO
+
+  - id: loyalty.order_intelligence
+    description: Orders, order items, AOV, purchase frequency and discount usage, with and without programme participation.
+    access: read
+    mcp_tools: TODO
+    notes: >-
+      Needed to compare members against non-members. May be satisfied by the commerce
+      platform rather than by TargetBay Loyalty itself.
+
+  - id: loyalty.customer_intelligence
+    description: Customer lifecycle stage, engagement recency, value and churn signals for members and non-members alike.
+    access: read
+    mcp_tools: TODO
+
+  - id: loyalty.messaging
+    description: Dispatch of programme messages to real recipients — tier changes, balance reminders, expiry warnings.
+    access: send
+    mcp_tools: TODO
+    notes: >-
+      UNVERIFIED. Programme messaging may be owned by BayEngage rather than by
+      TargetBay Loyalty. Skills must confirm which system sends before planning
+      programme communication, and must not plan a send twice across two products.
+
+  - id: loyalty.suppression_and_consent
+    description: Suppression lists, per-channel consent, quiet hours and frequency caps applying to programme messaging.
+    access: read
+    mcp_tools: TODO

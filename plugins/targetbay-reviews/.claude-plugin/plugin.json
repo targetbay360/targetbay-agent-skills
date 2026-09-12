@@ -1,0 +1,24 @@
+{
+  "name": "targetbay-reviews",
+  "description": "Skills that decide when a store should ask for a review, which products are short of proof, how to answer a falling rating, where to harvest photo and video UGC, and where existing proof earns its place. Vendor-neutral reasoning; the TargetBay Reviews MCP supplies the capabilities.",
+  "version": "0.1.0",
+  "author": {
+    "name": "TargetBay",
+    "email": "support@targetbay.com",
+    "url": "https://targetbay.com"
+  },
+  "homepage": "https://targetbay.com",
+  "repository": "https://github.com/targetbay360/targetbay-agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "claude",
+    "mcp",
+    "reviews",
+    "ugc",
+    "social-proof",
+    "ratings",
+    "ecommerce",
+    "targetbay"
+  ]
+}
