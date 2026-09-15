@@ -6,7 +6,7 @@ Constraints on how an onsite change is evaluated. Cited as `measurement-rules.md
 
 ### M1. Declare the metric, the comparison and the horizon before the change.
 A success criterion chosen after the results are in is not a criterion
-([global-rules.md#G13](global-rules.md)). State all three as part of the proposal.
+([global-rules.md#G24](global-rules.md)). State all three as part of the proposal.
 
 ### M2. The current experience is the baseline and it is presumed adequate.
 The burden of evidence sits with the change. A variant that does not beat the default is a variant that
@@ -15,11 +15,11 @@ does not ship, not a variant that needs a better audience.
 ### M3. Separate incremental revenue from redirected revenue.
 Attribution to a placement counts purchases that flowed through it, not purchases it caused. State the
 attribution method and its limits, and check cannibalisation before calling anything incremental
-([global-rules.md#G4](global-rules.md), [surface-rules.md#U5](surface-rules.md)).
+([global-rules.md#G18](global-rules.md), [surface-rules.md#U5](surface-rules.md)).
 
 ### M4. Declare the stopping condition, and honour it.
 A test runs to its pre-declared sample or duration. Stopping early on a favourable interim result is
-prohibited ([safety-rules.md#S10](safety-rules.md)); stopping early for a different reason is reported as
+prohibited ([safety-rules.md#S20](safety-rules.md)); stopping early for a different reason is reported as
 inconclusive, never as a result.
 
 ### M5. Do not run a test the traffic cannot resolve.

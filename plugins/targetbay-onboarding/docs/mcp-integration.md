@@ -9,14 +9,16 @@ This package contains no MCP implementation, no API client, no endpoint definiti
 It declares *capabilities* it needs, and the agent host supplies them through whatever the TargetBay MCP
 exposes.
 
-## What makes this plugin different from the other four
+## What makes this plugin different from the other three
 
-The four product plugins each declare the capabilities of one product. This one declares four
-orchestration capabilities that no single product owns — a derived view of the whole store, the answers
-the platform cannot observe, a cross-product apply path, and activation. It deliberately does **not**
-re-declare the fifty-five product capabilities; a skill here that needs product data reads it through
-[../capabilities.yaml](../capabilities.yaml)'s `onboarding.store_context`, which is where the derived
-view of all four products arrives.
+The three product plugins each declare the capabilities of one product. This one declares two things
+neither of those can: four orchestration capabilities that no single product owns — a derived view of the
+whole store, the answers the platform cannot observe, a cross-product apply path, and activation — and
+eleven onsite capabilities that belong to no product because onsite capture is not one.
+
+It deliberately does **not** re-declare the forty-three product capabilities; a skill here that needs
+product data reads it through [../capabilities.yaml](../capabilities.yaml)'s
+`onboarding.store_context`, which is where the derived view of all three products arrives.
 
 ## Capability registry
 
@@ -29,6 +31,17 @@ The registry is [../capabilities.yaml](../capabilities.yaml) — the single sour
 | `onboarding.intake` | write | — | **TODO** |
 | `onboarding.provisioning` | write | — | **TODO — capability itself unverified** |
 | `onboarding.activation` | send | — | **TODO** |
+| `onboarding.consent_and_tracking` | read | — | **TODO — blocks every onsite skill** |
+| `onboarding.visitor_intelligence` | read | — | **TODO** |
+| `onboarding.product_intelligence` | read | — | **TODO** |
+| `onboarding.audience_definition` | write | — | **TODO** |
+| `onboarding.recommendation_placement` | write | — | **TODO** |
+| `onboarding.recommendation_analytics` | read | — | **TODO** |
+| `onboarding.offers` | write | — | **TODO** |
+| `onboarding.offer_analytics` | read | — | **TODO** |
+| `onboarding.onsite_search` | write | — | **TODO** |
+| `onboarding.experimentation` | write | — | **TODO** |
+| `onboarding.experience_analytics` | read | — | **TODO** |
 
 Mapping a capability means naming the MCP tools or resources that satisfy it, recording the shape of what
 they return, and confirming the access level matches. Until that is done, no skill in this package can
@@ -38,7 +51,7 @@ execute — they can only plan.
 
 `onboarding.store_context` is the one capability this plugin cannot do without, and it is not a raw read.
 It returns a derived document: identity, detected vertical, catalogue shape, customer shape, brand
-profile, existing coverage across all four products, and a per-capability readiness matrix. Its shape is
+profile, existing coverage across all three products, and a per-capability readiness matrix. Its shape is
 [../schemas/context-pack.schema.json](../schemas/context-pack.schema.json).
 
 **Derivation belongs on the platform side, for two reasons.** Computing a lapse point means reading a
@@ -49,6 +62,17 @@ discipline into something structural.
 
 Where the platform exposes only raw reads, the affected values come back `absent` with the observation
 that would make them derivable. They are never estimated from whatever sample happened to be readable.
+
+## The one capability that is not like the others
+
+`onboarding.consent_and_tracking` is a precondition rather than an input
+([../rules/safety-rules.md#S15](../rules/safety-rules.md),
+[../rules/global-rules.md#G19](../rules/global-rules.md)). Without it, no skill here may plan anything
+that identifies or profiles a visitor — not at lowered confidence, not with a caveat. They degrade to
+non-personalised defaults, which for several skills means blocking outright.
+
+This is deliberately stricter than the treatment of other missing capabilities, because the consequence of
+guessing is not a bad recommendation but processing somebody's behaviour without a basis for it.
 
 ## Signalling capability unavailable
 
@@ -87,7 +111,7 @@ other workflow:
 - **Stable resource references.** Re-applying a plan updates in place rather than duplicating.
 - **A dry run that returns a per-resource diff** — create, update, no change or conflict — plus the blast
   radius: audience size per resource, and the maximum messages one customer could receive per week across
-  all four products once the set is live ([../rules/contact-ownership-rules.md#X7](../rules/contact-ownership-rules.md)).
+  all three products once the set is live ([../rules/contact-ownership-rules.md#X7](../rules/contact-ownership-rules.md)).
 
 ## Authentication
 
@@ -108,13 +132,13 @@ hard frequency caps. Skills plan within these; they do not approximate or bypass
 The cross-product contact budget is the case that needs stating explicitly. This plugin's
 [../rules/contact-ownership-rules.md](../rules/contact-ownership-rules.md) decides *who owns which
 moment*; it cannot enforce a cap. If the platform cannot supply a unified frequency and consent view
-across all four products, the budget in a blueprint is a plan rather than an enforcement, and the
+across all three products, the budget in a blueprint is a plan rather than an enforcement, and the
 blueprint must say so on its face (X9).
 
 ## TODOs before connecting to the real TargetBay MCP
 
-- [ ] Inspect the TargetBay MCP tool and resource surface across all four products
-- [ ] Map the four capabilities in [../capabilities.yaml](../capabilities.yaml) to real tools; replace `TODO`
+- [ ] Inspect the TargetBay MCP tool and resource surface across all three products
+- [ ] Map the fifteen capabilities in [../capabilities.yaml](../capabilities.yaml) to real tools; replace `TODO`
 - [ ] Confirm whether a write surface exists for segments, journeys, templates, review triggers, loyalty
       configuration and onsite placements — `onboarding.provisioning` is unverified until it does
 - [ ] Confirm that creation and activation are, or can be, separate operations
@@ -122,5 +146,17 @@ blueprint must say so on its face (X9).
 - [ ] Decide where intake answers are stored so they outlive a session and are readable by every product
 - [ ] Confirm whether a unified cross-product frequency and consent view exists
 - [ ] Enumerate the OAuth scopes each capability requires
+- [ ] Establish whether consent state is per visitor or per region, and what it gates — the two produce
+      materially different onsite designs
+- [ ] Confirm whether onsite frequency caps are per visitor across surfaces, or per campaign; a cap an
+      agent is expected to honour by convention is not a cap
+      ([../rules/targeting-rules.md#T8](../rules/targeting-rules.md))
+- [ ] Confirm whether experiments support a declared stopping condition, and whether anything
+      auto-promotes a winner on an interim result
+      ([../rules/measurement-rules.md#M4](../rules/measurement-rules.md))
+- [ ] Establish whether cannibalisation is observable, since incrementality claims depend on it
+      ([../rules/surface-rules.md#U5](../rules/surface-rules.md))
+- [ ] Confirm how a placement behaves when its strategy returns too few results, so the empty state can be
+      designed rather than discovered
 - [ ] Define how the MCP signals "capability unavailable", and how it distinguishes an empty result from
       an unavailable one

@@ -9,7 +9,7 @@ cases:
     prompt: Nobody here can tell me what's actually personalised on our site right now.
     expect_skill: surface-inventory
     must_cite:
-      - global-rules.md#G5
+      - global-rules.md#G19
       - surface-rules.md#U1
     must_not:
       - Report configuration without reading what consent currently permits
@@ -51,7 +51,7 @@ cases:
     expect_skill: onsite-search
     expect_composes: [surface-inventory]
     must_cite:
-      - global-rules.md#G1
+      - global-rules.md#G17
     must_not:
       - Rank failing queries by failure count rather than by volume times failure
       - Fix a catalogue gap with a synonym or a redirect to an unrelated product
@@ -64,7 +64,7 @@ cases:
     expect_skill: experience-experimentation
     expect_composes: [surface-inventory]
     must_cite:
-      - safety-rules.md#S10
+      - safety-rules.md#S20
       - measurement-rules.md#M4
       - measurement-rules.md#M8
     must_not:
@@ -79,7 +79,7 @@ cases:
     expect_skill: personalization-audit
     expect_composes: [surface-inventory, recommendation-strategy, offer-targeting, onsite-search, experience-experimentation]
     must_cite:
-      - global-rules.md#G7
+      - global-rules.md#G20
     must_not:
       - Default to recommending more personalization
       - Report only problems without stating what is healthy

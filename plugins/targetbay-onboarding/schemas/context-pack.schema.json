@@ -59,7 +59,7 @@
       "$ref": "#/$defs/intake"
     },
     "readiness": {
-      "description": "One row per capability across all four product namespaces. This is what lets a skill populate unmet_requirements precisely instead of discovering gaps one failed call at a time.",
+      "description": "One row per capability across all three product namespaces. This is what lets a skill populate unmet_requirements precisely instead of discovering gaps one failed call at a time.",
       "type": "array",
       "minItems": 1,
       "items": {

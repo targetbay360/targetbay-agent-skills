@@ -5,6 +5,36 @@ own changelog under `plugins/<name>/CHANGELOG.md`, and versions independently.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2026-09-15] Personalization stops being a separate product
+
+`targetbay-personalization` was listed and installed as a product alongside Email & SMS, Reviews and
+Loyalty. It is not a product. It is the step every product's onboarding starts with — the onsite capture
+that spends no contact budget and that cannot be added retroactively — and listing it separately meant a
+store could complete onboarding without it.
+
+The plugin is removed. Its six skills, three rule files, two knowledge documents and twelve capabilities
+now live in `targetbay-onboarding`, which goes to `0.2.0`. Details, including the rule-citation changes,
+are in [plugins/targetbay-onboarding/CHANGELOG.md](plugins/targetbay-onboarding/CHANGELOG.md).
+
+### Removed
+
+- **`targetbay-personalization`**, from `.claude-plugin/marketplace.json`, the README install list and the
+  issue templates. `npx @targetbay/personalization-skills` is no longer published.
+
+### Changed
+
+- **The marketplace is four plugins: three products and onboarding.** Every "all four products" in shared
+  prose is now three, and `targetbay-onboarding` describes itself as carrying the onsite work rather than
+  sequencing a fourth product that would do it.
+
+- **`docs/mcp-capability-inventory.md` counts 58 capabilities across four plugins**, down from 59 across
+  five: `onsite.store_profile` is retired into `onboarding.store_context`, which already carried the same
+  values.
+
+- **Golden prompts moved.** `tests/evals/golden-prompts/targetbay-personalization/` is now
+  `onsite-coverage.yaml` and `onsite-safety.yaml` under `targetbay-onboarding/`, with their rule
+  citations remapped to the merged numbering.
+
 ## [2026-09-12] Onboarding becomes a plugin
 
 A store's first week is where it decides whether TargetBay is worth keeping, and it was the part of the

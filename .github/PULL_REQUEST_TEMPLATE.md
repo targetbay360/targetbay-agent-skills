@@ -1,7 +1,7 @@
 ## Plugin
 
 <!-- Which plugin does this touch? targetbay-email-sms / targetbay-reviews / targetbay-loyalty /
-     targetbay-personalization / repository-level (tooling, marketplace, CI). -->
+     targetbay-onboarding / repository-level (tooling, marketplace, CI). -->
 
 ## What changed
 

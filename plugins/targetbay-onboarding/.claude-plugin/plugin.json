@@ -1,7 +1,7 @@
 {
   "name": "targetbay-onboarding",
-  "description": "Skills that turn a newly signed-up store into a store-specific programme across all four TargetBay products — auditing what the platform actually knows about this store, asking only what it cannot observe, sequencing the first ninety days so the four products do not compete for the same customer, and provisioning the result behind explicit approval. Vendor-neutral reasoning; the TargetBay MCP supplies the capabilities.",
-  "version": "0.1.0",
+  "description": "Skills that turn a newly signed-up store into a store-specific programme across all three TargetBay products \u2014 auditing what the platform actually knows about this store, asking only what it cannot observe, setting up the onsite capture that must go in first, sequencing the first ninety days so the three products do not compete for the same customer, and provisioning the result behind explicit approval. Vendor-neutral reasoning; the TargetBay MCP supplies the capabilities.",
+  "version": "0.2.0",
   "author": {
     "name": "TargetBay",
     "email": "support@targetbay.com",
@@ -17,6 +17,8 @@
     "onboarding",
     "implementation",
     "activation",
+    "onsite",
+    "personalization",
     "ecommerce",
     "targetbay"
   ]

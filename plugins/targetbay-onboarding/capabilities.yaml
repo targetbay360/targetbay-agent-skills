@@ -3,16 +3,17 @@
 # Single source of truth for the abstract capability identifiers that skills declare
 # in their `requires:` frontmatter.
 #
-# These are CAPABILITY names, not tool names. This plugin is deliberately narrow: it does
-# not re-declare the fifty-five product capabilities that live in the four product
-# registries. It declares the four things onboarding needs that no single product owns —
-# a derived view of the whole store, the answers the platform cannot observe, a
-# cross-product apply path, and activation.
+# These are CAPABILITY names, not tool names. This plugin does not re-declare the
+# product capabilities that live in the three product registries. It declares what
+# onboarding needs that no single product owns: a derived view of the whole store, the
+# answers the platform cannot observe, a cross-product apply path, activation — and the
+# onsite reads and writes that the first step of onboarding depends on, which belong to
+# no product because onsite capture is not one.
 #
 # Every `mcp_tools` value is TODO until the real TargetBay MCP surface is inspected and
 # mapped. See docs/mcp-integration.md.
 
-version: 0.1.0
+version: 0.2.0
 
 # access values:
 #   read   - retrieves data, no state change
@@ -24,8 +25,9 @@ capabilities:
   - id: onboarding.store_context
     description: >-
       The derived Store Context Pack — identity, detected vertical, catalogue shape, customer shape,
-      brand profile, existing coverage across all four products, and the per-capability data-readiness
-      matrix. Every value carries its basis, sample size and evidence.
+      brand profile, currency and locale, traffic volume, plan limits, existing coverage across all
+      three products, and the per-capability data-readiness matrix. Every value carries its basis,
+      sample size and evidence.
     access: read
     mcp_tools: TODO
     notes: >-
@@ -66,3 +68,71 @@ capabilities:
     notes: >-
       Separate from onboarding.provisioning on purpose. A single capability covering both would make the
       approval gate in safety-rules.md#S5 a request rather than an enforcement.
+
+  # ---------------------------------------------------------------- onsite capture
+  #
+  # Onsite capture and personalisation is the first step of onboarding, not a product.
+  # It spends no contact budget (contact-ownership-rules.md#X3), so it can run while
+  # everything else is still being decided, and what it captures cannot be captured
+  # retroactively (sequencing-rules.md#SQ1). The capabilities below are what that step
+  # reads and writes.
+
+  - id: onboarding.consent_and_tracking
+    description: Consent state for tracking and onsite personalisation, regional consent mode, and what may be collected or acted on for a given visitor.
+    access: read
+    mcp_tools: TODO
+    notes: >-
+      Onsite capture acts on behaviour, so consent is a precondition rather than a detail. Skills must
+      confirm this capability before planning anything that depends on identifying or profiling a
+      visitor, and degrade to non-personalised defaults when it is absent or withheld
+      (safety-rules.md#S15).
+
+  - id: onboarding.visitor_intelligence
+    description: Session and visitor behaviour — entry source, pages viewed, dwell, cart state, return frequency, and whether the visitor is identified.
+    access: read
+    mcp_tools: TODO
+
+  - id: onboarding.product_intelligence
+    description: Products, categories, attributes, price bands, margin signals, inventory posture and co-view or co-purchase affinity.
+    access: read
+    mcp_tools: TODO
+
+  - id: onboarding.audience_definition
+    description: Onsite audience and segment definitions, their sizes and their creation or modification.
+    access: write
+    mcp_tools: TODO
+
+  - id: onboarding.recommendation_placement
+    description: Recommendation widgets — which surface they sit on, which strategy drives them, what they exclude — and their configuration.
+    access: write
+    mcp_tools: TODO
+
+  - id: onboarding.recommendation_analytics
+    description: Per-placement performance — impression, click, add-to-cart, attributed revenue and cannibalisation signals.
+    access: read
+    mcp_tools: TODO
+
+  - id: onboarding.offers
+    description: Onsite offers, popups, banners and bars — targeting, trigger, frequency, content and their creation or modification.
+    access: write
+    mcp_tools: TODO
+
+  - id: onboarding.offer_analytics
+    description: Per-offer performance — impressions, engagement, dismissal, conversion and the revenue attributable to it.
+    access: read
+    mcp_tools: TODO
+
+  - id: onboarding.onsite_search
+    description: Onsite search queries, result counts, click-through and conversion; synonym, redirect and ranking configuration.
+    access: write
+    mcp_tools: TODO
+
+  - id: onboarding.experimentation
+    description: Onsite A/B and multivariate test configuration, traffic allocation, results and winner state.
+    access: write
+    mcp_tools: TODO
+
+  - id: onboarding.experience_analytics
+    description: Page and funnel performance — entry, exit, conversion rate and revenue per session, by surface and audience.
+    access: read
+    mcp_tools: TODO

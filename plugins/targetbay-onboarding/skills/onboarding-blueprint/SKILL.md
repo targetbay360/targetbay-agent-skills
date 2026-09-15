@@ -1,10 +1,10 @@
 ---
 name: onboarding-blueprint
-description: Use when a store is new to TargetBay and the question is what to set up first across all four products — onboarding email, SMS, reviews, loyalty and onsite personalization as one sequence rather than four independent setups. Decides what each product contributes, what it must wait for and why, who owns contact with a customer when two products both want to reach them, and what observation would justify each next step. Produces a sequenced ninety-day plan with every borrowed value labelled; provisions nothing.
+description: Use when a store is new to TargetBay and the question is what to set up first across all three products — onboarding email, SMS, reviews, loyalty and onsite personalization as one sequence rather than four independent setups. Decides what each product contributes, what it must wait for and why, who owns contact with a customer when two products both want to reach them, and what observation would justify each next step. Produces a sequenced ninety-day plan with every borrowed value labelled; provisions nothing.
 license: MIT
 metadata:
   targetbay.display_name: Cross-Product Onboarding Blueprint
-  targetbay.version: "0.1.0"
+  targetbay.version: "0.2.0"
   targetbay.category: planning
   targetbay.requires: onboarding.store_context, onboarding.intake
   targetbay.composes: context-audit, onboarding-intake
@@ -17,7 +17,7 @@ metadata:
 
 ## Purpose
 
-Turn what is known about one store into the order in which its four products get built.
+Turn what is known about one store into the order in which its three products get built.
 
 Four products configured independently produce four correct plans and one bad outcome: three of them
 message the same customer, and the one that does not is the one that could have started immediately. The
@@ -77,7 +77,7 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 1. Read the context audit         ← what is decidable, what is borrowed, what is absent
 2. Select the playbook overlay    ← or none, when vertical confidence is thin
 3. Rank products by what they spend, not by what they are worth
-4. Compute the contact budget     ← across all four products, one number (X1, X7)
+4. Compute the contact budget     ← across all three products, one number (X1, X7)
 5. Assign moment ownership        ← who may message at each lifecycle moment (X2)
 6. Sequence the horizon           ← capture before consumption, reversible before irreversible
 7. State each step's precondition ← an observation, never a date (SQ4)
@@ -100,7 +100,7 @@ Binding: [../../rules/global-rules.md](../../rules/global-rules.md),
 [../../rules/sequencing-rules.md](../../rules/sequencing-rules.md),
 [../../knowledge/onboarding-sequence.md](../../knowledge/onboarding-sequence.md).
 
-- **State the maximum weekly contact per customer across all four products, as a number.** A blueprint
+- **State the maximum weekly contact per customer across all three products, as a number.** A blueprint
   that cannot is not approvable (X7). "Each product is within its own limits" is not that number.
 - **Assign every lifecycle moment to exactly one product** (X2). A moment with two owners is a customer
   with two messages.
@@ -137,14 +137,14 @@ Binding: [../../rules/global-rules.md](../../rules/global-rules.md),
 
 A [skill result](../../schemas/skill-result.schema.json) at `risk_level: plan` containing: the sequenced
 plan across the horizon with each step's owning product and its precondition in observable terms; the
-maximum weekly contact per customer across all four products, with how it was computed; the
+maximum weekly contact per customer across all three products, with how it was computed; the
 moment-ownership map; every provisional value flagged with what would replace it; the consent and
 deliverability posture including any ramp for an imported list; which products were deferred and what
 evidence each is waiting for; and the review point.
 
 ## Validation
 
-- [ ] Maximum weekly contact per customer across all four products is stated as a number (X7)
+- [ ] Maximum weekly contact per customer across all three products is stated as a number (X7)
 - [ ] Every lifecycle moment has exactly one owning product (X2)
 - [ ] Every step's precondition is an observation, not a date (SQ4)
 - [ ] No irreversible step gated on a provisional value (SQ5)

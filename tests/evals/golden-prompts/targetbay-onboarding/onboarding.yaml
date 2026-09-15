@@ -9,7 +9,7 @@ description: >-
 
 cases:
   - id: ob-001
-    prompt: We went live nine days ago with three orders — onboard us across all four products.
+    prompt: We went live nine days ago with three orders — onboard us across all three products.
     expect_skill: onboarding-blueprint
     accept_skills:
       - onboarding-blueprint
@@ -41,7 +41,7 @@ cases:
       - contact-ownership-rules.md#X7
       - sequencing-rules.md#SQ1
     must_not:
-      - Plan four products independently without stating one aggregate contact figure
+      - Plan three products independently without stating one aggregate contact figure
       - Sequence lifecycle email ahead of arming review capture
       - Activate anything as part of the plan
     notes: >-

@@ -7,6 +7,8 @@ explanation lives in one place and the skills stay about decisions.
 |---|---|
 | [evidence-and-provenance.md](evidence-and-provenance.md) | Why every value carries where it came from, and what a zero-history store can honestly be given |
 | [onboarding-sequence.md](onboarding-sequence.md) | Why the order of onboarding work decides its outcome |
+| [personalization-principles.md](personalization-principles.md) | Why onsite personalisation works, and where its value actually is |
+| [visitor-behaviour.md](visitor-behaviour.md) | How visitors move, and what signals are available when |
 
 ## What belongs here
 

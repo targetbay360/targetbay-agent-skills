@@ -4,9 +4,9 @@ description: Use when deciding who should see an onsite offer, popup, banner or 
 license: MIT
 metadata:
   targetbay.display_name: Offer Targeting
-  targetbay.version: "1.0.0"
-  targetbay.category: personalization
-  targetbay.requires: onsite.store_profile, onsite.consent_and_tracking, onsite.offers, onsite.offer_analytics, onsite.audience_definition, onsite.visitor_intelligence, onsite.product_intelligence, onsite.experience_analytics
+  targetbay.version: "1.1.0"
+  targetbay.category: onsite
+  targetbay.requires: onboarding.store_context, onboarding.consent_and_tracking, onboarding.offers, onboarding.offer_analytics, onboarding.audience_definition, onboarding.visitor_intelligence, onboarding.product_intelligence, onboarding.experience_analytics
   targetbay.composes: surface-inventory
   targetbay.risk_level: plan
   targetbay.execution_mode: plan_then_execute
@@ -59,14 +59,14 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 
 | Capability | Used for |
 |---|---|
-| `onsite.consent_and_tracking` | Which targeting is permissible, and for which traffic |
-| `onsite.store_profile` | Traffic volume, currency, margin posture |
-| `onsite.offers` | Reading current offers; creating or amending them |
-| `onsite.offer_analytics` | Engagement, dismissal, conversion per offer |
-| `onsite.audience_definition` | Segment definitions and sizes; creating them |
-| `onsite.visitor_intelligence` | Session signals for triggers and intent |
-| `onsite.product_intelligence` | Margin and stock behind any product-specific offer |
-| `onsite.experience_analytics` | Conversion baseline the offer is measured against |
+| `onboarding.consent_and_tracking` | Which targeting is permissible, and for which traffic |
+| `onboarding.store_context` | Traffic volume, currency, margin posture |
+| `onboarding.offers` | Reading current offers; creating or amending them |
+| `onboarding.offer_analytics` | Engagement, dismissal, conversion per offer |
+| `onboarding.audience_definition` | Segment definitions and sizes; creating them |
+| `onboarding.visitor_intelligence` | Session signals for triggers and intent |
+| `onboarding.product_intelligence` | Margin and stock behind any product-specific offer |
+| `onboarding.experience_analytics` | Conversion baseline the offer is measured against |
 
 ## Inputs
 
@@ -98,28 +98,28 @@ Binding: [../../rules/global-rules.md](../../rules/global-rules.md),
 [../../rules/safety-rules.md](../../rules/safety-rules.md),
 [../../rules/measurement-rules.md](../../rules/measurement-rules.md).
 
-- Read consent first (G5, [#S2](../../rules/safety-rules.md)).
+- Read consent first (G19, [#S15](../../rules/safety-rules.md)).
 - Ask whether the offer should exist before designing it. An offer shown to visitors who were converting
   anyway is a discount on existing demand, and the baseline says which
   ([#M3](../../rules/measurement-rules.md)).
 - Start from the intended difference, not from available attributes (T1). A segment that would see the
-  same thing as everyone else should not exist (G8).
+  same thing as everyone else should not exist (G21).
 - Design exclusions before the audience (T4): already converted, already holds the item, already
   dismissed, in an active flow from another system, out of region.
 - Size every segment and say plainly when one is too small to evaluate at this store's volume (T3).
 - Never target on a sensitive attribute or a proxy for one (T5,
-  [#S3](../../rules/safety-rules.md)). Name the proxy when rejecting.
-- Never vary price by visitor under any framing ([#S4](../../rules/safety-rules.md)). Varying which offer
+  [#S16](../../rules/safety-rules.md)). Name the proxy when rejecting.
+- Never vary price by visitor under any framing ([#S17](../../rules/safety-rules.md)). Varying which offer
   is shown is merchandising; varying the price of the same item is not.
 - The offer carries a dismissal that works and a frequency cap that holds, with no pattern making
-  declining harder than accepting ([#S5](../../rules/safety-rules.md)).
+  declining harder than accepting ([#S18](../../rules/safety-rules.md)).
 - Frequency is per visitor across all surfaces, not per offer (T8). Count the offer against everything else
   already interrupting that visitor.
 - Prefer session intent for triggers over historical profile (T6).
-- State the anonymous path (T2, G12).
-- Define the measurement before the change, and include the discount cost against margin (M1, G13).
+- State the anonymous path (T2, G23).
+- Define the measurement before the change, and include the discount cost against margin (M1, G24).
 - Publishing an offer is `high_impact` — live visitors see it immediately
-  ([#S6](../../rules/safety-rules.md)).
+  ([#S5](../../rules/safety-rules.md)).
 
 ## Workflow
 
@@ -150,17 +150,17 @@ considered and rejected with the reason.
 
 ## Validation
 
-- [ ] Consent read first; targeting permissibility established (G5, S2)
+- [ ] Consent read first; targeting permissibility established (G19, S15)
 - [ ] The offer's existence justified against the no-offer baseline (M3)
-- [ ] Audience derived from the intended difference, not from available attributes (T1, G8)
+- [ ] Audience derived from the intended difference, not from available attributes (T1, G21)
 - [ ] Exclusions designed and stated (T4)
 - [ ] Every segment sized, with unevaluable segments named as such (T3)
-- [ ] No sensitive attribute or proxy anywhere in the targeting (T5, S3)
-- [ ] No price variation by visitor (S4)
-- [ ] Dismissal works and frequency caps hold; no pressure patterns (S5)
+- [ ] No sensitive attribute or proxy anywhere in the targeting (T5, S16)
+- [ ] No price variation by visitor (S17)
+- [ ] Dismissal works and frequency caps hold; no pressure patterns (S18)
 - [ ] Frequency counted per visitor across all surfaces (T8)
-- [ ] Anonymous path stated (T2, G12)
-- [ ] Measurement defined before the change, including discount cost (M1, G13)
+- [ ] Anonymous path stated (T2, G23)
+- [ ] Measurement defined before the change, including discount cost (M1, G24)
 
 ## Approval Requirements
 
@@ -170,7 +170,7 @@ considered and rejected with the reason.
 | Produce the plan | `plan` | None |
 | Create a draft audience or staged offer | `mutation` | Preview, then confirm |
 | Publish an offer to live traffic | `high_impact` | Explicit, with audience size and traffic share shown |
-| Remove an existing offer | `destructive` | Explicit, after reporting what it currently does (S9) |
+| Remove an existing offer | `destructive` | Explicit, after reporting what it currently does (S19) |
 
 ## Examples
 
@@ -191,13 +191,13 @@ intended effect without profiling anybody.
 
 | Situation | Response |
 |---|---|
-| `onsite.consent_and_tracking` unavailable | **Blocked.** Targeting permissibility cannot be established (S2, G5) |
-| `onsite.offers` unavailable | **Blocked.** Cannot read what already interrupts this visitor (T8) |
+| `onboarding.consent_and_tracking` unavailable | **Blocked.** Targeting permissibility cannot be established (S15, G19) |
+| `onboarding.offers` unavailable | **Blocked.** Cannot read what already interrupts this visitor (T8) |
 | Conversion baseline unavailable | **Partial.** State that the offer's incrementality cannot be assessed and that it may be discounting existing demand |
 | Margin unavailable | **Partial.** Withhold discount-bearing offers; propose non-discount alternatives and state why |
-| Audience sizes unavailable | **Blocked.** An unsized segment cannot be evaluated or approved (T3, S7) |
+| Audience sizes unavailable | **Blocked.** An unsized segment cannot be evaluated or approved (T3, S4) |
 | Frequency state not exposed per visitor | **Partial.** State that the cap cannot be honoured across surfaces, and treat that as a reason not to add an interruption (T8) |
-| Targeting depends on a sensitive proxy | Refuse that targeting, name the proxy, and propose a non-profiling alternative (T5, S3) |
-| Asked to vary price by visitor | Refuse, cite [#S4](../../rules/safety-rules.md), and propose offer-level differentiation instead |
+| Targeting depends on a sensitive proxy | Refuse that targeting, name the proxy, and propose a non-profiling alternative (T5, S16) |
+| Asked to vary price by visitor | Refuse, cite [#S17](../../rules/safety-rules.md), and propose offer-level differentiation instead |
 
 Degraded outcomes set `status` and populate `unmet_requirements`.

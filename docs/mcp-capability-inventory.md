@@ -1,13 +1,13 @@
 # MCP Capability Inventory — Phase 0 worksheet
 
 Every skill in this marketplace declares abstract capabilities, and every one of them currently maps to
-`mcp_tools: TODO`. A TargetBay MCP exists and reportedly reads and writes across all four products, but
+`mcp_tools: TODO`. A TargetBay MCP exists and reportedly reads and writes across all three products, but
 its surface has never been inspected from this repository. Until it is, no skill here can execute — they
 can only plan.
 
 Answering the questions below is what unblocks everything else.
 
-**Do not guess.** A tool name invented here becomes confident, wrong documentation in five packages — the
+**Do not guess.** A tool name invented here becomes confident, wrong documentation in four packages — the
 exact failure the marketplace's own rules prohibit. An honest "the platform cannot do this" is more
 useful than a plausible tool name.
 
@@ -23,10 +23,9 @@ copying it back is two lists that drift.
 | [`targetbay-email-sms`](../plugins/targetbay-email-sms/capabilities.yaml) | 15 | 1 |
 | [`targetbay-reviews`](../plugins/targetbay-reviews/capabilities.yaml) | 14 | 1 |
 | [`targetbay-loyalty`](../plugins/targetbay-loyalty/capabilities.yaml) | 14 | 1 |
-| [`targetbay-personalization`](../plugins/targetbay-personalization/capabilities.yaml) | 12 | 0 |
-| [`targetbay-onboarding`](../plugins/targetbay-onboarding/capabilities.yaml) | 4 | 1 |
+| [`targetbay-onboarding`](../plugins/targetbay-onboarding/capabilities.yaml) | 15 | 1 |
 
-That is 59 capabilities. For each one, fill in:
+That is 58 capabilities. For each one, fill in:
 
 | Field | What goes in it |
 |---|---|
@@ -36,7 +35,7 @@ That is 59 capabilities. For each one, fill in:
 Record the shape of what each tool returns, and the OAuth scope it needs, in that plugin's
 `docs/mcp-integration.md` — it carries a mapping table and a TODO list this work closes.
 
-The four capabilities already flagged **unverified** in their `notes` are the rows that matter most: this
+The capabilities already flagged **unverified** in their `notes` are the rows that matter most: this
 repository already suspects those may not exist at all.
 
 ## The three answers that change the plan
@@ -54,7 +53,8 @@ repository already suspects those may not exist at all.
 
 The remaining questions are per-plugin and live with their plugin — see each
 `plugins/<plugin>/docs/mcp-integration.md`, whose TODO list this work closes. The onboarding plugin's
-list is the longest, because it is the only one that needs all four products at once:
+list is the longest, because it is the only one that needs all three products at once, plus every onsite
+read and write:
 [plugins/targetbay-onboarding/docs/mcp-integration.md](../plugins/targetbay-onboarding/docs/mcp-integration.md).
 
 ## The manual baseline

@@ -157,7 +157,7 @@ so the first one runs, is measured, and informs the rest (S3).
 ## Examples
 
 **"The blueprint's approved — build it."**
-Fourteen resources across four products. The dry run reports eleven creates, two no-changes from an
+Fourteen resources across three products. The dry run reports eleven creates, two no-changes from an
 earlier partial run, and one conflict with an existing welcome automation the store built before
 migrating. The run stops on the conflict, reports it as its own finding, and proceeds with thirteen after
 the operator decides to keep the existing automation. Everything is created as drafts. The verification

@@ -45,5 +45,5 @@ cp -R "$SRC"/. "$DEST"/
 
 echo "$(find "$DEST" -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d ' ') skills installed into $DEST"
 echo
-echo "These skills plan only. They need the TargetBay MCP to read store data across all four products,"
+echo "These skills plan only. They need the TargetBay MCP to read store data across all three products,"
 echo "and they never send or activate anything without your explicit approval."

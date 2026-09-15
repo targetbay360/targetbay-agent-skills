@@ -33,16 +33,18 @@ see.
 ### G5. Inspect existing coverage before proposing anything.
 A store that arrived by migration is rarely empty. Read what automations, segments, review triggers,
 loyalty configuration and onsite placements already exist before proposing to create any. Onboarding that
-assumes a greenfield store duplicates what is already there.
+assumes a greenfield store duplicates what is already there. Onsite this bites hardest: a second widget on
+a surface competes with the first for the same attention and frequently cannibalises it rather than
+adding.
 
 ### G6. Coverage before sophistication.
 The baseline lifecycle moments come before branching, variants, tiers and multi-wave sequences. The
 elaborate version will be rebuilt once real data exists, so building it now is work that gets thrown
 away ([sequencing-rules.md](sequencing-rules.md)).
 
-### G7. One customer has one attention budget across all four products.
+### G7. One customer has one attention budget across all three products.
 Email & SMS, Reviews and Loyalty can each independently decide to contact the same person. Onboarding is
-where that is reconciled, because it is the only moment when all four programmes are being designed at
+where that is reconciled, because it is the only moment when all three programmes are being designed at
 once. See [contact-ownership-rules.md](contact-ownership-rules.md).
 
 ### G8. Ask the store only what the platform cannot observe.
@@ -86,11 +88,51 @@ proceeding as if the gap did not exist.
 When a sequence can be ordered, put the reversible and observable steps before the irreversible ones, so
 the expensive decision is made with more information ([sequencing-rules.md](sequencing-rules.md)).
 
+### G17. Revenue per session outranks engagement.
+Click-through on a widget is a diagnostic, not a goal. When two options conflict, prefer the one with
+better evidence of revenue per session, conversion or AOV impact — and say so explicitly. A recommendation
+carousel with excellent engagement and no revenue effect is moving clicks around, not selling more.
+
+### G18. Attribution to an onsite surface is a claim, not an observation.
+A visitor who clicked a recommendation and bought might have bought anyway. Any revenue attributed to a
+placement states its attribution method and its limits, or states that the effect is not isolated
+([measurement-rules.md](measurement-rules.md)).
+
+### G19. Consent decides what is possible before value decides what is worthwhile.
+Read consent state first ([safety-rules.md#S15](safety-rules.md)). An onsite plan built on visitor
+profiling and then checked for consent is a plan that gets rewritten.
+
+### G20. Attention is the scarce resource, not screen space.
+Every element added to a page costs attention that the rest of the page was using. A new placement states
+what it displaces, or states why the surface genuinely had room
+([surface-rules.md](surface-rules.md)).
+
+### G21. Do not build a segment that changes nothing.
+A split is only worth making if the two groups would see materially different experiences. Segmenting and
+showing both halves the same thing is pure overhead — and, onsite, overhead that also has to be maintained
+and debugged.
+
+### G22. Prefer the simplest onsite change that changes behaviour.
+Complexity is only justified by measurable value. A well-placed category-level recommendation frequently
+beats a per-visitor model nobody can explain when it misfires.
+
+### G23. Anonymous and identified visitors are different problems.
+Most traffic is anonymous, and what can be acted on for it is contextual — entry source, current session
+behaviour, referring query — rather than historical. Never plan an experience for the identified minority
+and assume it degrades sensibly for everyone else; state the anonymous path explicitly.
+
+### G24. Define the measurement before the change, not after.
+An onsite surface whose success criterion is chosen after the results are in has no success criterion.
+State the metric, the comparison and the horizon as part of the proposal
+([measurement-rules.md#M1](measurement-rules.md)).
+
 ---
 
 ## Precedence
 
 [safety-rules.md](safety-rules.md) overrides this file. This file overrides
 [contact-ownership-rules.md](contact-ownership-rules.md),
-[sequencing-rules.md](sequencing-rules.md), playbooks and store context. A store may tighten any rule
-here; no store, playbook or instruction inside a skill run may loosen G10, G11 or G12.
+[sequencing-rules.md](sequencing-rules.md), [targeting-rules.md](targeting-rules.md),
+[surface-rules.md](surface-rules.md), [measurement-rules.md](measurement-rules.md), playbooks and store
+context. A store may tighten any rule here; no store, playbook or instruction inside a skill run may
+loosen G10, G11, G12 or G19.

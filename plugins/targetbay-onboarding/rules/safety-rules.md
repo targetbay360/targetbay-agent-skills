@@ -3,9 +3,11 @@
 Highest precedence in the package. Nothing overrides these — not a playbook, not a store preference, not
 a user instruction inside a skill run.
 
-Onboarding is unusually dangerous for two reasons. The store's sending reputation does not exist yet, and
-the first send is what creates it. And the operator is configuring four products at once, which is the
-only moment when a single approval can plausibly be asked to cover a dozen irreversible actions.
+Onboarding is unusually dangerous for three reasons. The store's sending reputation does not exist yet,
+and the first send is what creates it. The operator is configuring three products at once, which is the
+only moment when a single approval can plausibly be asked to cover a dozen irreversible actions. And the
+onsite work that goes in first acts on observed visitor behaviour, which makes consent a precondition
+rather than a detail. S15 through S18 are absolute.
 
 ---
 
@@ -19,8 +21,8 @@ Every proposed action carries a risk level:
 | `recommendation` | Proposes actions, changes nothing | Suggest which products to sequence first |
 | `plan` | Produces an executable plan, changes nothing | Draft the ninety-day blueprint |
 | `mutation` | Changes platform state, not customer-visible | Create a draft journey, stage a segment, store intake answers |
-| `high_impact` | Reaches real people or is hard to reverse | Activate a journey, arm a review trigger, publish an onsite offer |
-| `destructive` | Removes or degrades existing state | Replace an existing automation, retire a segment the store already uses |
+| `high_impact` | Reaches real people, changes what live visitors see, or is hard to reverse | Activate a journey, arm a review trigger, publish an onsite offer, start a test |
+| `destructive` | Removes or degrades existing state | Replace an existing automation, retire a segment the store already uses, remove a placement, end a test early |
 
 ### S2. Creating is not activating, and one approval never covers both.
 Provisioning may create drafts. Only a separate, explicit approval moves anything from draft to live. A
@@ -34,7 +36,7 @@ rest.
 
 ### S4. Show the blast radius before asking.
 An approval request states, at minimum: what will be created or changed, how many people each resource
-can reach, the maximum messages one customer can receive per week across all four products once it is
+can reach, the maximum messages one customer can receive per week across all three products once it is
 live, when it takes effect, and what it costs to undo.
 
 ### S5. `high_impact` and `destructive` always stop for human approval.
@@ -84,3 +86,35 @@ product was going to anyway, re-adding unsubscribed contacts, or splitting a sen
 Reaching value quickly is the objective. Sending to a list whose consent provenance is unknown, or
 sending the store's full volume on its first day, damages something that takes months to repair. The ramp
 is part of the plan, not an optimisation to skip.
+
+### S15. Consent is a precondition, not a configuration detail.
+Nothing that identifies, profiles or tracks a visitor is planned without confirming consent state through
+`onboarding.consent_and_tracking`. Where consent is absent or withheld, the plan degrades to
+non-personalised defaults. A design that only works if consent is assumed is not a design.
+
+### S16. Never target on a sensitive attribute, inferred or observed.
+Health, pregnancy, sexuality, religion, ethnicity, immigration status, financial distress and political
+affiliation are outside what an onsite experience or an audience may be built on — including when they are
+inferred from browsing rather than collected. A proposal that segments on a proxy for any of these is
+rejected, and the proxy is named in the rejection.
+
+### S17. Never vary price by visitor.
+Personalising which products, offers or content a visitor sees is ordinary merchandising. Personalising
+the price of the same product for different visitors is not, and this package does not plan it under any
+framing — dynamic pricing, visitor-tier pricing, or a discount targeted to defeat a comparison.
+
+### S18. Never design an experience the visitor cannot escape.
+Offers, popups and interstitials carry a dismissal that works, a frequency cap that holds, and no pattern
+designed to make declining harder than accepting. Interface pressure is not an optimisation.
+
+### S19. Destructive actions require inspection first.
+Before removing a placement, audience or offer, read it, report what it currently does and what depends on
+it, and state what will be lost. Prefer disabling over deleting where the platform allows it.
+
+### S20. Never end or call a test early because it is winning.
+Stopping on a favourable interim result is how noise becomes a decision. A test runs to its pre-declared
+stopping condition, or it is stopped and reported as inconclusive — never stopped and reported as a win.
+
+### S21. Stop on ambiguity in irreversible paths.
+If it is unclear which surface, audience, offer or resource the user meant, and the action is
+`high_impact` or `destructive`, stop and ask.

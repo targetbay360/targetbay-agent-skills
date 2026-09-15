@@ -4,9 +4,9 @@ description: Use when an onsite change needs proving rather than asserting — d
 license: MIT
 metadata:
   targetbay.display_name: Experience Experimentation
-  targetbay.version: "1.0.0"
+  targetbay.version: "1.1.0"
   targetbay.category: experimentation
-  targetbay.requires: onsite.store_profile, onsite.consent_and_tracking, onsite.experimentation, onsite.experience_analytics, onsite.audience_definition, onsite.recommendation_analytics, onsite.offer_analytics
+  targetbay.requires: onboarding.store_context, onboarding.consent_and_tracking, onboarding.experimentation, onboarding.experience_analytics, onboarding.audience_definition, onboarding.recommendation_analytics, onboarding.offer_analytics
   targetbay.composes: surface-inventory
   targetbay.risk_level: plan
   targetbay.execution_mode: plan_then_execute
@@ -59,12 +59,12 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 
 | Capability | Used for |
 |---|---|
-| `onsite.consent_and_tracking` | Whether variant assignment is permissible for this traffic |
-| `onsite.store_profile` | Traffic volume and vertical |
-| `onsite.experimentation` | Reading tests in flight and configuration; creating and running tests |
-| `onsite.experience_analytics` | Baseline rates and funnel context |
-| `onsite.audience_definition` | The population the test runs against, and its size |
-| `onsite.recommendation_analytics` / `onsite.offer_analytics` | Element-level baselines for the thing under test |
+| `onboarding.consent_and_tracking` | Whether variant assignment is permissible for this traffic |
+| `onboarding.store_context` | Traffic volume and vertical |
+| `onboarding.experimentation` | Reading tests in flight and configuration; creating and running tests |
+| `onboarding.experience_analytics` | Baseline rates and funnel context |
+| `onboarding.audience_definition` | The population the test runs against, and its size |
+| `onboarding.recommendation_analytics` / `onboarding.offer_analytics` | Element-level baselines for the thing under test |
 
 ## Inputs
 
@@ -94,7 +94,7 @@ Binding: [../../rules/global-rules.md](../../rules/global-rules.md),
 [../../rules/measurement-rules.md](../../rules/measurement-rules.md),
 [../../rules/safety-rules.md](../../rules/safety-rules.md).
 
-- Declare the metric, the comparison and the horizon before the change (M1, G13).
+- Declare the metric, the comparison and the horizon before the change (M1, G24).
 - Compute whether this store's traffic can detect an effect worth acting on within a plausible horizon
   (M5). Where it cannot, say so and recommend deciding on reasoning instead — an underpowered test is worse
   than no test, because it produces a number people believe.
@@ -102,16 +102,16 @@ Binding: [../../rules/global-rules.md](../../rules/global-rules.md),
 - One change per test (M6). Where several must ship together, state that the test measures the bundle and
   cannot attribute within it.
 - Declare the stopping condition and honour it (M4). Never stop early because it is winning
-  ([#S10](../../rules/safety-rules.md)); a test stopped for any other reason is reported as inconclusive,
+  ([#S20](../../rules/safety-rules.md)); a test stopped for any other reason is reported as inconclusive,
   never as a result.
 - Report the losers (M7): what the change cost, which segment converted worse, what traffic saw nothing.
 - Check novelty decay where the horizon permits (M8). A first-period effect is not a durable one.
 - Refuse to run a test that overlaps an in-flight test on the same surface without stating the
   contamination and how it will be handled.
-- Consent must permit variant assignment for the traffic in question (G5,
-  [#S2](../../rules/safety-rules.md)).
+- Consent must permit variant assignment for the traffic in question (G19,
+  [#S15](../../rules/safety-rules.md)).
 - Starting a test is `high_impact` — a share of live traffic receives the variant
-  ([#S6](../../rules/safety-rules.md), [#S7](../../rules/safety-rules.md)).
+  ([#S5](../../rules/safety-rules.md), [#S4](../../rules/safety-rules.md)).
 - Never claim a result the test did not measure. A test on one template says nothing about another (G2).
 
 ## Workflow
@@ -144,14 +144,14 @@ Recommendations conform to [../../schemas/recommendation.schema.json](../../sche
 
 ## Validation
 
-- [ ] Metric, comparison and horizon declared before the change (M1, G13)
+- [ ] Metric, comparison and horizon declared before the change (M1, G24)
 - [ ] Minimum detectable effect computed against actual traffic (M5)
 - [ ] "Do not test" considered as a genuine outcome
 - [ ] Exactly one change under test, or the bundle declared as unattributable (M6)
-- [ ] Stopping condition declared before the start, and no early call permitted (M4, S10)
+- [ ] Stopping condition declared before the start, and no early call permitted (M4, S20)
 - [ ] Negative-result plan stated before the start
 - [ ] In-flight test overlap checked and handled
-- [ ] Consent permits variant assignment for the target traffic (G5, S2)
+- [ ] Consent permits variant assignment for the target traffic (G19, S15)
 - [ ] Losers reported alongside gains (M7)
 - [ ] Novelty decay checked where the horizon permits (M8)
 
@@ -163,7 +163,7 @@ Recommendations conform to [../../schemas/recommendation.schema.json](../../sche
 | Produce the design | `plan` | None |
 | Stage a test configuration | `mutation` | Preview, then confirm |
 | Start a test on live traffic | `high_impact` | Explicit, with traffic share and revenue at risk shown |
-| End a test before its stopping condition | `destructive` | Explicit, and the result is reported as inconclusive (S10, M4) |
+| End a test before its stopping condition | `destructive` | Explicit, and the result is reported as inconclusive (S20, M4) |
 
 ## Examples
 
@@ -175,7 +175,7 @@ template, or a metric closer to the change such as add-to-cart rather than purch
 
 **"The variant is up 18% after three days — can we roll it out?"**
 Three days is short of the declared stopping condition and inside the novelty window. States that the
-interim result is not a result (S10, M8), that stopping now would convert noise into a decision, and that
+interim result is not a result (S20, M8), that stopping now would convert noise into a decision, and that
 the test should run to its declared condition. Notes what the reading would be worth at that point, and
 that if the effect is real it will still be there.
 
@@ -183,11 +183,11 @@ that if the effect is real it will still be there.
 
 | Situation | Response |
 |---|---|
-| `onsite.experimentation` unavailable | **Blocked.** No test can be designed against an unknown experimentation surface |
+| `onboarding.experimentation` unavailable | **Blocked.** No test can be designed against an unknown experimentation surface |
 | Baseline unavailable | **Blocked.** Effect size cannot be computed without it (M1) |
 | Traffic volume unavailable | **Blocked.** Whether the test can resolve anything is the first question (M5) |
-| Consent does not permit variant assignment | **Blocked** for that traffic. Report which traffic can be tested, if any (S2) |
-| Platform auto-promotes an interim winner | Report it as a conflict with [#S10](../../rules/safety-rules.md); design around it or decline to test |
+| Consent does not permit variant assignment | **Blocked** for that traffic. Report which traffic can be tested, if any (S15) |
+| Platform auto-promotes an interim winner | Report it as a conflict with [#S20](../../rules/safety-rules.md); design around it or decline to test |
 | An overlapping test is in flight | **Blocked** until the overlap is resolved; state the contamination |
 | Traffic cannot resolve the effect | Recommend not testing, with the arithmetic, and decide on reasoning instead (M5) |
 | Asked to bundle several changes | Run it as a bundle test and state plainly that no change can be attributed within it (M6) |

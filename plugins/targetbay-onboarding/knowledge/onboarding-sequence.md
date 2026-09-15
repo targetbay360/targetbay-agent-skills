@@ -4,10 +4,10 @@ Why the order of onboarding work decides its outcome, independently of what gets
 
 ## Order is the decision
 
-Given the same store and the same four products, two operators will usually agree on roughly what should
-exist and disagree on what happens first. The disagreement matters more than the agreement, because three
-of the four products compete for the same scarce resource and one kind of configuration loses value
-permanently when it is delayed.
+Given the same store and the same three products, two operators will usually agree on roughly what should
+exist and disagree on what happens first. The disagreement matters more than the agreement, because all
+three products compete for the same scarce resource and one kind of configuration loses value permanently
+when it is delayed.
 
 ## Capture is not retroactive
 
@@ -25,13 +25,13 @@ work sequences late even when its payoff feels more immediate.
 
 ## The contact budget is the scarce resource
 
-Three of the four products send messages. Each has its own sensible limits, and a customer receives the
-sum of all three. Nothing inside any one product can see this, which is why it is settled at onboarding
-and written down in [../rules/contact-ownership-rules.md](../rules/contact-ownership-rules.md).
+All three products send messages. Each has its own sensible limits, and a customer receives the sum of
+all three. Nothing inside any one product can see this, which is why it is settled at onboarding and
+written down in [../rules/contact-ownership-rules.md](../rules/contact-ownership-rules.md).
 
-Onsite personalization is the exception, and the exception is structural rather than lucky: it acts on a
-visitor who is already on the site and already chose to be there. It spends none of the budget. That
-single property is why it can proceed while everything else is still being argued about.
+The onsite work is the exception, and the exception is structural rather than lucky: it acts on a visitor
+who is already on the site and already chose to be there. It spends none of the budget. That single
+property is why it can proceed while everything else is still being argued about.
 
 ## Why evidence-hungry decisions go last
 
@@ -53,8 +53,8 @@ one, and the review point is what turns the wait into a plan rather than a gap.
 
 Not a fixed list — the store's data decides — but the shape is usually:
 
-1. **Capture and no-cost surfaces.** Onsite personalization, tracking, review triggers armed. Nothing
-   spends contact budget; nothing waits on evidence that does not exist.
+1. **Capture and no-cost surfaces.** Onsite placements and search, tracking, review triggers armed.
+   Nothing spends contact budget; nothing waits on evidence that does not exist.
 2. **The lifecycle baseline.** Welcome, post-purchase, abandonment — the moments that exist for every
    store and need no threshold to be correct. Consent and deliverability posture gate this, not the
    calendar.
