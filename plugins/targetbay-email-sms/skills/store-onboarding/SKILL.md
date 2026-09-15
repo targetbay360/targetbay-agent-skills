@@ -41,7 +41,7 @@ day one.
 - The store has run for a while and simply lacks automations — that is a coverage gap, not onboarding.
 - The onboarding question spans reviews, loyalty or onsite personalization as well as email and SMS. Use
   [onboarding-blueprint](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-onboarding/skills/onboarding-blueprint/SKILL.md),
-  which sequences all four products against one contact budget rather than planning email and SMS alone.
+  which sequences all three products against one contact budget rather than planning email and SMS alone.
 
 ## Required Context
 

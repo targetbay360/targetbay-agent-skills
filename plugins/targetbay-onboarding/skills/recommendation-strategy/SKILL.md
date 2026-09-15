@@ -4,9 +4,9 @@ description: Use when deciding which product recommendations belong on which sur
 license: MIT
 metadata:
   targetbay.display_name: Recommendation Strategy
-  targetbay.version: "1.0.0"
+  targetbay.version: "1.1.0"
   targetbay.category: merchandising
-  targetbay.requires: onsite.store_profile, onsite.consent_and_tracking, onsite.recommendation_placement, onsite.recommendation_analytics, onsite.product_intelligence, onsite.visitor_intelligence, onsite.experience_analytics
+  targetbay.requires: onboarding.store_context, onboarding.consent_and_tracking, onboarding.recommendation_placement, onboarding.recommendation_analytics, onboarding.product_intelligence, onboarding.visitor_intelligence, onboarding.experience_analytics
   targetbay.composes: surface-inventory
   targetbay.risk_level: plan
   targetbay.execution_mode: plan_then_execute
@@ -62,13 +62,13 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 
 | Capability | Used for |
 |---|---|
-| `onsite.consent_and_tracking` | Which strategies are permissible, and for which traffic |
-| `onsite.store_profile` | Catalogue size, traffic volume, vertical |
-| `onsite.recommendation_placement` | Reading current placements; creating or amending them |
-| `onsite.recommendation_analytics` | Impressions, clicks, attributed revenue, cannibalisation signals |
-| `onsite.product_intelligence` | Affinity, co-purchase, categories, price bands, margin, stock |
-| `onsite.visitor_intelligence` | Session signals for the anonymous path |
-| `onsite.experience_analytics` | Page baselines the placement is measured against |
+| `onboarding.consent_and_tracking` | Which strategies are permissible, and for which traffic |
+| `onboarding.store_context` | Catalogue size, traffic volume, vertical |
+| `onboarding.recommendation_placement` | Reading current placements; creating or amending them |
+| `onboarding.recommendation_analytics` | Impressions, clicks, attributed revenue, cannibalisation signals |
+| `onboarding.product_intelligence` | Affinity, co-purchase, categories, price bands, margin, stock |
+| `onboarding.visitor_intelligence` | Session signals for the anonymous path |
+| `onboarding.experience_analytics` | Page baselines the placement is measured against |
 
 ## Inputs
 
@@ -101,24 +101,24 @@ Binding: [../../rules/global-rules.md](../../rules/global-rules.md),
 [../../rules/measurement-rules.md](../../rules/measurement-rules.md).
 
 - Read consent first; a strategy requiring visitor history is not available for traffic that has not
-  granted it (G5, [#S2](../../rules/safety-rules.md)).
+  granted it (G19, [#S15](../../rules/safety-rules.md)).
 - Match the strategy to the surface's decision, not to the catalogue or the available algorithm (U3).
 - Design exclusions before the strategy (U4). Items in the cart, recently purchased, and out of stock are
   excluded at design time — this is the most visible failure mode there is
   ([../../knowledge/personalization-principles.md](../../knowledge/personalization-principles.md)).
-- State the anonymous path explicitly and design it (T2, G12). It is the majority path.
+- State the anonymous path explicitly and design it (T2, G23). It is the majority path.
 - Prefer session intent over historical profile for anonymous traffic (T6).
 - Design the empty state: what shows when the strategy returns too few results or stock is thin (U6).
-- State what a new placement displaces (U2, G7).
+- State what a new placement displaces (U2, G20).
 - Check cannibalisation before claiming incremental revenue (U5, M3). A placement that moved a purchase
   between products has not added any.
-- Evaluate on outcome, not impressions (U7, G1).
+- Evaluate on outcome, not impressions (U7, G17).
 - Do not replace a well-performing default with an unproven variant (T7); route the comparison through
   [experience-experimentation](../experience-experimentation/SKILL.md) where the traffic supports it (M5).
-- Prefer the simplest mechanism that produces the result (G9). A rules-based placement that fails visibly
+- Prefer the simplest mechanism that produces the result (G22). A rules-based placement that fails visibly
   is preferable to a model that fails quietly and cannot be explained.
 - Publishing a placement is `high_impact` — live visitors see it immediately
-  ([#S6](../../rules/safety-rules.md), [#S7](../../rules/safety-rules.md)).
+  ([#S5](../../rules/safety-rules.md), [#S4](../../rules/safety-rules.md)).
 
 ## Workflow
 
@@ -148,16 +148,16 @@ Plus: current strategies as read, and placements considered and rejected with th
 
 ## Validation
 
-- [ ] Consent read first; permissible strategies established (G5, S2)
+- [ ] Consent read first; permissible strategies established (G19, S15)
 - [ ] Every placement's surface decision named, and the strategy derived from it (U3)
 - [ ] Exclusions designed, covering cart, recent purchase and stock (U4)
-- [ ] Anonymous path designed, not inherited as a fallback (T2, G12)
+- [ ] Anonymous path designed, not inherited as a fallback (T2, G23)
 - [ ] Empty state specified (U6)
-- [ ] Displacement stated for every addition (U2, G7)
+- [ ] Displacement stated for every addition (U2, G20)
 - [ ] Cannibalisation check defined before any incrementality claim (U5, M3)
 - [ ] Measurement stated in outcome terms with metric, comparison and horizon (M1, U7)
 - [ ] Well-performing defaults not replaced without a test where traffic supports one (T7, M5)
-- [ ] Publication treated as `high_impact` with reached traffic stated (S6, S7)
+- [ ] Publication treated as `high_impact` with reached traffic stated (S5, S4)
 
 ## Approval Requirements
 
@@ -167,7 +167,7 @@ Plus: current strategies as read, and placements considered and rejected with th
 | Produce the plan | `plan` | None |
 | Stage placement configuration | `mutation` | Preview, then confirm |
 | Publish to live traffic | `high_impact` | Explicit, per surface, with traffic share shown |
-| Remove an existing placement | `destructive` | Explicit, after reporting what it currently carries (S9) |
+| Remove an existing placement | `destructive` | Explicit, after reporting what it currently carries (S19) |
 
 ## Examples
 
@@ -188,8 +188,8 @@ decision and carries nothing — as the better addition.
 
 | Situation | Response |
 |---|---|
-| `onsite.consent_and_tracking` unavailable | **Blocked.** Strategy permissibility cannot be established (S2, G5) |
-| `onsite.product_intelligence` unavailable | **Blocked.** There is no strategy without affinity or catalogue data |
+| `onboarding.consent_and_tracking` unavailable | **Blocked.** Strategy permissibility cannot be established (S15, G19) |
+| `onboarding.product_intelligence` unavailable | **Blocked.** There is no strategy without affinity or catalogue data |
 | Inventory state unavailable | **Partial.** Design exclusions for cart and recent purchase; state that out-of-stock exclusion cannot be guaranteed (U4) |
 | Per-placement analytics unavailable | **Partial.** Recommend on reasoning; state that current placement value is unmeasured |
 | Cannibalisation not observable | Report attribution only, and state explicitly that no incrementality claim can be made (U5, M3) |

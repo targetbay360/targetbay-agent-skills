@@ -19,7 +19,7 @@ body:
         - "targetbay-email-sms — email and SMS"
         - "targetbay-reviews — reviews and UGC"
         - "targetbay-loyalty — loyalty and referrals"
-        - "targetbay-personalization — onsite personalization"
+        - "targetbay-onboarding — onboarding and onsite"
         - "Repository tooling — validation, install, marketplace"
     validations:
       required: true

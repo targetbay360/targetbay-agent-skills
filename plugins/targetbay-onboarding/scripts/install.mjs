@@ -89,5 +89,5 @@ if (dest.includes(`${join(".claude", "skills")}`)) {
   console.log(`slash commands installed into ${commands}`);
 }
 
-console.log("\nThese skills plan only. They need the TargetBay MCP to read store data across all four products,");
+console.log("\nThese skills plan only. They need the TargetBay MCP to read store data across all three products,");
 console.log("and they never send or activate anything without your explicit approval.");

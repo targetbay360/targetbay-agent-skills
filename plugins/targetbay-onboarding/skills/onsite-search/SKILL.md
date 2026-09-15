@@ -4,9 +4,9 @@ description: Use when onsite search is underperforming — queries returning not
 license: MIT
 metadata:
   targetbay.display_name: Onsite Search
-  targetbay.version: "1.0.0"
+  targetbay.version: "1.1.0"
   targetbay.category: discovery
-  targetbay.requires: onsite.store_profile, onsite.search, onsite.product_intelligence, onsite.experience_analytics, onsite.visitor_intelligence
+  targetbay.requires: onboarding.store_context, onboarding.onsite_search, onboarding.product_intelligence, onboarding.experience_analytics, onboarding.visitor_intelligence
   targetbay.composes: surface-inventory
   targetbay.risk_level: recommendation
   targetbay.execution_mode: plan_then_execute
@@ -61,11 +61,11 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 
 | Capability | Used for |
 |---|---|
-| `onsite.store_profile` | Catalogue size, vertical, traffic volume |
-| `onsite.search` | Query log, result counts, conversion; synonym, redirect and ranking configuration |
-| `onsite.product_intelligence` | Catalogue vocabulary, attributes, stock, margin |
-| `onsite.experience_analytics` | Search-to-purchase funnel against navigation |
-| `onsite.visitor_intelligence` | Session context around the query |
+| `onboarding.store_context` | Catalogue size, vertical, traffic volume |
+| `onboarding.onsite_search` | Query log, result counts, conversion; synonym, redirect and ranking configuration |
+| `onboarding.product_intelligence` | Catalogue vocabulary, attributes, stock, margin |
+| `onboarding.experience_analytics` | Search-to-purchase funnel against navigation |
+| `onboarding.visitor_intelligence` | Session context around the query |
 
 ## Inputs
 
@@ -95,24 +95,24 @@ Binding: [../../rules/global-rules.md](../../rules/global-rules.md),
 [../../rules/measurement-rules.md](../../rules/measurement-rules.md),
 [../../rules/surface-rules.md](../../rules/surface-rules.md).
 
-- Rank by volume times failure, not by failure alone. A query nobody types is not a problem (G1).
+- Rank by volume times failure, not by failure alone. A query nobody types is not a problem (G17).
 - Classify before fixing. A zero-result query caused by a catalogue gap is a merchandising finding and is
   routed out of search; fixing it with a synonym points visitors at something that is not there.
 - Prefer synonyms over redirects for vocabulary mismatches. A redirect hides the mismatch and breaks when
   the catalogue changes; a synonym fixes the vocabulary.
 - Reserve curated landings for queries whose volume justifies the maintenance. Each one is a page somebody
-  has to keep current (G9).
+  has to keep current (G22).
 - State what a ranking change costs as well as what it gains (M7). Promoting margin or stock demotes
   relevance, and that trade is stated rather than assumed.
 - Never rank on a signal the visitor would find surprising if explained. Search results that favour the
   store over the query are a short-term trade against the surface's credibility.
 - Compare search conversion against navigation conversion before concluding search is broken — a gap in
   either direction is informative.
-- Define the metric, comparison and horizon before any change (M1, G13).
+- Define the metric, comparison and horizon before any change (M1, G24).
 - Where traffic supports it, prove a ranking change rather than asserting it (M5), handing off to
   [experience-experimentation](../experience-experimentation/SKILL.md).
 - Publishing a search configuration change is `high_impact` — it changes what every searching visitor sees
-  ([#S6](../../rules/safety-rules.md)).
+  ([#S5](../../rules/safety-rules.md)).
 
 ## Workflow
 
@@ -143,14 +143,14 @@ deliberately left alone.
 
 ## Validation
 
-- [ ] Queries ranked by volume times failure, not by failure count (G1)
+- [ ] Queries ranked by volume times failure, not by failure count (G17)
 - [ ] Every failing query classified before a fix is proposed
 - [ ] Catalogue gaps routed out of search rather than papered over
 - [ ] Synonyms preferred over redirects for vocabulary mismatches
-- [ ] Curated landings justified by volume against maintenance cost (G9)
+- [ ] Curated landings justified by volume against maintenance cost (G22)
 - [ ] Ranking changes state what they demote (M7)
 - [ ] Search conversion compared against navigation
-- [ ] Measurement defined before the change, with metric, comparison and horizon (M1, G13)
+- [ ] Measurement defined before the change, with metric, comparison and horizon (M1, G24)
 - [ ] Ranking changes tested where traffic supports it, or the decision stated as reasoning-based (M5)
 
 ## Approval Requirements
@@ -161,7 +161,7 @@ deliberately left alone.
 | Recommend | `recommendation` | None |
 | Stage configuration | `mutation` | Preview, then confirm |
 | Publish to live search | `high_impact` | Explicit, with affected query volume shown |
-| Remove an existing rule or redirect | `destructive` | Explicit, after reporting what it currently does (S9) |
+| Remove an existing rule or redirect | `destructive` | Explicit, after reporting what it currently does (S19) |
 
 ## Examples
 
@@ -184,7 +184,7 @@ assumption it helps.
 
 | Situation | Response |
 |---|---|
-| `onsite.search` unavailable | **Blocked.** There is no analysis without the query log |
+| `onboarding.onsite_search` unavailable | **Blocked.** There is no analysis without the query log |
 | Per-query conversion unavailable | **Partial.** Zero-result queries can still be ranked; "wrong results" queries cannot be separated from good ones |
 | Catalogue vocabulary unavailable | **Blocked.** Gap and mismatch cannot be distinguished, and the fixes are opposite |
 | Funnel data unavailable | **Partial.** Report query-level findings; state that search-versus-navigation comparison was not possible |

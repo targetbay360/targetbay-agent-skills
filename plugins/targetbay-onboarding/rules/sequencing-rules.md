@@ -14,7 +14,7 @@ configuration that consumes it. A review trigger armed on day sixty cannot ask a
 Capture is the only kind of configuration whose delay destroys value permanently.
 
 ### SQ2. Sequence by what a step spends, not by what it is worth.
-Onsite personalization spends no contact budget
+Onsite work spends no contact budget
 ([contact-ownership-rules.md#X3](contact-ownership-rules.md)), so it can run while everything else is
 still being decided. Anything that reaches an inbox spends a scarce shared resource and waits its turn.
 

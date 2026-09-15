@@ -7,12 +7,12 @@ Constraints on who sees what. Cited as `targeting-rules.md#T3`.
 ### T1. Start from the decision, not from the data.
 Segment because two groups should see different things, not because the platform can tell them apart. A
 targeting scheme derived from available attributes rather than from intended differences produces
-segments nobody can act on ([global-rules.md#G8](global-rules.md)).
+segments nobody can act on ([global-rules.md#G21](global-rules.md)).
 
 ### T2. State the anonymous path for every scheme.
 Most visitors are not identified. Every targeting scheme names what an anonymous visitor sees, and that
 path is designed rather than inherited as a fallback
-([global-rules.md#G12](global-rules.md)).
+([global-rules.md#G23](global-rules.md)).
 
 ### T3. Size every segment before proposing it.
 A segment too small to produce a measurable result is a maintenance cost with no evidence attached. State
@@ -26,7 +26,7 @@ State exclusions explicitly.
 ### T5. Never target on a sensitive attribute or its proxy.
 Health, pregnancy, sexuality, religion, ethnicity, immigration status, financial distress and political
 affiliation are out of bounds, including when inferred from browsing behaviour. Name the proxy when
-rejecting a proposal that uses one ([safety-rules.md#S3](safety-rules.md)).
+rejecting a proposal that uses one ([safety-rules.md#S16](safety-rules.md)).
 
 ### T6. Session intent outranks historical profile for anonymous traffic.
 What a visitor is doing right now — entry query, category viewed, cart state — predicts better than a thin
@@ -39,4 +39,4 @@ default is the baseline, and the burden is on the variant
 
 ### T8. Frequency caps are per visitor, across all surfaces.
 Offers, popups and interstitials compete for the same tolerance. A cap that applies per-campaign rather
-than per-visitor is not a cap ([safety-rules.md#S5](safety-rules.md)).
+than per-visitor is not a cap ([safety-rules.md#S18](safety-rules.md)).

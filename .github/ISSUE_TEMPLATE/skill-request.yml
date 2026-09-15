@@ -17,7 +17,7 @@ body:
         - "targetbay-email-sms — email and SMS"
         - "targetbay-reviews — reviews and UGC"
         - "targetbay-loyalty — loyalty and referrals"
-        - "targetbay-personalization — onsite personalization"
+        - "targetbay-onboarding — onboarding and onsite"
         - "Spans several, or none of them"
     validations:
       required: true

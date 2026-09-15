@@ -36,7 +36,7 @@ This asymmetry is why exclusions are designed first
 Every element added to a page is taken from what the page was already doing. Pages accumulate widgets
 because each was added against an empty-space argument rather than an attention-cost argument, and the
 result converts worse than the simpler page it replaced
-([../rules/global-rules.md#G7](../rules/global-rules.md)).
+([../rules/global-rules.md#G20](../rules/global-rules.md)).
 
 ## Search is the highest-intent surface and the least attended to
 
@@ -55,4 +55,4 @@ durable effect, which is why the horizon matters and why a favourable early resu
 A rules-based experience fails visibly and is fixable. A model-driven one fails quietly and is not, and
 the store cannot explain to a customer why they were shown what they were shown. Where a simpler mechanism
 produces a comparable result, the simpler one is also the one that can be debugged at the point it
-misbehaves ([../rules/global-rules.md#G9](../rules/global-rules.md)).
+misbehaves ([../rules/global-rules.md#G22](../rules/global-rules.md)).

@@ -1,6 +1,6 @@
 ---
 name: context-audit
-description: Use when onboarding a store nobody has looked at yet and the first question is what this store actually is — what TargetBay knows about it, what it already has configured across all four products, and which of those facts are measured rather than assumed. Reads the derived store context and reports what is derived, what is provisional, what is simply absent, and which questions only the store owner can answer. Produces no plan; establishes what a plan could honestly be built from.
+description: Use when onboarding a store nobody has looked at yet and the first question is what this store actually is — what TargetBay knows about it, what it already has configured across all three products, and which of those facts are measured rather than assumed. Reads the derived store context and reports what is derived, what is provisional, what is simply absent, and which questions only the store owner can answer. Produces no plan; establishes what a plan could honestly be built from.
 license: MIT
 metadata:
   targetbay.display_name: Store Context Audit
@@ -36,7 +36,7 @@ partition and stops there.
   skills — for example
   [opportunity-discovery](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-email-sms/skills/opportunity-discovery/SKILL.md)
   or
-  [personalization-audit](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-personalization/skills/personalization-audit/SKILL.md).
+  [personalization-audit](../personalization-audit/SKILL.md).
 - A specific product's configuration is in question rather than the whole store.
 - The answer needed is a plan. This skill deliberately produces none; see
   [onboarding-blueprint](../onboarding-blueprint/SKILL.md).
@@ -46,7 +46,7 @@ partition and stops there.
 | Context | Why it is needed | Without it |
 |---|---|---|
 | The derived store context for this store | The entire input to the audit | Blocked |
-| Capability readiness across all four products | Determines what any later skill can do at all | Blocked |
+| Capability readiness across all three products | Determines what any later skill can do at all | Blocked |
 | Existing coverage per product | A migrated store is rarely empty (G5) | Partial; treat coverage as unknown, never as empty |
 | When the context was computed | A decision made on stale evidence is a different decision | Partial; warn |
 
@@ -122,7 +122,7 @@ Every absent value carries the observation that would make it derivable.
 - [ ] Every provisional and absent value carries its `replaced_by`
 - [ ] No absent value was given a substitute, a range or an approximation
 - [ ] Existing coverage reported per product, including "unknown" where it could not be read (G5)
-- [ ] Readiness matrix complete across all four namespaces
+- [ ] Readiness matrix complete across all three namespaces
 - [ ] `computed_at` stated, and staleness flagged if beyond the pack's TTL
 - [ ] No recommendation, ranking or sequencing appears anywhere in the output
 

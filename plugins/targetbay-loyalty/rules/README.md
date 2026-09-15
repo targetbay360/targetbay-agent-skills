@@ -19,7 +19,7 @@ a total no single product can see.
 
 Which moment belongs to which product is settled once, in
 [contact-ownership-rules.md](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-onboarding/rules/contact-ownership-rules.md), which ships with the
-`targetbay-onboarding` plugin because it is the only one whose registry may span all four products.
+`targetbay-onboarding` plugin because it is the only one whose registry may span all three products.
 **Owns the programme-state moment — points, tiers, rewards, referrals — though the messages themselves may dispatch through Email & SMS (X2, X5).**
 
 Those rules are not installed with this plugin. When a store runs more than one TargetBay product, read

@@ -56,7 +56,7 @@ The package is also mirrored to GitHub Packages. That registry requires a GitHub
 public package, so npmjs above is the path to use unless your organisation already standardises on it.
 
 > This plugin lives in the [TargetBay Agent Skills](https://github.com/targetbay360/targetbay-agent-skills)
-> marketplace alongside skills for Reviews, Loyalty and Personalization. Adding the marketplace once lets
+> marketplace alongside skills for Reviews, Loyalty and onboarding. Adding the marketplace once lets
 > you install any of them; each versions and releases independently.
 >
 > Previously published as `@targetbay/targetbay-email-sms-marketing-skills` from a repository of the same

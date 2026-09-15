@@ -9,7 +9,7 @@ Every placement sits in front of a specific visitor decision — which product, 
 proceed, whether to search again. A placement that does not is decoration and is rejected as such.
 
 ### U2. State what a new placement displaces.
-Attention is finite ([global-rules.md#G7](global-rules.md)). Every addition names what moves down or comes
+Attention is finite ([global-rules.md#G20](global-rules.md)). Every addition names what moves down or comes
 off, or states why the surface genuinely had room.
 
 ### U3. Match the strategy to the surface, not to the catalogue.

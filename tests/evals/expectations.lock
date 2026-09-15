@@ -88,12 +88,12 @@
     "skill_version": "1.0.0"
   },
   "ob-001": {
-    "hash": "7516224240dcfbfc",
-    "skill_version": "0.1.0"
+    "hash": "5d207b96911405cb",
+    "skill_version": "0.2.0"
   },
   "ob-002": {
-    "hash": "2abed6e2535b256e",
-    "skill_version": "0.1.0"
+    "hash": "e1f9924114166d18",
+    "skill_version": "0.2.0"
   },
   "ob-003": {
     "hash": "3aee992dee296882",
@@ -109,7 +109,7 @@
   },
   "ob-006": {
     "hash": "fc091430d603bf9b",
-    "skill_version": "0.1.0"
+    "skill_version": "0.2.0"
   },
   "ob-safe-001": {
     "hash": "4a84a893ca523291",
@@ -117,11 +117,11 @@
   },
   "ob-safe-002": {
     "hash": "8a54f3da0921c668",
-    "skill_version": "0.1.0"
+    "skill_version": "0.2.0"
   },
   "ob-safe-003": {
     "hash": "4067ca4bc0c76d7f",
-    "skill_version": "0.1.0"
+    "skill_version": "0.2.0"
   },
   "ob-safe-004": {
     "hash": "d56f425b2a272613",
@@ -196,44 +196,44 @@
     "skill_version": "2.0.0"
   },
   "pz-001": {
-    "hash": "298badec33578971",
-    "skill_version": "1.0.0"
+    "hash": "79dcefb843feffe8",
+    "skill_version": "1.1.0"
   },
   "pz-002": {
     "hash": "33d89ff233526f4f",
-    "skill_version": "1.0.0"
+    "skill_version": "1.1.0"
   },
   "pz-003": {
     "hash": "f8e389b791246e45",
-    "skill_version": "1.0.0"
+    "skill_version": "1.1.0"
   },
   "pz-004": {
-    "hash": "83bd23ac1a7a1727",
-    "skill_version": "1.0.0"
+    "hash": "926aa2ee8ce5ece0",
+    "skill_version": "1.1.0"
   },
   "pz-005": {
-    "hash": "df0d5a175b586e71",
-    "skill_version": "1.0.0"
+    "hash": "1b319e838878a9c8",
+    "skill_version": "1.1.0"
   },
   "pz-006": {
-    "hash": "47e7d7fe0b8721cc",
-    "skill_version": "1.0.0"
+    "hash": "31858eceb67f5e8f",
+    "skill_version": "1.1.0"
   },
   "pz-safe-001": {
-    "hash": "f775fee065b943ac",
-    "skill_version": "1.0.0"
+    "hash": "b7135e8a9ab1e81d",
+    "skill_version": "1.1.0"
   },
   "pz-safe-002": {
-    "hash": "bff8d6caf25de89c",
-    "skill_version": "1.0.0"
+    "hash": "9607afd2624010ad",
+    "skill_version": "1.1.0"
   },
   "pz-safe-003": {
-    "hash": "fe7e5a7cb9438cae",
-    "skill_version": "1.0.0"
+    "hash": "d2d2e95faa5997b2",
+    "skill_version": "1.1.0"
   },
   "pz-safe-004": {
-    "hash": "3d76eccc3db13276",
-    "skill_version": "1.0.0"
+    "hash": "888d3a57faa242f6",
+    "skill_version": "1.1.0"
   },
   "rev-001": {
     "hash": "81ef5732fb0efd07",

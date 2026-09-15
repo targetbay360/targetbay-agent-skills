@@ -4,9 +4,9 @@ description: Use for an open-ended assessment of a store's whole onsite experien
 license: MIT
 metadata:
   targetbay.display_name: Personalization Audit
-  targetbay.version: "1.0.0"
+  targetbay.version: "1.1.0"
   targetbay.category: planning
-  targetbay.requires: onsite.store_profile, onsite.consent_and_tracking, onsite.recommendation_placement, onsite.recommendation_analytics, onsite.offers, onsite.offer_analytics, onsite.search, onsite.experimentation, onsite.experience_analytics, onsite.visitor_intelligence
+  targetbay.requires: onboarding.store_context, onboarding.consent_and_tracking, onboarding.recommendation_placement, onboarding.recommendation_analytics, onboarding.offers, onboarding.offer_analytics, onboarding.onsite_search, onboarding.experimentation, onboarding.experience_analytics, onboarding.visitor_intelligence
   targetbay.composes: surface-inventory, recommendation-strategy, offer-targeting, onsite-search, experience-experimentation
   targetbay.risk_level: recommendation
   targetbay.execution_mode: recommend_only
@@ -59,14 +59,14 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 
 | Capability | Used for |
 |---|---|
-| `onsite.consent_and_tracking` | The precondition dimension |
-| `onsite.store_profile` | Traffic volume, catalogue size, vertical |
-| `onsite.recommendation_placement` / `onsite.recommendation_analytics` | Recommendation dimension |
-| `onsite.offers` / `onsite.offer_analytics` | Offer and interruption dimension |
-| `onsite.search` | Discovery dimension |
-| `onsite.experimentation` | Measurement discipline dimension |
-| `onsite.experience_analytics` | Funnel dimension and baselines |
-| `onsite.visitor_intelligence` | Traffic composition and session signal availability |
+| `onboarding.consent_and_tracking` | The precondition dimension |
+| `onboarding.store_context` | Traffic volume, catalogue size, vertical |
+| `onboarding.recommendation_placement` / `onboarding.recommendation_analytics` | Recommendation dimension |
+| `onboarding.offers` / `onboarding.offer_analytics` | Offer and interruption dimension |
+| `onboarding.onsite_search` | Discovery dimension |
+| `onboarding.experimentation` | Measurement discipline dimension |
+| `onboarding.experience_analytics` | Funnel dimension and baselines |
+| `onboarding.visitor_intelligence` | Traffic composition and session signal availability |
 
 ## Inputs
 
@@ -95,20 +95,20 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 Binding: [../../rules/global-rules.md](../../rules/global-rules.md), and every domain rule file through
 the skills this one composes.
 
-- Read consent first (G5, [#S2](../../rules/safety-rules.md)). A ranked plan built on profiling that is not
+- Read consent first (G19, [#S15](../../rules/safety-rules.md)). A ranked plan built on profiling that is not
   permitted here has to be rewritten from the top.
 - Find the binding constraint before ranking. Adding recommendations to a site whose largest funnel drop is
   at delivery cost moves nothing.
 - Do not default to "add personalization." Removing an element that costs attention and earns nothing is
   frequently the highest-value finding, and it is the one least often proposed
-  ([../../rules/global-rules.md#G7](../../rules/global-rules.md)).
+  ([../../rules/global-rules.md#G20](../../rules/global-rules.md)).
 - Assess measurement discipline as its own dimension. A store that has never proved an onsite change does
   not know which of its current elements help, and that is a finding about every other dimension
   ([../../rules/measurement-rules.md#M1](../../rules/measurement-rules.md)).
-- Report the anonymous share of traffic, and treat an identified-only experience as a finding (G12).
+- Report the anonymous share of traffic, and treat an identified-only experience as a finding (G23).
 - Report healthy dimensions explicitly. An audit that lists only problems cannot be checked for
   completeness, and creates pressure to change what is working.
-- Route every finding to the skill that owns it rather than restating that skill's reasoning here (G14).
+- Route every finding to the skill that owns it rather than restating that skill's reasoning here (G13).
 - Rank by value against effort, and state the evidence for both (G2). Where value cannot be sized, say so
   and rank on reasoning with lower confidence (G15).
 - Never recommend an action this skill would execute. `recommend_only` is the ceiling; the owning skills
@@ -140,12 +140,12 @@ assessed.
 
 ## Validation
 
-- [ ] Consent read first and its implications stated (G5, S2)
+- [ ] Consent read first and its implications stated (G19, S15)
 - [ ] Every dimension assessed or explicitly reported as unassessable (G15)
 - [ ] Binding constraint named, with the reasoning for why it binds
-- [ ] Removal considered alongside addition (G7)
+- [ ] Removal considered alongside addition (G20)
 - [ ] Measurement discipline assessed as its own dimension (M1)
-- [ ] Anonymous traffic share reported (G12)
+- [ ] Anonymous traffic share reported (G23)
 - [ ] Each finding routed to exactly one owning skill
 - [ ] Healthy dimensions reported, not omitted
 - [ ] Ranking states value and effort evidence, or declares the confidence is low (G2)
@@ -180,7 +180,7 @@ any personalised path would reach a minority regardless.
 
 | Situation | Response |
 |---|---|
-| `onsite.consent_and_tracking` unavailable | **Blocked.** Every recommendation depends on what is permissible (S2, G5) |
+| `onboarding.consent_and_tracking` unavailable | **Blocked.** Every recommendation depends on what is permissible (S15, G19) |
 | Surface inventory unavailable | **Blocked.** Composed skill blocked; there is nothing to audit |
 | One or more dimensions unreadable | **Partial.** Audit the rest, name the unassessed dimensions explicitly, and lower the ranking confidence |
 | Funnel data unavailable | **Partial.** The binding constraint may sit outside what was measured; say so |

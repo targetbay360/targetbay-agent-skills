@@ -4,9 +4,9 @@ description: Use when the question is what onsite personalization currently exis
 license: MIT
 metadata:
   targetbay.display_name: Surface Inventory
-  targetbay.version: "1.0.0"
-  targetbay.category: personalization
-  targetbay.requires: onsite.store_profile, onsite.consent_and_tracking, onsite.recommendation_placement, onsite.recommendation_analytics, onsite.offers, onsite.offer_analytics, onsite.experience_analytics, onsite.search
+  targetbay.version: "1.1.0"
+  targetbay.category: onsite
+  targetbay.requires: onboarding.store_context, onboarding.consent_and_tracking, onboarding.recommendation_placement, onboarding.recommendation_analytics, onboarding.offers, onboarding.offer_analytics, onboarding.experience_analytics, onboarding.onsite_search
   targetbay.risk_level: analysis
   targetbay.execution_mode: analyze_only
   targetbay.status: foundation
@@ -19,9 +19,9 @@ metadata:
 Establish what is currently running on the store's surfaces, what each element is doing, and where
 attention is being spent without return.
 
-Every other skill in this plugin needs the same foundation: the map of surfaces, what occupies them, and
+Every other onsite skill here needs the same foundation: the map of surfaces, what occupies them, and
 what consent permits. Deriving it once, here, stops five skills from proposing additions to pages that are
-already crowded ([../../rules/global-rules.md#G6](../../rules/global-rules.md)).
+already crowded ([../../rules/global-rules.md#G5](../../rules/global-rules.md)).
 
 ## When to Use
 
@@ -60,14 +60,14 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 
 | Capability | Used for |
 |---|---|
-| `onsite.consent_and_tracking` | What may be collected or acted on, and for which traffic |
-| `onsite.store_profile` | Catalogue size, traffic volume, vertical |
-| `onsite.recommendation_placement` | Which placements exist, on which surfaces, with which strategy |
-| `onsite.recommendation_analytics` | Per-placement impressions, clicks, attributed revenue |
-| `onsite.offers` | Which offers run, with what targeting and frequency |
-| `onsite.offer_analytics` | Per-offer engagement, dismissal and conversion |
-| `onsite.experience_analytics` | Page and funnel baselines the elements sit inside |
-| `onsite.search` | Search configuration as a surface in the inventory |
+| `onboarding.consent_and_tracking` | What may be collected or acted on, and for which traffic |
+| `onboarding.store_context` | Catalogue size, traffic volume, vertical |
+| `onboarding.recommendation_placement` | Which placements exist, on which surfaces, with which strategy |
+| `onboarding.recommendation_analytics` | Per-placement impressions, clicks, attributed revenue |
+| `onboarding.offers` | Which offers run, with what targeting and frequency |
+| `onboarding.offer_analytics` | Per-offer engagement, dismissal and conversion |
+| `onboarding.experience_analytics` | Page and funnel baselines the elements sit inside |
+| `onboarding.onsite_search` | Search configuration as a surface in the inventory |
 
 ## Inputs
 
@@ -97,16 +97,16 @@ Binding: [../../rules/global-rules.md](../../rules/global-rules.md),
 [../../rules/surface-rules.md](../../rules/surface-rules.md),
 [../../rules/safety-rules.md](../../rules/safety-rules.md).
 
-- Read consent before anything else (G5, [#S2](../../rules/safety-rules.md)). The inventory states what is
+- Read consent before anything else (G19, [#S15](../../rules/safety-rules.md)). The inventory states what is
   currently permissible, not only what is currently configured — those can differ, and where they do it is
   the most important finding on the page.
 - Name the decision every surface hosts (U1). A placement sitting in front of no decision is reported as
   decoration regardless of its engagement numbers.
-- Evaluate elements on outcome, never on impressions (U7, G1). An element with high engagement and no
+- Evaluate elements on outcome, never on impressions (U7, G17). An element with high engagement and no
   conversion effect is a candidate for removal, not for expansion.
-- Report the anonymous share of traffic explicitly (G12). An elaborate identified-visitor experience
+- Report the anonymous share of traffic explicitly (G23). An elaborate identified-visitor experience
   reaching a small minority is a finding.
-- State attribution limits wherever attributed revenue is reported (G4). Revenue flowing through a
+- State attribution limits wherever attributed revenue is reported (G18). Revenue flowing through a
   placement is not revenue caused by it.
 - Report empty surfaces — pages hosting a real decision with nothing helping — alongside crowded ones. Both
   are inventory findings.
@@ -137,11 +137,11 @@ No recommendations to act are produced here — the acting skills compose this o
 
 ## Validation
 
-- [ ] Consent state read first, and what it permits stated (G5, S2)
+- [ ] Consent state read first, and what it permits stated (G19, S15)
 - [ ] Every surface's hosted decision named, or the surface reported as decoration (U1)
-- [ ] Every element assessed on outcome, not impressions (U7, G1)
-- [ ] Attribution limits stated wherever attributed revenue appears (G4)
-- [ ] Anonymous traffic share reported explicitly (G12)
+- [ ] Every element assessed on outcome, not impressions (U7, G17)
+- [ ] Attribution limits stated wherever attributed revenue appears (G18)
+- [ ] Anonymous traffic share reported explicitly (G23)
 - [ ] Surfaces with a decision and no help reported, not only crowded ones
 - [ ] Working elements reported as working
 - [ ] No change proposed from this skill
@@ -168,18 +168,18 @@ page — which hosts the clearest completion decision in the funnel — carries 
 Consent state shows most EU traffic has not granted tracking, so the identified-visitor paths those
 elements depend on never resolve. Reports that the configured experience and the permissible experience
 differ for the majority of that traffic, and that the anonymous path was never designed — which is the
-finding, rather than anything about the elements themselves (G12, T2).
+finding, rather than anything about the elements themselves (G23, T2).
 
 ## Failure Handling
 
 | Situation | Response |
 |---|---|
-| `onsite.consent_and_tracking` unavailable | **Blocked.** What is permissible cannot be established, and an inventory that assumes permission is not usable (S2, G5) |
-| `onsite.recommendation_placement` or `onsite.offers` unavailable | **Blocked.** There is no inventory without the elements |
+| `onboarding.consent_and_tracking` unavailable | **Blocked.** What is permissible cannot be established, and an inventory that assumes permission is not usable (S15, G19) |
+| `onboarding.recommendation_placement` or `onboarding.offers` unavailable | **Blocked.** There is no inventory without the elements |
 | Per-element analytics unavailable | **Partial.** Report the inventory and the decisions hosted; state that element value is unassessed |
 | Page performance unavailable | **Partial.** Elements cannot be compared against a baseline; say so and lower confidence |
-| Traffic composition unavailable | **Partial.** Report that the reach of identified-visitor paths is unknown (G12) |
-| Attribution method not exposed | Report attributed revenue with its method marked unknown, and do not call any of it incremental (G4, U5) |
+| Traffic composition unavailable | **Partial.** Report that the reach of identified-visitor paths is unknown (G23) |
+| Attribution method not exposed | Report attributed revenue with its method marked unknown, and do not call any of it incremental (G18, U5) |
 | Nothing is configured | Report that, with the surfaces that host decisions and carry nothing. An empty inventory is a valid and useful result |
 
 Degraded outcomes set `status` and populate `unmet_requirements`.
