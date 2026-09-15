@@ -5,6 +5,32 @@ own changelog under `plugins/<name>/CHANGELOG.md`, and versions independently.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2026-09-15] A standalone reference skill for the sending layer
+
+The plugins decide what a store should do. Nothing in the repository explained how the sending layer
+underneath them works — SPF alignment, 10DLC registration, one-click unsubscribe headers, webhook
+signature verification, suppression scope. That material is deliberately excluded from the plugin
+contract by `rules/global-rules.md#G10`, which treats it as a platform responsibility, so it had
+nowhere to live and was simply absent.
+
+### Added
+
+- **`targetbay-email-sms-best-practices/`**, a standalone agent skill outside `plugins/`: a routing
+  hub plus fourteen references covering email and SMS deliverability, CAN-SPAM/GDPR/CASL and
+  TCPA/state compliance, the transactional message catalog, ecommerce lifecycle flows, capture and
+  consent, suppression and hygiene, idempotency and retry, delivery events, and accessibility.
+  It does not follow the fourteen-section plugin contract and is not registered in
+  `marketplace.json` — it is reference material for an engineer, not a decision skill for an agent.
+- **Two boundaries stated in the skill itself.** Code examples call a wrapper the reader owns rather
+  than an SDK method, because the TargetBay API and webhook signatures were not inspected; and every
+  figure is either an attributed external requirement or labelled illustrative, which is the same
+  rule the plugins follow.
+
+### Changed
+
+- **`README.md` documents the directory** in the repository layout and in a section explaining why a
+  skill that breaks the plugin contract is the correct shape for this content.
+
 ## [2026-09-12] BayEngage renamed to TargetBay Email & SMS
 
 The restructure below left one plugin naming itself differently from the other three. This entry closes
