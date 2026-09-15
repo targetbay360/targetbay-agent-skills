@@ -10,7 +10,7 @@
 # Never add a capability here to justify a skill. Add it only when the underlying
 # TargetBay Reviews platform genuinely exposes that class of data or action.
 
-version: 1.0.0
+version: 1.1.0
 
 # access values:
 #   read   - retrieves data, no state change
@@ -20,7 +20,10 @@ access_levels: [read, write, send]
 
 capabilities:
   - id: reviews.store_profile
-    description: Store identity, vertical, currency, locale, catalogue size, review programme age and plan limits.
+    description: >-
+      Store identity, vertical, currency, locale, catalogue size, review programme age and plan limits.
+      Also carries the derived Store Context Pack once the store has been onboarded — see
+      https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-onboarding/schemas/context-pack.schema.json
     access: read
     mcp_tools: TODO
 

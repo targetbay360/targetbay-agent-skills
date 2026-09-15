@@ -5,6 +5,99 @@ own changelog under `plugins/<name>/CHANGELOG.md`, and versions independently.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2026-09-15] Personalization stops being a separate product
+
+`targetbay-personalization` was listed and installed as a product alongside Email & SMS, Reviews and
+Loyalty. It is not a product. It is the step every product's onboarding starts with — the onsite capture
+that spends no contact budget and that cannot be added retroactively — and listing it separately meant a
+store could complete onboarding without it.
+
+The plugin is removed. Its six skills, three rule files, two knowledge documents and twelve capabilities
+now live in `targetbay-onboarding`, which goes to `0.2.0`. Details, including the rule-citation changes,
+are in [plugins/targetbay-onboarding/CHANGELOG.md](plugins/targetbay-onboarding/CHANGELOG.md).
+
+### Removed
+
+- **`targetbay-personalization`**, from `.claude-plugin/marketplace.json`, the README install list and the
+  issue templates. `npx @targetbay/personalization-skills` is no longer published.
+
+### Changed
+
+- **The marketplace is four plugins: three products and onboarding.** Every "all four products" in shared
+  prose is now three, and `targetbay-onboarding` describes itself as carrying the onsite work rather than
+  sequencing a fourth product that would do it.
+
+- **`docs/mcp-capability-inventory.md` counts 58 capabilities across four plugins**, down from 59 across
+  five: `onsite.store_profile` is retired into `onboarding.store_context`, which already carried the same
+  values.
+
+- **Golden prompts moved.** `tests/evals/golden-prompts/targetbay-personalization/` is now
+  `onsite-coverage.yaml` and `onsite-safety.yaml` under `targetbay-onboarding/`, with their rule
+  citations remapped to the merged numbering.
+
+## [2026-09-12] Onboarding becomes a plugin
+
+A store's first week is where it decides whether TargetBay is worth keeping, and it was the part of the
+marketplace with no home. Four product plugins each knew how to run their own product well; nothing knew
+what to do first, or how to stop all four from talking to the same customer at once.
+
+This entry records the repository-level changes. What the plugin contains, and why, is in
+[plugins/targetbay-onboarding/CHANGELOG.md](plugins/targetbay-onboarding/CHANGELOG.md).
+
+### Added
+
+- **A fifth plugin, `targetbay-onboarding`**, at `0.1.0` — four skills, its own `onboarding.*` registry,
+  and the cross-product rules the four product plugins cannot own. It is a separate plugin because
+  `tests/validate.py` makes it one: a plugin's capability identifiers may not span namespaces, and
+  `composes:` may only name skills in the same plugin, so a skill needing `email_sms.*`, `reviews.*`,
+  `loyalty.*` and `onsite.*` at once has nowhere else to live.
+
+- **`docs/mcp-capability-inventory.md`** — the Phase 0 worksheet. All 59 capabilities across the five
+  plugins are still `TODO`; this names the three answers that decide how far the onboarding pipeline can
+  go, and sends them into the registries rather than into a worksheet that drifts.
+
+### Changed
+
+- **Cross-product contact is reconciled.** The rules live in
+  `plugins/targetbay-onboarding/rules/contact-ownership-rules.md`; each of the four product plugins now
+  carries a pointer to them in its own `rules/README.md`, naming which moment that product owns and
+  stating plainly that those rules do not install alongside it. The residual dependency is recorded
+  honestly in X9: ownership is settled here, but *enforcement* needs a unified cross-product frequency
+  and consent view from the MCP, and where that does not exist the budget is labelled provisional rather
+  than claimed.
+
+- **Every `<ns>.store_profile` description now names the Store Context Pack**, in all four product
+  registries, which are bumped to `1.1.0`. One sentence, four times: it is what gives every skill that
+  already requires `store_profile` a store-specific context with no frontmatter change anywhere.
+
+- **`store-onboarding` narrowed to email and SMS**, and `targetbay-email-sms` bumped to `3.1.0`. The
+  cross-product question now belongs to `onboarding-blueprint`. The skill also gained the word
+  *onboarding* in its `description` — measured, not cosmetic: `store` and `new` are both in the eval
+  harness's `STOPWORDS`, so *"Onboard this new store"* reduced to the single term `onboard`, which the
+  skill carried nowhere. It ranked 23rd of 24 against its own subject. It now ranks 1st, pinned by a new
+  golden prompt so the word cannot be removed again with the suite still green.
+
+- **`tests/validate.py` now polices stale TODOs.** A wholly unmapped registry is the documented state of
+  an un-inspected MCP and stays legal. A *partly* mapped one is different: once real tools start landing,
+  every remaining `mcp_tools: TODO` must carry a `notes` saying why. "Not mapped yet" cannot quietly
+  become "nobody looked".
+
+- **The link sweep now resolves cross-plugin GitHub URLs.** A plugin may not link outside itself by
+  relative path, so siblings are referenced by full URL to this repository — and those were the only
+  links the sweep skipped. They now resolve to a path and are checked, which is what makes the
+  contact-ownership pointers above enforceable rather than decorative.
+
+### Known gaps
+
+- **Nothing is mapped yet.** All 59 capabilities are `TODO`, and four are flagged unverified. See
+  `docs/mcp-capability-inventory.md`.
+- **The contact budget is not enforceable from this repository.** The rules decide ownership; enforcement
+  needs the platform.
+- **The shared layer is now duplicated five times**, not four — and the fifth copy made the *drift*
+  worse, not just the line count: the same nine shared rules now carry five different anchor numbers, so
+  a cross-plugin citation like `safety-rules.md#S12` means different things in different plugins.
+  Extraction remains the next structural change, and was deliberately not coupled to this one.
+
 ## [2026-09-12] BayEngage renamed to TargetBay Email & SMS
 
 The restructure below left one plugin naming itself differently from the other three. This entry closes
@@ -80,4 +173,4 @@ root; it now holds four under `plugins/`, and can hold more without any of them 
   is the next structural change.
 - **Cross-product contact is unreconciled.** BayEngage, Reviews and Loyalty can each decide to contact the
   same customer. Each plugin's `docs/mcp-integration.md` records the question; none of them can answer it
-  alone.
+  alone. *Answered by `targetbay-onboarding` — see the entry at the top of this file.*
