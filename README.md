@@ -98,6 +98,7 @@ tests/                            shared validation and golden prompts
 plugins/<name>/                   a product plugin — self-contained
   skills/  rules/  knowledge/  schemas/  docs/  commands/
   capabilities.yaml  VERSION  CHANGELOG.md  package.json
+targetbay-email-sms-best-practices/   a standalone reference skill — see below
 ```
 
 Every plugin is self-contained because Claude Code ships only what lives under a plugin's `source`
@@ -106,6 +107,29 @@ referenced by full URL. `tests/validate.py` sweeps the whole repository and fail
 does not resolve, so the boundary is enforced rather than remembered.
 
 Plugins version and release independently, tagged `<plugin>@<version>`.
+
+## The standalone reference skill
+
+`targetbay-email-sms-best-practices/` sits outside `plugins/` deliberately. It is a routing hub plus
+fourteen reference documents covering the layer beneath the plugins: DNS authentication, A2P 10DLC
+registration, consent law, delivery events, suppression and accessibility.
+
+It does not follow the plugin contract, and should not be made to. The plugins decide *what a store
+should do* against declared MCP capabilities — no request code, no asserted thresholds, and
+deliverability and compliance explicitly treated as platform responsibilities
+([`rules/global-rules.md#G10`](plugins/targetbay-email-sms/rules/global-rules.md)). This skill is
+exactly that excluded material: it teaches an engineer how the sending layer works, so it carries
+implementation patterns and cites published external requirements by name.
+
+Two boundaries it holds:
+
+- **No invented API.** Code examples call your own `sendEmail(...)` / `verifySignature(...)` wrapper.
+  Webhook headers and event names are flagged as "confirm in TargetBay's documentation".
+- **No borrowed numbers.** Published provider and regulatory requirements are attributed as such;
+  anything else is labelled illustrative or described as a derivation from store data.
+
+Install it by copying the directory into an agent host's skills path; it has no dependencies and is
+not published to the marketplace.
 
 ## What every plugin has in common
 
