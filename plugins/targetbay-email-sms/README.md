@@ -3,7 +3,7 @@
 A vendor-neutral AI Agent Skills package that teaches agents **how to accomplish email and SMS marketing
 outcomes** using TargetBay Email & SMS.
 
-[![version](https://img.shields.io/badge/version-2.1.0-blue)](VERSION)
+[![version](https://img.shields.io/badge/version-3.1.0-blue)](VERSION)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![agent skills](https://img.shields.io/badge/Agent%20Skills-conformant-7c3aed)](https://agentskills.io/specification)
 [![validate](https://github.com/targetbay360/targetbay-agent-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/targetbay360/targetbay-agent-skills/actions/workflows/validate.yml)
@@ -56,7 +56,7 @@ The package is also mirrored to GitHub Packages. That registry requires a GitHub
 public package, so npmjs above is the path to use unless your organisation already standardises on it.
 
 > This plugin lives in the [TargetBay Agent Skills](https://github.com/targetbay360/targetbay-agent-skills)
-> marketplace alongside skills for Reviews, Loyalty and Personalization. Adding the marketplace once lets
+> marketplace alongside skills for Reviews, Loyalty and onboarding. Adding the marketplace once lets
 > you install any of them; each versions and releases independently.
 >
 > Previously published as `@targetbay/targetbay-email-sms-marketing-skills` from a repository of the same
@@ -213,7 +213,7 @@ The package is defined as much by its constraints as its content. Every skill:
 
 ## Status
 
-**2.0.0 — foundation, published.** Contracts established, reasoning real, workflows not yet hardened
+**3.1.0 — foundation, published.** Contracts established, reasoning real, workflows not yet hardened
 against a live TargetBay Email & SMS MCP. Every objective area named in the product brief now has a skill, and the
 package now installs four ways.
 

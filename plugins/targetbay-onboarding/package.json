@@ -1,0 +1,58 @@
+{
+  "name": "@targetbay/onboarding-skills",
+  "version": "0.2.0",
+  "description": "Agent Skills package teaching AI agents how to onboard a store onto TargetBay \u2014 what this store actually is, what to set up first across email, SMS, reviews and loyalty, the onsite capture that goes in before any of them, and in what order.",
+  "keywords": [
+    "agent-skills",
+    "claude",
+    "mcp",
+    "onboarding",
+    "implementation",
+    "activation",
+    "onsite",
+    "personalization",
+    "ecommerce",
+    "targetbay"
+  ],
+  "homepage": "https://github.com/targetbay360/targetbay-agent-skills#readme",
+  "bugs": {
+    "url": "https://github.com/targetbay360/targetbay-agent-skills/issues",
+    "email": "support@targetbay.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/targetbay360/targetbay-agent-skills.git",
+    "directory": "plugins/targetbay-onboarding"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "TargetBay",
+    "email": "support@targetbay.com",
+    "url": "https://targetbay.com"
+  },
+  "type": "module",
+  "bin": {
+    "targetbay-onboarding-skills": "scripts/install.mjs"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "skills",
+    "rules",
+    "knowledge",
+    "schemas",
+    "commands",
+    ".claude-plugin",
+    "scripts/install.mjs",
+    "scripts/install.sh",
+    "capabilities.yaml",
+    "VERSION",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

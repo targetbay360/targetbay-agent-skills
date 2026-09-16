@@ -6,6 +6,32 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). See [docs/versioning.md](docs/versioning.md)
 for how package and per-skill versions relate.
 
+## [3.1.0] - 2026-09-12
+
+`store-onboarding` is now scoped to email and SMS, and is findable by the word people actually use.
+
+### Changed
+
+- **`store-onboarding` narrowed to email and SMS, and bumped to `2.0.0`.** Cross-product onboarding —
+  sequencing reviews, loyalty and onsite personalization alongside email and SMS against a single contact
+  budget — now belongs to
+  [`onboarding-blueprint`](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-onboarding/skills/onboarding-blueprint/SKILL.md)
+  in the new `targetbay-onboarding` plugin, which this skill's `When Not to Use` links by full URL.
+
+- **`store-onboarding` gained the word *onboarding*** in its `description` and `When to Use`. This reads
+  cosmetic and is not. `store` and `new` are both in `tests/evals/run_evals.py`'s `STOPWORDS`, so the
+  prompt *"Onboard this new store"* reduced to the single term `onboard` — which the skill carried
+  nowhere. It ranked 23rd of 24 against its own subject while passing its suite, because the one golden
+  prompt it had happened to use vocabulary it did carry. It now ranks 1st.
+
+- **`email_sms.store_profile` now names the Store Context Pack**, and `capabilities.yaml` is bumped to
+  `1.1.0`. No skill frontmatter changed: every skill already requiring `store_profile` gains the derived
+  vertical, catalogue shape, customer shape, brand profile and readiness matrix through the capability it
+  already declares.
+
+- **Eval case `plan-003` reworded** to stay within email and SMS, with a `must_not` forbidding the skill
+  from planning reviews, loyalty or onsite work.
+
 ## [3.0.0] - 2026-09-12
 
 Renamed from BayEngage to TargetBay Email & SMS. The package was the last one in the marketplace still

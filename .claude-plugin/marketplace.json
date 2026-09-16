@@ -10,37 +10,72 @@
       "name": "targetbay-email-sms",
       "source": "./plugins/targetbay-email-sms",
       "description": "Email and SMS marketing skills for TargetBay Email & SMS: planning, audience selection, automation design, win-back, holiday sequencing and campaign diagnosis.",
-      "version": "3.0.0",
-      "author": { "name": "TargetBay" },
+      "version": "3.1.0",
+      "author": {
+        "name": "TargetBay"
+      },
       "homepage": "https://targetbay.com",
-      "keywords": ["email-marketing", "sms-marketing", "ecommerce", "targetbay"]
+      "keywords": [
+        "email-marketing",
+        "sms-marketing",
+        "ecommerce",
+        "targetbay"
+      ]
     },
     {
       "name": "targetbay-reviews",
       "source": "./plugins/targetbay-reviews",
       "description": "Review and UGC skills for TargetBay Reviews: when to ask for a review, which products lack social proof, recovering from low ratings, harvesting photo and video UGC, and where proof belongs.",
       "version": "0.1.0",
-      "author": { "name": "TargetBay" },
+      "author": {
+        "name": "TargetBay"
+      },
       "homepage": "https://targetbay.com",
-      "keywords": ["reviews", "ugc", "social-proof", "ecommerce", "targetbay"]
+      "keywords": [
+        "reviews",
+        "ugc",
+        "social-proof",
+        "ecommerce",
+        "targetbay"
+      ]
     },
     {
       "name": "targetbay-loyalty",
       "source": "./plugins/targetbay-loyalty",
       "description": "Loyalty and referral skills for TargetBay Loyalty: program and tier design, points economics, reward catalogue, redemption health and recovering members who are going quiet.",
       "version": "0.1.0",
-      "author": { "name": "TargetBay" },
+      "author": {
+        "name": "TargetBay"
+      },
       "homepage": "https://targetbay.com",
-      "keywords": ["loyalty", "rewards", "referrals", "retention", "ecommerce", "targetbay"]
+      "keywords": [
+        "loyalty",
+        "rewards",
+        "referrals",
+        "retention",
+        "ecommerce",
+        "targetbay"
+      ]
     },
     {
-      "name": "targetbay-personalization",
-      "source": "./plugins/targetbay-personalization",
-      "description": "Onsite personalization skills for TargetBay Personalization: recommendation placement, offer targeting, visitor segmentation, onsite search and experience experimentation.",
-      "version": "0.1.0",
-      "author": { "name": "TargetBay" },
+      "name": "targetbay-onboarding",
+      "source": "./plugins/targetbay-onboarding",
+      "description": "Cross-product onboarding skills for TargetBay: auditing what is actually known about a new store, asking only what the platform cannot observe, setting up the onsite capture \u2014 placements, offers, search and tracking \u2014 that has to go in first, sequencing the first ninety days across all three products, and provisioning the result without activating it.",
+      "version": "0.2.0",
+      "author": {
+        "name": "TargetBay"
+      },
       "homepage": "https://targetbay.com",
-      "keywords": ["personalization", "recommendations", "onsite", "cro", "ecommerce", "targetbay"]
+      "keywords": [
+        "onboarding",
+        "implementation",
+        "activation",
+        "onsite",
+        "personalization",
+        "recommendations",
+        "ecommerce",
+        "targetbay"
+      ]
     }
   ]
 }

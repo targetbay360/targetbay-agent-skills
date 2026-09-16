@@ -40,8 +40,10 @@ treats display and distribution as a separate problem from collection.
   [rating-diagnosis](../rating-diagnosis/SKILL.md).
 - The question is the whole programme's health. Use
   [review-program-audit](../review-program-audit/SKILL.md).
-- The change being considered is a general onsite personalization decision rather than a proof one — that
-  belongs to the personalization product, not here.
+- The change being considered is a general onsite personalisation decision rather than a proof one — that
+  belongs to the onsite skills in
+  [targetbay-onboarding](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-onboarding/skills/README.md),
+  not here.
 
 ## Required Context
 
