@@ -4,7 +4,7 @@ description: Use when someone asks what happened to revenue rather than what to 
 license: MIT
 metadata:
   targetbay.display_name: Revenue Analysis
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: revenue
   targetbay.requires: email_sms.store_profile, email_sms.order_intelligence, email_sms.customer_intelligence, email_sms.product_intelligence, email_sms.campaign_analytics, email_sms.automation_analytics
   targetbay.risk_level: analysis
@@ -60,15 +60,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.product_intelligence` | Product and category contribution |
 | `email_sms.campaign_analytics` | Campaign-attributed revenue |
 | `email_sms.automation_analytics` | Automation-attributed revenue |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `period` | yes | The window being analysed |
-| `comparison_period` | no | Defaults to the equivalent prior period |
-| `dimension` | no | Product, category, channel, cohort, instrument |
-| `question` | no | A specific "why" to answer |
 
 ## Decision Process
 

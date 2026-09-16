@@ -4,7 +4,7 @@ description: Use when members are going quiet — earning has slowed or stopped,
 license: MIT
 metadata:
   targetbay.display_name: Member Recovery
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: retention
   targetbay.requires: loyalty.store_profile, loyalty.member_profile, loyalty.points_ledger, loyalty.redemption, loyalty.tier_config, loyalty.customer_intelligence, loyalty.order_intelligence, loyalty.suppression_and_consent, loyalty.messaging
   targetbay.composes: program-diagnosis
@@ -70,15 +70,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `loyalty.order_intelligence` | Purchase pattern and its own interval |
 | `loyalty.suppression_and_consent` | Eligibility, channel, frequency headroom |
 | `loyalty.messaging` | Dispatch — only after explicit approval |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | A tier, cohort or enrolment period |
-| `objective` | no | Reactivation, redemption, expiry mitigation, downgrade prevention |
-| `constraints` | no | Contact budget, incentive limits, segments excluded |
-| `period` | no | Window for activity comparison |
 
 ## Decision Process
 

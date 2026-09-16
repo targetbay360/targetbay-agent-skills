@@ -1,10 +1,10 @@
 ---
 name: context-audit
-description: Use when onboarding a store nobody has looked at yet and the first question is what this store actually is — what TargetBay knows about it, what it already has configured across all three products, and which of those facts are measured rather than assumed. Reads the derived store context and reports what is derived, what is provisional, what is simply absent, and which questions only the store owner can answer. Produces no plan; establishes what a plan could honestly be built from.
+description: Use when onboarding a store nobody has assessed yet and the first question is what this store actually is — what TargetBay knows about it, what it already has configured across all three products, and which of those facts are measured rather than assumed. Reads the derived store context and reports what is derived, what is provisional, what is simply absent, and which questions only the store owner can answer. Produces no plan; establishes what a plan could honestly be built from.
 license: MIT
 metadata:
   targetbay.display_name: Store Context Audit
-  targetbay.version: "0.1.0"
+  targetbay.version: "0.2.0"
   targetbay.category: audit
   targetbay.requires: onboarding.store_context
   targetbay.risk_level: analysis
@@ -57,13 +57,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | Capability | Used for |
 |---|---|
 | `onboarding.store_context` | The Store Context Pack and its per-capability readiness matrix |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `sections` | no | Limits the read to named pack sections; the whole pack is the default |
-| `refresh` | no | Forces recomputation rather than accepting a cached pack |
 
 ## Decision Process
 
@@ -133,8 +126,7 @@ Every absent value carries the observation that would make it derivable.
 | Read context and readiness | `read_only` | None |
 | Report the partition | `analysis` | None |
 
-This skill reaches nobody and changes nothing. It needs no approval, and the fact that it needs none is
-why it is safe to run first on every store.
+Needing no approval is why this skill is safe to run first on every store.
 
 ## Examples
 

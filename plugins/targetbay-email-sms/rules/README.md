@@ -3,8 +3,8 @@
 Rules are the constraints that bind every skill. A skill decides *what to do*; rules decide *what is
 never acceptable regardless of what the skill concluded*.
 
-Rules live here rather than inside skills for one reason: a constraint restated in fourteen places
-drifts in fourteen directions. Skills link to rules; they do not copy them.
+Rules live here rather than inside skills for one reason: a constraint restated in every skill drifts
+in as many directions as there are skills. Skills link to rules; they do not copy them.
 
 ## Files
 

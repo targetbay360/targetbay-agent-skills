@@ -4,7 +4,7 @@ description: Use when onboarding a store whose setup depends on facts the platfo
 license: MIT
 metadata:
   targetbay.display_name: Onboarding Intake
-  targetbay.version: "0.1.0"
+  targetbay.version: "0.2.0"
   targetbay.category: intake
   targetbay.requires: onboarding.store_context, onboarding.intake
   targetbay.composes: context-audit
@@ -58,13 +58,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 |---|---|
 | `onboarding.store_context` | What the platform already answered, and whether brand is derivable |
 | `onboarding.intake` | Reading existing answers and writing new ones back to the store record |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `answers` | no | Answers already collected elsewhere — a ticket, a call, a form |
-| `scope` | no | Restricts the run to a named subset, such as brand or constraints |
 
 ## Decision Process
 

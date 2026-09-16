@@ -4,7 +4,7 @@ description: Use when deciding whether a loyalty programme should have tiers, ho
 license: MIT
 metadata:
   targetbay.display_name: Tier Structure
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: loyalty
   targetbay.requires: loyalty.store_profile, loyalty.program_config, loyalty.tier_config, loyalty.member_profile, loyalty.program_analytics, loyalty.order_intelligence
   targetbay.composes: program-diagnosis, points-economics
@@ -66,15 +66,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `loyalty.member_profile` | Tier population, qualification state, activity |
 | `loyalty.program_analytics` | Spend and behaviour by tier, and tier movement |
 | `loyalty.order_intelligence` | Value distribution and purchase frequency |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | A tier or member cohort |
-| `objective` | no | Add tiers, revise thresholds, cut cost, fix an empty tier |
-| `constraints` | no | Benefits that must stay, margin floor, thresholds that cannot move |
-| `period` | no | Window for distribution and movement analysis |
 
 ## Decision Process
 

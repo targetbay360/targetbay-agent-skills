@@ -4,7 +4,7 @@ description: Use when deciding which product recommendations belong on which sur
 license: MIT
 metadata:
   targetbay.display_name: Recommendation Strategy
-  targetbay.version: "1.1.0"
+  targetbay.version: "2.0.0"
   targetbay.category: merchandising
   targetbay.requires: onboarding.store_context, onboarding.consent_and_tracking, onboarding.recommendation_placement, onboarding.recommendation_analytics, onboarding.product_intelligence, onboarding.visitor_intelligence, onboarding.experience_analytics
   targetbay.composes: surface-inventory
@@ -69,15 +69,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `onboarding.product_intelligence` | Affinity, co-purchase, categories, price bands, margin, stock |
 | `onboarding.visitor_intelligence` | Session signals for the anonymous path |
 | `onboarding.experience_analytics` | Page baselines the placement is measured against |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | A template, surface or product set |
-| `objective` | no | Conversion, AOV, margin mix, inventory movement |
-| `constraints` | no | Products or categories excluded, surfaces that may not change |
-| `period` | no | Window for performance comparison |
 
 ## Decision Process
 

@@ -11,32 +11,32 @@ Six skills, covering assessment, design, economics, structure, acquisition and r
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Programme Diagnosis](program-diagnosis/SKILL.md) | `program-diagnosis` | `analysis` | 1.0.0 | — |
+| [Programme Diagnosis](program-diagnosis/SKILL.md) | `program-diagnosis` | `analysis` | 2.0.0 | — |
 
 ## Design
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Programme Design](program-design/SKILL.md) | `program-design` | `plan` | 1.0.0 | `program-diagnosis`, `points-economics`, `tier-structure`, `referral-program` |
-| [Tier Structure](tier-structure/SKILL.md) | `tier-structure` | `plan` | 1.0.0 | `program-diagnosis`, `points-economics` |
+| [Programme Design](program-design/SKILL.md) | `program-design` | `plan` | 2.0.0 | `program-diagnosis`, `points-economics`, `tier-structure`, `referral-program` |
+| [Tier Structure](tier-structure/SKILL.md) | `tier-structure` | `plan` | 2.0.0 | `program-diagnosis`, `points-economics` |
 
 ## Economics
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Points Economics](points-economics/SKILL.md) | `points-economics` | `recommendation` | 1.0.0 | `program-diagnosis` |
+| [Points Economics](points-economics/SKILL.md) | `points-economics` | `recommendation` | 2.0.0 | `program-diagnosis` |
 
 ## Acquisition
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Referral Programme](referral-program/SKILL.md) | `referral-program` | `plan` | 1.0.0 | `program-diagnosis`, `points-economics` |
+| [Referral Programme](referral-program/SKILL.md) | `referral-program` | `plan` | 2.0.0 | `program-diagnosis`, `points-economics` |
 
 ## Retention
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Member Recovery](member-recovery/SKILL.md) | `member-recovery` | `recommendation` | 1.0.0 | `program-diagnosis` |
+| [Member Recovery](member-recovery/SKILL.md) | `member-recovery` | `recommendation` | 2.0.0 | `program-diagnosis` |
 
 ## Composition graph
 
@@ -75,7 +75,7 @@ skill's reasoning; it is not a function call, and this package defines no runtim
 A new skill must decide something none of the existing six decides. If it would mostly restate one of them
 with a different scope, extend that skill instead.
 
-Follow the contract every skill here conforms to: the fourteen sections in order, `targetbay.*` metadata
+Follow the contract every skill here conforms to: the thirteen sections in order, `targetbay.*` metadata
 under `metadata`, capabilities drawn from [../capabilities.yaml](../capabilities.yaml), rules cited by
 number rather than restated, and a golden prompt in
 [tests/evals/](https://github.com/targetbay360/targetbay-agent-skills/blob/main/tests/evals/README.md).

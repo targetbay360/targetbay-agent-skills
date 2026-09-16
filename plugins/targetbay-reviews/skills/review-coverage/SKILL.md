@@ -4,7 +4,7 @@ description: Use when the question is where a store is short of social proof —
 license: MIT
 metadata:
   targetbay.display_name: Review Coverage
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: proof
   targetbay.requires: reviews.store_profile, reviews.product_coverage, reviews.ratings_analytics, reviews.ugc_media
   targetbay.risk_level: analysis
@@ -19,8 +19,8 @@ metadata:
 Locate where this store is missing proof, and rank the gaps by what closing them is worth.
 
 Every other skill in this plugin needs the same answer: which products matter and which are unproven.
-Deriving it once, here, is what keeps seven skills from inventing seven different definitions of "needs
-reviews" ([../../rules/global-rules.md#G5](../../rules/global-rules.md)).
+Deriving it once, here, is what keeps the four skills that compose it from inventing four different
+definitions of "needs reviews" ([../../rules/global-rules.md#G5](../../rules/global-rules.md)).
 
 ## When to Use
 
@@ -62,15 +62,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `reviews.product_coverage` | Per-product counts, ratings, recency, media presence |
 | `reviews.ratings_analytics` | Distribution behind each average, and its movement |
 | `reviews.ugc_media` | Which products have photographs and which have none |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | A category, collection, price band or product set |
-| `period` | no | Window for recency and velocity; defaults to a span covering several catalogue refreshes |
-| `objective` | no | Conversion, new-product launch, category expansion |
-| `constraints` | no | Products excluded from outreach, categories not to touch |
 
 ## Decision Process
 
@@ -142,8 +133,8 @@ it.
 |---|---|---|
 | Read and analyse | `read_only` / `analysis` | None |
 
-This skill changes nothing and therefore requires no approval. Every action it implies is owned by a
-composing skill, which carries its own approval requirements.
+Every action this skill implies is owned by a composing skill, which carries its own approval
+requirements.
 
 ## Examples
 

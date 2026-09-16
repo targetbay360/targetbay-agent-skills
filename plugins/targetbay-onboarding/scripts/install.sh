@@ -43,7 +43,31 @@ fi
 mkdir -p "$DEST"
 cp -R "$SRC"/. "$DEST"/
 
+# A skill cites ../../rules/, ../../knowledge/ and ../../schemas/ from inside the plugin tree.
+# Flattening skills/ into $DEST puts those targets out of reach, so point them at the released
+# files instead — the same full-URL rule this repository applies to any reference that leaves its
+# own directory. Sibling-skill links (../other-skill/SKILL.md) still resolve and are left alone.
+BLOB="https://github.com/$REPO/blob/$TAG/plugins/$PLUGIN"
+find "$DEST" -name '*.md' -type f -exec sed -i.bak \
+  -e "s#\[\.\./\.\./\([^]]*\)\](\.\./\.\./\([^)]*\))#[\1]($BLOB/\2)#g" \
+  -e "s#](\.\./\.\./\([^)]*\))#]($BLOB/\1)#g" {} +
+find "$DEST" -name '*.md.bak' -type f -delete
+
 echo "$(find "$DEST" -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d ' ') skills installed into $DEST"
+
+# Parity with install.mjs, which installs slash commands alongside a .claude tree.
+CMD_SRC=$(find "$TMP" -type d -path "*/plugins/$PLUGIN/commands" | head -n 1)
+case "$DEST" in
+  */.claude/skills|*/.claude/skills/)
+    if [ -n "$CMD_SRC" ]; then
+      CMD_DEST="$(dirname "$DEST")/commands"
+      mkdir -p "$CMD_DEST"
+      cp -R "$CMD_SRC"/. "$CMD_DEST"/
+      echo "slash commands installed into $CMD_DEST"
+    fi
+    ;;
+esac
+
 echo
 echo "These skills plan only. They need the TargetBay MCP to read store data across all three products,"
 echo "and they never send or activate anything without your explicit approval."

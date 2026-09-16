@@ -4,7 +4,7 @@ description: Use when the objective is stated as revenue — "increase revenue t
 license: MIT
 metadata:
   targetbay.display_name: Revenue Growth
-  targetbay.version: "1.1.0"
+  targetbay.version: "2.0.0"
   targetbay.category: revenue
   targetbay.requires: email_sms.store_profile, email_sms.customer_intelligence, email_sms.product_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.campaign_analytics, email_sms.automation, email_sms.automation_analytics, email_sms.marketing_calendar
   targetbay.composes: audience-discovery, automation-strategy, campaign-optimization, revenue-analysis, aov-growth
@@ -70,16 +70,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.campaign_analytics` | What has produced revenue before |
 | `email_sms.automation` / `email_sms.automation_analytics` | Existing journey coverage and revenue |
 | `email_sms.marketing_calendar` | Executable capacity in the period |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `period` | yes | The window growth is wanted in |
-| `revenue_target` | no | Absolute or percentage. Plan to evidence, not to the target |
-| `constraints` | no | Margin floors, no-discount policy, capacity, channel limits |
-| `focus` | no | Restrict to a product, category, audience or lever |
-| `playbook` | no | Vertical overlay |
 
 ## Decision Process
 
@@ -180,8 +170,6 @@ target was given — an explicit statement of how much of it the evidence suppor
 | Produce ranked opportunities | `recommendation` | None |
 | Build anything recommended | `mutation` | In the owning skill; preview then confirm |
 | Send or schedule anything | `high_impact` | Explicit, per send |
-
-This skill never sends and never mutates.
 
 ## Examples
 

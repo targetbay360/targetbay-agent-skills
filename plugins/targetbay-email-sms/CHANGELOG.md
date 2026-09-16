@@ -6,6 +6,47 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). See [docs/versioning.md](docs/versioning.md)
 for how package and per-skill versions relate.
 
+## [4.0.0] - 2026-09-16
+
+### Changed
+
+- **The skill contract is thirteen sections, not fourteen.** `Inputs` is removed from every skill and
+  from `tests/validate.py`. Two thirds of the corpus declared no required input at all, and the four
+  names that dominated the table — `scope`, `objective`, `constraints`, `period` — restated
+  `Required Context` without its reason column. Every skill is therefore a MAJOR bump.
+- **`aov-growth` and `upsell` no longer claim the same lever.** Thresholds and merchandising belong to
+  `aov-growth`, which ranks the levers; `upsell` keeps tier, size, bundle and subscription moves and
+  defers threshold design. Both descriptions changed, so both are at least MINOR on that count alone.
+- **Descriptions sharpened where the golden prompts showed overlap.** `customer-winback`,
+  `automation-strategy` and `audience-discovery` — whose description previously ended by telling a host
+  not to trigger it. The evals now run with no thin-margin warnings, and lexical top-1 agreement rises
+  from 41/59 to 44/59.
+- `automation-architect` cites `automation-rules.md#R2` rather than reproducing its list of variant
+  axes, and cites R7 for node count.
+- `docs/mcp-integration.md` no longer transcribes `capabilities.yaml`; it records the one capability
+  that still carries an open question and points at the registry for everything else.
+- The architecture diagram lives once, in `docs/architecture.md`, with the box borders the rename broke
+  now realigned. The plugin README links to it.
+- `docs/` and `examples/` are published to npm, so the README's links to them resolve in the tarball.
+
+### Fixed
+
+- **Installed skills no longer cite files that are not there.** `install.mjs` and `install.sh` flatten
+  `skills/` into the destination, which left every `../../rules/`, `../../knowledge/` and
+  `../../schemas/` citation resolving to nothing — 335 rule references alone. Both installers now
+  rewrite those to the released URL for the installed version. Sibling-skill links still resolve and
+  are untouched.
+- `install.sh` installs slash commands alongside a `.claude` tree, matching `install.mjs`.
+- `install.mjs` no longer throws when a plugin ships no `commands/` directory.
+- `package.json` no longer declares a `validate` script whose paths resolve nowhere from the plugin
+  directory.
+- `skills/README.md` listed `store-onboarding` at 1.1.0 while the skill declared 2.0.0.
+- The README claimed the plugin contains `tests/` and named eight validation groups; there are nine, and
+  the runners live at the repository root. It now points at CONTRIBUTING rather than restating them.
+- The "restated in fourteen skills" idiom, stale since the plugin reached 24, no longer depends on a
+  count. `docs/versioning.md` no longer claims every skill is at 1.0.0, and `docs/examples.md` no longer
+  says evaluations have yet to be added.
+
 ## [3.1.0] - 2026-09-12
 
 `store-onboarding` is now scoped to email and SMS, and is findable by the word people actually use.

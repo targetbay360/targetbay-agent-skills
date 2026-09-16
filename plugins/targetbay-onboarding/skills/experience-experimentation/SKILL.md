@@ -4,7 +4,7 @@ description: Use when an onsite change needs proving rather than asserting — d
 license: MIT
 metadata:
   targetbay.display_name: Experience Experimentation
-  targetbay.version: "1.1.0"
+  targetbay.version: "2.0.0"
   targetbay.category: experimentation
   targetbay.requires: onboarding.store_context, onboarding.consent_and_tracking, onboarding.experimentation, onboarding.experience_analytics, onboarding.audience_definition, onboarding.recommendation_analytics, onboarding.offer_analytics
   targetbay.composes: surface-inventory
@@ -65,15 +65,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `onboarding.experience_analytics` | Baseline rates and funnel context |
 | `onboarding.audience_definition` | The population the test runs against, and its size |
 | `onboarding.recommendation_analytics` / `onboarding.offer_analytics` | Element-level baselines for the thing under test |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `change` | yes | The change to be proved, stated as one change |
-| `metric` | no | Target metric; defaults to the outcome the surface serves |
-| `scope` | no | Surface, template or audience |
-| `constraints` | no | Maximum duration, maximum traffic share, revenue at risk |
 
 ## Decision Process
 

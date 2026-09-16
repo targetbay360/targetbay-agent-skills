@@ -4,7 +4,7 @@ description: Use when onboarding a store onto TargetBay Email & SMS — newly si
 license: MIT
 metadata:
   targetbay.display_name: Store Onboarding
-  targetbay.version: "2.0.0"
+  targetbay.version: "3.0.0"
   targetbay.category: planning
   targetbay.requires: email_sms.store_profile, email_sms.customer_intelligence, email_sms.order_intelligence, email_sms.product_intelligence, email_sms.segmentation, email_sms.automation, email_sms.suppression_and_consent
   targetbay.composes: automation-strategy, audience-discovery, monthly-marketing-planner
@@ -67,15 +67,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.segmentation` | Which segments exist, and list sizes |
 | `email_sms.automation` | Confirming there is no existing coverage |
 | `email_sms.suppression_and_consent` | Consent state per channel; what may be sent |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `vertical` | no | Selects the playbook overlay |
-| `objectives` | no | Store priorities for the first period |
-| `constraints` | no | Capacity, brand policy, channel restrictions |
-| `imported_history` | no | Whether historical orders were migrated |
 
 ## Decision Process
 

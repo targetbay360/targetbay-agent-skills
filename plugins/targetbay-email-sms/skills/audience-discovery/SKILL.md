@@ -1,10 +1,10 @@
 ---
 name: audience-discovery
-description: Use when deciding who to target, which segment or list to send to, or whether an audience should be split into separate segments. Determines whether the answer is one audience or several, ranks them by expected value, defines who must be excluded, and confirms each segment actually exists and is large enough to be worth sending to. Answers "who should we target?", "which list?" and "should we segment this?". Commonly composed by other skills rather than invoked directly.
+description: Use when deciding who to target, which segment or list to send to, or whether an audience should be split into separate segments. Determines whether the answer is one audience or several, ranks them by expected value, defines who must be excluded, and confirms each segment actually exists and is large enough to be worth sending to. Answers "who should we target?", "which list?" and "should we segment this?". Other skills delegate targeting here, so segment definitions stay in one place.
 license: MIT
 metadata:
   targetbay.display_name: Audience Discovery
-  targetbay.version: "1.1.0"
+  targetbay.version: "2.0.0"
   targetbay.category: audience
   targetbay.requires: email_sms.customer_intelligence, email_sms.order_intelligence, email_sms.product_intelligence, email_sms.segmentation, email_sms.suppression_and_consent, email_sms.campaign_analytics
   targetbay.risk_level: recommendation
@@ -65,18 +65,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.segmentation` | Resolving and sizing audiences; reusing existing segments |
 | `email_sms.suppression_and_consent` | Channel eligibility and suppression |
 | `email_sms.campaign_analytics` | Which audiences have responded before |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `objective` | yes | What the send is for |
-| `product_or_category` | no | Narrows affinity-based candidates |
-| `channel` | no | Constrains by consent; defaults to all consented channels |
-| `offer_type` | no | Affects which value bands are appropriate |
-| `send_window` | no | Enables collision and fatigue checking |
-| `max_audiences` | no | Caps how many are returned; ranking still applies |
-| `exclusions` | no | Store-specified groups to leave out |
 
 ## Decision Process
 
@@ -170,8 +158,6 @@ Also: audiences considered and rejected, with reasons.
 | Read customer and segment data | `read_only` | None |
 | Return ranked audiences | `recommendation` | None |
 | Create a recommended segment | `mutation` | Handled by the calling skill; preview then confirm |
-
-This skill never sends and never mutates.
 
 ## Examples
 

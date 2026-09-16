@@ -4,7 +4,7 @@ description: Use when deciding what a point is worth, what the earn rate should 
 license: MIT
 metadata:
   targetbay.display_name: Points Economics
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: economics
   targetbay.requires: loyalty.store_profile, loyalty.program_config, loyalty.points_ledger, loyalty.reward_catalog, loyalty.redemption, loyalty.program_analytics, loyalty.order_intelligence
   targetbay.composes: program-diagnosis
@@ -68,15 +68,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `loyalty.redemption` | Observed redemption rate and what converts |
 | `loyalty.program_analytics` | Earn and burn by tier and cohort |
 | `loyalty.order_intelligence` | AOV and frequency, for reachability arithmetic |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | A tier, reward set or member cohort |
-| `objective` | no | Affordability, reachability, liability control, generosity change |
-| `constraints` | no | Margin floor, budget ceiling, rewards that must stay |
-| `period` | no | Window for redemption and issuance measurement |
 
 ## Decision Process
 

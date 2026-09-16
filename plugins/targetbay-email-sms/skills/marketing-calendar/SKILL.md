@@ -4,7 +4,7 @@ description: Use when the planning horizon is longer than one period — buildin
 license: MIT
 metadata:
   targetbay.display_name: Marketing Calendar
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: planning
   targetbay.requires: email_sms.store_profile, email_sms.order_intelligence, email_sms.product_intelligence, email_sms.customer_intelligence, email_sms.campaign_analytics, email_sms.automation, email_sms.marketing_calendar
   targetbay.composes: monthly-marketing-planner, holiday-marketing, product-launch
@@ -64,16 +64,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.campaign_analytics` | Prior-period performance |
 | `email_sms.automation` | Baseline contact load |
 | `email_sms.marketing_calendar` | Occupancy and commitments across the horizon |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `horizon` | yes | Quarter, year, or an explicit range |
-| `committed_events` | no | Launches, sales, business dates already fixed |
-| `objectives` | no | Annual or quarterly priorities |
-| `constraints` | no | Capacity, blackout periods, discount policy |
-| `playbook` | no | Vertical overlay |
 
 ## Decision Process
 

@@ -34,17 +34,21 @@ not resolve, so this is caught rather than argued about.
 
 ## Where things go
 
-Paths below are relative to the plugin you are working in, `plugins/<plugin>/`.
+Paths in the first column are relative to the plugin you are working in, `plugins/<plugin>/`.
+
+Every plugin carries `knowledge/README.md` and `docs/mcp-integration.md`. The remaining guides are
+written once, in `targetbay-email-sms`, and apply to all four plugins — only that plugin has a `docs/`
+directory beyond `mcp-integration.md`, and only it has `playbooks/` and `examples/`.
 
 | Adding | Goes in | Guide |
 |---|---|---|
-| An objective an agent should accomplish | `skills/<name>/SKILL.md` | `docs/skill-authoring.md` |
-| A constraint that binds every skill | `rules/` | `docs/rules.md` |
-| Durable domain theory | `knowledge/` | `knowledge/README.md` |
-| Vertical defaults | `playbooks/<vertical>/PLAYBOOK.md` | `playbooks/README.md` |
-| A new abstract capability | `capabilities.yaml` | `docs/mcp-integration.md` |
-| A shortcut for a common request | `commands/<name>.md` | route to an existing skill; add no reasoning |
-| A narrated trace | `examples/` | `docs/examples.md` |
+| An objective an agent should accomplish | `skills/<name>/SKILL.md` | `plugins/targetbay-email-sms/docs/skill-authoring.md` |
+| A constraint that binds every skill | `rules/` | `plugins/targetbay-email-sms/docs/rules.md` |
+| Durable domain theory | `knowledge/` | the plugin's own `knowledge/README.md` |
+| Vertical defaults | `playbooks/<vertical>/PLAYBOOK.md` | `plugins/targetbay-email-sms/playbooks/README.md` |
+| A new abstract capability | `capabilities.yaml` | the plugin's own `docs/mcp-integration.md` |
+| A shortcut for a common request | `commands/<name>.md` | route to an existing skill; keep the reasoning in the skill |
+| A narrated trace | `examples/` | `plugins/targetbay-email-sms/docs/examples.md` |
 
 If the same paragraph would appear in more than one skill, it belongs in `rules/` or `knowledge/`, and the
 skills link to it.
@@ -100,7 +104,7 @@ These are not style preferences. A change that breaks one of them will not be ac
 |---|---|
 | `structure` | Repo and per-plugin required files and directories exist; every skill directory has a `SKILL.md`; a plugin's capability ids share one namespace |
 | `spec` | Every skill passes the Agent Skills reference validator |
-| `skill-validation` | Frontmatter parses and matches the plugin's schema; all fourteen sections present, in order, non-empty |
+| `skill-validation` | Frontmatter parses and matches the plugin's schema; all thirteen sections present, in order, non-empty |
 | `playbooks` | Playbook frontmatter and sections, where playbooks exist |
 | `references` | Every capability and composed skill resolves within its own plugin; composition graph is acyclic; every relative link in the repository resolves |
 | `duplication` | Skill names and display names are unique within a plugin |
@@ -108,14 +112,9 @@ These are not style preferences. A change that breaks one of them will not be ac
 | `versioning` | Each plugin's `VERSION` is semver, appears in its `CHANGELOG.md`, and matches both manifests; skill versions are semver |
 | `marketplace` | Every listed plugin exists, every existing plugin is listed, and sources, names and versions agree |
 
-And `run_evals.py` adds:
-
-| Group | Asserts |
-|---|---|
-| `schema` / `skill-refs` / `rule-refs` | Eval cases are well-formed and reference real skills, composition and rules |
-| `selection` | Every skill is lexically reachable from a prompt a user would type |
-| `coverage` | No skill is without a golden prompt |
-| `regression` | Expectations cannot change while the target skill's version stays put |
+`run_evals.py` adds six more — `schema`, `skill-refs`, `rule-refs`, `selection`, `coverage` and
+`regression` — each described in [tests/evals/README.md](tests/evals/README.md), which is where that
+runner's behaviour is documented rather than summarised.
 
 A green run means the repository is structurally sound. It does not mean the advice is good — that still
 needs a human who knows the domain.

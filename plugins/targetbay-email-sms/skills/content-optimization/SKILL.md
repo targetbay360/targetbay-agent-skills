@@ -4,7 +4,7 @@ description: Use when the message itself is the problem — subject lines that u
 license: MIT
 metadata:
   targetbay.display_name: Content Optimization
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: content
   targetbay.requires: email_sms.campaign_analytics, email_sms.template_management, email_sms.customer_intelligence, email_sms.product_intelligence, email_sms.segmentation
   targetbay.composes: ab-testing
@@ -62,15 +62,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.customer_intelligence` | Who the audience is and what they respond to |
 | `email_sms.product_intelligence` | Product facts, stock, what can be claimed |
 | `email_sms.segmentation` | The audience the content is judged against |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `campaign_or_template` | yes | The content being improved |
-| `diagnosed_problem` | no | From campaign-optimization, when available |
-| `constraints` | no | Brand voice, approved claims, offer policy, legal wording |
-| `channel` | no | Email or SMS; the rewrite differs substantially |
 
 ## Decision Process
 

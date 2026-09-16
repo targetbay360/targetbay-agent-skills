@@ -4,7 +4,7 @@ description: Use when designing or restructuring an automation journey — a wel
 license: MIT
 metadata:
   targetbay.display_name: Automation Architect
-  targetbay.version: "1.1.0"
+  targetbay.version: "2.0.0"
   targetbay.category: automation
   targetbay.requires: email_sms.store_profile, email_sms.customer_intelligence, email_sms.product_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.automation, email_sms.automation_analytics, email_sms.suppression_and_consent
   targetbay.composes: audience-discovery
@@ -80,18 +80,6 @@ Email & SMS MCP tool mappings are **TODO** — see
 | `email_sms.automation_analytics` | Per-node drop-off in existing journeys |
 | `email_sms.suppression_and_consent` | Channel eligibility per audience |
 
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `objective` | yes | The journey's purpose, e.g. "post-purchase", "win back lapsing buyers" |
-| `trigger_event` | no | If known. Otherwise derived from the objective |
-| `scope` | no | Restrict to a product, category, price band or audience |
-| `channels_allowed` | no | Defaults to channels with confirmed consent capability |
-| `existing_automation_ids` | no | Journeys to extend or replace rather than duplicate |
-| `constraints` | no | Store-stated limits: max journey length, no SMS, no discounting |
-| `playbook` | no | Vertical overlay — see [../../playbooks/README.md](../../playbooks/README.md) |
-
 ## Decision Process
 
 ```
@@ -133,16 +121,15 @@ Binding: [../../rules/automation-rules.md](../../rules/automation-rules.md) (R1�
 
 - A variant is created only when it passes all four tests in
   [../../rules/automation-rules.md#R4](../../rules/automation-rules.md): size, difference, value, coverage.
-- Candidate variant axes — lifecycle stage, customer value, product, category, price band, product
-  attribute, purchase frequency, engagement level, channel preference, differing objective. None of these
-  is automatically a variant; each is a hypothesis to test.
+- Work the candidate axes listed in [../../rules/automation-rules.md#R2](../../rules/automation-rules.md).
+  None of them is automatically a variant; each is a hypothesis the four tests above must confirm.
 - If the surviving set is one journey, that is a correct answer. State that alternatives were considered.
 - If an existing automation already covers a variant, extend it rather than adding a parallel one.
 
 **How many nodes**
 
-- No default count, no template length. Node count follows the decision window, what the store genuinely
-  has to say, and the customer's own interval.
+- No default count, no template length (R7). Node count follows the decision window, what the store
+  genuinely has to say, and the customer's own interval.
 - Every node states its purpose. A node that cannot justify itself is removed (R8).
 - Branch only where the paths stay different (R10). If branches reconverge immediately, use a condition
   or personalise inside one message.

@@ -1,10 +1,10 @@
 ---
 name: surface-inventory
-description: Use when the question is what onsite personalization currently exists and what it is doing — which surfaces carry placements, offers or search configuration, what each one is worth, where attention is being spent for nothing, and which surfaces host a decision but carry no help. This is the assessment skill every other personalization skill routes through.
+description: Use when the question is what onsite personalization currently exists and what it is doing — which surfaces carry placements, offers or search configuration, what each one is worth, where attention is being spent for nothing, and which surfaces host a decision but carry no help. Answers "what's actually personalised on our site right now?" and "what have we already got running?". This is the assessment skill every other personalization skill routes through; use personalization-audit when the question is what to do next rather than what exists.
 license: MIT
 metadata:
   targetbay.display_name: Surface Inventory
-  targetbay.version: "1.1.0"
+  targetbay.version: "2.0.0"
   targetbay.category: onsite
   targetbay.requires: onboarding.store_context, onboarding.consent_and_tracking, onboarding.recommendation_placement, onboarding.recommendation_analytics, onboarding.offers, onboarding.offer_analytics, onboarding.experience_analytics, onboarding.onsite_search
   targetbay.risk_level: analysis
@@ -68,15 +68,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `onboarding.offer_analytics` | Per-offer engagement, dismissal and conversion |
 | `onboarding.experience_analytics` | Page and funnel baselines the elements sit inside |
 | `onboarding.onsite_search` | Search configuration as a surface in the inventory |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | A template, surface set or funnel stage |
-| `period` | no | Window for performance comparison |
-| `objective` | no | Pre-change audit, cleanup, consent review |
-| `constraints` | no | Surfaces excluded from analysis |
 
 ## Decision Process
 
@@ -153,8 +144,8 @@ No recommendations to act are produced here — the acting skills compose this o
 |---|---|---|
 | Read and analyse | `read_only` / `analysis` | None |
 
-This skill changes nothing and therefore requires no approval. Every action it implies is owned by a
-composing skill, which carries its own approval requirements.
+Every action this skill implies is owned by a composing skill, which carries its own approval
+requirements.
 
 ## Examples
 
