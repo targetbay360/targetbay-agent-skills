@@ -4,7 +4,7 @@ description: Use when nobody has named the problem — "what should we be workin
 license: MIT
 metadata:
   targetbay.display_name: Opportunity Discovery
-  targetbay.version: "1.1.0"
+  targetbay.version: "2.0.0"
   targetbay.category: revenue
   targetbay.requires: email_sms.store_profile, email_sms.customer_intelligence, email_sms.order_intelligence, email_sms.product_intelligence, email_sms.segmentation, email_sms.campaign_analytics, email_sms.automation, email_sms.automation_analytics, email_sms.suppression_and_consent, email_sms.marketing_calendar
   targetbay.composes: revenue-analysis, automation-strategy, campaign-optimization
@@ -66,15 +66,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.automation` / `email_sms.automation_analytics` | Coverage gaps, decayed journeys |
 | `email_sms.suppression_and_consent` | List health, unused consented reach |
 | `email_sms.marketing_calendar` | Fatigue and unused capacity |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `period` | no | Observation window; defaults to several repeat intervals |
-| `max_findings` | no | Caps what is returned; the full scan still runs |
-| `exclude_lenses` | no | Areas already known and being worked on |
-| `playbook` | no | Vertical overlay |
 
 ## Decision Process
 

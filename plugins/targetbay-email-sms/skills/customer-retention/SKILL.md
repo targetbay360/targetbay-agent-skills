@@ -4,7 +4,7 @@ description: Use when the objective is keeping existing customers active — imp
 license: MIT
 metadata:
   targetbay.display_name: Customer Retention
-  targetbay.version: "1.1.0"
+  targetbay.version: "2.0.0"
   targetbay.category: retention
   targetbay.requires: email_sms.customer_intelligence, email_sms.order_intelligence, email_sms.product_intelligence, email_sms.segmentation, email_sms.automation, email_sms.automation_analytics, email_sms.campaign_analytics
   targetbay.composes: audience-discovery, automation-architect, product-replenishment
@@ -62,16 +62,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.segmentation` | Sizing retention audiences |
 | `email_sms.automation` / `email_sms.automation_analytics` | Existing coverage and its performance |
 | `email_sms.campaign_analytics` | Prior retention campaign results |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | A lifecycle stage, cohort, product or category |
-| `period` | no | Analysis window; defaults to a span covering several repeat intervals |
-| `objective` | no | Repeat rate, churn reduction, interval compression |
-| `constraints` | no | Discount policy, cadence limits, channel restrictions |
-| `playbook` | no | Vertical overlay |
 
 ## Decision Process
 

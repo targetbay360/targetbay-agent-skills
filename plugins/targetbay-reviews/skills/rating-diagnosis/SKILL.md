@@ -4,7 +4,7 @@ description: Use when a rating is falling, a product is attracting low ratings, 
 license: MIT
 metadata:
   targetbay.display_name: Rating Diagnosis
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: moderation
   targetbay.requires: reviews.store_profile, reviews.review_content, reviews.ratings_analytics, reviews.product_coverage, reviews.review_replies, reviews.order_intelligence
   targetbay.composes: review-coverage
@@ -66,15 +66,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `reviews.product_coverage` | Whether the affected products are thinly or well covered |
 | `reviews.review_replies` | What has already been replied to, and how |
 | `reviews.order_intelligence` | Fulfilment and return signals that separate product from delivery causes |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | A product, category or the store |
-| `period` | no | Window for the movement; defaults to a span long enough to contain a baseline |
-| `objective` | no | Diagnose only, or diagnose and plan a response |
-| `constraints` | no | Products or topics not to reply on publicly |
 
 ## Decision Process
 

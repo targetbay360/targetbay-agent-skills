@@ -1,10 +1,10 @@
 ---
 name: automation-strategy
-description: Use when the question is which automations a store should have at all — auditing the whole automation portfolio, finding lifecycle stages with no coverage, deciding which existing journeys should be split, consolidated, extended or retired, and sequencing that work by expected value. Use this before automation-architect, which designs the topology of a single objective once this skill has decided the objective is worth building.
+description: Use when the question is which automations a store should have at all — auditing the whole automation portfolio, finding lifecycle stages with no coverage, deciding which existing journeys should be split, consolidated, extended or retired, and sequencing them by expected value. Use opportunity-discovery instead when no one has said the problem is automation. Use this before automation-architect, which designs the topology of a single objective once this skill has decided the objective is worth building.
 license: MIT
 metadata:
   targetbay.display_name: Automation Strategy
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: automation
   targetbay.requires: email_sms.store_profile, email_sms.customer_intelligence, email_sms.product_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.automation, email_sms.automation_analytics, email_sms.campaign_analytics
   targetbay.composes: automation-architect, audience-discovery
@@ -69,16 +69,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); tool mappings **T
 | `email_sms.automation` | Reading the existing portfolio |
 | `email_sms.automation_analytics` | Per-journey and per-node performance |
 | `email_sms.campaign_analytics` | Detecting manual sends that should be automations |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `objectives` | no | Store priorities. Defaults to expected revenue impact |
-| `time_horizon` | no | How far out the roadmap should plan |
-| `constraints` | no | Team capacity, channel restrictions, brand limits |
-| `scope` | no | Restrict to a lifecycle stage, channel or product line |
-| `playbook` | no | Vertical overlay |
 
 ## Decision Process
 

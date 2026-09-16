@@ -49,7 +49,7 @@ package MAJOR and left every skill version untouched.
 | `stable` | Production-ready: exercised against real capabilities, with its execution paths verified |
 | `deprecated` | Superseded. `targetbay.deprecated_by` names the replacement |
 
-Every skill in 1.0.0 is `foundation`. Promotion to `stable` requires the capability mappings in
+Every skill currently ships as `foundation`. Promotion to `stable` requires the capability mappings in
 [mcp-integration.md](mcp-integration.md) to be complete for that skill, plus verification of its execution
 paths — not merely more prose.
 
@@ -90,7 +90,7 @@ Adding a binding rule is MINOR. A rule that invalidates existing skill behaviour
 
 ## Evaluations and versions
 
-[tests/evals/expectations.lock](https://github.com/targetbay360/targetbay-agent-skills/blob/main/tests/evals/README.md) ties each golden prompt's expectations to
+[tests/evals/expectations.lock](https://github.com/targetbay360/targetbay-agent-skills/blob/main/tests/evals/expectations.lock) ties each golden prompt's expectations to
 the version of the skill it targets. Changing what a case expects without moving that skill's version
 fails the run.
 

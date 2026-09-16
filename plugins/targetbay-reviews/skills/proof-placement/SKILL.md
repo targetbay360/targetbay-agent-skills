@@ -4,7 +4,7 @@ description: Use when reviews and UGC exist but are not working — deciding whe
 license: MIT
 metadata:
   targetbay.display_name: Proof Placement
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: display
   targetbay.requires: reviews.store_profile, reviews.product_coverage, reviews.review_content, reviews.ratings_analytics, reviews.ugc_media, reviews.display_placement, reviews.syndication
   targetbay.composes: review-coverage
@@ -69,15 +69,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `reviews.ugc_media` | Media inventory, moderation state and rights status |
 | `reviews.display_placement` | Reading current placements; creating or amending them |
 | `reviews.syndication` | Current distribution state; enabling or changing it |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | A surface, template, category or product set |
-| `objective` | no | Conversion, return-rate reduction, reuse, distribution |
-| `constraints` | no | Surfaces that may not change, brand or legal limits on reuse |
-| `period` | no | Window for page performance comparison |
 
 ## Decision Process
 

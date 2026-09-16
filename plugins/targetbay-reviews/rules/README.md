@@ -1,7 +1,7 @@
 # Rules
 
 Constraints that bind every skill in this plugin. Skills cite rules by number rather than restating them,
-because a constraint restated in seven skills drifts in seven directions.
+because a constraint restated in every skill drifts in as many directions as there are skills.
 
 | File | Binds | Cited as |
 |---|---|---|

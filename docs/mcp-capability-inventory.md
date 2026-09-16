@@ -33,10 +33,12 @@ That is 58 capabilities. For each one, fill in:
 | `notes` | Required if you leave `mcp_tools: TODO` — say why. `tests/validate.py` enforces this as soon as any capability in that registry is mapped, so "not mapped yet" cannot quietly become "nobody looked". |
 
 Record the shape of what each tool returns, and the OAuth scope it needs, in that plugin's
-`docs/mcp-integration.md` — it carries a mapping table and a TODO list this work closes.
+`docs/mcp-integration.md` — it carries a TODO list this work closes, plus the open questions below
+stated per plugin.
 
-The capabilities already flagged **unverified** in their `notes` are the rows that matter most: this
-repository already suspects those may not exist at all.
+The rows that matter most are the ones each plugin's `docs/mcp-integration.md` lists under **Mapping
+status** as open questions: capabilities this repository already suspects may not exist, or may belong
+to the commerce platform rather than to TargetBay. Seven of the 58 carry such a question.
 
 ## The three answers that change the plan
 

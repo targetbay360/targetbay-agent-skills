@@ -4,7 +4,7 @@ description: Use when the whole customer journey needs designing or reviewing ra
 license: MIT
 metadata:
   targetbay.display_name: Customer Lifecycle
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: lifecycle
   targetbay.requires: email_sms.store_profile, email_sms.customer_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.automation, email_sms.automation_analytics
   targetbay.composes: customer-retention, customer-winback, automation-strategy, audience-discovery
@@ -62,15 +62,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.order_intelligence` | Intervals, cohorts, transition rates |
 | `email_sms.segmentation` | Sizing each stage and transition |
 | `email_sms.automation` / `email_sms.automation_analytics` | Coverage and performance per stage |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `period` | no | Observation window; defaults to several repeat intervals |
-| `stage_definitions` | no | Store-supplied boundaries; otherwise derived |
-| `scope` | no | Restrict to a segment, category or channel |
-| `playbook` | no | Vertical overlay |
 
 ## Decision Process
 

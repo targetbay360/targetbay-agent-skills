@@ -6,12 +6,14 @@
 //   npx @targetbay/onboarding-skills --global   -> ~/.claude/skills
 //   npx @targetbay/onboarding-skills --dest DIR -> DIR
 
-import { cp, mkdir, readdir, access } from "node:fs/promises";
+import { cp, mkdir, readdir, access, readFile, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const PACKAGE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const PLUGIN = "targetbay-onboarding";
+const VERSION = (await readFile(join(PACKAGE_ROOT, "VERSION"), "utf8")).trim();
 
 const args = process.argv.slice(2);
 
@@ -53,6 +55,40 @@ async function exists(path) {
   }
 }
 
+// A skill is authored inside the plugin tree, so it cites `../../rules/...`, `../../knowledge/...`
+// and the schemas by relative path. Installing flattens `skills/` into the destination, which puts
+// those targets out of reach — the citation would resolve to nothing on disk. Rewrite them to the
+// full URL for the installed version, which is what this repository requires of any reference that
+// leaves its own directory. Links to sibling skills (`../other-skill/SKILL.md`) still resolve after
+// flattening and are left alone.
+const REPO_BLOB = `https://github.com/targetbay360/targetbay-agent-skills/blob/${PLUGIN}@${VERSION}/plugins/${PLUGIN}`;
+
+async function rewriteEscapingLinks(dir) {
+  const entries = await readdir(dir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const path = join(dir, entry.name);
+
+    if (entry.isDirectory()) {
+      await rewriteEscapingLinks(path);
+      continue;
+    }
+
+    if (!entry.name.endsWith(".md")) {
+      continue;
+    }
+
+    const before = await readFile(path, "utf8");
+    const after = before
+      .replace(/\[\.\.\/\.\.\/([^\]]+)\]\(\.\.\/\.\.\/([^)\s]+)\)/g, `[$1](${REPO_BLOB}/$2)`)
+      .replace(/\]\(\.\.\/\.\.\/([^)\s]+)\)/g, `](${REPO_BLOB}/$1)`);
+
+    if (after !== before) {
+      await writeFile(path, after);
+    }
+  }
+}
+
 const force = args.includes("--force");
 const dest = destination();
 const skills = (await readdir(join(PACKAGE_ROOT, "skills"), { withFileTypes: true }))
@@ -73,6 +109,7 @@ for (const skill of skills) {
   }
 
   await cp(join(PACKAGE_ROOT, "skills", skill), target, { recursive: true });
+  await rewriteEscapingLinks(target);
   written++;
 }
 
@@ -83,7 +120,7 @@ if (skipped) {
 }
 
 // Slash commands are a Claude Code convention; only install them alongside a .claude tree.
-if (dest.includes(`${join(".claude", "skills")}`)) {
+if (dest.includes(`${join(".claude", "skills")}`) && (await exists(join(PACKAGE_ROOT, "commands")))) {
   const commands = join(dirname(dest), "commands");
   await cp(join(PACKAGE_ROOT, "commands"), commands, { recursive: true, force });
   console.log(`slash commands installed into ${commands}`);

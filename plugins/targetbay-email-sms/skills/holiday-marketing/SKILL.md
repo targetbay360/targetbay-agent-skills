@@ -4,7 +4,7 @@ description: Use when deciding whether and how a store should participate in a h
 license: MIT
 metadata:
   targetbay.display_name: Holiday Marketing
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: seasonal
   targetbay.requires: email_sms.store_profile, email_sms.customer_intelligence, email_sms.product_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.campaign_analytics, email_sms.marketing_calendar
   targetbay.composes: audience-discovery, holiday-drip-campaign
@@ -66,16 +66,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.segmentation` | Sizing the audience the holiday applies to |
 | `email_sms.campaign_analytics` | Last year's holiday campaign results |
 | `email_sms.marketing_calendar` | Surrounding commitments and collisions |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `holiday` | yes | Name and dates |
-| `markets` | no | Which customer markets it applies to |
-| `objective` | no | Revenue, acquisition, brand, clearance |
-| `constraints` | no | Discount policy, brand fit, capacity |
-| `playbook` | no | Vertical overlay |
 
 ## Decision Process
 

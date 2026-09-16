@@ -25,7 +25,7 @@ Every item below is wrong on purpose, and the validator must report them:
 - `targetbay.version` is not semver
 - `targetbay.category`, `targetbay.risk_level` and `targetbay.execution_mode` are not in their enums
 - `targetbay.requires` names a tool rather than a `email_sms.*` capability
-- all fourteen required sections are missing
+- all thirteen required sections are missing
 
 ## Purpose
 

@@ -1,10 +1,10 @@
 ---
 name: personalization-audit
-description: Use for an open-ended assessment of a store's whole onsite experience — when someone asks what is wrong with our site, where to start with personalization, what to fix first, or wants a review without naming a specific problem. Scans surfaces, recommendations, offers, search and measurement together and ranks what is most worth fixing.
+description: Use for an open-ended assessment of a store's whole onsite experience — when someone asks what to do about personalization, what is wrong with our site, where to start, or what to fix first, without naming a specific problem. Use surface-inventory when the question is only what already exists. Scans surfaces, recommendations, offers, search and measurement together and ranks what is most worth fixing.
 license: MIT
 metadata:
   targetbay.display_name: Personalization Audit
-  targetbay.version: "1.1.0"
+  targetbay.version: "2.0.0"
   targetbay.category: planning
   targetbay.requires: onboarding.store_context, onboarding.consent_and_tracking, onboarding.recommendation_placement, onboarding.recommendation_analytics, onboarding.offers, onboarding.offer_analytics, onboarding.onsite_search, onboarding.experimentation, onboarding.experience_analytics, onboarding.visitor_intelligence
   targetbay.composes: surface-inventory, recommendation-strategy, offer-targeting, onsite-search, experience-experimentation
@@ -67,15 +67,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `onboarding.experimentation` | Measurement discipline dimension |
 | `onboarding.experience_analytics` | Funnel dimension and baselines |
 | `onboarding.visitor_intelligence` | Traffic composition and session signal availability |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | Limits the audit to a template set or funnel stage |
-| `period` | no | Window for performance comparison |
-| `objective` | no | Biases ranking toward conversion, AOV or risk reduction |
-| `constraints` | no | Effort ceiling, surfaces out of bounds |
 
 ## Decision Process
 
@@ -158,8 +149,8 @@ assessed.
 | Read and analyse | `read_only` / `analysis` | None |
 | Recommend and rank | `recommendation` | None |
 
-This skill executes nothing. Every recommendation it makes is carried out by a composed skill under that
-skill's own approval requirements.
+Every recommendation this skill makes is carried out by a composed skill, under that skill's own
+approval requirements.
 
 ## Examples
 

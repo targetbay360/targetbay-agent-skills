@@ -10,55 +10,55 @@ capabilities that carry it out. See [../docs/architecture.md](../docs/architectu
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Revenue Growth](revenue-growth/SKILL.md) | `revenue-growth` | `recommendation` | 1.1.0 | `audience-discovery`, `automation-strategy`, `campaign-optimization`, `revenue-analysis`, `aov-growth` |
-| [Revenue Analysis](revenue-analysis/SKILL.md) | `revenue-analysis` | `analysis` | 1.0.0 | — |
-| [Opportunity Discovery](opportunity-discovery/SKILL.md) | `opportunity-discovery` | `recommendation` | 1.1.0 | `revenue-analysis`, `automation-strategy`, `campaign-optimization` |
-| [AOV Growth](aov-growth/SKILL.md) | `aov-growth` | `recommendation` | 1.0.0 | `upsell`, `cross-sell`, `audience-discovery` |
-| [Cross-sell](cross-sell/SKILL.md) | `cross-sell` | `recommendation` | 1.0.0 | `audience-discovery` |
-| [Upsell](upsell/SKILL.md) | `upsell` | `recommendation` | 1.0.0 | `audience-discovery` |
+| [Revenue Growth](revenue-growth/SKILL.md) | `revenue-growth` | `recommendation` | 2.0.0 | `audience-discovery`, `automation-strategy`, `campaign-optimization`, `revenue-analysis`, `aov-growth` |
+| [Revenue Analysis](revenue-analysis/SKILL.md) | `revenue-analysis` | `analysis` | 2.0.0 | — |
+| [Opportunity Discovery](opportunity-discovery/SKILL.md) | `opportunity-discovery` | `recommendation` | 2.0.0 | `revenue-analysis`, `automation-strategy`, `campaign-optimization` |
+| [AOV Growth](aov-growth/SKILL.md) | `aov-growth` | `recommendation` | 2.0.0 | `upsell`, `cross-sell`, `audience-discovery` |
+| [Cross-sell](cross-sell/SKILL.md) | `cross-sell` | `recommendation` | 2.0.0 | `audience-discovery` |
+| [Upsell](upsell/SKILL.md) | `upsell` | `recommendation` | 2.0.0 | `audience-discovery` |
 
 ## Retention and lifecycle
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Customer Lifecycle](customer-lifecycle/SKILL.md) | `customer-lifecycle` | `recommendation` | 1.0.0 | `customer-retention`, `customer-winback`, `automation-strategy`, `audience-discovery` |
-| [Customer Retention](customer-retention/SKILL.md) | `customer-retention` | `recommendation` | 1.1.0 | `audience-discovery`, `automation-architect`, `product-replenishment` |
-| [Customer Win-back](customer-winback/SKILL.md) | `customer-winback` | `recommendation` | 1.0.0 | `audience-discovery` |
-| [Product Replenishment](product-replenishment/SKILL.md) | `product-replenishment` | `recommendation` | 1.0.0 | `automation-architect`, `audience-discovery` |
+| [Customer Lifecycle](customer-lifecycle/SKILL.md) | `customer-lifecycle` | `recommendation` | 2.0.0 | `customer-retention`, `customer-winback`, `automation-strategy`, `audience-discovery` |
+| [Customer Retention](customer-retention/SKILL.md) | `customer-retention` | `recommendation` | 2.0.0 | `audience-discovery`, `automation-architect`, `product-replenishment` |
+| [Customer Win-back](customer-winback/SKILL.md) | `customer-winback` | `recommendation` | 2.0.0 | `audience-discovery` |
+| [Product Replenishment](product-replenishment/SKILL.md) | `product-replenishment` | `recommendation` | 2.0.0 | `automation-architect`, `audience-discovery` |
 
 ## Automation
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Automation Strategy](automation-strategy/SKILL.md) | `automation-strategy` | `plan` | 1.0.0 | `automation-architect`, `audience-discovery` |
-| [Automation Architect](automation-architect/SKILL.md) | `automation-architect` | `plan` | 1.1.0 | `audience-discovery` |
-| [Automation Optimization](automation-optimization/SKILL.md) | `automation-optimization` | `recommendation` | 1.2.0 | `ab-testing` |
+| [Automation Strategy](automation-strategy/SKILL.md) | `automation-strategy` | `plan` | 2.0.0 | `automation-architect`, `audience-discovery` |
+| [Automation Architect](automation-architect/SKILL.md) | `automation-architect` | `plan` | 2.0.0 | `audience-discovery` |
+| [Automation Optimization](automation-optimization/SKILL.md) | `automation-optimization` | `recommendation` | 2.0.0 | `ab-testing` |
 
 ## Planning
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Marketing Calendar](marketing-calendar/SKILL.md) | `marketing-calendar` | `plan` | 1.0.0 | `monthly-marketing-planner`, `holiday-marketing`, `product-launch` |
-| [Monthly Marketing Planner](monthly-marketing-planner/SKILL.md) | `monthly-marketing-planner` | `plan` | 1.0.0 | `audience-discovery`, `campaign-optimization`, `holiday-marketing`, `product-launch`, `revenue-growth` |
-| [Store Onboarding](store-onboarding/SKILL.md) | `store-onboarding` | `plan` | 1.1.0 | `automation-strategy`, `audience-discovery`, `monthly-marketing-planner` |
+| [Marketing Calendar](marketing-calendar/SKILL.md) | `marketing-calendar` | `plan` | 2.0.0 | `monthly-marketing-planner`, `holiday-marketing`, `product-launch` |
+| [Monthly Marketing Planner](monthly-marketing-planner/SKILL.md) | `monthly-marketing-planner` | `plan` | 2.0.0 | `audience-discovery`, `campaign-optimization`, `holiday-marketing`, `product-launch`, `revenue-growth` |
+| [Store Onboarding](store-onboarding/SKILL.md) | `store-onboarding` | `plan` | 3.0.0 | `automation-strategy`, `audience-discovery`, `monthly-marketing-planner` |
 
 ## Seasonal and launch
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Holiday Marketing](holiday-marketing/SKILL.md) | `holiday-marketing` | `plan` | 1.0.0 | `audience-discovery`, `holiday-drip-campaign` |
-| [Holiday Drip Campaign](holiday-drip-campaign/SKILL.md) | `holiday-drip-campaign` | `plan` | 1.0.0 | `audience-discovery` |
-| [Product Launch](product-launch/SKILL.md) | `product-launch` | `plan` | 1.0.0 | `audience-discovery`, `cross-sell` |
+| [Holiday Marketing](holiday-marketing/SKILL.md) | `holiday-marketing` | `plan` | 2.0.0 | `audience-discovery`, `holiday-drip-campaign` |
+| [Holiday Drip Campaign](holiday-drip-campaign/SKILL.md) | `holiday-drip-campaign` | `plan` | 2.0.0 | `audience-discovery` |
+| [Product Launch](product-launch/SKILL.md) | `product-launch` | `plan` | 2.0.0 | `audience-discovery`, `cross-sell` |
 
 ## Optimisation, content and audience
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Campaign Optimization](campaign-optimization/SKILL.md) | `campaign-optimization` | `recommendation` | 1.2.0 | `audience-discovery`, `ab-testing`, `content-optimization` |
-| [Content Optimization](content-optimization/SKILL.md) | `content-optimization` | `recommendation` | 1.0.0 | `ab-testing` |
-| [Channel Optimization](channel-optimization/SKILL.md) | `channel-optimization` | `recommendation` | 1.0.0 | `audience-discovery` |
-| [A/B Testing](ab-testing/SKILL.md) | `ab-testing` | `recommendation` | 1.0.0 | `audience-discovery` |
-| [Audience Discovery](audience-discovery/SKILL.md) | `audience-discovery` | `recommendation` | 1.1.0 | — |
+| [Campaign Optimization](campaign-optimization/SKILL.md) | `campaign-optimization` | `recommendation` | 2.0.0 | `audience-discovery`, `ab-testing`, `content-optimization` |
+| [Content Optimization](content-optimization/SKILL.md) | `content-optimization` | `recommendation` | 2.0.0 | `ab-testing` |
+| [Channel Optimization](channel-optimization/SKILL.md) | `channel-optimization` | `recommendation` | 2.0.0 | `audience-discovery` |
+| [A/B Testing](ab-testing/SKILL.md) | `ab-testing` | `recommendation` | 2.0.0 | `audience-discovery` |
+| [Audience Discovery](audience-discovery/SKILL.md) | `audience-discovery` | `recommendation` | 2.0.0 | — |
 
 All 24 skills are at `targetbay.status: foundation` — the contract is established and the reasoning is real, but the
 workflows have not yet been hardened against a live TargetBay Email & SMS MCP. See
@@ -125,11 +125,11 @@ decomposition, and `ab-testing` for test design.
 Every `SKILL.md` conforms to the [Agent Skills specification](https://agentskills.io/specification) —
 `name`, `description` and `license` at the top level, everything else under `metadata` as `targetbay.*`
 strings — and is additionally validated against
-[../schemas/skill.schema.json](../schemas/skill.schema.json), which is stricter, plus these fourteen
+[../schemas/skill.schema.json](../schemas/skill.schema.json), which is stricter, plus these thirteen
 sections, in order:
 
 `Purpose` · `When to Use` · `When Not to Use` · `Required Context` · `Required MCP Capabilities` ·
-`Inputs` · `Decision Process` · `Decision Rules` · `Workflow` · `Expected Output` · `Validation` ·
+`Decision Process` · `Decision Rules` · `Workflow` · `Expected Output` · `Validation` ·
 `Approval Requirements` · `Examples` · `Failure Handling`
 
 To add a skill, follow [../docs/skill-authoring.md](../docs/skill-authoring.md), give it a golden

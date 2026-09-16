@@ -4,7 +4,7 @@ description: Use when deciding who should see an onsite offer, popup, banner or 
 license: MIT
 metadata:
   targetbay.display_name: Offer Targeting
-  targetbay.version: "1.1.0"
+  targetbay.version: "2.0.0"
   targetbay.category: onsite
   targetbay.requires: onboarding.store_context, onboarding.consent_and_tracking, onboarding.offers, onboarding.offer_analytics, onboarding.audience_definition, onboarding.visitor_intelligence, onboarding.product_intelligence, onboarding.experience_analytics
   targetbay.composes: surface-inventory
@@ -67,15 +67,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `onboarding.visitor_intelligence` | Session signals for triggers and intent |
 | `onboarding.product_intelligence` | Margin and stock behind any product-specific offer |
 | `onboarding.experience_analytics` | Conversion baseline the offer is measured against |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | A surface, funnel stage or audience |
-| `objective` | no | Conversion, list growth, cart recovery, inventory movement |
-| `constraints` | no | Discount ceiling, surfaces off limits, offer types not permitted |
-| `period` | no | Window for baseline and offer performance |
 
 ## Decision Process
 

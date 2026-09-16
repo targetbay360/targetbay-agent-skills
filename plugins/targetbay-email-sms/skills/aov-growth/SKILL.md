@@ -1,10 +1,10 @@
 ---
 name: aov-growth
-description: Use when average order value is the objective across the whole programme rather than one mechanism — deciding between thresholds, bundles, tier moves, cross-category attachment and merchandising, and ranking them by revenue effect against margin cost. Use upsell or cross-sell when the mechanism is already chosen.
+description: Use when average order value is the objective and the lever is not yet chosen — ranking thresholds, bundling, merchandising, tier moves and cross-category attachment against each other by revenue effect and margin cost. Owns free-shipping and gift threshold design. Answers "raise our average order value" and "where is our basket losing value?". Use upsell once the chosen lever is an upward move onto a premium tier, larger size or subscription, and cross-sell once it is attachment in another category.
 license: MIT
 metadata:
   targetbay.display_name: AOV Growth
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: revenue
   targetbay.requires: email_sms.order_intelligence, email_sms.customer_intelligence, email_sms.product_intelligence, email_sms.segmentation, email_sms.campaign_analytics
   targetbay.composes: upsell, cross-sell, audience-discovery
@@ -19,9 +19,10 @@ metadata:
 
 Decide which AOV lever this store should pull, for which customers, and what it costs in margin.
 
-AOV is the third term of the revenue equation and usually the least worked. It is also the easiest to
-damage: a lever aimed at the wrong segment suppresses conversion, and the loss appears as fewer orders
-rather than as an obvious AOV failure.
+AOV is the third term of the revenue equation and usually the least worked. The failure this skill
+exists to prevent is reaching for the mechanism someone already had in mind: a lever aimed at the wrong
+cluster suppresses conversion, and the loss appears as fewer orders rather than as an obvious AOV
+failure.
 
 ## When to Use
 
@@ -33,8 +34,11 @@ rather than as an obvious AOV failure.
 
 ## When Not to Use
 
-- The mechanism is already decided. Use [upsell](../upsell/SKILL.md) for higher-value versions, or
-  [cross-sell](../cross-sell/SKILL.md) for attachment.
+- The lever is already decided and it moves a customer upward — premium tier, larger size, bundle,
+  subscription. Use [upsell](../upsell/SKILL.md).
+- The lever is already decided and it is attachment in another category. Use
+  [cross-sell](../cross-sell/SKILL.md).
+- Thresholds are **not** an exception to those two: threshold design stays here.
 - The goal is more orders. Use [customer-retention](../customer-retention/SKILL.md).
 - The store's pricing strategy itself is the question — outside this package.
 
@@ -60,16 +64,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.product_intelligence` | Tiers, bundles, attachment candidates, margin signals |
 | `email_sms.segmentation` | Sizing each lever's audience |
 | `email_sms.campaign_analytics` | Prior AOV mechanic performance |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `aov_target` | no | Shapes ambition; never overrides evidence |
-| `mechanisms_allowed` | no | Store policy may exclude discounting or bundling |
-| `constraints` | no | Margin floors, brand positioning, shipping economics |
-| `scope` | no | Restrict to a category or segment |
-| `playbook` | no | Vertical overlay |
 
 ## Decision Process
 

@@ -38,23 +38,13 @@ Each entry carries an `id`, a `description`, an `access` level (`read` / `write`
 
 ## Mapping status
 
-| Capability | Access | MCP tools | Status |
-|---|---|---|---|
-| `email_sms.store_profile` | read | — | **TODO** |
-| `email_sms.customer_intelligence` | read | — | **TODO** |
-| `email_sms.product_intelligence` | read | — | **TODO** |
-| `email_sms.order_intelligence` | read | — | **TODO** |
-| `email_sms.segmentation` | write | — | **TODO** |
-| `email_sms.campaign_management` | write | — | **TODO** |
-| `email_sms.campaign_analytics` | read | — | **TODO** |
-| `email_sms.automation` | write | — | **TODO** |
-| `email_sms.automation_analytics` | read | — | **TODO** |
-| `email_sms.template_management` | write | — | **TODO** |
-| `email_sms.messaging_email` | send | — | **TODO** |
-| `email_sms.messaging_sms` | send | — | **TODO — capability itself unverified** |
-| `email_sms.suppression_and_consent` | read | — | **TODO** |
-| `email_sms.marketing_calendar` | read | — | **TODO** |
-| `email_sms.experimentation` | write | — | **TODO** |
+All 15 capabilities in [../capabilities.yaml](../capabilities.yaml) are `mcp_tools: TODO`.
+Rather than transcribe the registry here — two lists that drift — this section records only what
+still needs a decision. Read the registry for ids, descriptions, access levels and notes.
+
+| Capability | Access | Open question |
+|---|---|---|
+| `email_sms.messaging_sms` | send | capability itself unverified |
 
 Mapping a capability means: naming the MCP tools or resources that satisfy it, recording the shape of what
 they return, and confirming the access level matches. Until that is done, no skill in this package can

@@ -10,7 +10,7 @@
       "name": "targetbay-email-sms",
       "source": "./plugins/targetbay-email-sms",
       "description": "Email and SMS marketing skills for TargetBay Email & SMS: planning, audience selection, automation design, win-back, holiday sequencing and campaign diagnosis.",
-      "version": "3.1.0",
+      "version": "4.0.0",
       "author": {
         "name": "TargetBay"
       },
@@ -25,8 +25,8 @@
     {
       "name": "targetbay-reviews",
       "source": "./plugins/targetbay-reviews",
-      "description": "Review and UGC skills for TargetBay Reviews: when to ask for a review, which products lack social proof, recovering from low ratings, harvesting photo and video UGC, and where proof belongs.",
-      "version": "0.1.0",
+      "description": "Review and UGC skills for TargetBay Reviews: when to ask for a review, which products lack social proof, recovering from a falling rating, auditing the whole programme, and where proof belongs.",
+      "version": "0.2.0",
       "author": {
         "name": "TargetBay"
       },
@@ -42,8 +42,8 @@
     {
       "name": "targetbay-loyalty",
       "source": "./plugins/targetbay-loyalty",
-      "description": "Loyalty and referral skills for TargetBay Loyalty: program and tier design, points economics, reward catalogue, redemption health and recovering members who are going quiet.",
-      "version": "0.1.0",
+      "description": "Loyalty and referral skills for TargetBay Loyalty: program and tier design, points economics, referral programmes, diagnosing an underperforming programme, and recovering members who are going quiet.",
+      "version": "0.2.0",
       "author": {
         "name": "TargetBay"
       },
@@ -61,7 +61,7 @@
       "name": "targetbay-onboarding",
       "source": "./plugins/targetbay-onboarding",
       "description": "Cross-product onboarding skills for TargetBay: auditing what is actually known about a new store, asking only what the platform cannot observe, setting up the onsite capture \u2014 placements, offers, search and tracking \u2014 that has to go in first, sequencing the first ninety days across all three products, and provisioning the result without activating it.",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "author": {
         "name": "TargetBay"
       },
