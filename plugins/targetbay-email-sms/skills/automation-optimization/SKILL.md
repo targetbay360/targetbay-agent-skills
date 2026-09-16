@@ -4,7 +4,7 @@ description: Use when a live automation is underperforming and needs tuning rath
 license: MIT
 metadata:
   targetbay.display_name: Automation Optimization
-  targetbay.version: "1.2.0"
+  targetbay.version: "2.0.0"
   targetbay.category: optimization
   targetbay.requires: email_sms.automation, email_sms.automation_analytics, email_sms.customer_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.experimentation
   targetbay.composes: ab-testing
@@ -62,15 +62,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.order_intelligence` | Whether conversion happens outside the attributed window |
 | `email_sms.segmentation` | Entry audience composition and size |
 | `email_sms.experimentation` | Testing a change inside the journey |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `automation_id` | yes | The journey being diagnosed |
-| `metric_of_concern` | no | Defaults to goal attainment and revenue per entrant |
-| `comparison_period` | no | For decay detection |
-| `constraints` | no | What cannot change — brand, offer policy, journey length |
 
 ## Decision Process
 

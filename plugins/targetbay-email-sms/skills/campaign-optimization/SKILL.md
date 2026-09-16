@@ -4,7 +4,7 @@ description: Use when a campaign, newsletter or email blast underperformed and n
 license: MIT
 metadata:
   targetbay.display_name: Campaign Optimization
-  targetbay.version: "1.2.0"
+  targetbay.version: "2.0.0"
   targetbay.category: optimization
   targetbay.requires: email_sms.campaign_management, email_sms.campaign_analytics, email_sms.customer_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.experimentation, email_sms.suppression_and_consent
   targetbay.composes: audience-discovery, ab-testing, content-optimization
@@ -64,15 +64,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.segmentation` | Audience definitions and sizes |
 | `email_sms.experimentation` | Test configuration and results |
 | `email_sms.suppression_and_consent` | Whether cadence or suppression shaped the result |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `campaign_id` or `campaign_set` | yes | What is being diagnosed |
-| `comparison_baseline` | no | Defaults to comparable campaigns from this store |
-| `metric_of_concern` | no | Defaults to revenue and conversion |
-| `constraints` | no | What cannot change — brand, offer policy, audience |
 
 ## Decision Process
 

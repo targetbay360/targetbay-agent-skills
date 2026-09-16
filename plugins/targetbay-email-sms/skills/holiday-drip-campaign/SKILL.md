@@ -4,7 +4,7 @@ description: Use when preparing a multi-message sequence around a holiday, festi
 license: MIT
 metadata:
   targetbay.display_name: Holiday Drip Campaign
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: seasonal
   targetbay.requires: email_sms.store_profile, email_sms.customer_intelligence, email_sms.product_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.campaign_management, email_sms.campaign_analytics, email_sms.marketing_calendar, email_sms.suppression_and_consent
   targetbay.composes: audience-discovery
@@ -75,18 +75,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.campaign_analytics` | Last year's performance by stage |
 | `email_sms.marketing_calendar` | Collisions across the period |
 | `email_sms.suppression_and_consent` | Channel eligibility, quiet hours |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `holiday` | yes | Name and dates |
-| `promotion_window` | no | If a sale period is already decided |
-| `objective` | no | Revenue, acquisition, clearance, brand. Defaults to revenue |
-| `products` | no | If the merchandising decision is already made |
-| `channels_allowed` | no | Defaults to consented, available channels |
-| `constraints` | no | Max sends, no-discount policy, brand limits |
-| `playbook` | no | Vertical overlay |
 
 ## Decision Process
 

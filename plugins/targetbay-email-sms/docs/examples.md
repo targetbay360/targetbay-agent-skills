@@ -3,8 +3,9 @@
 The [examples/](../examples/) directory holds narrated traces: a user prompt, the skills that fire, the
 capabilities read, the decisions made and why, and the shape of the output.
 
-They exist because the skills describe *how to decide*, and a trace shows what that produces. They are the
-closest thing this package has to a test of its own reasoning until evaluations are added.
+They exist because the skills describe *how to decide*, and a trace shows what that produces. Where the
+golden prompts in `tests/evals/` assert which skill answers a question, a trace shows the reasoning that
+skill then performs.
 
 ## What a trace is and is not
 

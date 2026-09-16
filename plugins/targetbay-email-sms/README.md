@@ -3,7 +3,7 @@
 A vendor-neutral AI Agent Skills package that teaches agents **how to accomplish email and SMS marketing
 outcomes** using TargetBay Email & SMS.
 
-[![version](https://img.shields.io/badge/version-3.1.0-blue)](VERSION)
+[![version](https://img.shields.io/badge/version-4.0.0-blue)](VERSION)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![agent skills](https://img.shields.io/badge/Agent%20Skills-conformant-7c3aed)](https://agentskills.io/specification)
 [![validate](https://github.com/targetbay360/targetbay-agent-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/targetbay360/targetbay-agent-skills/actions/workflows/validate.yml)
@@ -114,27 +114,9 @@ No file in this repository makes a network call.
 
 ## Architecture
 
-```
-┌──────────────────────────────────────────────┐
-│ AI Agent host                                │
-└──────────────────┬───────────────────────────┘
-                   ▼
-┌──────────────────────────────────────────────┐
-│ TargetBay Email & SMS Marketing Skills       │  ← this package
-│   skills · rules · knowledge · playbooks     │     HOW to decide
-└──────────────────┬───────────────────────────┘
-                   ▼  declares required capabilities
-┌──────────────────────────────────────────────┐
-│ TargetBay Email & SMS MCP                                │  ← separate repository
-└──────────────────┬───────────────────────────┘
-                   ▼
-┌──────────────────────────────────────────────┐
-│ TargetBay Email & SMS platform                           │
-└──────────────────────────────────────────────┘
-```
-
 Skills declare **abstract capabilities** — `email_sms.customer_intelligence`, not a tool name — so the two
-repositories version independently. Full reasoning in [docs/architecture.md](docs/architecture.md).
+repositories version independently. The layering diagram and the full reasoning are in
+[docs/architecture.md](docs/architecture.md).
 
 ## Example
 
@@ -191,7 +173,6 @@ schemas/       4 JSON Schemas — skill, recommendation, workflow, skill-result
 commands/      6 slash commands that route a plain request to the right skill
 docs/          architecture, authoring, MCP integration, rules, versioning, examples
 examples/      5 narrated traces of skills reasoning end to end
-tests/         two runners — structural validation, and golden-prompt evaluations
 scripts/       install.mjs (npm) and install.sh (curl) — no dependencies
 capabilities.yaml   the abstract capability registry
 .claude-plugin/     plugin and marketplace manifests
@@ -213,7 +194,7 @@ The package is defined as much by its constraints as its content. Every skill:
 
 ## Status
 
-**3.1.0 — foundation, published.** Contracts established, reasoning real, workflows not yet hardened
+**4.0.0 — foundation, published.** Contracts established, reasoning real, workflows not yet hardened
 against a live TargetBay Email & SMS MCP. Every objective area named in the product brief now has a skill, and the
 package now installs four ways.
 
@@ -233,13 +214,13 @@ python3 tests/validate.py            # structure and contracts
 python3 tests/evals/run_evals.py     # golden prompts
 ```
 
-`validate.py` — eight groups: structure, **spec**, skill metadata, playbooks, references and link
-resolution, duplication, schemas, versioning. The `spec` group runs the Agent Skills reference validator
-over every skill, so conformance is a test rather than a claim. Invalid fixtures must be *rejected*, so a
-green run means the checks are doing work.
+`validate.py` — nine check groups, listed in
+[CONTRIBUTING.md](https://github.com/targetbay360/targetbay-agent-skills/blob/main/CONTRIBUTING.md). The
+`spec` group runs the Agent Skills reference validator over every skill, so conformance is a test rather
+than a claim. Invalid fixtures must be *rejected*, so a green run means the checks are doing work.
 
-`run_evals.py` — 38 golden prompts asserting which skill answers which question, what it composes, and
-what it must never do. Its selection check is a lexical proxy with a documented ceiling, not a model;
+`run_evals.py` — 39 golden prompts for this plugin, 81 across the marketplace, asserting which skill
+answers which question, what it composes, and what it must never do. Its selection check is a lexical proxy with a documented ceiling, not a model;
 the model-dependent half is emitted as prompt packs via `--emit`. It found six skill descriptions that
 did not contain the words users actually type.
 

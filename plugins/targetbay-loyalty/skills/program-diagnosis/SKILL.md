@@ -4,7 +4,7 @@ description: Use when the question is how a loyalty programme is actually perfor
 license: MIT
 metadata:
   targetbay.display_name: Programme Diagnosis
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: loyalty
   targetbay.requires: loyalty.store_profile, loyalty.program_config, loyalty.member_profile, loyalty.points_ledger, loyalty.redemption, loyalty.program_analytics, loyalty.order_intelligence, loyalty.customer_intelligence
   targetbay.risk_level: analysis
@@ -70,15 +70,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `loyalty.program_analytics` | Enrolment, activity and spend by tier |
 | `loyalty.order_intelligence` | Member and non-member purchase behaviour |
 | `loyalty.customer_intelligence` | Lifecycle stage and engagement, inside and outside the programme |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | A tier, cohort or enrolment period |
-| `period` | no | Analysis window; defaults to a span covering several purchase cycles |
-| `objective` | no | Health check, pre-redesign baseline, keep-or-kill decision |
-| `constraints` | no | Segments excluded from analysis |
 
 ## Decision Process
 
@@ -160,8 +151,8 @@ it.
 |---|---|---|
 | Read and analyse | `read_only` / `analysis` | None |
 
-This skill changes nothing and therefore requires no approval. Every action it implies is owned by a
-composing skill, which carries its own approval requirements.
+Every action this skill implies is owned by a composing skill, which carries its own approval
+requirements.
 
 ## Examples
 

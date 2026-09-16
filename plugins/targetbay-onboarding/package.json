@@ -1,6 +1,6 @@
 {
   "name": "@targetbay/onboarding-skills",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Agent Skills package teaching AI agents how to onboard a store onto TargetBay \u2014 what this store actually is, what to set up first across email, SMS, reviews and loyalty, the onsite capture that goes in before any of them, and in what order.",
   "keywords": [
     "agent-skills",
@@ -40,6 +40,7 @@
     "skills",
     "rules",
     "knowledge",
+    "docs",
     "schemas",
     "commands",
     ".claude-plugin",

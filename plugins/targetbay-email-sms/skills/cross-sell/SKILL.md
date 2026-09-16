@@ -4,7 +4,7 @@ description: Use when the objective is getting existing customers to buy from a 
 license: MIT
 metadata:
   targetbay.display_name: Cross-sell
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: revenue
   targetbay.requires: email_sms.customer_intelligence, email_sms.product_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.campaign_analytics
   targetbay.composes: audience-discovery
@@ -60,16 +60,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.order_intelligence` | Purchase history, sequence and timing of category entry |
 | `email_sms.segmentation` | Sizing candidate audiences |
 | `email_sms.campaign_analytics` | Prior cross-sell performance |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `source_product_or_category` | no | Anchor for the recommendation |
-| `target_category` | no | If the store wants a specific category grown |
-| `instrument` | no | Campaign or automation; defaults to whichever fits the trigger |
-| `constraints` | no | Margin, stock, brand, discount policy |
-| `playbook` | no | Vertical overlay |
 
 ## Decision Process
 

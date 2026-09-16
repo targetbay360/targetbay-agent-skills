@@ -10,10 +10,10 @@ Ten skills in two groups: a four-step pipeline, and the onsite work that pipelin
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Store Context Audit](context-audit/SKILL.md) | `context-audit` | `analysis` | 0.1.0 | — |
-| [Onboarding Intake](onboarding-intake/SKILL.md) | `onboarding-intake` | `mutation` | 0.1.0 | `context-audit` |
-| [Cross-Product Onboarding Blueprint](onboarding-blueprint/SKILL.md) | `onboarding-blueprint` | `plan` | 0.2.0 | `context-audit`, `onboarding-intake` |
-| [Onboarding Provisioning](onboarding-provisioning/SKILL.md) | `onboarding-provisioning` | `high_impact` | 0.1.0 | `onboarding-blueprint` |
+| [Store Context Audit](context-audit/SKILL.md) | `context-audit` | `analysis` | 0.2.0 | — |
+| [Onboarding Intake](onboarding-intake/SKILL.md) | `onboarding-intake` | `mutation` | 0.2.0 | `context-audit` |
+| [Cross-Product Onboarding Blueprint](onboarding-blueprint/SKILL.md) | `onboarding-blueprint` | `plan` | 0.3.0 | `context-audit`, `onboarding-intake` |
+| [Onboarding Provisioning](onboarding-provisioning/SKILL.md) | `onboarding-provisioning` | `high_impact` | 0.2.0 | `onboarding-blueprint` |
 
 ## The onsite work
 
@@ -24,12 +24,12 @@ because what it captures cannot be captured retroactively
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Surface Inventory](surface-inventory/SKILL.md) | `surface-inventory` | `analysis` | 1.1.0 | — |
-| [Recommendation Strategy](recommendation-strategy/SKILL.md) | `recommendation-strategy` | `plan` | 1.1.0 | `surface-inventory` |
-| [Offer Targeting](offer-targeting/SKILL.md) | `offer-targeting` | `plan` | 1.1.0 | `surface-inventory` |
-| [Onsite Search](onsite-search/SKILL.md) | `onsite-search` | `recommendation` | 1.1.0 | `surface-inventory` |
-| [Experience Experimentation](experience-experimentation/SKILL.md) | `experience-experimentation` | `plan` | 1.1.0 | `surface-inventory` |
-| [Personalization Audit](personalization-audit/SKILL.md) | `personalization-audit` | `recommendation` | 1.1.0 | `surface-inventory`, `recommendation-strategy`, `offer-targeting`, `onsite-search`, `experience-experimentation` |
+| [Surface Inventory](surface-inventory/SKILL.md) | `surface-inventory` | `analysis` | 2.0.0 | — |
+| [Recommendation Strategy](recommendation-strategy/SKILL.md) | `recommendation-strategy` | `plan` | 2.0.0 | `surface-inventory` |
+| [Offer Targeting](offer-targeting/SKILL.md) | `offer-targeting` | `plan` | 2.0.0 | `surface-inventory` |
+| [Onsite Search](onsite-search/SKILL.md) | `onsite-search` | `recommendation` | 2.0.0 | `surface-inventory` |
+| [Experience Experimentation](experience-experimentation/SKILL.md) | `experience-experimentation` | `plan` | 2.0.0 | `surface-inventory` |
+| [Personalization Audit](personalization-audit/SKILL.md) | `personalization-audit` | `recommendation` | 2.0.0 | `surface-inventory`, `recommendation-strategy`, `offer-targeting`, `onsite-search`, `experience-experimentation` |
 
 ## Composition
 

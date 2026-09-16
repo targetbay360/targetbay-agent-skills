@@ -2,7 +2,7 @@
 
 ## Why rules are separate from skills
 
-A constraint restated inside fourteen skills becomes fourteen slightly different constraints. Rules are
+A constraint restated inside every skill becomes as many slightly different constraints. Rules are
 written once, cited by number, and changed in one place.
 
 | | Answers | Lives in |

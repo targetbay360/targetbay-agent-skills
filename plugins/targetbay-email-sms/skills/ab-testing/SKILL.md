@@ -4,7 +4,7 @@ description: Use when designing a test, deciding whether a test is worth running
 license: MIT
 metadata:
   targetbay.display_name: A/B Testing
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: optimization
   targetbay.requires: email_sms.experimentation, email_sms.campaign_analytics, email_sms.segmentation, email_sms.order_intelligence
   targetbay.composes: audience-discovery
@@ -60,17 +60,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.campaign_analytics` | Baseline and variance for the outcome metric |
 | `email_sms.segmentation` | Sizing the testable audience |
 | `email_sms.order_intelligence` | Revenue outcomes, which are usually the real metric |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `hypothesis` | yes | Belief, expected effect, audience, measure |
-| `variable` | yes | The single thing being changed |
-| `outcome_metric` | no | Defaults to revenue or conversion, never opens |
-| `audience` | no | Delegated to [audience-discovery](../audience-discovery/SKILL.md) |
-| `minimum_effect` | no | The smallest difference worth acting on |
-| `constraints` | no | Time limits, brand limits, what cannot vary |
 
 ## Decision Process
 

@@ -4,7 +4,7 @@ description: Use when a store is new to TargetBay and the question is what to se
 license: MIT
 metadata:
   targetbay.display_name: Cross-Product Onboarding Blueprint
-  targetbay.version: "0.2.0"
+  targetbay.version: "0.3.0"
   targetbay.category: planning
   targetbay.requires: onboarding.store_context, onboarding.intake
   targetbay.composes: context-audit, onboarding-intake
@@ -61,15 +61,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 |---|---|
 | `onboarding.store_context` | Catalogue and customer shape, vertical, brand, coverage, readiness |
 | `onboarding.intake` | Objectives and constraints the platform cannot observe |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `products` | no | Restricts the blueprint to named products; all available is the default |
-| `objectives` | no | Overrides or supplements the stated objective from intake |
-| `constraints` | no | Capacity, brand policy, channel restrictions stated for this run |
-| `horizon` | no | Planning horizon; ninety days is the default |
 
 ## Decision Process
 

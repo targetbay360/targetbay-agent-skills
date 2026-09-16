@@ -20,10 +20,10 @@ Add the marketplace once, then install the products you actually use.
 
 | Plugin | Decides | Skills | Version | MCP |
 |---|---|---|---|---|
-| [**targetbay-email-sms**](plugins/targetbay-email-sms/README.md) | How a store plans, targets, sequences and optimises email and SMS marketing | 24 | `3.1.0` | mapping TODO |
-| [**targetbay-reviews**](plugins/targetbay-reviews/README.md) | When to ask for a review, which products lack proof, how to answer a falling rating, where proof belongs | 5 | `0.1.0` | mapping TODO |
-| [**targetbay-loyalty**](plugins/targetbay-loyalty/README.md) | Whether to run a programme, what a point is worth, where tier thresholds go, which members are leaving | 6 | `0.1.0` | mapping TODO |
-| [**targetbay-onboarding**](plugins/targetbay-onboarding/README.md) | What a new store actually is, what to ask it, what to set up first across all three products, and which surfaces to personalise before any of them | 10 | `0.2.0` | mapping TODO |
+| [**targetbay-email-sms**](plugins/targetbay-email-sms/README.md) | How a store plans, targets, sequences and optimises email and SMS marketing | 24 | `4.0.0` | mapping TODO |
+| [**targetbay-reviews**](plugins/targetbay-reviews/README.md) | When to ask for a review, which products lack proof, how to answer a falling rating, where proof belongs | 5 | `0.2.0` | mapping TODO |
+| [**targetbay-loyalty**](plugins/targetbay-loyalty/README.md) | Whether to run a programme, what a point is worth, where tier thresholds go, which members are leaving | 6 | `0.2.0` | mapping TODO |
+| [**targetbay-onboarding**](plugins/targetbay-onboarding/README.md) | What a new store actually is, what to ask it, what to set up first across all three products, and which surfaces to personalise before any of them | 10 | `0.3.0` | mapping TODO |
 
 ```
 /plugin install targetbay-email-sms@targetbay
@@ -159,13 +159,13 @@ and are not published to the marketplace.
 
 Different products, same contract:
 
-- **Fourteen sections per skill**, in order — including `When Not to Use`, `Approval Requirements` and
+- **Thirteen sections per skill**, in order — including `When Not to Use`, `Approval Requirements` and
   `Failure Handling`, because a skill that cannot say what it will not do is not finished
 - **A composition graph with one skill at the bottom**, so "which products", "which members", "which
   surfaces" each has exactly one implementation and does not drift between skills
 - **`blocked` and `partial` as first-class results.** A skill that cannot get the data it needs says so
   rather than filling the gap
-- **Rules cited by number, never restated.** A constraint copied into six skills drifts in six directions
+- **Rules cited by number, never restated.** A constraint copied into every skill drifts once per copy
 - **Nothing invented.** No tool names before the MCP is inspected, no thresholds asserted as universal, no
   benchmark presented as this store's data
 - **`high_impact` always stops for a human**, with the blast radius shown before the question is asked

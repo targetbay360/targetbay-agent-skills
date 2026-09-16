@@ -1,7 +1,7 @@
 {
   "name": "targetbay-loyalty",
-  "description": "Skills that decide whether a store should run a loyalty programme, what shape it takes, what points are worth, which rewards belong in the catalogue, and which members are quietly leaving. Vendor-neutral reasoning; the TargetBay Loyalty MCP supplies the capabilities.",
-  "version": "0.1.0",
+  "description": "Skills that decide whether a store should run a loyalty programme, what shape it takes, what points are worth, where tier thresholds go, how a referral programme should pay, and which members are quietly leaving. Vendor-neutral reasoning; the TargetBay Loyalty MCP supplies the capabilities.",
+  "version": "0.2.0",
   "author": {
     "name": "TargetBay",
     "email": "support@targetbay.com",

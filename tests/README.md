@@ -30,7 +30,7 @@ copy of a schema has to honour.
 |---|---|
 | `structure` | Repo-level and per-plugin required files and directories exist; every `skills/*/` has a `SKILL.md`; every capability entry is well-formed; a plugin's capability ids share one namespace |
 | `spec` | Every skill passes the [Agent Skills](https://agentskills.io/specification) reference validator — top-level frontmatter closed to the six specification fields, `name` lowercase-hyphenated and matching the directory, `description` within 1024 characters |
-| `skill-validation` | Frontmatter parses and validates against the plugin's own `schemas/skill.schema.json`; `name` matches the directory; all fourteen sections present, in order, non-empty |
+| `skill-validation` | Frontmatter parses and validates against the plugin's own `schemas/skill.schema.json`; `name` matches the directory; all thirteen sections present, in order, non-empty |
 | `playbooks` | Where a plugin has playbooks: frontmatter keys and semver, `name` matches the directory, all six sections present and in order |
 | `references` | Every `targetbay.requires` resolves in the plugin's own `capabilities.yaml`; every `targetbay.composes` resolves to a skill in the same plugin; the composition graph is acyclic; every relative markdown link in the repository resolves |
 | `duplication` | Skill `name` and `targetbay.display_name` are unique **within a plugin** — two products may legitimately both want an `audience-discovery` |
@@ -85,15 +85,13 @@ for every plugin carrying that schema.
 python3 tests/evals/run_evals.py
 ```
 
-Cases live in `evals/golden-prompts/<plugin>/*.yaml` and are evaluated against that plugin's skills
-only. The lexical proxy's inverse document frequency is computed per plugin, because a term distinctive
-inside one product's vocabulary is not necessarily distinctive across all of them — and an agent host
-matches within the plugins a user actually installed.
+Cases live in `evals/golden-prompts/<plugin>/*.yaml`. The runner checks that every skill can be reached
+by a prompt a user would actually type, that cases agree with the skills' declared composition, that
+cited rules exist in that plugin's `rules/`, and that expectations cannot change silently.
 
-It checks that every skill can be reached by a prompt a user would actually type, that cases agree with
-the skills' declared composition, that cited rules exist in that plugin's `rules/`, and that expectations
-cannot change silently. Its selection check is a lexical proxy with a documented ceiling, not a model —
-the model-dependent half is emitted as prompt packs via `--emit` and scored against
-[evals/rubric.md](evals/rubric.md).
+Its selection check is a lexical proxy with a documented ceiling, not a model. Why it is scored per
+plugin, and where the proxy stops being informative, is set out once in
+[evals/README.md](evals/README.md); the model-dependent half is emitted as prompt packs via `--emit` and
+scored against [evals/rubric.md](evals/rubric.md).
 
 `validate.py` stays a structural check and knows nothing about evals. Run both.
