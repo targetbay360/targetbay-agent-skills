@@ -114,6 +114,9 @@ HEADING = re.compile(r"^## (.+?)\s*$", re.MULTILINE)
 MD_LINK = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
 FENCE = re.compile(r"^```.*?^```", re.MULTILINE | re.DOTALL)
 EXTERNAL = re.compile(r"^(https?:|mailto:|#)")
+# A full URL back into this repository — a plugin's only legal way to reference a sibling.
+SELF_BLOB = re.compile(
+    r"^https://github\.com/targetbay360/targetbay-agent-skills/blob/[^/]+/([^#?]+)")
 
 failures: list[str] = []
 group_counts: dict[str, int] = {}
@@ -230,12 +233,25 @@ for pl in plugins:
     check("structure", bool(pl.skills), f"{pl.name}: no skills found")
     check("structure", bool(pl.capabilities), f"{pl.name}: capabilities.yaml declares no capabilities")
 
-    for entry in pl.cap_doc.get("capabilities", []):
+    # An unmapped registry is the documented state of an un-inspected MCP. A PARTLY mapped
+    # one is different: once real tools start landing, every remaining TODO has to say why
+    # it is still a TODO, so "not mapped yet" cannot quietly become "nobody looked".
+    entries = pl.cap_doc.get("capabilities", [])
+    partly_mapped = any(e.get("mcp_tools") != "TODO" for e in entries)
+
+    for entry in entries:
         cid = entry.get("id", "<unnamed>")
         check("structure", "description" in entry and "access" in entry and "mcp_tools" in entry,
               f"{pl.name}: capability {cid} is missing description/access/mcp_tools")
         check("structure", entry.get("access") in {"read", "write", "send"},
               f"{pl.name}: capability {cid} has invalid access: {entry.get('access')}")
+        if entry.get("mcp_tools") != "TODO":
+            check("structure", bool(entry.get("mcp_tools")),
+                  f"{pl.name}: capability {cid} has an empty mcp_tools mapping")
+        elif partly_mapped:
+            check("structure", bool(str(entry.get("notes", "")).strip()),
+                  f"{pl.name}: capability {cid} is still TODO in a partly mapped registry "
+                  f"and carries no notes explaining why")
 
     # one registry, one namespace: a plugin's capabilities must not straddle products
     prefixes = {cid.split(".", 1)[0] for cid in pl.capabilities}
@@ -349,10 +365,21 @@ for pl in plugins:
 
 # every relative markdown link resolves, repo-wide. This is the safety net for moving
 # content between directories (fixtures excluded: they are deliberately broken).
+#
+# A plugin may not link outside itself by relative path — Claude Code ships only what is
+# under the plugin's `source` — so cross-plugin references are written as full GitHub URLs
+# to this same repository. Those resolve to a path here, so they are checked too: a file
+# renamed in one plugin should not silently break a sibling's link to it.
 for md in sorted(ROOT.rglob("*.md")):
     if FIXTURES in md.parents or "node_modules" in md.parts:
         continue
     for target in MD_LINK.findall(FENCE.sub("", md.read_text())):
+        self_ref = SELF_BLOB.match(target)
+        if self_ref:
+            path = (ROOT / self_ref.group(1)).resolve()
+            check("references", path.exists(),
+                  f"{md.relative_to(ROOT)} links to missing repository path '{self_ref.group(1)}'")
+            continue
         if EXTERNAL.match(target):
             continue
         path = (md.parent / target.split("#", 1)[0]).resolve()
