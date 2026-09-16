@@ -1,10 +1,10 @@
 ---
 name: customer-winback
-description: Use when targeting customers who have already lapsed — dormant or churned contacts who have stopped buying and largely stopped engaging. Decides who is worth recovering, what would actually bring them back, how many attempts are justified, and when continued sending should stop in favour of suppression. Use customer-retention for customers who are still active.
+description: Use when targeting customers who have already lapsed — dormant or churned contacts who have stopped buying and largely stopped engaging. Decides who is worth recovering, what would actually bring them back, how many attempts are justified, and when continued sending should stop in favour of suppression. Answers "should we keep emailing our dormant list?" and "can we win these customers back?". Use customer-retention for customers who are still active, and channel-optimization when the question is which channel to reach them on rather than whether to reach them at all.
 license: MIT
 metadata:
   targetbay.display_name: Customer Win-back
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: retention
   targetbay.requires: email_sms.customer_intelligence, email_sms.order_intelligence, email_sms.product_intelligence, email_sms.segmentation, email_sms.campaign_analytics, email_sms.suppression_and_consent
   targetbay.composes: audience-discovery
@@ -62,16 +62,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.segmentation` | Sizing win-back audiences by value and reachability |
 | `email_sms.campaign_analytics` | Prior win-back results |
 | `email_sms.suppression_and_consent` | Reachability, complaint risk, suppression state |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `lapse_window` | no | Derived from the store's intervals when not given |
-| `value_threshold` | no | Restrict to customers above a prior-value level |
-| `max_attempts` | no | Defaults to a bounded sequence decided from evidence |
-| `offer_policy` | no | Whether escalating incentive is permitted |
-| `objective` | no | Recovery, list hygiene, or both |
 
 ## Decision Process
 

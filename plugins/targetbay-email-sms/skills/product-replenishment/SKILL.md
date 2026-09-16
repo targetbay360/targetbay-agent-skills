@@ -4,7 +4,7 @@ description: Use when products are consumed and rebought on a measurable cycle a
 license: MIT
 metadata:
   targetbay.display_name: Product Replenishment
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: lifecycle
   targetbay.requires: email_sms.product_intelligence, email_sms.order_intelligence, email_sms.customer_intelligence, email_sms.segmentation, email_sms.automation, email_sms.automation_analytics
   targetbay.composes: automation-architect, audience-discovery
@@ -61,16 +61,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.customer_intelligence` | Individual patterns, engagement, value |
 | `email_sms.segmentation` | Sizing each replenishment audience |
 | `email_sms.automation` / `email_sms.automation_analytics` | Existing coverage and its performance |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `products_or_categories` | no | Defaults to scanning the catalogue for qualifying products |
-| `minimum_repeat_sample` | no | How much repeat evidence a product needs to qualify |
-| `channels_allowed` | no | Defaults to consented, available channels |
-| `constraints` | no | Discount policy, cadence limits |
-| `playbook` | no | Vertical overlay |
 
 ## Decision Process
 

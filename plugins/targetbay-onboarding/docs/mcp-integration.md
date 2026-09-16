@@ -25,23 +25,14 @@ product data reads it through [../capabilities.yaml](../capabilities.yaml)'s
 The registry is [../capabilities.yaml](../capabilities.yaml) — the single source of truth. Every skill's
 `requires:` entries are validated against it.
 
-| Capability | Access | MCP tools | Status |
-|---|---|---|---|
-| `onboarding.store_context` | read | — | **TODO** |
-| `onboarding.intake` | write | — | **TODO** |
-| `onboarding.provisioning` | write | — | **TODO — capability itself unverified** |
-| `onboarding.activation` | send | — | **TODO** |
-| `onboarding.consent_and_tracking` | read | — | **TODO — blocks every onsite skill** |
-| `onboarding.visitor_intelligence` | read | — | **TODO** |
-| `onboarding.product_intelligence` | read | — | **TODO** |
-| `onboarding.audience_definition` | write | — | **TODO** |
-| `onboarding.recommendation_placement` | write | — | **TODO** |
-| `onboarding.recommendation_analytics` | read | — | **TODO** |
-| `onboarding.offers` | write | — | **TODO** |
-| `onboarding.offer_analytics` | read | — | **TODO** |
-| `onboarding.onsite_search` | write | — | **TODO** |
-| `onboarding.experimentation` | write | — | **TODO** |
-| `onboarding.experience_analytics` | read | — | **TODO** |
+All 15 capabilities in [../capabilities.yaml](../capabilities.yaml) are `mcp_tools: TODO`.
+Rather than transcribe the registry here — two lists that drift — this section records only what
+still needs a decision. Read the registry for ids, descriptions, access levels and notes.
+
+| Capability | Access | Open question |
+|---|---|---|
+| `onboarding.provisioning` | write | capability itself unverified |
+| `onboarding.consent_and_tracking` | read | blocks every onsite skill |
 
 Mapping a capability means naming the MCP tools or resources that satisfy it, recording the shape of what
 they return, and confirming the access level matches. Until that is done, no skill in this package can

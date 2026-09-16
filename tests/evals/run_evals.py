@@ -8,9 +8,8 @@
 Exits 0 when every check passes, 1 otherwise.
 
 Cases live in `golden-prompts/<plugin>/*.yaml` and are evaluated against that plugin's skills
-only. The lexical proxy's inverse document frequency is computed per plugin, because a term
-that is distinctive inside one product's vocabulary is not necessarily distinctive across all
-of them, and an agent host matches within the plugins a user actually installed.
+only; scoring is per plugin. README.md in this directory explains why, and where the proxy's
+usefulness ends.
 
 What is deterministic here and what is not
 ------------------------------------------

@@ -4,7 +4,7 @@ description: Use when a store has no loyalty programme and is deciding whether t
 license: MIT
 metadata:
   targetbay.display_name: Programme Design
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: planning
   targetbay.requires: loyalty.store_profile, loyalty.program_config, loyalty.order_intelligence, loyalty.customer_intelligence, loyalty.reward_catalog, loyalty.suppression_and_consent
   targetbay.composes: program-diagnosis, points-economics, tier-structure, referral-program
@@ -65,15 +65,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `loyalty.customer_intelligence` | Lifecycle distribution and engagement |
 | `loyalty.reward_catalog` | What can be offered, at what cost |
 | `loyalty.suppression_and_consent` | How the programme could be communicated at all |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `objective` | no | Retention, frequency, AOV, competitive response |
-| `constraints` | no | Budget, margin floor, mechanics that are off the table |
-| `scope` | no | A customer segment the programme is aimed at |
-| `period` | no | Window for behaviour analysis |
 
 ## Decision Process
 

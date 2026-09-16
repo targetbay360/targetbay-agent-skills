@@ -4,7 +4,7 @@ description: Use when designing, pricing or fixing a referral programme — deci
 license: MIT
 metadata:
   targetbay.display_name: Referral Programme
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: referral
   targetbay.requires: loyalty.store_profile, loyalty.referral_program, loyalty.member_profile, loyalty.order_intelligence, loyalty.customer_intelligence, loyalty.program_analytics, loyalty.suppression_and_consent
   targetbay.composes: program-diagnosis, points-economics
@@ -67,15 +67,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `loyalty.customer_intelligence` | Retention of referred customers against other sources |
 | `loyalty.program_analytics` | Referral volume, qualification and conversion |
 | `loyalty.suppression_and_consent` | Where and how members may be asked |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `objective` | no | Volume, quality, cost reduction, fraud control |
-| `constraints` | no | Budget, margin floor, incentive types not permitted |
-| `scope` | no | A member segment expected to refer |
-| `period` | no | Window for cohort retention analysis |
 
 ## Decision Process
 

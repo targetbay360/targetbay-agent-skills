@@ -4,7 +4,7 @@ description: Use for an open-ended assessment of a store's whole review and UGC 
 license: MIT
 metadata:
   targetbay.display_name: Review Programme Audit
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: planning
   targetbay.requires: reviews.store_profile, reviews.product_coverage, reviews.ratings_analytics, reviews.review_requests, reviews.request_analytics, reviews.display_placement, reviews.ugc_media, reviews.moderation, reviews.syndication
   targetbay.composes: review-coverage, review-request-program, rating-diagnosis, proof-placement
@@ -67,15 +67,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `reviews.ugc_media` | Media dimension |
 | `reviews.moderation` | Moderation consistency dimension |
 | `reviews.syndication` | Distribution dimension |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | Limits the audit to a category or product set |
-| `period` | no | Window for movement and performance comparison |
-| `objective` | no | Biases ranking toward conversion, launch readiness or risk reduction |
-| `constraints` | no | Effort ceiling, surfaces or products out of bounds |
 
 ## Decision Process
 
@@ -150,8 +141,8 @@ Plus: the dimensions assessed as healthy, and anything that could not be assesse
 | Read and analyse | `read_only` / `analysis` | None |
 | Recommend and rank | `recommendation` | None |
 
-This skill executes nothing. Every recommendation it makes is carried out by a composed skill under that
-skill's own approval requirements.
+Every recommendation this skill makes is carried out by a composed skill, under that skill's own
+approval requirements.
 
 ## Examples
 

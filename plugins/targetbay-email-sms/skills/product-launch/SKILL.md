@@ -4,7 +4,7 @@ description: Use when a new product, collection, restock or category is being in
 license: MIT
 metadata:
   targetbay.display_name: Product Launch
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: acquisition
   targetbay.requires: email_sms.store_profile, email_sms.customer_intelligence, email_sms.product_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.campaign_management, email_sms.campaign_analytics, email_sms.marketing_calendar, email_sms.suppression_and_consent
   targetbay.composes: audience-discovery, cross-sell
@@ -65,17 +65,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.campaign_analytics` | Prior launch results |
 | `email_sms.marketing_calendar` | Collisions across the launch window |
 | `email_sms.suppression_and_consent` | Channel eligibility |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `product_or_collection` | yes | What is launching |
-| `launch_date` | yes | Or the window |
-| `stock_position` | no | Depth and replenishment lead time |
-| `objective` | no | Revenue, sell-through, awareness, category entry |
-| `constraints` | no | Embargoes, discount policy, capacity |
-| `playbook` | no | Vertical overlay |
 
 ## Decision Process
 

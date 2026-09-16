@@ -4,7 +4,7 @@ description: Use when an approved onboarding blueprint needs to become real conf
 license: MIT
 metadata:
   targetbay.display_name: Onboarding Provisioning
-  targetbay.version: "0.1.0"
+  targetbay.version: "0.2.0"
   targetbay.category: provisioning
   targetbay.requires: onboarding.store_context, onboarding.provisioning, onboarding.activation
   targetbay.composes: onboarding-blueprint
@@ -56,14 +56,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `onboarding.store_context` | Current coverage, audience sizes, consent state before creating anything |
 | `onboarding.provisioning` | Dry run, apply and verify the resource set |
 | `onboarding.activation` | Moving an approved resource from draft to live, one at a time |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `blueprint` | yes | The approved plan to provision |
-| `resources` | no | Restricts this run to named resources from the blueprint |
-| `idempotency_key` | no | Reuses a prior run's key so a re-run completes rather than duplicates |
 
 ## Decision Process
 

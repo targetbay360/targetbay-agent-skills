@@ -4,7 +4,7 @@ description: Use when deciding how email and SMS should divide the work — whic
 license: MIT
 metadata:
   targetbay.display_name: Channel Optimization
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: optimization
   targetbay.requires: email_sms.customer_intelligence, email_sms.campaign_analytics, email_sms.automation_analytics, email_sms.segmentation, email_sms.suppression_and_consent, email_sms.messaging_sms
   targetbay.composes: audience-discovery
@@ -61,16 +61,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.segmentation` | Sizing channel-eligible audiences |
 | `email_sms.suppression_and_consent` | Consent per channel, quiet hours, caps |
 | `email_sms.messaging_sms` | SMS availability. **Unverified** — see [../../docs/mcp-integration.md](../../docs/mcp-integration.md) |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | A campaign, a journey, or the whole programme |
-| `objective` | no | Cost reduction, reach, conversion, re-engagement |
-| `sms_cost` | no | Per-message cost, if the store knows it |
-| `constraints` | no | Budget, brand policy, jurisdictions |
-| `playbook` | no | Vertical overlay |
 
 ## Decision Process
 

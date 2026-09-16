@@ -38,22 +38,14 @@ Each entry carries an `id`, a `description`, an `access` level (`read` / `write`
 
 ## Mapping status
 
-| Capability | Access | MCP tools | Status |
-|---|---|---|---|
-| `reviews.store_profile` | read | — | **TODO** |
-| `reviews.product_coverage` | read | — | **TODO** |
-| `reviews.review_content` | read | — | **TODO** |
-| `reviews.ratings_analytics` | read | — | **TODO** |
-| `reviews.review_requests` | write | — | **TODO** |
-| `reviews.request_analytics` | read | — | **TODO** |
-| `reviews.ugc_media` | read | — | **TODO** |
-| `reviews.moderation` | write | — | **TODO** |
-| `reviews.review_replies` | write | — | **TODO** |
-| `reviews.display_placement` | write | — | **TODO** |
-| `reviews.syndication` | write | — | **TODO — capability itself unverified** |
-| `reviews.messaging` | send | — | **TODO** |
-| `reviews.suppression_and_consent` | read | — | **TODO** |
-| `reviews.order_intelligence` | read | — | **TODO — may belong to the commerce platform** |
+All 14 capabilities in [../capabilities.yaml](../capabilities.yaml) are `mcp_tools: TODO`.
+Rather than transcribe the registry here — two lists that drift — this section records only what
+still needs a decision. Read the registry for ids, descriptions, access levels and notes.
+
+| Capability | Access | Open question |
+|---|---|---|
+| `reviews.syndication` | write | capability itself unverified |
+| `reviews.order_intelligence` | read | may belong to the commerce platform |
 
 Mapping a capability means: naming the MCP tools or resources that satisfy it, recording the shape of what
 they return, and confirming the access level matches. Until that is done, no skill in this package can

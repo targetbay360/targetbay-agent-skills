@@ -13,12 +13,12 @@
 └──────────────────┬───────────────────────────┘
                    ▼  declares required capabilities
 ┌──────────────────────────────────────────────┐
-│ TargetBay Email & SMS MCP                                │  ← separate repository
+│ TargetBay Email & SMS MCP                    │  ← separate repository
 │   tools and resources                        │     WHAT can be done
 └──────────────────┬───────────────────────────┘
                    ▼
 ┌──────────────────────────────────────────────┐
-│ TargetBay Email & SMS platform                           │  data and execution
+│ TargetBay Email & SMS platform               │  data and execution
 └──────────────────────────────────────────────┘
 ```
 
@@ -50,7 +50,7 @@ skills/      objective → decisions → plan → execution sequence
 ```
 
 Skills link to the other three by relative path. Nothing is copy-pasted between them: a constraint
-restated in fourteen skills drifts in fourteen directions.
+restated in every skill drifts in as many directions as there are skills.
 
 ## Composition
 

@@ -1,10 +1,10 @@
 ---
 name: onsite-search
-description: Use when onsite search is underperforming — queries returning nothing, high-volume queries that do not convert, synonyms and redirects that need setting, or search results that do not reflect what the store actually wants to sell. Also use to mine search queries for catalogue and merchandising gaps.
+description: Use when search on the store's site is underperforming — searches coming back with no results, high-volume queries that do not convert, synonyms and redirects that need setting, or search results that do not reflect what the store actually wants to sell. Answers "our searches return no results" and "why does site search find nothing?". Also use to mine search queries for catalogue and merchandising gaps. Use personalization-audit when search is only one suspect among several and nobody has named the problem.
 license: MIT
 metadata:
   targetbay.display_name: Onsite Search
-  targetbay.version: "1.1.0"
+  targetbay.version: "2.0.0"
   targetbay.category: discovery
   targetbay.requires: onboarding.store_context, onboarding.onsite_search, onboarding.product_intelligence, onboarding.experience_analytics, onboarding.visitor_intelligence
   targetbay.composes: surface-inventory
@@ -66,15 +66,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `onboarding.product_intelligence` | Catalogue vocabulary, attributes, stock, margin |
 | `onboarding.experience_analytics` | Search-to-purchase funnel against navigation |
 | `onboarding.visitor_intelligence` | Session context around the query |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | A category, query set or locale |
-| `period` | no | Window for query volume and conversion |
-| `objective` | no | Zero-result reduction, conversion, catalogue discovery |
-| `constraints` | no | Ranking rules that may not change, terms not to redirect |
 
 ## Decision Process
 

@@ -4,7 +4,7 @@ description: Use when a store needs to collect more reviews — designing or fix
 license: MIT
 metadata:
   targetbay.display_name: Review Request Programme
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: outreach
   targetbay.requires: reviews.store_profile, reviews.product_coverage, reviews.review_requests, reviews.request_analytics, reviews.order_intelligence, reviews.suppression_and_consent, reviews.ugc_media, reviews.messaging
   targetbay.composes: review-coverage
@@ -71,15 +71,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `reviews.suppression_and_consent` | Eligibility, channel and frequency headroom |
 | `reviews.ugc_media` | Whether a media ask is warranted and where |
 | `reviews.messaging` | Dispatch — only after explicit approval |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `scope` | no | A category, product set or customer cohort |
-| `objective` | no | Coverage, velocity, media, backlog recovery |
-| `constraints` | no | Channel restrictions, excluded products, contact budget |
-| `period` | no | Analysis window for request performance |
 
 ## Decision Process
 

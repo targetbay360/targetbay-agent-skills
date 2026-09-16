@@ -4,7 +4,7 @@ description: Use when planning a month of marketing — "plan next month", build
 license: MIT
 metadata:
   targetbay.display_name: Monthly Marketing Planner
-  targetbay.version: "1.0.0"
+  targetbay.version: "2.0.0"
   targetbay.category: planning
   targetbay.requires: email_sms.store_profile, email_sms.customer_intelligence, email_sms.product_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.campaign_management, email_sms.campaign_analytics, email_sms.automation, email_sms.marketing_calendar, email_sms.suppression_and_consent
   targetbay.composes: audience-discovery, campaign-optimization, holiday-marketing, product-launch, revenue-growth
@@ -76,18 +76,6 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 | `email_sms.automation` | Contact load already committed |
 | `email_sms.marketing_calendar` | Occupancy and collisions |
 | `email_sms.suppression_and_consent` | Channel eligibility and frequency caps |
-
-## Inputs
-
-| Input | Required | Notes |
-|---|---|---|
-| `period` | yes | The month or date range being planned |
-| `objectives` | no | Store priorities. Defaults to the strongest opportunity found |
-| `revenue_target` | no | Shapes intensity and offer strategy |
-| `known_events` | no | Launches, restocks, store events, sales already committed |
-| `constraints` | no | Max sends per week, no-discount periods, brand blackouts, capacity |
-| `channels_allowed` | no | Defaults to consented and available channels |
-| `playbook` | no | Vertical overlay |
 
 ## Decision Process
 

@@ -5,6 +5,30 @@ All notable changes to TargetBay Reviews Skills are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this package adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-09-16
+
+### Changed
+
+- **The skill contract is thirteen sections, not fourteen.** `Inputs` is removed from every skill and
+  from `tests/validate.py`; every skill is a MAJOR bump as a result.
+- `docs/mcp-integration.md` no longer transcribes `capabilities.yaml`; it records the two capabilities
+  that still carry an open question and points at the registry for the rest.
+- `rules/README.md` no longer states the drift argument in terms of a skill count that will go stale.
+- `docs/` is published to npm, so the README's links to it resolve in the tarball.
+- Tautological lines beneath the `Approval Requirements` table are gone; the routing they carried stays.
+
+### Fixed
+
+- **Installed skills no longer cite files that are not there.** Both installers rewrite the
+  `../../rules/`, `../../knowledge/` and `../../schemas/` citations that flattening breaks into the
+  released URL for the installed version.
+- `install.sh` installs slash commands alongside a `.claude` tree, matching `install.mjs`.
+- `schemas/skill.schema.json` cited `docs/architecture.md`, which only the email-sms plugin carries; it
+  now cites `rules/safety-rules.md#S1`.
+- `review-coverage` said it stopped "seven skills" inventing seven definitions; four skills compose it.
+- The marketplace and plugin descriptions named photo and video UGC harvesting as covered work; no
+  skill here does it. They now name rating recovery and the programme audit, which do have skills.
+
 ## [0.1.0] - 2026-09-12
 
 First release. Five skills, a capability registry, and the rules and knowledge they cite.

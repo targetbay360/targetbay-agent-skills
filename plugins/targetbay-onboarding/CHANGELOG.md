@@ -5,6 +5,28 @@ All notable changes to TargetBay Onboarding Skills are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this package adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-09-16
+
+### Changed
+
+- **The skill contract is thirteen sections, not fourteen.** `Inputs` is removed from every skill and
+  from `tests/validate.py`; every skill is a MAJOR bump as a result.
+- **`personalization-audit`, `surface-inventory`, `onsite-search` and `context-audit` split more
+  cleanly.** `surface-inventory` owns what is running now; `personalization-audit` owns what to do about
+  it; `onsite-search` owns failing queries. Two golden prompts previously separated by a 0% margin now
+  resolve without a warning.
+- `docs/mcp-integration.md` no longer transcribes `capabilities.yaml`; it records the two capabilities
+  that still carry an open question and points at the registry for the rest.
+- The README documents the five slash commands, which it previously did not mention.
+- `docs/` is published to npm, so the README's links to it resolve in the tarball.
+
+### Fixed
+
+- **Installed skills no longer cite files that are not there.** Both installers rewrite the
+  `../../rules/`, `../../knowledge/` and `../../schemas/` citations that flattening breaks into the
+  released URL for the installed version.
+- `install.sh` installs slash commands alongside a `.claude` tree, matching `install.mjs`.
+
 ## [0.2.0] - 2026-09-15
 
 Onsite personalisation moves in. It was a fifth plugin, `targetbay-personalization`, sold and installed as

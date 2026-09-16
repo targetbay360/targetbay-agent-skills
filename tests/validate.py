@@ -43,7 +43,6 @@ REQUIRED_SECTIONS = [
     "When Not to Use",
     "Required Context",
     "Required MCP Capabilities",
-    "Inputs",
     "Decision Process",
     "Decision Rules",
     "Workflow",
@@ -103,11 +102,6 @@ PLUGIN_REQUIRED_FILES = [
 ]
 
 PLUGIN_REQUIRED_DIRS = ["skills", "rules", "knowledge", "schemas", "docs"]
-
-# Validated when present, not required. A young plugin should not invent five vertical
-# playbooks it has no evidence for — the same "never invent" discipline the package
-# applies to MCP tool names.
-PLUGIN_OPTIONAL_DIRS = ["playbooks", "examples", "commands"]
 
 SEMVER = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$")
 HEADING = re.compile(r"^## (.+?)\s*$", re.MULTILINE)

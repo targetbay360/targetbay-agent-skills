@@ -63,7 +63,7 @@ summary of the implementation:
 Include the phrases a user would actually say, and say which neighbouring skill to use instead — that is
 what stops the wrong skill firing.
 
-## The fourteen sections
+## The thirteen sections
 
 All required, in this order, all non-empty.
 
@@ -74,7 +74,6 @@ All required, in this order, all non-empty.
 | `When Not to Use` | The neighbouring skills, with links. This is what prevents misfires |
 | `Required Context` | A table: context, why it is needed, and what happens without it |
 | `Required MCP Capabilities` | Each capability and what it is used for |
-| `Inputs` | A table: input, required, notes |
 | `Decision Process` | The ordered reasoning, usually as a diagram |
 | `Decision Rules` | The specific rules, citing `rules/` by number rather than restating them |
 | `Workflow` | The lifecycle phases with the risk level of each |
@@ -84,7 +83,7 @@ All required, in this order, all non-empty.
 | `Examples` | Two or three realistic situations with the reasoning, not just the answer |
 | `Failure Handling` | A table: situation, response. Every degraded path stated |
 
-Extra sections are allowed after these, but the fourteen must all be present and in order.
+Extra sections are allowed after these, but the thirteen must all be present and in order.
 
 ## Writing the content
 
@@ -129,7 +128,7 @@ references, the acyclic composition graph, name uniqueness, and every relative l
 
 ## Then
 
-- Add a golden prompt for it in [tests/evals/golden-prompts/targetbay-email-sms/](https://github.com/targetbay360/targetbay-agent-skills/blob/main/tests/evals/README.md) — the
+- Add a golden prompt for it in [tests/evals/golden-prompts/targetbay-email-sms/](https://github.com/targetbay360/targetbay-agent-skills/tree/main/tests/evals/golden-prompts/targetbay-email-sms) — the
   `coverage` check fails until every skill is the expected answer to at least one prompt. If the
   selection check cannot find your skill from a prompt a user would plausibly type, the description
   is the problem, not the prompt
@@ -142,7 +141,7 @@ references, the acyclic composition graph, name uniqueness, and every relative l
 
 - [ ] The objective is one a store owner would state
 - [ ] No existing skill already covers it
-- [ ] All fourteen sections present, in order, non-empty
+- [ ] All thirteen sections present, in order, non-empty
 - [ ] `description` is in trigger form and names the neighbouring skills
 - [ ] Every `targetbay.requires` entry exists in `capabilities.yaml`
 - [ ] Every `targetbay.composes` entry exists, and the graph stays acyclic

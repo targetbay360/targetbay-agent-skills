@@ -3,7 +3,7 @@
 A vendor-neutral AI Agent Skills package that teaches agents **how to design, price and run a loyalty and
 referral programme** using TargetBay Loyalty.
 
-[![version](https://img.shields.io/badge/version-0.1.0-blue)](VERSION)
+[![version](https://img.shields.io/badge/version-0.2.0-blue)](VERSION)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![agent skills](https://img.shields.io/badge/Agent%20Skills-conformant-7c3aed)](https://agentskills.io/specification)
 
@@ -126,7 +126,7 @@ that mapping has to settle before any skill here can execute.
 
 ## Status
 
-`0.1.0`. Skill reasoning is expected to be stable; capability identifiers may change as the real MCP
+`0.2.0`. Skill reasoning is expected to be stable; capability identifiers may change as the real MCP
 surface is mapped. See [CHANGELOG.md](CHANGELOG.md) for known gaps.
 
 ---

@@ -5,7 +5,7 @@ what this store actually is, what to set up first across all three products, and
 capture is part of that: the placements, offers, search and tracking a store starts with live here rather
 than in a product plugin, because no product owns them.
 
-[![version](https://img.shields.io/badge/version-0.2.0-blue)](VERSION)
+[![version](https://img.shields.io/badge/version-0.3.0-blue)](VERSION)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![agent skills](https://img.shields.io/badge/Agent%20Skills-conformant-7c3aed)](https://agentskills.io/specification)
 
@@ -84,6 +84,18 @@ captured retroactively, so it runs while the messaging programmes are still bein
 
 Full graph and selection guidance: [skills/README.md](skills/README.md).
 
+### Commands
+
+Each routes a plain request to one skill; the reasoning stays in the skill.
+
+| Command | Does |
+|---|---|
+| `/targetbay-onboarding:onboard-store` | The whole pipeline — audit what is known, ask what is not, sequence the first ninety days |
+| `/targetbay-onboarding:store-context` | What TargetBay actually knows: derived, provisional, stated, absent |
+| `/targetbay-onboarding:surface-map` | What runs on every onsite surface, and what each element is worth |
+| `/targetbay-onboarding:audit-experience` | Ranks the onsite problems worth fixing first |
+| `/targetbay-onboarding:search-gaps` | Mines failing search queries for catalogue and vocabulary gaps |
+
 ## Four things this package insists on
 
 **Every value carries where it came from.** A quantity is derived from this store's data, provisional from
@@ -147,7 +159,7 @@ also records the fourteen questions that mapping has to settle before any skill 
 
 ## Status
 
-`0.2.0`. Skill reasoning is expected to be stable; capability identifiers may change as the real MCP
+`0.3.0`. Skill reasoning is expected to be stable; capability identifiers may change as the real MCP
 surface is mapped. `onboarding.provisioning` is unverified — no TargetBay write surface has been
 inspected. See [CHANGELOG.md](CHANGELOG.md) for known gaps.
 

@@ -5,6 +5,52 @@ own changelog under `plugins/<name>/CHANGELOG.md`, and versions independently.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2026-09-16] The skill contract loses a section, and installed skills keep their citations
+
+Two problems, both of which the repository's own rules already named.
+
+**`Inputs` was scaffolding.** Thirty of forty-five skills declared no required input at all, and the
+four names that dominated the table — `scope`, `objective`, `constraints`, `period` — restated
+`Required Context` without its reason column. The contract is now **thirteen sections**, enforced in
+`tests/validate.py`. Removing a required section is a MAJOR change for every plugin, so all four bump,
+and every skill with them.
+
+**A skill installed from npm cited files that were not there.** Both installers flatten `skills/` into
+the destination, which left every `../../rules/`, `../../knowledge/` and `../../schemas/` citation
+resolving to nothing — 335 rule references alone, in the layer the whole "cite, do not restate"
+architecture depends on. `install.mjs` and `install.sh` now rewrite those to the released URL for the
+installed version, which is what `CONTRIBUTING.md` already requires of a reference that leaves its own
+directory. Sibling-skill links still resolve after flattening and are untouched.
+
+### Changed
+
+- `aov-growth` and `upsell` no longer both claim free-shipping and gift thresholds. Threshold design
+  and merchandising belong to `aov-growth`; `upsell` keeps the upward moves and defers the rest.
+- Skill descriptions sharpened where the golden prompts showed overlap. The evals run with no
+  thin-margin warnings, and lexical top-1 agreement rises from 41/59 to 44/59.
+- Each plugin's `docs/mcp-integration.md` stops transcribing its `capabilities.yaml` — the pattern
+  `docs/mcp-capability-inventory.md` explicitly forbids — and records only the seven capabilities that
+  still carry an open question.
+- `CONTRIBUTING.md` no longer implies every plugin carries `docs/skill-authoring.md`; only
+  `targetbay-email-sms` does, and the guides are written once there for all four.
+- The drift argument no longer counts skills. It was written as "fourteen skills" when the plugin had
+  fourteen and has since had twenty-four, and appeared elsewhere as six, five and seven.
+- `docs/` and, where present, `examples/` are published to npm.
+
+### Fixed
+
+- `tests/evals/run_evals.py` and `tests/README.md` no longer restate the lexical-proxy rationale that
+  `tests/evals/README.md` carries; `CONTRIBUTING.md` points at the eval docs rather than summarising
+  their check groups at lower fidelity.
+- The `2026-09-15` entry below sat between two `2026-09-12` entries in a reverse-chronological file,
+  with no blank line before its heading.
+- `targetbay-loyalty` and `targetbay-reviews` shipped a `skill.schema.json` citing `docs/architecture.md`,
+  which only `targetbay-email-sms` carries.
+- Marketplace and plugin descriptions named work no skill does — photo and video UGC harvesting, a
+  reward catalogue, redemption health.
+- The bug-report template offered a version placeholder matching no plugin.
+- `PLUGIN_OPTIONAL_DIRS` in `tests/validate.py` was defined and never referenced.
+
 ## [2026-09-16] A standalone reference skill for template design
 
 The plugins produce content direction and explicitly stop short of finished creative, and the sending
@@ -57,6 +103,32 @@ are in [plugins/targetbay-onboarding/CHANGELOG.md](plugins/targetbay-onboarding/
 - **Golden prompts moved.** `tests/evals/golden-prompts/targetbay-personalization/` is now
   `onsite-coverage.yaml` and `onsite-safety.yaml` under `targetbay-onboarding/`, with their rule
   citations remapped to the merged numbering.
+
+## [2026-09-15] A standalone reference skill for the sending layer
+
+The plugins decide what a store should do. Nothing in the repository explained how the sending layer
+underneath them works — SPF alignment, 10DLC registration, one-click unsubscribe headers, webhook
+signature verification, suppression scope. That material is deliberately excluded from the plugin
+contract by `rules/global-rules.md#G10`, which treats it as a platform responsibility, so it had
+nowhere to live and was simply absent.
+
+### Added
+
+- **`targetbay-email-sms-best-practices/`**, a standalone agent skill outside `plugins/`: a routing
+  hub plus fourteen references covering email and SMS deliverability, CAN-SPAM/GDPR/CASL and
+  TCPA/state compliance, the transactional message catalog, ecommerce lifecycle flows, capture and
+  consent, suppression and hygiene, idempotency and retry, delivery events, and accessibility.
+  It does not follow the fourteen-section plugin contract and is not registered in
+  `marketplace.json` — it is reference material for an engineer, not a decision skill for an agent.
+- **Two boundaries stated in the skill itself.** Code examples call a wrapper the reader owns rather
+  than an SDK method, because the TargetBay API and webhook signatures were not inspected; and every
+  figure is either an attributed external requirement or labelled illustrative, which is the same
+  rule the plugins follow.
+
+### Changed
+
+- **`README.md` documents the directory** in the repository layout and in a section explaining why a
+  skill that breaks the plugin contract is the correct shape for this content.
 
 ## [2026-09-12] Onboarding becomes a plugin
 
@@ -120,31 +192,6 @@ This entry records the repository-level changes. What the plugin contains, and w
   worse, not just the line count: the same nine shared rules now carry five different anchor numbers, so
   a cross-plugin citation like `safety-rules.md#S12` means different things in different plugins.
   Extraction remains the next structural change, and was deliberately not coupled to this one.
-## [2026-09-15] A standalone reference skill for the sending layer
-
-The plugins decide what a store should do. Nothing in the repository explained how the sending layer
-underneath them works — SPF alignment, 10DLC registration, one-click unsubscribe headers, webhook
-signature verification, suppression scope. That material is deliberately excluded from the plugin
-contract by `rules/global-rules.md#G10`, which treats it as a platform responsibility, so it had
-nowhere to live and was simply absent.
-
-### Added
-
-- **`targetbay-email-sms-best-practices/`**, a standalone agent skill outside `plugins/`: a routing
-  hub plus fourteen references covering email and SMS deliverability, CAN-SPAM/GDPR/CASL and
-  TCPA/state compliance, the transactional message catalog, ecommerce lifecycle flows, capture and
-  consent, suppression and hygiene, idempotency and retry, delivery events, and accessibility.
-  It does not follow the fourteen-section plugin contract and is not registered in
-  `marketplace.json` — it is reference material for an engineer, not a decision skill for an agent.
-- **Two boundaries stated in the skill itself.** Code examples call a wrapper the reader owns rather
-  than an SDK method, because the TargetBay API and webhook signatures were not inspected; and every
-  figure is either an attributed external requirement or labelled illustrative, which is the same
-  rule the plugins follow.
-
-### Changed
-
-- **`README.md` documents the directory** in the repository layout and in a section explaining why a
-  skill that breaks the plugin contract is the correct shape for this content.
 
 ## [2026-09-12] BayEngage renamed to TargetBay Email & SMS
 
