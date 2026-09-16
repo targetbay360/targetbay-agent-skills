@@ -17,6 +17,11 @@ list hygiene and accessibility.
 Two channels, one reputation, one consent record — and most failures in this domain are
 infrastructural rather than creative.
 
+Its companion,
+[Email Template Design](https://github.com/targetbay360/targetbay-agent-skills/tree/main/targetbay-email-template-design),
+covers the visual layer — layout, typography, colour and dark mode, template anatomy, calls to action
+and imagery.
+
 ## What it covers
 
 **Getting delivered**
