@@ -1,0 +1,257 @@
+{
+  "schema_version": "0.1.0",
+  "store_id": "store_10482",
+  "computed_at": "2026-09-12T04:15:00Z",
+  "ttl_seconds": 86400,
+  "source_window": "2025-09-01/2026-09-01",
+  "identity": {
+    "display_name": "Example Store",
+    "domain": "example.test",
+    "currency": "USD",
+    "locales": [
+      "en-US"
+    ],
+    "markets": [
+      "US",
+      "CA"
+    ],
+    "platform_age_days": 41,
+    "migrated_from": "another-platform",
+    "plan_limits": {
+      "monthly_email_sends": 50000,
+      "sms_enabled": false
+    }
+  },
+  "vertical": {
+    "detected": {
+      "value": "beauty",
+      "basis": "derived",
+      "n": 1840,
+      "confidence": 0.74,
+      "evidence": [
+        {
+          "metric": "category_name_match_share",
+          "value": 0.68,
+          "source_capability": "email_sms.product_intelligence"
+        }
+      ],
+      "replaced_by": null
+    },
+    "playbook": "beauty",
+    "alternatives": [
+      {
+        "playbook": "ecommerce",
+        "confidence": 0.21
+      }
+    ]
+  },
+  "catalogue": {
+    "size": {
+      "value": 1840,
+      "unit": "products",
+      "basis": "derived",
+      "n": 1840,
+      "evidence": [
+        {
+          "metric": "active_product_count",
+          "value": 1840,
+          "source_capability": "email_sms.product_intelligence"
+        }
+      ]
+    },
+    "consumability": {
+      "value": "consumable",
+      "basis": "derived",
+      "n": 612,
+      "confidence": 0.81,
+      "evidence": [
+        {
+          "metric": "skus_with_repeat_interval_under_120d_share",
+          "value": 0.63,
+          "period": "2025-09-01/2026-09-01",
+          "source_capability": "email_sms.order_intelligence"
+        }
+      ]
+    },
+    "price_deciles": [
+      8,
+      12,
+      16,
+      19,
+      24,
+      29,
+      36,
+      48,
+      72
+    ],
+    "replenishment_candidates": [
+      {
+        "product_ref": "sku_4471",
+        "observed_interval": {
+          "value": null,
+          "basis": "absent",
+          "replaced_by": "30 repeat purchases of this product"
+        }
+      }
+    ]
+  },
+  "customers": {
+    "total": {
+      "value": 14203,
+      "basis": "derived",
+      "n": 14203,
+      "evidence": [
+        {
+          "metric": "contact_count",
+          "value": 14203,
+          "source_capability": "email_sms.customer_intelligence"
+        }
+      ]
+    },
+    "lifecycle_counts": {
+      "prospect": 9120,
+      "first_time_buyer": 3402,
+      "repeat_buyer": 1104,
+      "unknown": 577
+    },
+    "consent": {
+      "email": {
+        "granted": 4102,
+        "denied": 318,
+        "unknown": 9783
+      },
+      "sms": {
+        "granted": 0,
+        "denied": 0,
+        "unknown": 14203
+      }
+    },
+    "engagement_recency": [
+      {
+        "bucket": "0-30d",
+        "count": 1841
+      },
+      {
+        "bucket": "31-90d",
+        "count": 2260
+      },
+      {
+        "bucket": "never",
+        "count": 10102
+      }
+    ],
+    "boundaries": {
+      "lapse_point": {
+        "value": null,
+        "basis": "absent",
+        "replaced_by": "200 customers with a second purchase"
+      },
+      "first_to_second_gap": {
+        "value": 38,
+        "unit": "days",
+        "basis": "provisional",
+        "replaced_by": "200 customers with a second purchase"
+      },
+      "repeat_rate": {
+        "value": null,
+        "basis": "absent",
+        "replaced_by": "90 days of order history on this platform"
+      }
+    }
+  },
+  "brand": {
+    "sender_identity": {
+      "from_name": {
+        "value": "Example Store",
+        "basis": "derived",
+        "n": 12,
+        "evidence": [
+          {
+            "metric": "from_name_modal_value",
+            "value": "Example Store",
+            "source_capability": "email_sms.template_management"
+          }
+        ]
+      }
+    },
+    "palette": [
+      {
+        "hex": "#1b3a5c",
+        "template_count": 11
+      }
+    ],
+    "voice": {
+      "mean_sentence_words": {
+        "value": 14.2,
+        "unit": "words",
+        "basis": "derived",
+        "n": 12,
+        "evidence": [
+          {
+            "metric": "mean_sentence_words",
+            "value": 14.2,
+            "source_capability": "email_sms.template_management"
+          }
+        ]
+      }
+    },
+    "templates_analysed": 12
+  },
+  "coverage": {
+    "email_sms": {
+      "configured": true,
+      "resources": [
+        {
+          "kind": "automation",
+          "name": "Welcome",
+          "state": "live",
+          "audience_size": 4102
+        }
+      ]
+    },
+    "loyalty": {
+      "configured": false,
+      "resources": []
+    }
+  },
+  "intake": {
+    "answered_at": "2026-09-12T03:50:00Z",
+    "answers": {
+      "Q3": {
+        "value": 15,
+        "unit": "percent",
+        "basis": "stated",
+        "source": "intake:Q3"
+      },
+      "Q6": {
+        "value": 3,
+        "unit": "messages_per_week",
+        "basis": "stated",
+        "source": "intake:Q6"
+      }
+    }
+  },
+  "readiness": [
+    {
+      "capability": "email_sms.customer_intelligence",
+      "status": "available",
+      "n": 14203
+    },
+    {
+      "capability": "email_sms.messaging_sms",
+      "status": "unverified",
+      "reason": "No SMS dispatch endpoint confirmed for this tenant.",
+      "blocks": [
+        "onboarding-blueprint"
+      ]
+    },
+    {
+      "capability": "loyalty.points_ledger",
+      "status": "absent",
+      "n": 0,
+      "blocks": [
+        "onboarding-blueprint"
+      ]
+    }
+  ]
+}
