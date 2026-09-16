@@ -61,6 +61,7 @@ send path can bypass, or a flow that keeps mailing someone who already bought.
 | Handle retries, idempotency, timeouts, queueing | [Sending Reliability](./references/sending-reliability.md) |
 | Process delivery events, verify webhooks | [Webhooks & Events](./references/webhooks-events.md) |
 | Make emails readable by screen readers and in dark mode | [Accessibility](./references/accessibility.md) |
+| Design the template — layout, type, colour, CTA, imagery | [Email Template Design](https://github.com/targetbay360/targetbay-agent-skills/tree/main/targetbay-email-template-design) |
 
 ## Start Here
 
@@ -93,3 +94,9 @@ on later. Unregistered US traffic is not filtered — it is blocked outright.
 **Accessibility?**
 Most ecommerce email fails basic checks. See [Accessibility](./references/accessibility.md) for
 `lang`, presentational tables, heading order, alt text, `<title>`, contrast and dark mode.
+
+**Designing what the email looks like?**
+This skill covers whether a message arrives and what it must contain. How it is laid out — width,
+type, colour, dark mode appearance, calls to action, imagery — is the companion skill,
+[Email Template Design](https://github.com/targetbay360/targetbay-agent-skills/tree/main/targetbay-email-template-design).
+Do [Accessibility](./references/accessibility.md) first; the design decisions there assume it.

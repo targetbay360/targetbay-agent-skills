@@ -5,6 +5,29 @@ own changelog under `plugins/<name>/CHANGELOG.md`, and versions independently.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2026-09-16] A standalone reference skill for template design
+
+The plugins produce content direction and explicitly stop short of finished creative, and the sending
+layer skill covers whether a message arrives and what it must contain. Neither covers what an email
+should look like. Repository-wide there was no material on template width, email-safe typography,
+palette construction, block order or designing for images off — the nearest was the accessibility
+reference, which describes what breaks rather than how to build.
+
+### Added
+
+- **`targetbay-email-template-design/`**, a standalone agent skill outside `plugins/`: a routing hub
+  plus six references covering layout and spacing, typography, colour and dark mode, template
+  anatomy, calls to action and imagery, and design QA. Design guidance only — no HTML, no client
+  conditionals, no CSS. Where the sending-layer skill already owns a rule, it cites rather than
+  restates.
+
+### Changed
+
+- `targetbay-email-sms-best-practices/SKILL.md` gains a routing row and a `Start Here` entry pointing
+  at the design skill. The two standalone skills cross-link by full GitHub URL, because each installs
+  by copying its own directory and a relative link between them would be dead on install.
+- `README.md` documents both standalone skills rather than one.
+
 ## [2026-09-15] Personalization stops being a separate product
 
 `targetbay-personalization` was listed and installed as a product alongside Email & SMS, Reviews and
