@@ -1,10 +1,10 @@
 ---
 name: store-onboarding
-description: Use when getting started with a store that has no established programme — newly signed up, just migrated or moved from another platform, or starting from scratch with no automations and no sending history. Answers "what should we set up first?". Audits what data actually exists, decides the baseline journeys to build and in what order, plans a deliberately light first period, and sets a review point. Deliberately conservative, because most planning skills depend on history a new store does not have — this skill says so rather than inventing defaults.
+description: Use when onboarding a store onto TargetBay Email & SMS — newly signed up, just migrated or moved from another platform, or starting from scratch with no automations and no sending history. Answers "what should we set up first?" for email and SMS. Audits what data actually exists, decides the baseline journeys to build and in what order, plans a deliberately light first period, and sets a review point. Deliberately conservative, because most planning skills depend on history a new store does not have — this skill says so rather than inventing defaults.
 license: MIT
 metadata:
   targetbay.display_name: Store Onboarding
-  targetbay.version: "1.1.0"
+  targetbay.version: "2.0.0"
   targetbay.category: planning
   targetbay.requires: email_sms.store_profile, email_sms.customer_intelligence, email_sms.order_intelligence, email_sms.product_intelligence, email_sms.segmentation, email_sms.automation, email_sms.suppression_and_consent
   targetbay.composes: automation-strategy, audience-discovery, monthly-marketing-planner
@@ -25,9 +25,10 @@ day one.
 
 ## When to Use
 
+- Onboarding a store onto TargetBay Email & SMS for the first time
 - A store is new to TargetBay
 - An existing store has no automations and no meaningful sending history
-- Establishing a baseline programme before any optimisation
+- Establishing a baseline email and SMS programme before any optimisation
 - Auditing what data is actually available before planning depends on it
 
 ## When Not to Use
@@ -38,6 +39,9 @@ day one.
 - Only the automation portfolio is in question. Use
   [automation-strategy](../automation-strategy/SKILL.md).
 - The store has run for a while and simply lacks automations — that is a coverage gap, not onboarding.
+- The onboarding question spans reviews, loyalty or onsite personalization as well as email and SMS. Use
+  [onboarding-blueprint](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-onboarding/skills/onboarding-blueprint/SKILL.md),
+  which sequences all three products against one contact budget rather than planning email and SMS alone.
 
 ## Required Context
 

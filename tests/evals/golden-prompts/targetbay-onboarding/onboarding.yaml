@@ -1,0 +1,112 @@
+suite: onboarding
+description: >-
+  The onboarding pipeline end to end. These cases pin the two things that decide whether onboarding is
+  store-specific or a default checklist: that the facts get partitioned before a plan is built on them,
+  and that the sequence is derived from this store rather than borrowed from the last one.
+
+  The zero-history case is first on purpose. A store with almost no data is the most common onboarding
+  shape and the one where filling a gap with a plausible default is most tempting.
+
+cases:
+  - id: ob-001
+    prompt: We went live nine days ago with three orders — onboard us across all three products.
+    expect_skill: onboarding-blueprint
+    accept_skills:
+      - onboarding-blueprint
+      - context-audit
+    expect_composes:
+      - context-audit
+    must_cite:
+      - global-rules.md#G3
+      - global-rules.md#G14
+      - sequencing-rules.md#SQ6
+    must_not:
+      - Offer a lapse point, VIP boundary or replenishment interval derived from nine days of data
+      - Present a vertical playbook default as a threshold derived from this store
+      - Size loyalty tiers or points economics on a repeat rate that does not exist
+      - State a step's precondition as a calendar date rather than an observation
+    notes: >-
+      The hardest and most common onboarding shape. Almost every derived value is absent, and the skill
+      must deliver sequencing, catalogue-shape decisions and labelled defaults rather than invented
+      thresholds. Accepts context-audit because establishing the partition first is a legitimate reading
+      of the same request.
+
+  - id: ob-002
+    prompt: We just signed up. Set up everything across email, reviews, loyalty and onsite.
+    expect_skill: onboarding-blueprint
+    expect_composes:
+      - context-audit
+      - onboarding-intake
+    must_cite:
+      - contact-ownership-rules.md#X7
+      - sequencing-rules.md#SQ1
+    must_not:
+      - Plan three products independently without stating one aggregate contact figure
+      - Sequence lifecycle email ahead of arming review capture
+      - Activate anything as part of the plan
+    notes: >-
+      The cross-product case this plugin exists for. Four products planned as one sequence, with the
+      maximum weekly contact per customer stated as a number rather than left as the sum of four
+      separate caps.
+
+  - id: ob-003
+    prompt: What do we actually know about this store?
+    expect_skill: context-audit
+    must_cite:
+      - global-rules.md#G14
+      - safety-rules.md#S12
+    must_not:
+      - Recommend, rank or sequence anything
+      - Report a value without saying whether it was derived, borrowed, stated or absent
+      - Treat an empty read as a measured zero
+    notes: >-
+      The audit's whole job is the partition. A recommendation appearing here removes the reviewer's
+      chance to disagree with the facts before a plan rests on them.
+
+  - id: ob-004
+    prompt: "Ask the store owner what we need: objectives, margin posture, brand policy and blackout dates."
+    expect_skill: onboarding-intake
+    expect_composes:
+      - context-audit
+    must_cite:
+      - global-rules.md#G8
+      - global-rules.md#G3
+    must_not:
+      - Ask a question whose answer is already in the derived store context
+      - Infer margin posture from discount history instead of asking
+      - Record an unanswered question as a default rather than as absent
+      - Write answers without previewing the full set first
+    notes: >-
+      Intake is the cheapest fix for "same features for everyone" because it needs no platform data at
+      all. Its discipline is subtraction: read first, then ask only what remains.
+
+  - id: ob-005
+    prompt: The blueprint is approved — build it in TargetBay.
+    expect_skill: onboarding-provisioning
+    expect_composes:
+      - onboarding-blueprint
+    must_cite:
+      - safety-rules.md#S2
+      - safety-rules.md#S4
+      - contact-ownership-rules.md#X8
+    must_not:
+      - Activate anything as part of the apply
+      - Ask for approval without stating audience size per resource
+      - Overwrite existing configuration found by the dry run
+    notes: >-
+      Approval of a plan is not approval to go live. The dry run, the blast radius and the separate
+      activation gate are the whole content of this case.
+
+  - id: ob-006
+    prompt: Reviews and email both want to message customers after delivery. Who wins?
+    expect_skill: onboarding-blueprint
+    must_cite:
+      - contact-ownership-rules.md#X2
+      - contact-ownership-rules.md#X4
+    must_not:
+      - Let both products message the same moment
+      - Resolve the collision by switching channel or shortening one message
+      - Run the yielding ask the following day instead of behind its own owned moment
+    notes: >-
+      The unreconciled-contact problem in its smallest form. Post-purchase is Reviews' moment; the
+      answer is ownership, not compromise.
