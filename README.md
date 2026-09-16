@@ -99,6 +99,7 @@ plugins/<name>/                   a product plugin — self-contained
   skills/  rules/  knowledge/  schemas/  docs/  commands/
   capabilities.yaml  VERSION  CHANGELOG.md  package.json
 targetbay-email-sms-best-practices/   a standalone reference skill — see below
+targetbay-email-template-design/      a standalone reference skill — see below
 ```
 
 Every plugin is self-contained because Claude Code ships only what lives under a plugin's `source`
@@ -108,7 +109,7 @@ does not resolve, so the boundary is enforced rather than remembered.
 
 Plugins version and release independently, tagged `<plugin>@<version>`.
 
-## The standalone reference skill
+## The standalone reference skills
 
 `targetbay-email-sms-best-practices/` sits outside `plugins/` deliberately. It is a routing hub plus
 fourteen reference documents covering the layer beneath the plugins: DNS authentication, A2P 10DLC
@@ -128,8 +129,20 @@ Two boundaries it holds:
 - **No borrowed numbers.** Published provider and regulatory requirements are attributed as such;
   anything else is labelled illustrative or described as a derivation from store data.
 
-Install it by copying the directory into an agent host's skills path; it has no dependencies and is
-not published to the marketplace.
+`targetbay-email-template-design/` sits alongside it and covers the other half of that excluded
+material: what an email should look like. Layout and spacing, email-safe typography, colour and dark
+mode, template anatomy, calls to action and imagery, and the review before a template ships. The
+plugins produce content direction and stop short of finished creative
+([`rules/content-rules.md`](plugins/targetbay-email-sms/rules/content-rules.md)); this is the design
+layer that turns direction into a template. It holds the same two boundaries, and adds a third: **no
+markup** — design decisions only, with the templating layer left to implement them.
+
+The two link to each other by full GitHub URL rather than relative path. Each installs by copying its
+own directory, so a relative link between them resolves during validation and is dead on install —
+the same reason a plugin never reaches outside its own directory.
+
+Install either by copying the directory into an agent host's skills path; they have no dependencies
+and are not published to the marketplace.
 
 ## What every plugin has in common
 
