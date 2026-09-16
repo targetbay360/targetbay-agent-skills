@@ -97,6 +97,31 @@ This entry records the repository-level changes. What the plugin contains, and w
   worse, not just the line count: the same nine shared rules now carry five different anchor numbers, so
   a cross-plugin citation like `safety-rules.md#S12` means different things in different plugins.
   Extraction remains the next structural change, and was deliberately not coupled to this one.
+## [2026-09-15] A standalone reference skill for the sending layer
+
+The plugins decide what a store should do. Nothing in the repository explained how the sending layer
+underneath them works — SPF alignment, 10DLC registration, one-click unsubscribe headers, webhook
+signature verification, suppression scope. That material is deliberately excluded from the plugin
+contract by `rules/global-rules.md#G10`, which treats it as a platform responsibility, so it had
+nowhere to live and was simply absent.
+
+### Added
+
+- **`targetbay-email-sms-best-practices/`**, a standalone agent skill outside `plugins/`: a routing
+  hub plus fourteen references covering email and SMS deliverability, CAN-SPAM/GDPR/CASL and
+  TCPA/state compliance, the transactional message catalog, ecommerce lifecycle flows, capture and
+  consent, suppression and hygiene, idempotency and retry, delivery events, and accessibility.
+  It does not follow the fourteen-section plugin contract and is not registered in
+  `marketplace.json` — it is reference material for an engineer, not a decision skill for an agent.
+- **Two boundaries stated in the skill itself.** Code examples call a wrapper the reader owns rather
+  than an SDK method, because the TargetBay API and webhook signatures were not inspected; and every
+  figure is either an attributed external requirement or labelled illustrative, which is the same
+  rule the plugins follow.
+
+### Changed
+
+- **`README.md` documents the directory** in the repository layout and in a section explaining why a
+  skill that breaks the plugin contract is the correct shape for this content.
 
 ## [2026-09-12] BayEngage renamed to TargetBay Email & SMS
 
