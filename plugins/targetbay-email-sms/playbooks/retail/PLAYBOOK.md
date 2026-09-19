@@ -1,12 +1,13 @@
 ---
 name: retail
 display_name: Multi-channel Retail
-version: 1.0.0
+version: 1.1.0
 applies_to: Retailers operating physical locations alongside online sales, where customer behaviour and inventory are split across channels.
 overrides:
   - default thresholds
   - lever priority
   - audience emphasis
+  - recipe priority
 ---
 
 # Multi-channel Retail Playbook
@@ -82,3 +83,20 @@ online-only attribution picture.
 - **Single-location stores** need the local emphasis but not the cross-location segmentation.
 - Stores with no in-store identity capture cannot apply the attribution caveats usefully — the data to
   check simply is not there, and the correct response is to say so rather than to assume.
+
+## Recipe Priority
+
+A prior for [automation-recipe-selector](../../skills/automation-recipe-selector/SKILL.md), which
+re-ranks it on store evidence. Each entry names the signal to check before believing it.
+
+1. **Lifecycle recipes**, with local time and store-level timing applied throughout. *Check:* that
+   contact time zone is recorded; a single-clock schedule delivers overnight to part of the base.
+2. **Channel escalation** — email then SMS, where SMS consent exists separately. *Check:* that SMS
+   consent is recorded per channel and that quiet hours are configured per region.
+3. **Measurement** — the periodic summary, segmented by location or region rather than store-wide.
+4. **Retention sweeps** — after the above. *Check:* whether purchase behaviour is attributable to a
+   contact at all when a large share of trade is anonymous walk-in.
+5. **List health** and **AI-assisted** — as the baseline.
+
+Usually wrong here: any recipe that assumes one time zone, one clock or one operating calendar across
+the whole contact base.
