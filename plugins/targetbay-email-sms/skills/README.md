@@ -4,17 +4,19 @@ A skill teaches an agent how to accomplish a marketing objective. It owns the re
 which instrument, how many, in what order, and when to stop — while the TargetBay Email & SMS MCP owns the
 capabilities that carry it out. See [../docs/architecture.md](../docs/architecture.md).
 
-31 skills, grouped by what they decide.
+38 skills, grouped by what they decide.
 
 ## Revenue
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Revenue Growth](revenue-growth/SKILL.md) | `revenue-growth` | `recommendation` | 2.0.0 | `audience-discovery`, `automation-strategy`, `campaign-optimization`, `revenue-analysis`, `aov-growth` |
-| [Revenue Analysis](revenue-analysis/SKILL.md) | `revenue-analysis` | `analysis` | 2.0.0 | — |
-| [Opportunity Discovery](opportunity-discovery/SKILL.md) | `opportunity-discovery` | `recommendation` | 2.0.0 | `revenue-analysis`, `automation-strategy`, `campaign-optimization` |
 | [AOV Growth](aov-growth/SKILL.md) | `aov-growth` | `recommendation` | 2.0.0 | `upsell`, `cross-sell`, `audience-discovery` |
 | [Cross-sell](cross-sell/SKILL.md) | `cross-sell` | `recommendation` | 2.0.0 | `audience-discovery` |
+| [Offer Strategy](offer-strategy/SKILL.md) | `offer-strategy` | `recommendation` | 1.0.0 | `audience-discovery` |
+| [Opportunity Discovery](opportunity-discovery/SKILL.md) | `opportunity-discovery` | `recommendation` | 2.1.0 | `revenue-analysis`, `automation-strategy`, `campaign-optimization`, `deliverability-qa` |
+| [Product Recommendation Strategy](product-recommendation-strategy/SKILL.md) | `product-recommendation-strategy` | `recommendation` | 1.0.0 | — |
+| [Revenue Analysis](revenue-analysis/SKILL.md) | `revenue-analysis` | `analysis` | 2.0.0 | — |
+| [Revenue Growth](revenue-growth/SKILL.md) | `revenue-growth` | `recommendation` | 2.0.0 | `audience-discovery`, `automation-strategy`, `campaign-optimization`, `revenue-analysis`, `aov-growth` |
 | [Stock and Price Alerts](stock-and-price-alerts/SKILL.md) | `stock-and-price-alerts` | `recommendation` | 1.0.0 | `audience-discovery`, `automation-architect` |
 | [Upsell](upsell/SKILL.md) | `upsell` | `recommendation` | 2.0.0 | `audience-discovery` |
 
@@ -23,25 +25,25 @@ capabilities that carry it out. See [../docs/architecture.md](../docs/architectu
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
 | [Customer Lifecycle](customer-lifecycle/SKILL.md) | `customer-lifecycle` | `recommendation` | 2.0.0 | `customer-retention`, `customer-winback`, `automation-strategy`, `audience-discovery` |
-| [Customer Retention](customer-retention/SKILL.md) | `customer-retention` | `recommendation` | 2.0.0 | `audience-discovery`, `automation-architect`, `product-replenishment` |
-| [Customer Win-back](customer-winback/SKILL.md) | `customer-winback` | `recommendation` | 2.1.0 | `audience-discovery` |
 | [Product Replenishment](product-replenishment/SKILL.md) | `product-replenishment` | `recommendation` | 2.0.0 | `automation-architect`, `audience-discovery` |
+| [Customer Retention](customer-retention/SKILL.md) | `customer-retention` | `recommendation` | 2.0.0 | `audience-discovery`, `automation-architect`, `product-replenishment` |
+| [Customer Win-back](customer-winback/SKILL.md) | `customer-winback` | `recommendation` | 2.2.0 | `audience-discovery`, `list-hygiene`, `offer-strategy` |
 
 ## Automation
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Automation Strategy](automation-strategy/SKILL.md) | `automation-strategy` | `plan` | 2.0.0 | `automation-architect`, `audience-discovery` |
-| [Automation Architect](automation-architect/SKILL.md) | `automation-architect` | `plan` | 2.0.0 | `audience-discovery` |
-| [Automation Optimization](automation-optimization/SKILL.md) | `automation-optimization` | `recommendation` | 2.0.0 | `ab-testing` |
+| [Automation Architect](automation-architect/SKILL.md) | `automation-architect` | `plan` | 2.1.0 | `audience-discovery`, `product-recommendation-strategy`, `offer-strategy` |
 | [Automation Orchestration](automation-orchestration/SKILL.md) | `automation-orchestration` | `plan` | 1.0.0 | `automation-architect` |
 | [Automation Recipe Selector](automation-recipe-selector/SKILL.md) | `automation-recipe-selector` | `plan` | 1.0.0 | `automation-strategy`, `audience-discovery` |
+| [Automation Strategy](automation-strategy/SKILL.md) | `automation-strategy` | `plan` | 2.0.0 | `automation-architect`, `audience-discovery` |
 
 ## Planning
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Marketing Calendar](marketing-calendar/SKILL.md) | `marketing-calendar` | `plan` | 2.0.0 | `monthly-marketing-planner`, `holiday-marketing`, `product-launch` |
+| [Campaign Conflict Resolver](campaign-conflict-resolver/SKILL.md) | `campaign-conflict-resolver` | `plan` | 1.0.0 | `audience-discovery` |
+| [Marketing Calendar](marketing-calendar/SKILL.md) | `marketing-calendar` | `plan` | 2.0.1 | `monthly-marketing-planner`, `holiday-marketing`, `product-launch` |
 | [Monthly Marketing Planner](monthly-marketing-planner/SKILL.md) | `monthly-marketing-planner` | `plan` | 2.0.0 | `audience-discovery`, `campaign-optimization`, `holiday-marketing`, `product-launch`, `revenue-growth` |
 | [Store Onboarding](store-onboarding/SKILL.md) | `store-onboarding` | `plan` | 3.0.0 | `automation-strategy`, `audience-discovery`, `monthly-marketing-planner` |
 
@@ -49,25 +51,30 @@ capabilities that carry it out. See [../docs/architecture.md](../docs/architectu
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Holiday Marketing](holiday-marketing/SKILL.md) | `holiday-marketing` | `plan` | 2.0.0 | `audience-discovery`, `holiday-drip-campaign` |
-| [Holiday Drip Campaign](holiday-drip-campaign/SKILL.md) | `holiday-drip-campaign` | `plan` | 2.0.0 | `audience-discovery` |
 | [Product Launch](product-launch/SKILL.md) | `product-launch` | `plan` | 2.0.1 | `audience-discovery`, `cross-sell` |
+| [Holiday Drip Campaign](holiday-drip-campaign/SKILL.md) | `holiday-drip-campaign` | `plan` | 2.0.0 | `audience-discovery` |
+| [Holiday Marketing](holiday-marketing/SKILL.md) | `holiday-marketing` | `plan` | 2.0.0 | `audience-discovery`, `holiday-drip-campaign` |
 
 ## Optimisation, content and audience
 
 | Skill | Name | Risk | Version | Composes |
 |---|---|---|---|---|
-| [Campaign Optimization](campaign-optimization/SKILL.md) | `campaign-optimization` | `recommendation` | 2.1.0 | `audience-discovery`, `ab-testing`, `content-optimization` |
-| [Content Optimization](content-optimization/SKILL.md) | `content-optimization` | `recommendation` | 2.0.0 | `ab-testing` |
-| [Channel Optimization](channel-optimization/SKILL.md) | `channel-optimization` | `recommendation` | 2.0.0 | `audience-discovery` |
-| [Send-Time Optimization](send-time-optimization/SKILL.md) | `send-time-optimization` | `recommendation` | 1.0.0 | `ab-testing` |
-| [AI Content Governance](ai-content-governance/SKILL.md) | `ai-content-governance` | `plan` | 1.0.0 | `content-optimization` |
-| [A/B Testing](ab-testing/SKILL.md) | `ab-testing` | `recommendation` | 2.0.0 | `audience-discovery` |
 | [Audience Discovery](audience-discovery/SKILL.md) | `audience-discovery` | `recommendation` | 2.1.0 | — |
-| [List Hygiene](list-hygiene/SKILL.md) | `list-hygiene` | `recommendation` | 1.0.0 | `audience-discovery` |
-| [Consent Verification](consent-verification/SKILL.md) | `consent-verification` | `recommendation` | 1.0.0 | — |
+| [Consent and Contact Policy](consent-verification/SKILL.md) | `consent-verification` | `recommendation` | 1.1.0 | — |
+| [List Hygiene](list-hygiene/SKILL.md) | `list-hygiene` | `recommendation` | 1.1.0 | `audience-discovery` |
+| [AI Content Governance](ai-content-governance/SKILL.md) | `ai-content-governance` | `plan` | 1.0.0 | `content-optimization` |
+| [Content Optimization](content-optimization/SKILL.md) | `content-optimization` | `recommendation` | 2.1.0 | `ab-testing`, `dynamic-content-personalizer` |
+| [Dynamic Content Personalizer](dynamic-content-personalizer/SKILL.md) | `dynamic-content-personalizer` | `recommendation` | 1.0.0 | `product-recommendation-strategy`, `audience-discovery` |
+| [Email Render QA](email-render-qa/SKILL.md) | `email-render-qa` | `recommendation` | 1.0.0 | — |
+| [A/B Testing](ab-testing/SKILL.md) | `ab-testing` | `recommendation` | 2.1.0 | `audience-discovery` |
+| [Automation Optimization](automation-optimization/SKILL.md) | `automation-optimization` | `recommendation` | 2.0.0 | `ab-testing` |
+| [Campaign Optimization](campaign-optimization/SKILL.md) | `campaign-optimization` | `recommendation` | 2.2.0 | `audience-discovery`, `ab-testing`, `content-optimization`, `deliverability-qa`, `offer-strategy` |
+| [Channel Optimization](channel-optimization/SKILL.md) | `channel-optimization` | `recommendation` | 2.1.0 | `audience-discovery` |
+| [Deliverability QA](deliverability-qa/SKILL.md) | `deliverability-qa` | `recommendation` | 1.0.0 | `list-hygiene` |
+| [Email Quality Auditor](email-quality-auditor/SKILL.md) | `email-quality-auditor` | `recommendation` | 1.0.0 | `deliverability-qa`, `email-render-qa`, `dynamic-content-personalizer`, `audience-discovery` |
+| [Send-Time Optimization](send-time-optimization/SKILL.md) | `send-time-optimization` | `recommendation` | 1.0.0 | `ab-testing` |
 
-All 31 skills are at `targetbay.status: foundation` — the contract is established and the reasoning is real, but the
+All 38 skills are at `targetbay.status: foundation` — the contract is established and the reasoning is real, but the
 workflows have not yet been hardened against a live TargetBay Email & SMS MCP. See
 [../docs/versioning.md](../docs/versioning.md).
 
@@ -85,15 +92,26 @@ marketing-calendar
         ├── holiday-marketing ── holiday-drip-campaign
         ├── product-launch ── cross-sell
         └── campaign-optimization ─┬── ab-testing
-                                   └── content-optimization ── ab-testing
+                                   ├── content-optimization ─┬── ab-testing
+                                   │                         └── dynamic-content-personalizer
+                                   ├── deliverability-qa ── list-hygiene
+                                   └── offer-strategy
+
+email-quality-auditor ─┬── deliverability-qa ── list-hygiene
+                       ├── email-render-qa (composes nothing)
+                       ├── dynamic-content-personalizer ── product-recommendation-strategy
+                       └── audience-discovery
 
 store-onboarding ── automation-strategy · monthly-marketing-planner
 customer-lifecycle ── customer-retention ── product-replenishment ── automation-architect
-opportunity-discovery ── revenue-analysis · automation-strategy · campaign-optimization
+customer-winback ── audience-discovery · list-hygiene · offer-strategy
+opportunity-discovery ── revenue-analysis · automation-strategy · campaign-optimization · deliverability-qa
 
+automation-architect ── audience-discovery · product-recommendation-strategy · offer-strategy
 automation-recipe-selector ── automation-strategy · audience-discovery
 automation-orchestration ── automation-architect
 stock-and-price-alerts ── audience-discovery · automation-architect
+campaign-conflict-resolver ── audience-discovery
 send-time-optimization ── ab-testing
 ai-content-governance ── content-optimization
 list-hygiene ── audience-discovery
@@ -104,7 +122,12 @@ consent-verification (composes nothing — a policy decision with no delegation)
 
 `audience-discovery` is the most-composed skill in the package: every targeting question routes through
 it, so targeting logic exists in exactly one place. `revenue-analysis` plays the same role for
-decomposition, and `ab-testing` for test design.
+decomposition, `ab-testing` for test design, and `product-recommendation-strategy` — deliberately
+built as a leaf that composes nothing — for which items a message features.
+
+`email-quality-auditor` is the only skill positioned above the others as a gate rather than beside
+them as a peer. It owns the verdict and none of the reasoning: every dimension it sweeps belongs to
+the skill it composes. See [../docs/email-quality-architecture.md](../docs/email-quality-architecture.md).
 
 ## Which skill for which question
 
@@ -141,6 +164,14 @@ decomposition, and `ab-testing` for test design.
 | "Our bounce rate is climbing" | [list-hygiene](list-hygiene/SKILL.md) |
 | "Should we use double opt-in?" | [consent-verification](consent-verification/SKILL.md) |
 | "Who should we target?" | [audience-discovery](audience-discovery/SKILL.md) |
+| "Can we safely send this?" | [email-quality-auditor](email-quality-auditor/SKILL.md) |
+| "Are we authenticated? Is our reputation slipping?" | [deliverability-qa](deliverability-qa/SKILL.md) |
+| "Will this break in dark mode or with images off?" | [email-render-qa](email-render-qa/SKILL.md) |
+| "How should we personalize this?" | [dynamic-content-personalizer](dynamic-content-personalizer/SKILL.md) |
+| "What offer should we use?" | [offer-strategy](offer-strategy/SKILL.md) |
+| "Which products should we recommend?" | [product-recommendation-strategy](product-recommendation-strategy/SKILL.md) |
+| "These sends overlap — what gives?" | [campaign-conflict-resolver](campaign-conflict-resolver/SKILL.md) |
+| "How often is too often?" | [consent-verification](consent-verification/SKILL.md) |
 
 ## The contract
 
@@ -169,6 +200,14 @@ The decisions live here; the runnable patterns that carry them live in
 a standalone reference skill outside this plugin. `automation-recipe-selector` is the skill that
 decides which of those a given store should adopt, and in what order.
 
+Email quality and deliverability reasoning lives here; the operational detail it rests on — DNS record
+syntax, provider requirements, accessibility rules, dark-mode behaviour — lives in the standalone
+[best practices](https://github.com/targetbay360/targetbay-agent-skills/blob/main/targetbay-email-sms-best-practices/SKILL.md)
+and [template design](https://github.com/targetbay360/targetbay-agent-skills/blob/main/targetbay-email-template-design/SKILL.md)
+reference skills, which the skills here cite rather than restate.
+
 Deliberately **not** covered by this package: acquisition channels outside email and SMS, paid media,
-creative production, pricing strategy, and anything the TargetBay Email & SMS platform enforces deterministically
-(consent, suppression, sending limits). See [../docs/architecture.md](../docs/architecture.md).
+creative production, pricing strategy, seed-list inbox placement measurement (no capability exists —
+see [../../../docs/mcp-capability-gap-analysis.md](../../../docs/mcp-capability-gap-analysis.md)), and
+anything the TargetBay Email & SMS platform enforces deterministically (consent, suppression, sending
+limits). See [../docs/architecture.md](../docs/architecture.md).
