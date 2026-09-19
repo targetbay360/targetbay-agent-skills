@@ -1,6 +1,6 @@
 ---
 name: email-quality-auditor
-description: Use as the last check before a campaign is approved to go out — sweeping audience, consent, suppression, recent contact, personalisation fallbacks, links, opt-out, offer accuracy, product availability, collisions with other sends and the sending programme's condition, then returning one verdict with every objection stated. Answers "can we safely send this?", "is this campaign ready?" and "check this before it goes out". Use campaign-optimization when a campaign has already run and underperformed, and deliverability-qa when the sending programme rather than one campaign is in question.
+description: Use as the last check before a campaign is sent or an automation is switched on — sweeping audience, consent, suppression, recent contact, personalisation fallbacks, links, opt-out, offer accuracy, product availability, collisions with other sends and the sending programme's condition, then returning one verdict with every objection stated. Answers "can we safely send this?", "is this campaign ready?", "check this before it goes out" and "review this automation before we switch it on". Use campaign-optimization when a campaign has already run and underperformed, and deliverability-qa when the sending programme rather than one message is in question.
 license: MIT
 metadata:
   targetbay.display_name: Email Quality Auditor
