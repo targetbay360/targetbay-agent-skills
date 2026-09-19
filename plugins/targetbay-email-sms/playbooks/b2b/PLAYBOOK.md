@@ -1,13 +1,14 @@
 ---
 name: b2b
 display_name: Business-to-Business and Wholesale
-version: 1.0.0
+version: 1.1.0
 applies_to: Businesses selling to other businesses — wholesale, trade accounts, and considered purchases involving multiple people, longer cycles and account-level relationships.
 overrides:
   - default thresholds
   - lever priority
   - lifecycle emphasis
   - audience emphasis
+  - recipe priority
 ---
 
 # B2B and Wholesale Playbook
@@ -94,3 +95,24 @@ and account management instead.
 - **Mixed B2B and B2C stores** need the two bases separated before either overlay is applied; applying
   this playbook to the consumer half will suppress legitimate activity.
 - **Marketplace and distributor relationships** may mean the end customer is not reachable at all.
+
+## Recipe Priority
+
+A prior for [automation-recipe-selector](../../skills/automation-recipe-selector/SKILL.md), which
+re-ranks it on store evidence. Each entry names the signal to check before believing it.
+
+1. **Consent verification and inbound lead capture** — the pair that makes everything else lawful and
+   useful here. *Check:* that a contact-form submission is not being treated as marketing consent;
+   conflating the two is the most common failure in this vertical.
+2. **Integration recipes** — CRM sync, and the signed-webhook primer it depends on. *Check:* that a
+   conflict rule between the CRM and the platform has been decided before the sync is built, and that
+   consent state is excluded from the synced fields.
+3. **Long-cycle nurture** — the click-branched pattern, at a cadence matched to the buying cycle
+   rather than to a weekly calendar. *Check:* that the cycle length is derived from closed deals.
+4. **Measurement** — the periodic summary, reported against pipeline rather than order revenue.
+5. **List health** — as the baseline. **AI-assisted** — last, and note that generated copy reaching a
+   named account carries more exposure here than a consumer send.
+
+Usually wrong here: cart recovery, VIP tiers and most consumer lifecycle recipes. There is rarely a
+cart, the relationship is with an account rather than a person, and recognition schemes do not map to
+a buying committee.

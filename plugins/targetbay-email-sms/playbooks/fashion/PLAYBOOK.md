@@ -1,13 +1,14 @@
 ---
 name: fashion
 display_name: Fashion, Apparel and Accessories
-version: 1.0.0
+version: 1.1.0
 applies_to: Apparel, footwear and accessories retail with seasonal collections, size and fit variables, and high return rates.
 overrides:
   - default thresholds
   - lever priority
   - seasonal emphasis
   - lifecycle emphasis
+  - recipe priority
 ---
 
 # Fashion Playbook
@@ -89,3 +90,21 @@ transitions are the structural anchors. Plan the year around them and fit other 
 - **Made-to-order and bespoke** have long fulfilment cycles that invalidate the post-purchase timing.
 - **Resale and consignment** have unique-item inventory, so nearly every stock and affinity assumption
   breaks.
+
+## Recipe Priority
+
+A prior for [automation-recipe-selector](../../skills/automation-recipe-selector/SKILL.md), which
+re-ranks it on store evidence. Each entry names the signal to check before believing it.
+
+1. **Stock and price alerts first.** Back-in-stock by size is the highest-intent message this vertical
+   sends, and it is the recipe most often missing. *Check:* that availability is recorded at variant
+   level — a product-level alert to someone who wanted a different size is worse than no alert.
+2. **Lifecycle recipes** — cart recovery, then welcome and the review request. *Check:* that the cart
+   still holds the requested variant before the reminder goes out.
+3. **Retention sweeps** — re-engagement before churn scoring here, since seasonal buying makes a
+   quiet contact a weaker churn signal than in other verticals.
+4. **List health** and **measurement** — as the baseline.
+5. **AI-assisted** — last.
+
+Usually wrong here: replenishment-shaped recipes. The consumption cycle is not the driver, and a
+reorder reminder for a garment reads as though nobody is paying attention.

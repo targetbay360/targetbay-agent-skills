@@ -52,3 +52,9 @@ If two messages in the same window use the same angle to the same people, one of
 ### N12. Content decisions are testable.
 When a content choice is a judgement call, mark it as a testable variable rather than presenting it as
 settled. See [../knowledge/experimentation-principles.md](../knowledge/experimentation-principles.md).
+
+### N13. A generation step that fails sends nothing.
+When a step produces customer-facing content automatically and that step is unavailable, times out or
+returns something unusable, the send stops. It does not fall back to a previously approved version — that
+is how an expired offer or a withdrawn claim reaches a customer months later — and it does not ship a
+partial message. A generated element with no verified data behind it is omitted, not invented (G3, N3).

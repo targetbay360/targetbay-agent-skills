@@ -94,3 +94,19 @@ cases:
       - Recommend a product to customers who already own it
     notes: >-
       Category breadth, not a higher-value version of the same thing.
+
+  - id: rev-008
+    prompt: Set up back-in-stock alerts for the people who asked.
+    expect_skill: stock-and-price-alerts
+    expect_composes: [audience-discovery, automation-architect]
+    must_cite:
+      - audience-rules.md#A1
+      - personalization-rules.md#P9
+    must_not:
+      - Notify the whole waitlist without checking it against the units available
+      - Alert at product level when the request was for a specific variant
+      - Send on an availability read that was not verified at send time
+      - Leave the serving order unstated
+    notes: >-
+      Units gate the audience. product-launch owns the broad restock announcement; this owns the
+      per-contact alert to people who asked.

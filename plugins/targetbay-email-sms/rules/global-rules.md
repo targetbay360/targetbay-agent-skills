@@ -56,7 +56,8 @@ Only data TargetBay Email & SMS can actually confirm for that specific contact. 
 
 ### G13. Respect suppression, consent and frequency at planning time.
 Do not plan sends the platform will refuse, and do not plan sends that are technically permitted but
-will fatigue the audience. See [frequency-rules.md](frequency-rules.md).
+will fatigue the audience. See [frequency-rules.md](frequency-rules.md). Planning time is not the whole
+obligation — the same state is re-checked at the moment of sending ([audience-rules.md#A13](audience-rules.md)).
 
 ### G14. Explain material recommendations with their evidence.
 Any recommendation that changes spend, audience, cadence or topology is stated together with the
