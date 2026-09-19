@@ -63,3 +63,9 @@ examples or recommendations. See [SECURITY.md](https://github.com/targetbay360/t
 ### S12. A capability you do not have is not a capability you may assume.
 If a required capability is unavailable, the skill degrades or blocks. It does not simulate the result,
 and it does not proceed on the assumption that the capability will be there at execution time.
+
+### S13. An approval gate that expires into a send is not a gate.
+No timeout, deadline, absent reviewer or standing instruction produces an approval. Approval is an
+explicit act by a person on the thing being approved (S3), so "send unless someone objects by Friday" and
+"approve these from now on" are both refusals, not approvals. Where the reviewer is unavailable the send
+waits.

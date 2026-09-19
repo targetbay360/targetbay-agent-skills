@@ -4,7 +4,7 @@ description: Use when deciding who to target, which segment or list to send to, 
 license: MIT
 metadata:
   targetbay.display_name: Audience Discovery
-  targetbay.version: "2.0.0"
+  targetbay.version: "2.1.0"
   targetbay.category: audience
   targetbay.requires: email_sms.customer_intelligence, email_sms.order_intelligence, email_sms.product_intelligence, email_sms.segmentation, email_sms.suppression_and_consent, email_sms.campaign_analytics
   targetbay.risk_level: recommendation
@@ -108,6 +108,12 @@ Binding: [../../rules/audience-rules.md](../../rules/audience-rules.md),
 - Rank, always — an unordered list defers the decision back to the user (A11).
 - Below the size where a send is worth building, recommend a different instrument (A12).
 - Never target on unverified inference (A9).
+- A machine-proposed cluster is a hypothesis, not an audience. It passes the same tests as any other
+  candidate before it is materialised — it exists and is sized (A1, A2), it changes the treatment
+  (A3, G8), and it can be described in a sentence a person understands. Check it for sensitive and
+  inferred-sensitive attributes reconstructed from proxies
+  ([../../rules/personalization-rules.md#P7](../../rules/personalization-rules.md)) before, not after,
+  it becomes a segment.
 
 ## Workflow
 

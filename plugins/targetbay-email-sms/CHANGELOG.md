@@ -6,6 +6,89 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). See [docs/versioning.md](docs/versioning.md)
 for how package and per-skill versions relate.
 
+## [4.1.0] - 2026-09-19
+
+Seven decisions this plugin did not own, and two capabilities the registry had already observed but
+never recorded.
+
+**The registry was behind its own integration note.** `docs/mcp-integration.md` has said since it was
+written that the platform surface covers "event tracking, plus webhook events for
+campaign, contact, list and order activity" — and `capabilities.yaml` listed neither. That is not a
+new capability invented to justify a skill; it is the registry catching up with evidence already
+recorded in this package. Both entries ship with `notes` naming what is still unconfirmed, because a
+request/response tool surface and a push subscription are different shapes and the MCP may expose
+only one.
+
+**`customer-winback` pointed at nothing.** Its `When Not to Use` sent the reader to "a deliverability
+and list hygiene exercise" and no such skill existed, so the most common follow-up question in the
+corpus dead-ended. `list-hygiene` closes it.
+
+**The same correction, applied to the API.** The campaign resource exposes
+read, list, send and reports — there is no create operation —. That is recorded in `docs/mcp-integration.md` so no skill
+plans against an operation nobody has confirmed, and stated in full in the new recipe library, where
+every affected pattern names the workaround.
+
+### Added
+
+- **`list-hygiene` 1.0.0** — who leaves the sending population and by which route, when a complaint
+  rate means pausing rather than tuning, and what suppression costs in revenue alongside what it buys
+  in deliverability. Decides the programme's response; the platform still classifies and enforces.
+- **`consent-verification` 1.0.0** — whether a confirmation step is worth its cost in list growth, per
+  channel and per capture point, and what happens to contacts whose permission cannot be evidenced.
+  Its most important output is a refusal: an unevidenced list is not mailed, and a re-permission pass
+  does not launder one. Nothing in `skills/`, `rules/`, `knowledge/` or `playbooks/` mentioned opt-in
+  before this.
+- **`ai-content-governance` 1.0.0** — where the human sign-off sits in a pipeline that writes
+  customer-facing copy: which message classes may ship unreviewed, what the reviewer checks and in what
+  order, and the rule that a failed generation sends nothing rather than falling back to the last good
+  version.
+- **`automation-orchestration` 1.0.0** — where each step of a journey runs, and what moving a send
+  outside the platform costs. A topology where suppression, consent, frequency or quiet hours has no
+  named enforcing layer is refused rather than flagged. Names no external product.
+- **`stock-and-price-alerts` 1.0.0** — availability and price changes as per-contact alerts. Units
+  available gate the audience before it is sized, the serving order is stated rather than defaulted,
+  and repeated price-drop notices are bounded because they train discount-waiting. `product-launch`
+  keeps the broad restock announcement.
+- **`send-time-optimization` 1.0.0** — which granularity of send timing the store's data can support,
+  and the refusal when none of them beats the current time at this volume. `campaign-rules.md#C6`
+  stated the rule and no skill owned the decision.
+- **`automation-recipe-selector` 1.0.0** — ranks a published, finite recipe library against one store
+  by readiness rather than appeal, names the single prerequisite blocking each entry, and hands back to
+  `automation-strategy` when nothing in the library fits.
+- Two capabilities: `email_sms.event_stream` (read) and `email_sms.event_tracking` (write), both
+  `mcp_tools: TODO` with `notes` recording the open questions. `capabilities.yaml` is at 1.2.0.
+- **Three rules**, each promoted from prose that three or more skills were about to state
+  independently. `content-rules.md#N13` — a generation step that fails sends nothing, with no fallback
+  to a previously approved version. `safety-rules.md#S13` — an approval gate that expires into a send
+  is not a gate, and a standing instruction is not per-send approval. `audience-rules.md#A13` — an
+  audience is a snapshot, re-checked at send time; `G13` bound planning time only and now points at it.
+  The skills and the recipe library cite these rather than restating them.
+- `## Recipe Priority` in all five playbooks, appended after `Known Limits`, with the signal to check
+  before believing each position. `automation-recipe-selector` takes it as a prior and reports which
+  position came from the playbook and which from store data.
+- Ten golden-prompt cases across the five existing suites, including two `selection: skip` refusal
+  cases — an instruction to send generated copy unattended, and an instruction to mail a purchased
+  list.
+
+### Changed
+
+- **`campaign-optimization` 2.1.0** — owns the re-send to non-openers. Three rules: it spends from the
+  same frequency budget, it changes one variable, and a third attempt at the same non-responders is
+  escalation in the wrong direction. A near-duplicate skill was considered and rejected;
+  `frequency-rules.md#F6` already decided the hard case.
+- **`customer-winback` 2.1.0** — the list-hygiene pointer now resolves.
+- **`audience-discovery` 2.1.0** — a machine-proposed cluster is a hypothesis, not an audience. It
+  passes A1, A2, A3 and G8 before it is materialised, and is checked for sensitive attributes
+  reconstructed from proxies before, not after.
+- **`product-launch` 2.0.1** — routes per-contact availability and price alerts to
+  `stock-and-price-alerts`; the broad restock announcement stays.
+- `docs/mcp-integration.md` records the two new capabilities' open questions, corrects the prior-art
+  paragraph to state that campaign creation is unverified, and adds three TODOs.
+- The five playbooks are at 1.1.0, each with `recipe priority` in `overrides`.
+- `lexical top-1 agreement` moves from 44/59 to 52/67 as the corpus grows. One thin-margin warning
+  remains, between `revenue-analysis` and `revenue-growth`, and is drift from the larger corpus rather
+  than a new overlap.
+
 ## [4.0.0] - 2026-09-16
 
 ### Changed

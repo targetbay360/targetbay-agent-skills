@@ -53,3 +53,9 @@ An unordered list of six audiences defers the decision back to the user.
 ### A12. Very small audiences need a different instrument.
 Below the point where a campaign is worth building, prefer adding the group to an existing automation, or
 a one-to-one action, over a dedicated send.
+
+### A13. An audience is a snapshot. Re-check it at send time.
+Suppression, consent and the engagement state the audience was selected on are re-evaluated immediately
+before dispatch, not when the audience was assembled. The gap between the two is exactly where opt-outs,
+purchases and complaints land, and it widens whenever a send is scheduled, batched or handed to an
+external step. G13 binds planning; this binds the moment of sending.

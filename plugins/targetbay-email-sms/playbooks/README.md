@@ -60,6 +60,12 @@ And these six sections, in order:
 `Known Limits` is required, and it is not a formality: it is where a playbook states the store types it
 gets wrong. A playbook without stated limits will be applied where it does not belong.
 
+Further sections are allowed after those six, and validation checks only that the six come first and
+in order. All five shipped playbooks carry one: `Recipe Priority`, a starting order for the published
+[automation recipe library](https://github.com/targetbay360/targetbay-agent-skills/blob/main/targetbay-marketing-automation-recipes/SKILL.md)
+which [automation-recipe-selector](../skills/automation-recipe-selector/SKILL.md) takes as a prior and
+re-ranks on store evidence.
+
 ## Shipped playbooks
 
 | Playbook | Applies to |
@@ -83,7 +89,7 @@ Skills must work correctly with no playbook at all.
 
 ## Adding one
 
-Copy the frontmatter and the six section headings, fill them with adjustments you can justify, be
+Copy the frontmatter and the six required section headings, fill them with adjustments you can justify, be
 specific about `Known Limits`, and run `python3 tests/validate.py`.
 
 Keep playbooks short. A playbook that restates general marketing advice is noise; a playbook that names

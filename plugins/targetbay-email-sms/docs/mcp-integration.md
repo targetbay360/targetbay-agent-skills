@@ -38,13 +38,15 @@ Each entry carries an `id`, a `description`, an `access` level (`read` / `write`
 
 ## Mapping status
 
-All 15 capabilities in [../capabilities.yaml](../capabilities.yaml) are `mcp_tools: TODO`.
+All 17 capabilities in [../capabilities.yaml](../capabilities.yaml) are `mcp_tools: TODO`.
 Rather than transcribe the registry here — two lists that drift — this section records only what
 still needs a decision. Read the registry for ids, descriptions, access levels and notes.
 
 | Capability | Access | Open question |
 |---|---|---|
 | `email_sms.messaging_sms` | send | capability itself unverified |
+| `email_sms.event_stream` | read | whether an MCP surface can expose a push subscription at all, or whether subscription is configured out of band |
+| `email_sms.event_tracking` | write | whether event names are enumerated, and whether a recorded event can trigger a platform automation |
 
 Mapping a capability means: naming the MCP tools or resources that satisfy it, recording the shape of what
 they return, and confirming the access level matches. Until that is done, no skill in this package can
@@ -89,3 +91,9 @@ hard frequency caps. Skills plan within these; they do not approximate or bypass
       [../schemas/workflow.schema.json](../schemas/workflow.schema.json)
 - [ ] Confirm whether `email_sms.marketing_calendar` is a real capability or must be assembled from
       campaign and automation reads
+- [ ] Confirm whether campaign creation exists in the MCP surface at all; the inspected node has none,
+      and several skills would plan differently if a campaign can only be selected rather than created
+- [ ] Confirm how subscription to `email_sms.event_stream` is configured — through the MCP, or out of band
+- [ ] Confirm whether an event recorded through `email_sms.event_tracking` can trigger a platform
+      automation. If it cannot, every store-pushed trigger needs an external orchestrator, which is the
+      decision `automation-orchestration` owns
