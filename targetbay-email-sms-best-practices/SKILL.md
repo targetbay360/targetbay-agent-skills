@@ -62,6 +62,7 @@ send path can bypass, or a flow that keeps mailing someone who already bought.
 | Process delivery events, verify webhooks | [Webhooks & Events](./references/webhooks-events.md) |
 | Make emails readable by screen readers and in dark mode | [Accessibility](./references/accessibility.md) |
 | Design the template — layout, type, colour, CTA, imagery | [Email Template Design](https://github.com/targetbay360/targetbay-agent-skills/tree/main/targetbay-email-template-design) |
+| Wire the automation that sends it — trigger, operations, guardrails | [Marketing Automation Recipes](https://github.com/targetbay360/targetbay-agent-skills/tree/main/targetbay-marketing-automation-recipes) |
 
 ## Start Here
 
