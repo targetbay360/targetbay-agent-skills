@@ -105,10 +105,12 @@ No file in this repository makes a network call.
 
 ```
 .claude-plugin/marketplace.json   one entry per plugin
+docs/                             the MCP capability inventory — the Phase 0 worksheet
 tests/                            shared validation and golden prompts
 plugins/<name>/                   a product plugin — self-contained
-  skills/  rules/  knowledge/  schemas/  docs/  commands/
-  capabilities.yaml  VERSION  CHANGELOG.md  package.json
+  skills/  rules/  knowledge/  schemas/  docs/  commands/  scripts/
+  playbooks/  examples/           targetbay-email-sms only
+  .claude-plugin/plugin.json  capabilities.yaml  VERSION  CHANGELOG.md  package.json
 targetbay-email-sms-best-practices/       a standalone reference skill — see below
 targetbay-email-template-design/          a standalone reference skill — see below
 targetbay-marketing-automation-recipes/   a standalone reference skill — see below
@@ -149,9 +151,10 @@ plugins produce content direction and stop short of finished creative
 layer that turns direction into a template. It holds the same two boundaries, and adds a third: **no
 markup** — design decisions only, with the templating layer left to implement them.
 
-`targetbay-marketing-automation-recipes/` is the third, and covers the wiring. Runnable recipes across lifecycle journeys, personalisation, retention sweeps, list health, measurement,
-AI-assisted content and system integration — each with its trigger, preconditions, the platform
-operations it calls, the guardrails it must carry and what to measure. It holds the same boundaries
+`targetbay-marketing-automation-recipes/` is the third, and covers the wiring. Runnable recipes
+across lifecycle journeys, personalisation, retention sweeps, list health, measurement, AI-assisted
+content and system integration — each with its trigger, preconditions, the platform operations it
+calls, the guardrails it must carry and what to measure. It holds the same boundaries
 with one addition of its own: **the platform surface is described once, in a single reference**, and
 every recipe names operations rather than paths, so endpoint drift is a one-file fix. It also states
 plainly where the surface has no operation for what a recipe wants, rather than assuming one exists

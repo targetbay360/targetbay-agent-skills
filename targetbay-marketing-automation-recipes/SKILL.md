@@ -87,6 +87,7 @@ recipe then selects and sends. Each recipe file states the working shape in its 
 | Let a model draft copy, with a human gate before it sends | [AI-Assisted Recipes](./references/ai-assisted-recipes.md) |
 | Sync contacts with a CRM, capture inbound leads, consume webhooks | [Integration Recipes](./references/integration-recipes.md) |
 | See what is not built yet, and what was refused | [Roadmap](./references/roadmap.md) |
+| Design what the message looks like once the wiring works | [Email Template Design](https://github.com/targetbay360/targetbay-agent-skills/tree/main/targetbay-email-template-design) |
 | Decide which recipes this store should adopt first | [Automation Recipe Selector](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-email-sms/skills/automation-recipe-selector/SKILL.md) |
 
 ## Start Here
