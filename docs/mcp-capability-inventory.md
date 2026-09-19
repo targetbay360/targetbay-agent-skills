@@ -20,12 +20,12 @@ copying it back is two lists that drift.
 
 | Registry | Capabilities | Flagged unverified |
 |---|---|---|
-| [`targetbay-email-sms`](../plugins/targetbay-email-sms/capabilities.yaml) | 15 | 1 |
+| [`targetbay-email-sms`](../plugins/targetbay-email-sms/capabilities.yaml) | 17 | 1 |
 | [`targetbay-reviews`](../plugins/targetbay-reviews/capabilities.yaml) | 14 | 1 |
 | [`targetbay-loyalty`](../plugins/targetbay-loyalty/capabilities.yaml) | 14 | 1 |
 | [`targetbay-onboarding`](../plugins/targetbay-onboarding/capabilities.yaml) | 15 | 1 |
 
-That is 58 capabilities. For each one, fill in:
+That is 60 capabilities. For each one, fill in:
 
 | Field | What goes in it |
 |---|---|
@@ -38,7 +38,8 @@ stated per plugin.
 
 The rows that matter most are the ones each plugin's `docs/mcp-integration.md` lists under **Mapping
 status** as open questions: capabilities this repository already suspects may not exist, or may belong
-to the commerce platform rather than to TargetBay. Seven of the 58 carry such a question.
+to the commerce platform rather than to TargetBay. Nine of the 60 carry such a question —
+three in `targetbay-email-sms`, two in each of the others.
 
 ## The three answers that change the plan
 
