@@ -1,10 +1,10 @@
 ---
 name: list-hygiene
-description: Use when bounces, spam complaints or a block at a mailbox provider are the problem rather than the campaign — deciding which contacts to suppress and when, how the sending programme should respond to a hard bounce versus a soft one, whether a complaint rate means pausing sends entirely, what to do with subscribers who have never once opened, and when a sunset path beats another attempt. Answers "our bounce rate is climbing", "we keep landing in spam" and "who should we remove from the list?". Use customer-winback when lapsed buyers might still be recovered and the objective is revenue, and channel-optimization when the question is which channel to reach people on.
+description: Use when bounces, spam complaints or one mailbox provider turning against the store are the problem rather than the campaign — deciding which contacts leave the sending population and when, how to respond to a hard bounce versus a repeated soft one, whether a complaint trend means pausing sends entirely, what to do with subscribers who have never once opened, and when a sunset path beats another attempt. Answers "our bounce rate is climbing", "engagement has collapsed at one provider" and "who should we remove from the list?". Use deliverability-qa when authentication or sender reputation is the suspected cause, and customer-winback when lapsed buyers might still be recovered.
 license: MIT
 metadata:
   targetbay.display_name: List Hygiene
-  targetbay.version: "1.0.0"
+  targetbay.version: "1.1.0"
   targetbay.category: audience
   targetbay.requires: email_sms.suppression_and_consent, email_sms.campaign_analytics, email_sms.customer_intelligence, email_sms.segmentation, email_sms.event_stream
   targetbay.composes: audience-discovery
@@ -46,6 +46,11 @@ state ([../../rules/global-rules.md#G10](../../rules/global-rules.md)).
   [channel-optimization](../channel-optimization/SKILL.md).
 - The problem is one campaign's performance, not the sending population. Use
   [campaign-optimization](../campaign-optimization/SKILL.md).
+- Authentication, sender reputation or a volume ramp is the suspected cause. Use
+  [deliverability-qa](../deliverability-qa/SKILL.md), which diagnoses the layer above this one and
+  composes this skill for the population half of the remedy.
+- The question is whether the list may lawfully be mailed at all, or how often. Use
+  [consent-verification](../consent-verification/SKILL.md).
 
 ## Required Context
 
@@ -58,6 +63,7 @@ state ([../../rules/global-rules.md#G10](../../rules/global-rules.md)).
 | Prior value per contact | States what suppression costs in revenue | Partial; the trade-off cannot be quantified |
 | Acquisition source per contact | Locates a bad source rather than blaming the whole list | Partial; remediation is guesswork |
 | Send volume and cadence history | Distinguishes a rate change from a volume change | Partial |
+| Engagement, bounce and complaint movement split by receiving domain | Whether one provider or the whole programme has turned | Partial; the diagnosis stays list-wide |
 
 ## Required MCP Capabilities
 
@@ -76,7 +82,8 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 ```
 1. Read the current rates and their recent variance   ← the store's own baseline, not a published figure
 2. Establish whether this is a rate change or a volume change
-3. Locate the concentration                           ← by acquisition source, cohort, domain, campaign
+3. Locate the concentration                           ← by acquisition source, cohort, campaign
+3a. Split by receiving domain                         ← one provider turning is a different problem
 4. Classify the affected contacts into three responses
      suppress now · bounded sunset path · leave alone
 5. Size each group and state its prior value          ← what suppression costs
@@ -90,7 +97,9 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 Binding: [../../rules/global-rules.md](../../rules/global-rules.md),
 [../../rules/safety-rules.md](../../rules/safety-rules.md),
 [../../rules/audience-rules.md](../../rules/audience-rules.md),
-[../../knowledge/email-principles.md](../../knowledge/email-principles.md).
+[../../rules/deliverability-rules.md](../../rules/deliverability-rules.md),
+[../../knowledge/email-principles.md](../../knowledge/email-principles.md),
+[../../knowledge/deliverability-principles.md](../../knowledge/deliverability-principles.md).
 
 - The platform classifies and enforces; this skill decides the response (G10). Never propose a
   parallel suppression list maintained outside the platform.
@@ -112,6 +121,17 @@ Binding: [../../rules/global-rules.md](../../rules/global-rules.md),
   than offering a content change as the remedy.
 - Segment the diagnosis by acquisition source before blaming the list. One bad source reads as a
   general decline and sends remediation to the wrong place.
+- Split rates by receiving domain before drawing a list-wide conclusion (D6). A collapse at one
+  provider while the others hold steady is the signature of a provider-specific problem, and a
+  list-wide suppression is the wrong response to it.
+- Read the trend, not the level (D3). A rate sitting where it has always sat is not a finding; the
+  same rate moving in one direction over successive sends is. Where history is too short for a
+  trend, say the level is uninterpretable rather than comparing it to a published figure.
+- Inbox placement is not observable from sending data (D7). Engagement movement by receiving domain
+  is the closest proxy and is labelled as a proxy, never reported as "we are in the spam folder".
+- Authentication and reputation are the layer above this one (D1). Where the diagnosis points there,
+  hand it to [deliverability-qa](../deliverability-qa/SKILL.md) rather than proposing suppression as
+  a remedy for a problem suppression does not touch (D8).
 
 ## Workflow
 
@@ -148,6 +168,10 @@ including the revenue forgone.
 - [ ] Pause recommendation made explicitly where the complaint rate warrants it
 - [ ] No suppressed or unsubscribed contact proposed for re-entry (S7)
 - [ ] No parallel suppression mechanism proposed outside the platform (G10)
+- [ ] Rates split by receiving domain before any list-wide conclusion (D6)
+- [ ] Trend read over successive sends, not a single level (D3)
+- [ ] Placement claims stated as proxies, never asserted (D7)
+- [ ] Authentication and reputation questions routed to deliverability-qa rather than answered here (D1)
 - [ ] What could not be checked is declared (G15)
 
 ## Approval Requirements
@@ -190,5 +214,8 @@ cohort alone, which is what created the placement problem.
 | Acquisition source unavailable | **Partial.** Diagnosis stays list-wide; state that a single bad source cannot be ruled out |
 | Store refuses the suppression | Proceed with the rest of the plan, restate the deliverability cost to every other send plainly, and record it as an accepted risk |
 | Complaint rate already at a level that risks a block | Recommend pausing sends first. Do not offer a content change as the remedy |
+| Rates cannot be split by receiving domain | **Partial.** Diagnosis stays list-wide; state that a single-provider cause cannot be ruled out (D6) |
+| The concentration points at authentication or reputation | Hand to deliverability-qa with the evidence attached. Suppression does not remedy a layer it cannot reach (D1, D8) |
+| No placement signal of any kind exists | Expected, not an error. Report placement as unknown and present engagement movement by domain as a proxy (D7) |
 
 Degraded outcomes set `status` and populate `unmet_requirements`.

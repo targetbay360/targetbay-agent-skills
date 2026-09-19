@@ -38,19 +38,25 @@ Each entry carries an `id`, a `description`, an `access` level (`read` / `write`
 
 ## Mapping status
 
-All 17 capabilities in [../capabilities.yaml](../capabilities.yaml) are `mcp_tools: TODO`.
+All 18 capabilities in [../capabilities.yaml](../capabilities.yaml) are `mcp_tools: TODO`.
 Rather than transcribe the registry here — two lists that drift — this section records only what
 still needs a decision. Read the registry for ids, descriptions, access levels and notes.
 
 | Capability | Access | Open question |
 |---|---|---|
 | `email_sms.messaging_sms` | send | capability itself unverified |
+| `email_sms.sending_infrastructure` | read | whether authentication record state, alignment and warm-up posture are readable at all. Every sending platform holds this; whether the MCP exposes it has never been inspected |
 | `email_sms.event_stream` | read | whether an MCP surface can expose a push subscription at all, or whether subscription is configured out of band |
 | `email_sms.event_tracking` | write | whether event names are enumerated, and whether a recorded event can trigger a platform automation |
 
 Mapping a capability means: naming the MCP tools or resources that satisfy it, recording the shape of what
 they return, and confirming the access level matches. Until that is done, no skill in this package can
 execute — they can only plan.
+
+The capabilities added in 4.2.0, the one deliberately **not** added, and which unconfirmed shapes block
+which skill are set out in
+[the capability gap analysis](https://github.com/targetbay360/targetbay-agent-skills/blob/main/docs/mcp-capability-gap-analysis.md).
+The headline: contact-level journey membership is the single missing shape that degrades three skills.
 
 ## Authentication
 

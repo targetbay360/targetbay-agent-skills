@@ -55,7 +55,7 @@ plugin, a repo-root file, a standalone skill) by full `https://github.com/target
 URL. `validate.py` sweeps every relative Markdown link in the repo (except `tests/fixtures/`) and fails
 on one that does not resolve, so this is enforced, not remembered.
 
-Four plugins: `targetbay-email-sms` (31 skills), `targetbay-onboarding` (10, cross-product sequencing +
+Four plugins: `targetbay-email-sms` (38 skills), `targetbay-onboarding` (10, cross-product sequencing +
 onsite), `targetbay-loyalty` (6), `targetbay-reviews` (5).
 
 ## The skill contract

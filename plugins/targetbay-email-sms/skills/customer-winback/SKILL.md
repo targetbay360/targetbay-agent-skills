@@ -4,10 +4,10 @@ description: Use when targeting customers who have already lapsed — dormant or
 license: MIT
 metadata:
   targetbay.display_name: Customer Win-back
-  targetbay.version: "2.1.0"
+  targetbay.version: "2.2.0"
   targetbay.category: retention
   targetbay.requires: email_sms.customer_intelligence, email_sms.order_intelligence, email_sms.product_intelligence, email_sms.segmentation, email_sms.campaign_analytics, email_sms.suppression_and_consent
-  targetbay.composes: audience-discovery
+  targetbay.composes: audience-discovery, list-hygiene, offer-strategy
   targetbay.risk_level: recommendation
   targetbay.execution_mode: plan_then_execute
   targetbay.status: foundation
@@ -39,6 +39,9 @@ stop is part of the skill, not an afterthought.
   hygiene exercise. Use [list-hygiene](../list-hygiene/SKILL.md), which owns who leaves the sending
   population and by which route.
 - The contacts never purchased. They are prospects, not win-back.
+- The falling engagement is programme-wide rather than confined to the lapsed base. Use
+  [deliverability-qa](../deliverability-qa/SKILL.md) — a win-back sequence launched onto a failing
+  sending programme fails with it.
 
 ## Required Context
 
@@ -68,8 +71,10 @@ Defined in [../../capabilities.yaml](../../capabilities.yaml); mappings **TODO**
 
 ```
 1. Derive the lapse definition from this store's intervals
-2. Segment the lapsed base by prior value and current reachability
-3. Discard the unreachable                      ← recommend suppression, not more sending
+2. Classify the lapsed base into dormancy classes  ← derived here, never a fixed set of windows
+     recently lapsed · long lapsed · engaged but not buying · neither engaged nor buying
+3. Segment each class by prior value and current reachability
+3a. Discard the unreachable                     ← hand to list-hygiene, not another send
 4. Identify the reason to return per segment    ← new products, prior affinity, what changed
 5. Decide attempt count and escalation          ← bounded, evidence-led
 6. Decide channel per attempt                   ← a different channel often beats a louder one
@@ -94,6 +99,24 @@ Binding: [../../rules/audience-rules.md](../../rules/audience-rules.md),
 - Personalise on what they previously bought, using verified data only (P1, P5).
 - A recovered customer re-enters the normal lifecycle and must exit the win-back sequence immediately.
 - Never re-add suppressed or unsubscribed contacts (S7).
+- **Dormancy classes are derived from this store's own purchase and engagement intervals**, never
+  from fixed windows (G2, A6). A store whose customers buy twice a year and one whose customers buy
+  weekly do not share a definition of lapsed, and a borrowed window puts active customers in the
+  win-back sequence.
+- Engagement and purchase are separate axes. A contact still opening but no longer buying is a
+  different problem from one who has stopped both, and collapsing them into one "dormant" group
+  sends the wrong message to at least one of them.
+- The sunset decision is **not made here**. Where the conclusion is that a contact should leave the
+  sending population, hand it to [list-hygiene](../list-hygiene/SKILL.md) with the recovery evidence
+  attached, so suppression happens in one place with its blast radius reported (G7, S6).
+- Win-back is bounded by the same contact budget as everything else (F2, F3). A sequence that
+  escalates while a campaign is also reaching the same contacts is escalation to a non-responder
+  twice over (F6).
+- The offer ladder across attempts is [offer-strategy](../offer-strategy/SKILL.md)'s decision, not a
+  default escalation of depth. Each attempt should be a distinct instrument rather than the same
+  discount getting deeper (C4, C5).
+- Measure recovery by the second purchase, not the first. A discount that buys one transaction from a
+  lapsed customer has recovered a sale, not a customer (G1).
 
 ## Workflow
 
@@ -127,6 +150,12 @@ evidence; and risks including complaint and deliverability exposure.
 - [ ] Channel choices consent-checked (A10)
 - [ ] Escalation starts with relevance, not maximum discount (C4)
 - [ ] Complaint and deliverability risk stated
+- [ ] Dormancy classes derived from this store's intervals, not fixed windows (G2, A6)
+- [ ] Engagement and purchase treated as separate axes, not collapsed
+- [ ] Sunset and suppression handed to list-hygiene rather than decided here (G7)
+- [ ] Offer ladder delegated to offer-strategy, not a default escalation of depth (C4)
+- [ ] Sequence contact counted against campaigns reaching the same contacts (F2, F3)
+- [ ] Success defined on the second purchase, not the first (G1)
 - [ ] No suppressed contacts targeted (S7)
 
 ## Approval Requirements
@@ -164,5 +193,9 @@ Full trace: [../../examples/customer-winback.md](../../examples/customer-winback
 | Lapsed base very small | Recommend inclusion in an existing campaign rather than a dedicated sequence (A12) |
 | Complaint rate already elevated | Recommend suppression first; do not add sends to a reputation problem |
 | Store refuses suppression | Proceed with the recovery plan, restate the deliverability cost plainly, and record it as a risk |
+| Purchase intervals too sparse to derive a lapse definition | **Partial.** State that the classes are provisional, keep the sequence short, and recommend the measurement before the second attempt (G15) |
+| Engagement and purchase cannot be separated | **Partial.** Treat the base as one class, say so, and be more conservative on attempt count |
+| Second-purchase data unavailable | **Partial.** Measure on first purchase, and state plainly that recovery cannot be distinguished from a one-off discounted sale (G1) |
+| Offer strategy unavailable for the ladder | Design the attempts with instruments unset rather than defaulting to escalating discount depth |
 
 Degraded outcomes set `status` and populate `unmet_requirements`.

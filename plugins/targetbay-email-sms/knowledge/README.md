@@ -24,6 +24,7 @@ obey. If the same explanation appears in three skills, it belongs here.
 | [campaign-principles.md](campaign-principles.md) | What makes a one-off send work |
 | [automation-principles.md](automation-principles.md) | Triggers, conditions, branching, timing, goals, exit |
 | [email-principles.md](email-principles.md) | The email channel, including deliverability |
+| [deliverability-principles.md](deliverability-principles.md) | Identity, reputation and placement — the mechanism under the email channel |
 | [sms-principles.md](sms-principles.md) | The SMS channel, including consent and cost |
 | [personalization-principles.md](personalization-principles.md) | Why personalisation works and when it backfires |
 | [experimentation-principles.md](experimentation-principles.md) | Testing that produces decisions rather than noise |
