@@ -20,7 +20,7 @@ Add the marketplace once, then install the products you actually use.
 
 | Plugin | Decides | Skills | Version | MCP |
 |---|---|---|---|---|
-| [**targetbay-email-sms**](plugins/targetbay-email-sms/README.md) | How a store plans, targets, sequences and optimises email and SMS marketing | 24 | `4.0.0` | mapping TODO |
+| [**targetbay-email-sms**](plugins/targetbay-email-sms/README.md) | How a store plans, targets, sequences and optimises email and SMS marketing | 31 | `4.1.0` | mapping TODO |
 | [**targetbay-reviews**](plugins/targetbay-reviews/README.md) | When to ask for a review, which products lack proof, how to answer a falling rating, where proof belongs | 5 | `0.2.0` | mapping TODO |
 | [**targetbay-loyalty**](plugins/targetbay-loyalty/README.md) | Whether to run a programme, what a point is worth, where tier thresholds go, which members are leaving | 6 | `0.2.0` | mapping TODO |
 | [**targetbay-onboarding**](plugins/targetbay-onboarding/README.md) | What a new store actually is, what to ask it, what to set up first across all three products, and which surfaces to personalise before any of them | 10 | `0.3.0` | mapping TODO |
@@ -109,8 +109,9 @@ tests/                            shared validation and golden prompts
 plugins/<name>/                   a product plugin — self-contained
   skills/  rules/  knowledge/  schemas/  docs/  commands/
   capabilities.yaml  VERSION  CHANGELOG.md  package.json
-targetbay-email-sms-best-practices/   a standalone reference skill — see below
-targetbay-email-template-design/      a standalone reference skill — see below
+targetbay-email-sms-best-practices/       a standalone reference skill — see below
+targetbay-email-template-design/          a standalone reference skill — see below
+targetbay-marketing-automation-recipes/   a standalone reference skill — see below
 ```
 
 Every plugin is self-contained because Claude Code ships only what lives under a plugin's `source`
@@ -148,12 +149,26 @@ plugins produce content direction and stop short of finished creative
 layer that turns direction into a template. It holds the same two boundaries, and adds a third: **no
 markup** — design decisions only, with the templating layer left to implement them.
 
-The two link to each other by full GitHub URL rather than relative path. Each installs by copying its
-own directory, so a relative link between them resolves during validation and is dead on install —
+`targetbay-marketing-automation-recipes/` is the third, and covers the wiring. Runnable recipes across lifecycle journeys, personalisation, retention sweeps, list health, measurement,
+AI-assisted content and system integration — each with its trigger, preconditions, the platform
+operations it calls, the guardrails it must carry and what to measure. It holds the same boundaries
+with one addition of its own: **the platform surface is described once, in a single reference**, and
+every recipe names operations rather than paths, so endpoint drift is a one-file fix. It also states
+plainly where the surface has no operation for what a recipe wants, rather than assuming one exists
+because a published example calls it.
+
+It draws the same line the other two do. The plugins decide *which* automations a store should adopt
+and in what order — [`automation-recipe-selector`](plugins/targetbay-email-sms/skills/automation-recipe-selector/SKILL.md)
+ranks the library against one store's readiness — and this skill covers how each one is wired once
+chosen. It ships no pattern that mails a contact who did not opt in, and records the refusals rather
+than omitting them.
+
+The three link to each other by full GitHub URL rather than relative path. Each installs by copying
+its own directory, so a relative link between them resolves during validation and is dead on install —
 the same reason a plugin never reaches outside its own directory.
 
-Install either by copying the directory into an agent host's skills path; they have no dependencies
-and are not published to the marketplace.
+Install any of them by copying the directory into an agent host's skills path; they have no
+dependencies and are not published to the marketplace.
 
 ## What every plugin has in common
 

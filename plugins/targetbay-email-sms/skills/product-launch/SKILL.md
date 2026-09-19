@@ -4,7 +4,7 @@ description: Use when a new product, collection, restock or category is being in
 license: MIT
 metadata:
   targetbay.display_name: Product Launch
-  targetbay.version: "2.0.0"
+  targetbay.version: "2.0.1"
   targetbay.category: acquisition
   targetbay.requires: email_sms.store_profile, email_sms.customer_intelligence, email_sms.product_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.campaign_management, email_sms.campaign_analytics, email_sms.marketing_calendar, email_sms.suppression_and_consent
   targetbay.composes: audience-discovery, cross-sell
@@ -37,6 +37,10 @@ producing a spike with no follow-through, so the product's second week is empty.
 - The product already launched and needs ongoing promotion — that is campaign work.
 - The launch needs placing in a wider calendar. Use
   [monthly-marketing-planner](../monthly-marketing-planner/SKILL.md), which composes this skill.
+- The message is a per-contact alert rather than an announcement — a back-in-stock notice to people
+  who asked for one, a price-drop notice, or a waitlist collected before the product exists. Use
+  [stock-and-price-alerts](../stock-and-price-alerts/SKILL.md). Announcing a restock to a broad
+  audience stays here.
 
 ## Required Context
 

@@ -10,7 +10,7 @@
 # Never add a capability here to justify a skill. Add it only when the underlying
 # TargetBay Email & SMS platform genuinely exposes that class of data or action.
 
-version: 1.1.0
+version: 1.2.0
 
 # access values:
 #   read   - retrieves data, no state change
@@ -100,3 +100,29 @@ capabilities:
     description: A/B and multivariate test configuration and results, including winner selection state.
     access: write
     mcp_tools: TODO
+
+  - id: email_sms.event_stream
+    description: >-
+      The platform's own stream of contact, list, campaign and order events, and the ability to
+      subscribe to it. Individual events as they occur, distinct from the aggregated results in
+      email_sms.campaign_analytics.
+    access: read
+    mcp_tools: TODO
+    notes: >-
+      Evidenced by an platform surface exposing a signed event subscription covering
+      contact, list, campaign and order activity. See docs/mcp-integration.md. Whether the MCP
+      surfaces this stream at all is an open question: a request/response tool surface and a push
+      subscription are different shapes. Skills requiring it must degrade to aggregate analytics
+      when it is absent.
+
+  - id: email_sms.event_tracking
+    description: >-
+      Recording a behavioural or commercial event against a contact from outside the platform —
+      the write side of the event stream.
+    access: write
+    mcp_tools: TODO
+    notes: >-
+      Evidenced by the same surface, which exposes an event-tracking operation.
+      Unconfirmed: whether event names are free-form or an enumerated set, and whether a recorded
+      event can trigger a platform-side automation. If it cannot, every journey that depends on a
+      store-pushed trigger needs an external orchestrator. See docs/mcp-integration.md.

@@ -1,12 +1,13 @@
 ---
 name: beauty
 display_name: Beauty, Skincare and Personal Care
-version: 1.0.0
+version: 1.1.0
 applies_to: Cosmetics, skincare, haircare and personal care retail with consumable products, routine-based usage and measurable replenishment intervals.
 overrides:
   - default thresholds
   - lever priority
   - lifecycle emphasis
+  - recipe priority
 ---
 
 # Beauty Playbook
@@ -86,3 +87,21 @@ than following abandonment.
 - **Subscription-led beauty** replaces most of this with churn and billing management.
 - Stores with heavy gifting seasonality will find the reorder interval polluted by gift purchases;
   separate gift orders before deriving intervals where the data allows it.
+
+## Recipe Priority
+
+A prior for [automation-recipe-selector](../../skills/automation-recipe-selector/SKILL.md), which
+re-ranks it on store evidence. Each entry names the signal to check before believing it.
+
+1. **Lifecycle recipes, timed to replenishment** — the post-purchase sequence and the reorder-adjacent
+   messages carry this vertical. *Check:* that repeat intervals are measurable per product and size,
+   not per category.
+2. **Review request** — earlier than in other verticals, because product proof drives discovery here.
+   *Check:* that delivery status reaches the platform; asking on order date alone is the failure.
+3. **Stock and price alerts** — for shade and variant specifically. *Check:* that variant-level
+   availability is recorded; shade is the axis customers actually wait on.
+4. **Retention sweeps** and **list health** — as the baseline.
+5. **AI-assisted** — last.
+
+Usually wrong here: deep-discount win-back. It erodes a margin this vertical depends on, and a
+replenishment-timed reminder recovers many of the same customers at full price.

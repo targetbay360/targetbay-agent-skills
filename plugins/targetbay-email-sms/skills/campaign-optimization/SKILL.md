@@ -4,7 +4,7 @@ description: Use when a campaign, newsletter or email blast underperformed and n
 license: MIT
 metadata:
   targetbay.display_name: Campaign Optimization
-  targetbay.version: "2.0.0"
+  targetbay.version: "2.1.0"
   targetbay.category: optimization
   targetbay.requires: email_sms.campaign_management, email_sms.campaign_analytics, email_sms.customer_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.experimentation, email_sms.suppression_and_consent
   targetbay.composes: audience-discovery, ab-testing, content-optimization
@@ -29,6 +29,7 @@ subject line of a campaign that failed because it went to the wrong people with 
 - Deciding what to test next
 - Reviewing a period's campaigns for patterns
 - A campaign performed well and the reason should be identified and reused
+- Deciding whether to re-send a campaign to the people who did not open it
 
 ## When Not to Use
 
@@ -123,6 +124,17 @@ Binding: [../../rules/campaign-rules.md](../../rules/campaign-rules.md),
 - Fix the largest lever first: audience and offer before content, content before subject line.
 - A campaign that underperformed because it should not have been sent is a planning finding, not a
   content finding. Say that.
+- A re-send to non-openers is a second send, not a free one. It spends from the same frequency
+  budget as everything else and is counted against it
+  ([../../rules/frequency-rules.md#F2](../../rules/frequency-rules.md),
+  [../../rules/frequency-rules.md#F3](../../rules/frequency-rules.md)).
+- A re-send changes one thing — normally the subject line — and reuses the body. Changing both makes
+  the result unattributable and turns a cheap re-send into an untested new campaign (C10).
+- Suppress anyone who opened, clicked, converted or unsubscribed since the original, re-evaluated at
+  send time (A13).
+- A third attempt at the same non-responders is escalation in the wrong direction and is normally
+  refused; a different channel or a different message is the legitimate next move
+  ([../../rules/frequency-rules.md#F6](../../rules/frequency-rules.md)).
 - Record the outcome where the next recommendation will find it.
 
 ## Workflow

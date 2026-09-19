@@ -5,6 +5,47 @@ own changelog under `plugins/<name>/CHANGELOG.md`, and versions independently.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2026-09-19] A third standalone skill, and seven decisions the plugin did not own
+
+A set of requested automation patterns had no route through the skills corpus: webhook-triggered lifecycle journeys, scheduled churn and hygiene sweeps, a human approval
+gate before an AI-written send. A store asking an agent "what should we automate?" got strategy and no
+path to a running automation.
+
+**The recipes could not go into the plugin.** Hard requirements 1 to 4 in `CONTRIBUTING.md` forbid
+endpoints, tool schemas, request code and threshold numbers anywhere under `plugins/`, and a recipe
+without its trigger and its operations is not a recipe. The two existing standalone skills at the
+repository root are the documented precedent for concrete content — `README.md` already explains why
+they invert the no-numbers rule — so `targetbay-marketing-automation-recipes` joins them. Recipes across ten references, each with its trigger, preconditions, operations, guardrails, what to
+measure and what has not been verified. The decisions stay in the plugin, capability-abstract, where
+an agent looks for them.
+
+**The platform surface has no campaign-create operation.** Reading the integration showed the campaign
+resource exposes read, list, send and reports only — while a large share of the published example
+workflows call a create operation anyway, returning nothing rather than failing loudly. Every recipe
+here is written against a pre-built campaign that it selects and sends, and the gap is disclosed in
+the skill body, in the surface reference and on each affected recipe. No count is published: this
+repository has already been bitten by a hard-coded one.
+
+**Two capabilities were added, and four patterns were refused.** `email_sms.event_stream` and
+`email_sms.event_tracking` were already described in `docs/mcp-integration.md` as observed platform
+behaviour and had simply never reached `capabilities.yaml`. On the other side, the cold-outreach and
+address-scraping workflows are not shipped — they mail people who never opted in, which collides with
+`safety-rules.md#S7` and with the compliance reference this repository already carries, and sending
+reputation on a shared platform is shared. Invoice parsing and attachment routing are out of scope.
+All four refusals are recorded in the library's `roadmap.md` rather than silently omitted.
+
+### Added
+
+- `targetbay-marketing-automation-recipes/` — the third standalone reference skill. Not in the
+  marketplace, no manifest, no version file; like its siblings it is installed by copying.
+- Seven skills, two capabilities, three rules and a `Recipe Priority` section in all five playbooks.
+  See [plugins/targetbay-email-sms/CHANGELOG.md](plugins/targetbay-email-sms/CHANGELOG.md) for the
+  detail.
+
+### Changed
+
+- `targetbay-email-sms` is at 4.1.0. The other three plugins are untouched.
+
 ## [2026-09-16] The skill contract loses a section, and installed skills keep their citations
 
 Two problems, both of which the repository's own rules already named.

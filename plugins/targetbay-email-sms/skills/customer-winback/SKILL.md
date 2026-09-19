@@ -4,7 +4,7 @@ description: Use when targeting customers who have already lapsed — dormant or
 license: MIT
 metadata:
   targetbay.display_name: Customer Win-back
-  targetbay.version: "2.0.0"
+  targetbay.version: "2.1.0"
   targetbay.category: retention
   targetbay.requires: email_sms.customer_intelligence, email_sms.order_intelligence, email_sms.product_intelligence, email_sms.segmentation, email_sms.campaign_analytics, email_sms.suppression_and_consent
   targetbay.composes: audience-discovery
@@ -36,7 +36,8 @@ stop is part of the skill, not an afterthought.
 - Customers are still active or only just going quiet. Use
   [customer-retention](../customer-retention/SKILL.md) — intervention there is cheaper and works better.
 - The goal is reactivating engagement without a purchase objective — that is a deliverability and list
-  hygiene exercise, and the recommendation is usually suppression.
+  hygiene exercise. Use [list-hygiene](../list-hygiene/SKILL.md), which owns who leaves the sending
+  population and by which route.
 - The contacts never purchased. They are prospects, not win-back.
 
 ## Required Context

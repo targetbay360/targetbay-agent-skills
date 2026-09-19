@@ -67,3 +67,32 @@ cases:
       - Fire the reminder after the expected run-out point
     notes: >-
       Intervals derive per product AND size. This is the most common way the lever is wasted.
+
+  - id: life-006
+    prompt: Our bounce rate is climbing and we keep landing in spam.
+    expect_skill: list-hygiene
+    expect_composes: [audience-discovery]
+    must_cite:
+      - global-rules.md#G10
+      - safety-rules.md#S6
+    must_not:
+      - Treat rising bounces and poor placement as one signal with one cause
+      - Recommend rewriting content as the remedy for a complaint-rate problem
+      - Propose a suppression without stating its size and the prior value lost
+      - Classify bounces rather than reading the platform's classification
+    notes: >-
+      Deliverability, not campaign performance. customer-winback owns the lapsed buyers who might
+      still be recovered; this owns who leaves the sending population.
+
+  - id: life-007
+    prompt: Should we make people confirm their email before we send anything?
+    expect_skill: consent-verification
+    must_cite:
+      - audience-rules.md#A10
+      - safety-rules.md#S7
+    must_not:
+      - Recommend a store-wide requirement without reading rates by acquisition source
+      - Assert that the growth cost is or is not worth it without quantifying both sides
+      - Apply one requirement across email and SMS
+    notes: >-
+      A trade with a number on each side. The answer is often "on this capture point only".
