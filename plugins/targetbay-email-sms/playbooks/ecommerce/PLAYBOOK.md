@@ -1,12 +1,13 @@
 ---
 name: ecommerce
 display_name: General E-commerce
-version: 1.0.0
+version: 1.1.0
 applies_to: Direct-to-consumer online retail with a catalogue that supports repeat purchase. The baseline overlay that the other playbooks assume and differ from.
 overrides:
   - default thresholds
   - lever priority
   - lifecycle emphasis
+  - recipe priority
 ---
 
 # General E-commerce Playbook
@@ -96,3 +97,22 @@ This playbook is wrong for:
 - **Very new stores** — nearly every threshold here is derived from history that does not exist yet. Use
   the coverage baseline, label the rest provisional, and revisit once intervals are measurable.
 - **B2B** — see [../b2b/PLAYBOOK.md](../b2b/PLAYBOOK.md); the buying process is structurally different.
+
+## Recipe Priority
+
+A prior for [automation-recipe-selector](../../skills/automation-recipe-selector/SKILL.md), which
+re-ranks it on store evidence. Each entry names the signal to check before believing it.
+
+1. **Lifecycle recipes** — cart recovery first, then welcome, then order confirmation and the review
+   request. *Check:* that an abandonment signal is distinguishable from a completed order; without it
+   cart recovery cannot be built correctly and welcome moves to first.
+2. **Retention sweeps** — churn-risk scoring, then dormant re-engagement. *Check:* that purchase
+   intervals are measurable per contact; a store-wide interval makes every infrequent buyer look at risk.
+3. **List health** — the hygiene audit before the bounce responder. *Check:* that bounce classification
+   comes from the platform; nothing here should classify a bounce itself.
+4. **Measurement** — the A/B cycle and the periodic summary. *Check:* that volume can resolve a
+   difference at all, before automating a test that will report noise weekly.
+5. **AI-assisted** — last, and only once the approval gate has an owner with time to staff it.
+
+This is the baseline order the other four playbooks differ from; nothing in the library is
+structurally inapplicable here.

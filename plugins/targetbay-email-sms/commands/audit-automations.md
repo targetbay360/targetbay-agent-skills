@@ -9,7 +9,9 @@ decide which existing journeys should be split, consolidated, extended or retire
 objective means one automation.
 
 Rank the work by expected value with the evidence for each, and hand individual builds to
-`automation-architect`.
+`automation-architect`. If the store would rather adopt from the published recipe library than have
+the portfolio derived, use `automation-recipe-selector` instead — it ranks that library on readiness
+and defers the value ordering back to this skill.
 
 Plan only. Creating or activating an automation needs explicit human approval
 (`rules/safety-rules.md`).

@@ -82,3 +82,49 @@ cases:
       - Conclude the strategy is wrong before checking for expired offers and dead links
     notes: >-
       Decay is the most common cause of a journey that used to work.
+
+  - id: auto-007
+    prompt: Half of this journey needs data we keep in our own system — where should each step actually run?
+    expect_skill: automation-orchestration
+    expect_composes: [automation-architect]
+    must_cite:
+      - global-rules.md#G10
+      - frequency-rules.md#F3
+    must_not:
+      - Move a send outside the platform without naming the layer that enforces suppression and frequency
+      - Propose an orchestrator-side copy of suppression or consent state
+      - Move the whole journey out when only one step needs the external data
+      - Name a specific external workflow product
+    notes: >-
+      Placement, not journey shape. automation-architect decides what the journey looks like once
+      each step's home is settled.
+
+  - id: auto-008
+    prompt: Which of your ready-made recipes should we set up first?
+    expect_skill: automation-recipe-selector
+    expect_composes: [automation-strategy, audience-discovery]
+    must_cite:
+      - global-rules.md#G6
+      - automation-rules.md#R4
+    must_not:
+      - Rank a recipe ahead of the prerequisite work that unblocks it
+      - Recommend a recipe that duplicates a journey the store already runs
+      - Present a playbook position as a data-driven conclusion
+      - List several prerequisites for a blocked recipe instead of naming the one that blocks it
+    notes: >-
+      Ranking a finite published library by readiness. automation-strategy would derive the
+      portfolio from store data with no catalogue in hand.
+
+  - id: auto-009
+    prompt: We don't want a template — design the journeys our data says we need.
+    expect_skill: automation-strategy
+    expect_composes: [automation-architect, audience-discovery]
+    must_cite:
+      - automation-rules.md#R1
+    must_not:
+      - Offer a recipe from the library as the answer
+      - Assume one objective means one automation
+    notes: >-
+      The boundary assertion. This fails loudly if automation-recipe-selector's description
+      over-reaches into automation-strategy's territory.
+    accept_skills: [automation-strategy, automation-recipe-selector]

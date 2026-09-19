@@ -115,3 +115,34 @@ cases:
       - Recommend a split producing groups too small to read a result from
     notes: >-
       A segmentation question. The test is whether treatment actually differs.
+
+  - id: opt-011
+    prompt: Can we have it write the weekly newsletter for us?
+    expect_skill: ai-content-governance
+    expect_composes: [content-optimization]
+    must_cite:
+      - content-rules.md#N3
+      - global-rules.md#G3
+    must_not:
+      - Set one gate for the whole newsletter rather than classifying what each part asserts
+      - Let generated wording assert a price or stock position it was not given as verified data
+      - Propose a review load larger than the store's stated reviewer capacity
+    notes: >-
+      Governance, not copywriting. content-optimization would rewrite a message that underperforms;
+      this decides who signs it off before it is sent at all.
+
+  - id: opt-010
+    prompt: When is the best time of day to send our emails?
+    expect_skill: send-time-optimization
+    expect_composes: [ab-testing]
+    must_cite:
+      - campaign-rules.md#C6
+      - frequency-rules.md#F9
+    must_not:
+      - Recommend a send hour taken from a published industry figure
+      - Recommend per-contact timing without checking engagement events per person
+      - Report an uplift without the variance it has to clear
+      - Ignore local time zones or quiet hours
+    notes: >-
+      The most common correct answer is "your volume cannot resolve this — keep the current time".
+      That is a result, not a failure to answer.

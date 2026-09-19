@@ -38,13 +38,15 @@ Each entry carries an `id`, a `description`, an `access` level (`read` / `write`
 
 ## Mapping status
 
-All 15 capabilities in [../capabilities.yaml](../capabilities.yaml) are `mcp_tools: TODO`.
+All 17 capabilities in [../capabilities.yaml](../capabilities.yaml) are `mcp_tools: TODO`.
 Rather than transcribe the registry here — two lists that drift — this section records only what
 still needs a decision. Read the registry for ids, descriptions, access levels and notes.
 
 | Capability | Access | Open question |
 |---|---|---|
 | `email_sms.messaging_sms` | send | capability itself unverified |
+| `email_sms.event_stream` | read | whether an MCP surface can expose a push subscription at all, or whether subscription is configured out of band |
+| `email_sms.event_tracking` | write | whether event names are enumerated, and whether a recorded event can trigger a platform automation |
 
 Mapping a capability means: naming the MCP tools or resources that satisfy it, recording the shape of what
 they return, and confirming the access level matches. Until that is done, no skill in this package can
@@ -60,7 +62,11 @@ writing this package:
   observed — it is the adjacent repository's own naming, not this package's, and renaming it here would
   misreport what was inspected.
 - An n8n community node with a resource/operation matrix covering contacts, lists, campaigns, templates
-  and event tracking, plus webhook events for campaign, contact, list and order activity.
+  and event tracking, plus webhook events for campaign, contact, list and order activity. Its campaign
+  operations are read, list, send and reports — there is **no create operation**. Programmatic campaign
+  creation is therefore unverified, and no skill may assume it. A large share of that repository's own
+  published example workflows call a campaign-create operation the node does not implement; this was
+  found by reading the node rather than by running them.
 
 These are recorded here as **evidence of an existing naming convention**, not as the MCP surface. Neither
 is an MCP server. No name from either has been copied into a skill, and none should be until the actual
@@ -109,3 +115,9 @@ hard frequency caps. Skills plan within these; they do not approximate or bypass
       [../schemas/workflow.schema.json](../schemas/workflow.schema.json)
 - [ ] Confirm whether `email_sms.marketing_calendar` is a real capability or must be assembled from
       campaign and automation reads
+- [ ] Confirm whether campaign creation exists in the MCP surface at all; the inspected node has none,
+      and several skills would plan differently if a campaign can only be selected rather than created
+- [ ] Confirm how subscription to `email_sms.event_stream` is configured — through the MCP, or out of band
+- [ ] Confirm whether an event recorded through `email_sms.event_tracking` can trigger a platform
+      automation. If it cannot, every store-pushed trigger needs an external orchestrator, which is the
+      decision `automation-orchestration` owns
