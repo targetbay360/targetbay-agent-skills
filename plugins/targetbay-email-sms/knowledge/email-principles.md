@@ -20,8 +20,10 @@ Practical consequences for planning:
 - **Complaints are the most expensive metric.** They are a direct signal that the recipient did not want
   this. Cadence and relevance are the levers.
 
-Bounce handling, complaint feedback loops and authentication are platform responsibilities — see
-[../rules/global-rules.md#G10](../rules/global-rules.md).
+Bounce handling, complaint feedback loops and suppression enforcement are platform
+responsibilities — see [../rules/global-rules.md#G10](../rules/global-rules.md). The mechanism
+underneath all of this — why identity, reputation and content are three separate layers with three
+separate remedies — is [deliverability-principles.md](deliverability-principles.md).
 
 ## What email is good at
 

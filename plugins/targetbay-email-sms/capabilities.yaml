@@ -10,7 +10,7 @@
 # Never add a capability here to justify a skill. Add it only when the underlying
 # TargetBay Email & SMS platform genuinely exposes that class of data or action.
 
-version: 1.2.0
+version: 1.3.0
 
 # access values:
 #   read   - retrieves data, no state change
@@ -85,6 +85,20 @@ capabilities:
       UNVERIFIED. No local TargetBay Email & SMS implementation of SMS dispatch has been inspected.
       Skills must confirm this capability is present before planning SMS execution and
       degrade to email-only when it is absent. See docs/mcp-integration.md.
+
+  - id: email_sms.sending_infrastructure
+    description: >-
+      Sending domains and subdomains, authentication record state (SPF, DKIM, DMARC, BIMI) and
+      whether it aligns with the visible sender, dedicated versus shared IP, warm-up state and the
+      current sending limits that bound it.
+    access: read
+    mcp_tools: TODO
+    notes: >-
+      UNVERIFIED. Every sending platform must hold this configuration for mail to leave at all, but
+      whether the TargetBay MCP exposes it as readable data has never been inspected from this
+      repository. Skills requiring it must report `partial` and reason from
+      email_sms.campaign_analytics proxies when it is absent, and must never present an
+      authentication state they could not read. See docs/mcp-integration.md.
 
   - id: email_sms.suppression_and_consent
     description: Suppression lists, consent state per channel, quiet-hours and frequency-cap configuration.
