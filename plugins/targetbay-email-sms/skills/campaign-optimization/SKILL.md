@@ -4,10 +4,10 @@ description: Use when a campaign, newsletter or email blast underperformed and n
 license: MIT
 metadata:
   targetbay.display_name: Campaign Optimization
-  targetbay.version: "2.1.0"
+  targetbay.version: "2.2.0"
   targetbay.category: optimization
   targetbay.requires: email_sms.campaign_management, email_sms.campaign_analytics, email_sms.customer_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.experimentation, email_sms.suppression_and_consent
-  targetbay.composes: audience-discovery, ab-testing, content-optimization
+  targetbay.composes: audience-discovery, ab-testing, content-optimization, deliverability-qa, offer-strategy
   targetbay.risk_level: recommendation
   targetbay.execution_mode: plan_then_execute
   targetbay.status: foundation
@@ -40,6 +40,10 @@ subject line of a campaign that failed because it went to the wrong people with 
 - Sample size is too small to diagnose anything. Say so and stop.
 - The failure point is already known to be the message itself. Use
   [content-optimization](../content-optimization/SKILL.md) directly.
+- Every send is affected, not one campaign. That is the sending programme, not a campaign. Use
+  [deliverability-qa](../deliverability-qa/SKILL.md).
+- The campaign has not been sent and needs clearing first. Use
+  [email-quality-auditor](../email-quality-auditor/SKILL.md).
 
 ## Required Context
 
@@ -85,20 +89,32 @@ Test             ← sized and time-boxed in advance
    ↓
 Measure          ← on the outcome metric, not the proxy
    ↓
-Optimize         ← apply, record, and move to the next-largest lever
+Learn            ← record what the result settled, and what it did not
+   ↓
+Optimize         ← apply, then re-enter at the next-largest lever
 ```
+
+The loop only compounds if **Learn** is a step rather than a sentiment. A result that is not written
+down where the next diagnosis will find it means the same hypothesis gets tested again in six
+months, and the store pays twice for one answer.
 
 **Locating the break.** Walk the funnel in order and stop at the first stage that is materially below
 baseline:
 
-| Stage below baseline | Likely cause |
-|---|---|
-| Delivered / reach | Deliverability, suppression, list health, cadence |
-| Opened | From name, subject, send time, fatigue, inbox placement |
-| Clicked | Offer relevance, content angle, call to action, audience mismatch |
-| Converted | Offer strength, landing experience, price, stock, audience intent |
-| AOV | Merchandising, bundling, threshold mechanics |
-| Retained | The campaign bought a purchase at the cost of the relationship |
+| Stage below baseline | Likely cause | Owning skill |
+|---|---|---|
+| Delivered / reach | Authentication, sender reputation, a provider turning | [deliverability-qa](../deliverability-qa/SKILL.md) |
+| Delivered / reach | Suppression, bounces, an unengaged population | [list-hygiene](../list-hygiene/SKILL.md) |
+| Opened | From name, subject, preheader, fatigue | [content-optimization](../content-optimization/SKILL.md) |
+| Opened | Send hour or day | [send-time-optimization](../send-time-optimization/SKILL.md) |
+| Opened | Too much contact in the window | [consent-verification](../consent-verification/SKILL.md), which owns the ceiling |
+| Clicked | Content angle, call to action | [content-optimization](../content-optimization/SKILL.md) |
+| Clicked | Audience mismatch | [audience-discovery](../audience-discovery/SKILL.md) |
+| Converted | Offer strength or depth | [offer-strategy](../offer-strategy/SKILL.md) |
+| Converted | Wrong products featured | [product-recommendation-strategy](../product-recommendation-strategy/SKILL.md) |
+| Converted | Landing experience, price, stock | Outside this package; report it |
+| AOV | Merchandising, bundling, threshold mechanics | [aov-growth](../aov-growth/SKILL.md) |
+| Retained | The campaign bought a purchase at the cost of the relationship | [customer-retention](../customer-retention/SKILL.md) |
 
 Diagnose in funnel order. A click problem diagnosed as a subject-line problem produces a fix that
 changes nothing.
@@ -135,6 +151,21 @@ Binding: [../../rules/campaign-rules.md](../../rules/campaign-rules.md),
 - A third attempt at the same non-responders is escalation in the wrong direction and is normally
   refused; a different channel or a different message is the legitimate next move
   ([../../rules/frequency-rules.md#F6](../../rules/frequency-rules.md)).
+- **Reach failures are diagnosed before anything above them.** A campaign that under-delivered is not
+  a content problem, and the two causes at that stage are different skills: authentication and
+  reputation go to [deliverability-qa](../deliverability-qa/SKILL.md), population and suppression go
+  to [list-hygiene](../list-hygiene/SKILL.md) (D1, D8).
+- Never assert inbox placement as the cause of a low open rate (D7). It is a candidate, stated as
+  one, and the evidence for it is engagement movement by receiving domain rather than the open rate
+  itself.
+- The offer is a lever with an owner. Where the break is at conversion and the offer is implicated,
+  delegate to [offer-strategy](../offer-strategy/SKILL.md) rather than proposing a depth here (C4).
+- **Learn is a step.** Every completed cycle records the hypothesis, the result, what it settled and
+  what it did not, and the date — because winners decay and a settled question has a shelf life
+  ([../../knowledge/experimentation-principles.md](../../knowledge/experimentation-principles.md)).
+  An inconclusive test is recorded as inconclusive, not discarded.
+- A recommendation that was applied and not measured is an open loop. Report it as one rather than
+  moving to the next lever (G15).
 - Record the outcome where the next recommendation will find it.
 
 ## Workflow
@@ -176,6 +207,11 @@ Where the sample is too small to resolve the question, that finding replaces the
 - [ ] Success metric is an outcome, not a proxy
 - [ ] Comparison baseline is from this store (G3)
 - [ ] Recommendation targets the largest lever, not the easiest one
+- [ ] Reach failures diagnosed before higher stages, and routed to the right owner (D1, D8)
+- [ ] No placement claim asserted from open rate alone (D7)
+- [ ] Offer questions delegated rather than answered with a discount depth (C4)
+- [ ] The result recorded with what it settled and what it did not, and dated
+- [ ] Any applied-but-unmeasured prior recommendation reported as an open loop (G15)
 - [ ] Sample-size limitations stated where they exist
 
 ## Approval Requirements
@@ -217,6 +253,10 @@ finding so the next plan cites it.
 | Multiple variables changed at once | Report that the campaign is not diagnosable as a test, and what to isolate next time |
 | Store's volume cannot resolve the test | Recommend the change on reasoning, explicitly not as a test |
 | Requested fix targets the wrong lever | Say so, give the evidence, and propose the right one |
+| The break is at reach | Diagnose no further up the funnel; route to deliverability-qa or list-hygiene with the evidence, and say which and why (D1) |
+| Engagement cannot be split by receiving domain | **Partial.** Placement stays a candidate cause rather than a finding (D6, D7) |
+| No record of prior cycles | **Partial.** Proceed, and state that the test history could not be checked — a settled question may be re-tested |
+| A prior recommendation was applied but never measured | Report the open loop before proposing a new cycle; an unmeasured change contaminates the next baseline |
 
 Degraded outcomes set `status` and populate `unmet_requirements`. Never present a cause without the
 evidence that supports it (G2, G14).
