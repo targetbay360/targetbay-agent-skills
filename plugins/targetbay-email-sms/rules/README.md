@@ -17,6 +17,7 @@ in as many directions as there are skills. Skills link to rules; they do not cop
 | [automation-rules.md](automation-rules.md) | Variants, branching, topology, node justification. |
 | [personalization-rules.md](personalization-rules.md) | What may be used to personalise, and what may not. |
 | [content-rules.md](content-rules.md) | Subject lines, body content, offers, claims, accessibility. |
+| [deliverability-rules.md](deliverability-rules.md) | Authentication, reputation, placement, and the order of diagnosis. |
 | [frequency-rules.md](frequency-rules.md) | Contact cadence, fatigue, channel pressure, collisions. |
 
 ## Contact ownership across products
@@ -40,7 +41,8 @@ When two rules conflict, the higher layer wins:
 ```
 1. safety-rules            (never overridden)
 2. global-rules
-3. domain rules            (audience / campaign / automation / personalization / content / frequency)
+3. domain rules            (audience / campaign / automation / personalization / content /
+                            frequency / deliverability)
 4. playbook overlay        (playbooks/<vertical>/PLAYBOOK.md)
 5. store context           (the individual store's stated preferences)
 ```
