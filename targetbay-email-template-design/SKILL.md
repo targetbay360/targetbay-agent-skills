@@ -14,6 +14,8 @@ Design guidance for ecommerce email templates — layout, hierarchy, type, colou
 imagery. This is the visual layer only. *Which* message to send and when belongs to the lifecycle
 flows; whether it arrives at all belongs to deliverability. Both live in the
 [best practices skill](https://github.com/targetbay360/targetbay-agent-skills/tree/main/targetbay-email-sms-best-practices).
+Wiring the automation that sends it — the trigger, the operations, the guardrails — belongs to the
+[automation recipes skill](https://github.com/targetbay360/targetbay-agent-skills/tree/main/targetbay-marketing-automation-recipes).
 
 Email is constrained design, and the constraint is the renderer rather than taste. A design that
 ignores that is not bolder — it is one that some share of the list cannot read.

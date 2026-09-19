@@ -16,9 +16,11 @@ path to a running automation.
 endpoints, tool schemas, request code and threshold numbers anywhere under `plugins/`, and a recipe
 without its trigger and its operations is not a recipe. The two existing standalone skills at the
 repository root are the documented precedent for concrete content — `README.md` already explains why
-they invert the no-numbers rule — so `targetbay-marketing-automation-recipes` joins them. Recipes across ten references, each with its trigger, preconditions, operations, guardrails, what to
-measure and what has not been verified. The decisions stay in the plugin, capability-abstract, where
-an agent looks for them.
+they invert the no-numbers rule — so `targetbay-marketing-automation-recipes` joins them.
+Twenty-five recipes across seven reference files, each with its trigger, preconditions, operations,
+guardrails, what to measure and what has not been verified, plus three supporting references: the
+recipe format, the guardrails every recipe carries, and the roadmap. The decisions stay in the
+plugin, capability-abstract, where an agent looks for them.
 
 **The platform surface has no campaign-create operation.** Reading the integration showed the campaign
 resource exposes read, list, send and reports only — while a large share of the published example
@@ -33,7 +35,8 @@ behaviour and had simply never reached `capabilities.yaml`. On the other side, t
 address-scraping workflows are not shipped — they mail people who never opted in, which collides with
 `safety-rules.md#S7` and with the compliance reference this repository already carries, and sending
 reputation on a shared platform is shared. Invoice parsing and attachment routing are out of scope.
-All four refusals are recorded in the library's `roadmap.md` rather than silently omitted.
+All four refusals are recorded in `references/roadmap.md` rather than silently omitted, alongside a
+twenty-row catalogue of ideas that are not built, each marked with what it would need first.
 
 ### Added
 
@@ -46,6 +49,23 @@ All four refusals are recorded in the library's `roadmap.md` rather than silentl
 ### Changed
 
 - `targetbay-email-sms` is at 4.1.0. The other three plugins are untouched.
+- Ten golden-prompt cases across five of the six `targetbay-email-sms` eval suites — two of them
+  `selection: skip` refusal cases, pinning the cold-outreach and address-scraping patterns as
+  refusals rather than gaps — and a regenerated `tests/evals/expectations.lock`.
+- `README.md` documents the third standalone skill, in the repository layout and in the section
+  explaining why a skill that breaks the plugin contract is the right shape for this content.
+- The three standalone skills now each link to the other two. Previously nothing linked *to*
+  `targetbay-marketing-automation-recipes`, so it was unreachable from its siblings — the README
+  already claimed the three cross-linked, and now they do. Full GitHub URLs, because each skill
+  installs by copying its own directory and a relative link between them is dead on install.
+
+### Fixed
+
+- `docs/mcp-capability-inventory.md` had not been updated when the two capabilities above landed:
+  the `targetbay-email-sms` registry reads 17 rather than 15, the total 60 rather than 58, and the
+  open questions nine rather than seven. The plugin's own `docs/mcp-integration.md` already said 17,
+  so the two files were contradicting each other. The dated entries below keep their original
+  counts — 58 was correct when it was written.
 
 ## [2026-09-16] The skill contract loses a section, and installed skills keep their citations
 
