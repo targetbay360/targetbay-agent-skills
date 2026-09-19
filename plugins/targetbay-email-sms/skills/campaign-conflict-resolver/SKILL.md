@@ -1,6 +1,6 @@
 ---
 name: campaign-conflict-resolver
-description: Use when two or more sends contend for the same person in the same window and something has to yield — a broadcast landing on contacts mid-journey, two automations both eligible, a seasonal push over a lifecycle message, or the same moment planned on email and SMS. Decides which proceeds, which is delayed, which is suppressed and which switches channel. Answers "these campaigns overlap, what do we do?" and "which message wins?". Use marketing-calendar to sequence a plan before conflicts arise, and channel-optimization when the question is channel assignment rather than contention.
+description: Use when a campaign and the automations already running would both reach the same customers at the same time, when two automations fire for the same contact, or when a seasonal push overlaps a lifecycle message or the same moment is planned on both email and SMS. Decides which send proceeds, which is delayed, which is suppressed for the overlap and which switches channel. Answers "our campaign overlaps with automations that are running, what do we do?", "two automations both fire for the same customers" and "which message wins?". Use marketing-calendar to sequence a plan before any of this arises, and channel-optimization for channel assignment absent contention.
 license: MIT
 metadata:
   targetbay.display_name: Campaign Conflict Resolver

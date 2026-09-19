@@ -108,3 +108,50 @@ cases:
       - Commit later waves before the first wave provides evidence
     notes: >-
       Wave sequencing is an information decision as much as a revenue one.
+
+  - id: plan-008
+    prompt: Our Black Friday campaign goes to everyone but we have five automations running — what do we do?
+    expect_skill: campaign-conflict-resolver
+    expect_composes: [audience-discovery]
+    must_cite:
+      - frequency-rules.md#F8
+      - frequency-rules.md#F3
+      - automation-rules.md#R16
+    must_not:
+      - Apply a fixed hierarchy that always ranks broadcasts above automations
+      - Pause every automation for the period without pricing what that forgoes
+      - Report a conflict without measuring how many contacts actually overlap
+      - Leave the yielding send's forgone value unstated
+    notes: >-
+      The reflex fix trades the highest-earning messages for the lowest. Priority is derived from
+      per-contact value, and suppression scoped to the overlap beats a blanket pause.
+
+  - id: plan-009
+    prompt: Two of our automations both fire for the same customers at the same time.
+    expect_skill: campaign-conflict-resolver
+    must_cite:
+      - automation-rules.md#R16
+      - global-rules.md#G7
+    must_not:
+      - Install a permanent suppression rule that hides the overlap instead of fixing it
+      - Arbitrate a structural defect as if it were an incidental collision
+    notes: >-
+      Complete rather than incidental overlap is a portfolio defect. Arbitrating it monthly means
+      deciding the same thing forever; the fix belongs to automation-strategy.
+
+  - id: plan-010
+    prompt: How often is too often to email our customers?
+    expect_skill: consent-verification
+    must_cite:
+      - frequency-rules.md#F2
+      - frequency-rules.md#F4
+      - frequency-rules.md#F5
+    must_not:
+      - Recommend a cadence taken from a published figure rather than this store's own rates
+      - Set one ceiling for the whole list
+      - Count campaign volume while ignoring automation messages
+      - Raise the ceiling for a segment that has stopped responding
+    notes: >-
+      A grocery store whose delivered contact is far higher than its campaign calendar suggests,
+      because two live journeys are not on it. The ceiling is derived per segment from where this
+      store's unsubscribes turn.

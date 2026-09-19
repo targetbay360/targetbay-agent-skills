@@ -110,3 +110,67 @@ cases:
     notes: >-
       Units gate the audience. product-launch owns the broad restock announcement; this owns the
       per-contact alert to people who asked.
+
+  - id: rev-009
+    prompt: What offer should we use for the spring campaign?
+    expect_skill: offer-strategy
+    expect_composes: [audience-discovery]
+    must_cite:
+      - campaign-rules.md#C4
+      - campaign-rules.md#C5
+      - global-rules.md#G3
+    must_not:
+      - Recommend a discount without first testing whether no offer would work
+      - State a depth as a round number with no derivation from this store's history
+      - Assume margin data exists
+      - Ignore the customers who would have converted at full price
+    notes: >-
+      A fashion store heading into a seasonal push. The null offer is the default and has to be
+      argued away; the cost that never appears in the campaign report is margin given to people who
+      were already converting.
+
+  - id: rev-010
+    prompt: Which products should we recommend in the post-purchase email?
+    expect_skill: product-recommendation-strategy
+    must_cite:
+      - personalization-rules.md#P4
+      - personalization-rules.md#P5
+      - global-rules.md#G7
+    must_not:
+      - Recommend items from general knowledge of the vertical rather than the store's catalogue
+      - Present catalogue-wide popularity as a personalised recommendation
+      - Pad the block to fill the template's slots
+      - Assume inventory availability that was not read
+    notes: >-
+      A home and furniture store. The evidence rung is named per item, and one well-evidenced
+      recommendation beats six where the fourth onwards rest only on popularity.
+
+  - id: rev-011
+    prompt: What should we offer lapsed customers who haven't bought in a year?
+    expect_skill: offer-strategy
+    expect_composes: [audience-discovery]
+    must_cite:
+      - campaign-rules.md#C4
+      - global-rules.md#G1
+    must_not:
+      - Open the sequence at the deepest discount
+      - Escalate the same instrument rather than changing instrument between attempts
+      - Count a single discounted transaction as a recovered customer
+    notes: >-
+      Recovery is measured on the second purchase. A ladder of the same discount getting deeper
+      leaves nothing to escalate to and teaches the customer to wait.
+    accept_skills: [offer-strategy, customer-winback]
+
+  - id: rev-012
+    prompt: Recommend products for subscribers who signed up but have never ordered.
+    expect_skill: product-recommendation-strategy
+    must_cite:
+      - personalization-rules.md#P3
+      - global-rules.md#G15
+    must_not:
+      - Label a segment-level selection as personalised
+      - Infer affinity from data the platform does not hold for these contacts
+      - Return a ranked list without saying which evidence rung it rests on
+    notes: >-
+      A subscription and consumables store with a cohort that has no purchase history. Reporting
+      that no rung above segment level exists is the correct answer, not a failure to answer.

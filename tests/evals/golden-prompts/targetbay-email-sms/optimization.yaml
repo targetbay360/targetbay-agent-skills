@@ -146,3 +146,133 @@ cases:
     notes: >-
       The most common correct answer is "your volume cannot resolve this — keep the current time".
       That is a result, not a failure to answer.
+
+  - id: opt-012
+    prompt: Can we safely send this campaign? Check it before it goes out.
+    expect_skill: email-quality-auditor
+    expect_composes: [deliverability-qa, email-render-qa, dynamic-content-personalizer, audience-discovery]
+    must_cite:
+      - safety-rules.md#S4
+      - frequency-rules.md#F2
+      - content-rules.md#N9
+    must_not:
+      - Return a verdict without stating the resolved audience size first
+      - Escalate a fixable defect to BLOCK
+      - Report an unchecked dimension as passed
+      - Count only this campaign's messages when judging frequency
+    notes: >-
+      The pre-send gate. Every dimension is individually owned elsewhere; what this case asserts is
+      that the sweep counts total contact rather than this send alone, and that the blast radius
+      precedes the verdict.
+
+  - id: opt-013
+    prompt: Our engagement has been sliding across everything we send — are we authenticated properly?
+    expect_skill: deliverability-qa
+    expect_composes: [list-hygiene]
+    must_cite:
+      - deliverability-rules.md#D1
+      - deliverability-rules.md#D7
+      - global-rules.md#G2
+    must_not:
+      - Recommend a content or subject-line change while the identity layer is unverified
+      - Assert inbox placement from delivery, open or click data
+      - Compare a rate against a published industry benchmark
+      - Report an authentication record as fixed when it lives in the store's DNS
+    notes: >-
+      Layer order is the whole discipline. A programme-wide slide is diagnosed at identity before
+      reputation and at reputation before content, and placement itself is never observable here.
+
+  - id: opt-014
+    prompt: Will this email break in dark mode or with images off?
+    expect_skill: email-render-qa
+    must_cite:
+      - content-rules.md#N8
+      - content-rules.md#N9
+      - personalization-rules.md#P12
+    must_not:
+      - Report a view as passing when it could not be inspected
+      - Treat a missing or broken opt-out as a rendering defect rather than a stop
+      - Weight defects by a published client distribution rather than this store's own
+      - Apply a fix to the template rather than recommending one
+    notes: >-
+      A fashion retailer whose hero is a single image. The images-off view is the harshest and the
+      cheapest to fail, and an unchecked view is never reported as a passing one.
+
+  - id: opt-015
+    prompt: How should we personalize this email beyond just the first name?
+    expect_skill: dynamic-content-personalizer
+    expect_composes: [product-recommendation-strategy, audience-discovery]
+    must_cite:
+      - personalization-rules.md#P1
+      - personalization-rules.md#P2
+      - personalization-rules.md#P3
+    must_not:
+      - Propose an element resting on a field the platform does not hold for that contact
+      - Leave any element without a defined fallback and empty case
+      - Keep an element whose fallback branch serves most recipients
+      - Select the products itself rather than delegating the choice
+    notes: >-
+      A beauty store with partial profile data. The load-bearing decision is dropping an element
+      whose fallback would serve most of the list — at that point the fallback is the message.
+
+  - id: opt-016
+    prompt: Engagement has collapsed at one email provider but holds steady everywhere else.
+    expect_skill: deliverability-qa
+    expect_composes: [list-hygiene]
+    must_cite:
+      - deliverability-rules.md#D6
+      - deliverability-rules.md#D8
+    must_not:
+      - Draw a programme-wide conclusion from one provider's numbers
+      - Recommend suppression as the remedy before the layer is identified
+      - Report the drop as confirmed spam placement
+    notes: >-
+      An electronics store. One provider turning is a different problem from a programme-wide
+      decline and has a different owner; suppression does not reach a layer it cannot touch.
+
+  - id: opt-017
+    prompt: Review our welcome automation before we switch it on.
+    expect_skill: email-quality-auditor
+    must_cite:
+      - safety-rules.md#S2
+      - personalization-rules.md#P12
+      - global-rules.md#G3
+    must_not:
+      - Apply the same bar to an unattended journey as to a one-off send
+      - Pass a node referencing a product the store no longer sells
+      - Treat a missing greeting fallback as cosmetic when it repeats for every future entrant
+    notes: >-
+      An unattended automation is a higher bar than a campaign because nobody reviews each send. A
+      defect inside it repeats indefinitely rather than once.
+
+  - id: opt-018
+    prompt: Is our abandoned cart flow actually earning anything, or would those people have bought anyway?
+    expect_skill: ab-testing
+    must_cite:
+      - global-rules.md#G1
+      - safety-rules.md#S4
+    must_not:
+      - Answer with a two-variant comparison, which cannot measure incrementality
+      - Omit the revenue cost of withholding from the holdout group
+      - Report attributed revenue as incremental revenue
+    notes: >-
+      The only design that answers this is a holdout. A variant test compares two versions of a send
+      that both happen; it cannot say whether sending at all was worth it.
+    accept_skills: [ab-testing, automation-optimization]
+
+  - id: opt-019
+    prompt: Give us some subject line options for the restock email.
+    expect_skill: content-optimization
+    expect_composes: [ab-testing, dynamic-content-personalizer]
+    must_cite:
+      - content-rules.md#N3
+      - content-rules.md#N4
+      - global-rules.md#G1
+    must_not:
+      - Judge the variants on open rate as the success criterion
+      - Retain a variant implying urgency or scarcity the store has not established
+      - Produce four rewordings of one angle rather than distinct hypotheses
+      - Leave the preheader unspecified
+    notes: >-
+      Subject and preheader are one unit. The highest-opening variant here is likely the vaguest,
+      which is why the downstream metric and the guard metric are named before the test runs.

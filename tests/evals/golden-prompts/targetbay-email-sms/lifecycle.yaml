@@ -96,3 +96,20 @@ cases:
       - Apply one requirement across email and SMS
     notes: >-
       A trade with a number on each side. The answer is often "on this capture point only".
+
+  - id: life-008
+    prompt: Which of our dormant customers are worth another attempt and which should we let go?
+    expect_skill: customer-winback
+    expect_composes: [audience-discovery, list-hygiene, offer-strategy]
+    must_cite:
+      - audience-rules.md#A6
+      - frequency-rules.md#F6
+      - global-rules.md#G7
+    must_not:
+      - Define dormancy with a fixed window rather than this store's own intervals
+      - Collapse contacts who still open into the same class as those who do not
+      - Decide the suppression here rather than handing it to the skill that owns it
+      - Escalate contact frequency to people who have stopped responding
+    notes: >-
+      Engagement and purchase are separate axes. Someone still opening but not buying is a different
+      problem from someone who has stopped both, and the sunset decision has one owner.
