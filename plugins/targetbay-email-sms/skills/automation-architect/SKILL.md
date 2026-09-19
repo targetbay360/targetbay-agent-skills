@@ -4,10 +4,10 @@ description: Use when designing or restructuring an automation journey — a wel
 license: MIT
 metadata:
   targetbay.display_name: Automation Architect
-  targetbay.version: "2.0.0"
+  targetbay.version: "2.1.0"
   targetbay.category: automation
   targetbay.requires: email_sms.store_profile, email_sms.customer_intelligence, email_sms.product_intelligence, email_sms.order_intelligence, email_sms.segmentation, email_sms.automation, email_sms.automation_analytics, email_sms.suppression_and_consent
-  targetbay.composes: audience-discovery
+  targetbay.composes: audience-discovery, product-recommendation-strategy, offer-strategy
   targetbay.risk_level: plan
   targetbay.execution_mode: plan_then_execute
   targetbay.status: foundation
@@ -50,6 +50,15 @@ exists, and variants that were considered and rejected are recorded with why.
 - The real question is who to target, not what to build. Use
   [audience-discovery](../audience-discovery/SKILL.md).
 - No automation capability is available. Say so and stop; do not design something that cannot be built.
+- The question is which items a node should feature. Use
+  [product-recommendation-strategy](../product-recommendation-strategy/SKILL.md), which this skill
+  composes — the journey decides that a node recommends products, not which ones.
+- The question is what incentive a node carries. Use [offer-strategy](../offer-strategy/SKILL.md),
+  which this skill composes.
+- The journey is designed and two of its messages now contend with a campaign. Use
+  [campaign-conflict-resolver](../campaign-conflict-resolver/SKILL.md).
+- A step cannot live inside the platform at all. Use
+  [automation-orchestration](../automation-orchestration/SKILL.md).
 
 ## Required Context
 
@@ -100,6 +109,8 @@ Email & SMS MCP tool mappings are **TODO** — see
 8. Determine timing                             ← from observed intervals, R13
       ↓
 9. Determine channel per node                   ← consent, then preference, then cost
+      ↓  a channel change mid-journey is a branch and must clear R10
+9a. Determine what each node says               ← products and offers delegated, not decided here
       ↓
 10. Define goal and exit per variant            ← R15
       ↓
@@ -142,9 +153,31 @@ Binding: [../../rules/automation-rules.md](../../rules/automation-rules.md) (R1�
 - Derive intervals from observed behaviour: delivery time, usage time, repeat interval, decision window.
 - Where the data to derive an interval is missing, state the interval is a default and mark it testable.
 
+**What each node carries**
+
+- A node's message type is a topology decision; its contents are not. Products are delegated to
+  [product-recommendation-strategy](../product-recommendation-strategy/SKILL.md) and incentives to
+  [offer-strategy](../offer-strategy/SKILL.md). A journey that hard-codes a discount depth or a
+  product list has embedded two decisions it does not own, and both go stale inside it (G7).
+- **Do not branch on product or price band merely because the data allows it** (R3, G9). A
+  product-attribute branch earns its place only when the two paths say materially different things
+  for materially different windows — a consumable with a short repeat cycle against a durable with a
+  long one is a real divergence; two price bands receiving the same message with a different number
+  in it is not.
+- An offer escalating across a journey's nodes is an offer ladder, and the ladder's shape is
+  [offer-strategy](../offer-strategy/SKILL.md)'s decision. Escalating depth by default is how a
+  journey teaches customers to wait for its last message.
+- Where a node's recommendation would rest only on catalogue-wide popularity, state that the node is
+  effectively unpersonalised and reconsider whether it earns its place (R8).
+
 **Channel**
 
 - Consent first, observed channel response second, cost third (R14).
+- A change of channel mid-journey is a branch, not a formatting choice, and it must clear R10: the
+  paths have to stay different after it. Where consent splits the audience by channel, that is a
+  genuine branch; where it does not, one path with a channel-appropriate message is simpler (R12).
+- Channel assignment across the whole journey is bounded by the per-channel cadence budget, which is
+  smaller for SMS and is shared with every campaign reaching the same contact (F2, F3, F7).
 - SMS must clear a higher bar — see [../../knowledge/sms-principles.md](../../knowledge/sms-principles.md).
 - If `email_sms.messaging_sms` is unavailable, design email-only and record the gap.
 
@@ -195,6 +228,10 @@ Before presenting:
 - [ ] No conflict with existing journeys, or precedence explicitly stated (R16)
 - [ ] No duplication of an existing automation (G6)
 - [ ] Total contact from this journey counted against existing cadence (F2, F3)
+- [ ] No product or price-band branch that does not change what the paths say (R3, G9)
+- [ ] Product selection delegated, not embedded in the journey (G7)
+- [ ] Offer depth and any ladder delegated, not hard-coded in a node
+- [ ] Every mid-journey channel change justified as a branch under R10
 - [ ] `rejected_variants` populated
 - [ ] No invented data anywhere in the plan (G3)
 
@@ -252,6 +289,9 @@ Full narrated traces: [../../examples/automation-strategy.md](../../examples/aut
 | Existing automation already covers the objective | Return a modification plan, not a new journey |
 | Consent data unavailable | **Partial.** Plan email-only; never assume consent |
 | Conflicting live journey found | Surface the conflict and propose precedence before proposing new nodes |
+| Product intelligence unavailable | **Partial.** Design the topology and mark product-carrying nodes as unspecified; never populate them from general knowledge of the vertical (G3) |
+| Offer strategy not yet decided | Design the node as offer-bearing with the depth unset, and record it as a dependency rather than choosing a figure |
+| A branch cannot be shown to diverge | Collapse it into one path with a condition, and record the branch as rejected (R10, R5) |
 
 Every degraded outcome sets `status` to `partial` or `blocked` and populates `unmet_requirements`. This
 skill never fabricates intervals, audience sizes or performance figures to complete a plan (G3, G15).
