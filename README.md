@@ -20,7 +20,7 @@ Add the marketplace once, then install the products you actually use.
 
 | Plugin | Decides | Skills | Version | MCP |
 |---|---|---|---|---|
-| [**targetbay-email-sms**](plugins/targetbay-email-sms/README.md) | How a store plans, targets, sequences and optimises email and SMS marketing | 31 | `4.1.0` | mapping TODO |
+| [**targetbay-email-sms**](plugins/targetbay-email-sms/README.md) | How a store plans, targets, sequences and optimises email and SMS marketing | 38 | `4.2.0` | mapping TODO |
 | [**targetbay-reviews**](plugins/targetbay-reviews/README.md) | When to ask for a review, which products lack proof, how to answer a falling rating, where proof belongs | 5 | `0.2.0` | mapping TODO |
 | [**targetbay-loyalty**](plugins/targetbay-loyalty/README.md) | Whether to run a programme, what a point is worth, where tier thresholds go, which members are leaving | 6 | `0.2.0` | mapping TODO |
 | [**targetbay-onboarding**](plugins/targetbay-onboarding/README.md) | What a new store actually is, what to ask it, what to set up first across all three products, and which surfaces to personalise before any of them | 10 | `0.3.0` | mapping TODO |
@@ -47,6 +47,8 @@ the correct answer, and the quickest confirmation that the skills loaded.
 Every capability across the four plugins is still unmapped. The worksheet that closes that gap is
 [docs/mcp-capability-inventory.md](docs/mcp-capability-inventory.md) — one row per capability, filled in
 against the real MCP surface, plus the three answers that decide how far the onboarding pipeline can go.
+[docs/mcp-capability-gap-analysis.md](docs/mcp-capability-gap-analysis.md) narrows that to the shapes the
+email quality layer actually needs, ranked by how many skills each one unblocks.
 
 ---
 
@@ -105,7 +107,7 @@ No file in this repository makes a network call.
 
 ```
 .claude-plugin/marketplace.json   one entry per plugin
-docs/                             the MCP capability inventory — the Phase 0 worksheet
+docs/                             capability inventory and gap analyses, skill priorities
 tests/                            shared validation and golden prompts
 plugins/<name>/                   a product plugin — self-contained
   skills/  rules/  knowledge/  schemas/  docs/  commands/  scripts/

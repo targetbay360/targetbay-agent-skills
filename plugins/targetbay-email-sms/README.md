@@ -20,7 +20,7 @@ outcomes** using TargetBay Email & SMS.
 /plugin install targetbay-email-sms@targetbay
 ```
 
-Installs the 31 skills and six slash commands.
+Installs the 38 skills and six slash commands.
 
 </td></tr>
 <tr><th>npm</th><td>
@@ -148,16 +148,17 @@ monthly-marketing-planner
 The campaign count is **derived**, not templated. An empty week is a valid output. See
 [examples/plan-next-month.md](examples/plan-next-month.md) for the full trace.
 
-## The 31 skills
+## The 38 skills
 
 | | Skills |
 |---|---|
-| **Revenue** | [revenue-growth](skills/revenue-growth/SKILL.md) · [revenue-analysis](skills/revenue-analysis/SKILL.md) · [opportunity-discovery](skills/opportunity-discovery/SKILL.md) · [aov-growth](skills/aov-growth/SKILL.md) · [cross-sell](skills/cross-sell/SKILL.md) · [upsell](skills/upsell/SKILL.md) · [stock-and-price-alerts](skills/stock-and-price-alerts/SKILL.md) |
+| **Revenue** | [revenue-growth](skills/revenue-growth/SKILL.md) · [revenue-analysis](skills/revenue-analysis/SKILL.md) · [opportunity-discovery](skills/opportunity-discovery/SKILL.md) · [aov-growth](skills/aov-growth/SKILL.md) · [cross-sell](skills/cross-sell/SKILL.md) · [upsell](skills/upsell/SKILL.md) · [stock-and-price-alerts](skills/stock-and-price-alerts/SKILL.md) · [offer-strategy](skills/offer-strategy/SKILL.md) · [product-recommendation-strategy](skills/product-recommendation-strategy/SKILL.md) |
 | **Retention & lifecycle** | [customer-lifecycle](skills/customer-lifecycle/SKILL.md) · [customer-retention](skills/customer-retention/SKILL.md) · [customer-winback](skills/customer-winback/SKILL.md) · [product-replenishment](skills/product-replenishment/SKILL.md) |
 | **Automation** | [automation-strategy](skills/automation-strategy/SKILL.md) · [automation-architect](skills/automation-architect/SKILL.md) · [automation-optimization](skills/automation-optimization/SKILL.md) · [automation-orchestration](skills/automation-orchestration/SKILL.md) · [automation-recipe-selector](skills/automation-recipe-selector/SKILL.md) |
-| **Planning** | [marketing-calendar](skills/marketing-calendar/SKILL.md) · [monthly-marketing-planner](skills/monthly-marketing-planner/SKILL.md) · [store-onboarding](skills/store-onboarding/SKILL.md) |
+| **Planning** | [marketing-calendar](skills/marketing-calendar/SKILL.md) · [monthly-marketing-planner](skills/monthly-marketing-planner/SKILL.md) · [store-onboarding](skills/store-onboarding/SKILL.md) · [campaign-conflict-resolver](skills/campaign-conflict-resolver/SKILL.md) |
 | **Seasonal & launch** | [holiday-marketing](skills/holiday-marketing/SKILL.md) · [holiday-drip-campaign](skills/holiday-drip-campaign/SKILL.md) · [product-launch](skills/product-launch/SKILL.md) |
 | **Optimisation & content** | [campaign-optimization](skills/campaign-optimization/SKILL.md) · [content-optimization](skills/content-optimization/SKILL.md) · [channel-optimization](skills/channel-optimization/SKILL.md) · [ab-testing](skills/ab-testing/SKILL.md) · [send-time-optimization](skills/send-time-optimization/SKILL.md) · [ai-content-governance](skills/ai-content-governance/SKILL.md) |
+| **Email quality** | [email-quality-auditor](skills/email-quality-auditor/SKILL.md) · [deliverability-qa](skills/deliverability-qa/SKILL.md) · [email-render-qa](skills/email-render-qa/SKILL.md) · [dynamic-content-personalizer](skills/dynamic-content-personalizer/SKILL.md) |
 | **Audience** | [audience-discovery](skills/audience-discovery/SKILL.md) · [list-hygiene](skills/list-hygiene/SKILL.md) · [consent-verification](skills/consent-verification/SKILL.md) |
 
 Index, composition graph and the question-to-skill table: [skills/README.md](skills/README.md).
@@ -165,13 +166,14 @@ Index, composition graph and the question-to-skill table: [skills/README.md](ski
 ## Layout
 
 ```
-skills/        31 skills, one SKILL.md each — objective → decisions → plan
-rules/         8 numbered, citable rule sets that bind every skill
-knowledge/     9 marketing principles documents, vendor-agnostic
+skills/        38 skills, one SKILL.md each — objective → decisions → plan
+rules/         9 numbered, citable rule sets that bind every skill
+knowledge/     10 marketing principles documents, vendor-agnostic
 playbooks/     5 vertical overlays that adjust defaults without editing skills
 schemas/       4 JSON Schemas — skill, recommendation, workflow, skill-result
 commands/      6 slash commands that route a plain request to the right skill
-docs/          architecture, authoring, MCP integration, rules, versioning, examples
+docs/          architecture, authoring, MCP integration, rules, versioning, examples,
+               email quality architecture
 examples/      5 narrated traces of skills reasoning end to end
 scripts/       install.mjs (npm) and install.sh (curl) — no dependencies
 capabilities.yaml   the abstract capability registry

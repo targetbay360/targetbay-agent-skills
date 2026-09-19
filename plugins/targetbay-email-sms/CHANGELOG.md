@@ -6,6 +6,131 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). See [docs/versioning.md](docs/versioning.md)
 for how package and per-skill versions relate.
 
+## [4.2.0] - 2026-09-19
+
+The layer between a finished campaign and a real audience, and the intelligence beneath it. Seven
+skills, nine extended, one new rule family and one new capability — flagged unverified, because the
+alternative was inventing one.
+
+**Nothing stood between a built campaign and a send.** Every dimension that can make a send wrong was
+owned by a skill that optimised only its own: the audience was checked by one, the copy by another,
+the offer by a third, and none of them counted what the recipient actually receives. `email-quality-auditor`
+is the sweep that does. It returns PASS, WARN or BLOCK, and BLOCK is deliberately narrow — four stop
+conditions, all of them things `safety-rules.md` already forbids. Everything else is a warning with
+its cost stated, because a gate that blocks on preference is a gate people learn to route around.
+
+**Deliverability was one bullet in `email-principles.md` and a row in a funnel table.** `list-hygiene`
+owned bounces, complaints and who leaves the population, which is the reputation layer; nothing owned
+the layer above it. A store whose authentication does not align was being told to rewrite its subject
+lines. `deliverability-rules.md` (D1..D10) and `knowledge/deliverability-principles.md` set out the
+three layers and the order they are diagnosed in, and `deliverability-qa` stops at the first one that
+fails. D7 is the rule that will get argued with most: inbox placement is not observable from sending
+data, and this package does not pretend otherwise.
+
+**Two decisions were being made inside five skills each.** `cross-sell`, `upsell`,
+`product-replenishment`, `stock-and-price-alerts` and `product-launch` each chose products; nothing
+held the reasoning. `product-recommendation-strategy` is built as a leaf that composes nothing, the
+same shape as `audience-discovery` and for the same reason. `offer-strategy` does the same for
+incentives, and makes the null offer the default rather than the thing nobody considered.
+
+**The contact ceiling every planning skill was planning below had never been set.** F1 to F12 bound
+the corpus and each skill counted only its own messages, so the number itself existed nowhere.
+`consent-verification` — now Consent and Contact Policy — derives it per segment from where this
+store's unsubscribe rate turns against delivered volume, and `campaign-conflict-resolver` arbitrates
+against it. No universal priority hierarchy is hard-coded: the reflex of pausing all automations
+during a promotion trades a store's highest-earning messages for its lowest, and a fixed ranking is
+what makes that look correct.
+
+Nine skills proposed by the brief behind this release were **not** built, because an existing skill
+or rule family already owned the decision — `send-time-optimization` exists under that name,
+`channel-optimization` is channel orchestration, `opportunity-discovery` is the portfolio analyser,
+`content-optimization` owns subject lines. The full reasoning, including what was rejected from the
+external corpus used as a benchmark, is in
+[docs/email-skills-gap-analysis.md](https://github.com/targetbay360/targetbay-agent-skills/blob/main/docs/email-skills-gap-analysis.md).
+
+### Added
+
+- **`email-quality-auditor` 1.0.0** — the pre-send gate. Resolves the audience and states the blast
+  radius before any verdict, runs four stop conditions first, then sweeps frequency, collisions,
+  personalisation, products, offer accuracy, rendering and programme condition. Owns the verdict and
+  none of the reasoning: every dimension is delegated to the skill that owns it. Names every
+  dimension it could not check rather than reporting it as passed.
+- **`deliverability-qa` 1.0.0** — identity, then reputation, then content, stopping at the first
+  failure. Composes `list-hygiene` for the population half of any remedy. Reports authentication
+  fixes with an owner outside the platform, because the records live in the store's DNS. Where no
+  placement signal exists it says placement is unknown and labels its proxies as proxies.
+- **`email-render-qa` 1.0.0** — whether the built message is readable by the whole list: images off,
+  narrow screen, dark mode, assistive technology, links, footer. Weights defects by this store's own
+  client mix. A missing opt-out is a stop, not a defect.
+- **`dynamic-content-personalizer` 1.0.0** — applies P1..P12 to a specific message. Drops an element
+  whose fallback branch would serve most recipients, on the grounds that the fallback is then the
+  message. Delegates item selection rather than choosing products itself.
+- **`offer-strategy` 1.0.0** — tests the null offer first. Derives depth from this store's own
+  response history rather than a round number, treats non-monetary instruments as first-class, and
+  states the cost as displaced full-price sales where margin data does not exist. Never assumes it
+  does.
+- **`product-recommendation-strategy` 1.0.0** — the product counterpart to `audience-discovery`. An
+  evidence ladder from transacted through co-purchase to catalogue-wide popularity, with the rung
+  named per item and the bottom rung never presented as personalised.
+- **`campaign-conflict-resolver` 1.0.0** — allow, delay, suppress for the overlap, or substitute
+  channel. Priority derived from per-contact value or a stated store policy, recorded for reuse. A
+  complete rather than incidental overlap is reported as a portfolio defect and handed to
+  `automation-strategy` instead of being arbitrated every month.
+- **`rules/deliverability-rules.md`** — D1..D10. Diagnostic order, reputation as a shared pool,
+  trends over thresholds, and the limit on what sending data can show.
+- **`knowledge/deliverability-principles.md`** — the three-layer model, what warm-up is actually
+  doing, and why bounces and complaints say different things. Operational detail is linked to the
+  standalone reference skills by absolute URL rather than duplicated.
+- **`capabilities.yaml` 1.3.0** — `email_sms.sending_infrastructure`, flagged UNVERIFIED with what
+  is assumed. No inbox-placement capability was added: seed-list data does not exist, and adding a
+  capability to justify a skill is what this registry's own header forbids.
+
+### Changed
+
+- **`consent-verification` 1.1.0** — now Consent and Contact Policy. Adds the cadence half: delivered
+  contact measured across campaigns and automations, the ceiling derived per segment from where this
+  store's rates turn, a separate and smaller SMS ceiling, a bounded peak allowance with its recovery
+  window, and a recorded class precedence. A separate frequency skill was considered and rejected —
+  permission and cadence are one standing policy, and splitting them puts half of it out of reach of
+  the skill that needs both.
+- **`channel-optimization` 2.1.0** — per-segment assignment derived from consent coverage rather than
+  a tier map, the offset between paired channel touches as an explicit decision, a content brief per
+  channel, and "reach this segment on nothing" as a legitimate assignment. Collisions are handed on
+  rather than resolved here.
+- **`campaign-optimization` 2.2.0** — Learn becomes a step in the loop, with the result dated and
+  what it did not settle recorded. The funnel table names an owning skill per stage, and reach
+  failures split between `deliverability-qa` and `list-hygiene` rather than being one row.
+- **`automation-architect` 2.1.0** — product and offer branching as explicit decision points,
+  delegated to their owners. A journey that hard-codes a discount depth has embedded a decision it
+  does not own, and it goes stale inside the journey. A mid-journey channel change is a branch and
+  must clear R10.
+- **`customer-winback` 2.2.0** — dormancy classes derived from this store's own intervals, engagement
+  and purchase kept as separate axes, the sunset decision handed to `list-hygiene`, and recovery
+  measured on the second purchase. A separate reactivation skill was rejected: it would have owned
+  nothing this does not.
+- **`ab-testing` 2.1.0** — holdout as a first-class design, because no variant comparison can say
+  whether a send earns anything at all. A dimensions table naming the trap specific to each lever,
+  and an explicit refusal to report a directional difference as a finding.
+- **`content-optimization` 2.1.0** — subject and preheader worked as one unit, variants judged on a
+  downstream metric with a guard metric, and message architecture where every block justifies its
+  place. A separate subject-line skill was rejected; this one already owned the decision.
+- **`list-hygiene` 1.1.0** — trend over level, split by receiving domain before any list-wide
+  conclusion, and authentication questions routed up rather than answered with suppression. A
+  separate inbox-placement monitor was rejected: without a placement capability it would have been a
+  skill that cannot run.
+- **`opportunity-discovery` 2.1.0** — deliverability separated from list health as its own lens with
+  its own owner, a contention lens that counts campaigns and automations together, and a fixed
+  routing map so no finding is left without a destination.
+- **`marketing-calendar` 2.0.1** — description only. Seven new skills re-weight the per-plugin IDF,
+  which pushed "plan our marketing for the year" out of the selection check's top three. The fix is
+  the description, not the prompt.
+
+### Tests
+
+- Sixteen eval cases, taking `targetbay-email-sms` from 49 to 65 — seven coverage prompts and nine
+  ecommerce scenarios spread across fashion, beauty, electronics, grocery, home and furniture and
+  subscription stores. Lexical top-1 agreement moves from 52/67 to 67/83.
+
 ## [4.1.0] - 2026-09-19
 
 Seven decisions this plugin did not own, and two capabilities the registry had already observed but
