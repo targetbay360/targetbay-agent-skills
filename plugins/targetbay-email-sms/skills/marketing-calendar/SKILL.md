@@ -1,10 +1,10 @@
 ---
 name: marketing-calendar
-description: Use when the planning horizon is longer than one period — building a quarterly or annual calendar, sequencing major moments against each other, reserving capacity for known peaks, and keeping a rolling plan current as commitments change. Use monthly-marketing-planner for a single period, which this skill composes.
+description: Use when the planning horizon is a year or a quarter rather than a single month — building the annual calendar, sequencing the year's major moments against each other, reserving capacity for known peaks, and keeping that long-horizon plan current as commitments change. Answers "plan our marketing for the year", "build a quarterly calendar" and "what does the next twelve months look like?". Use monthly-marketing-planner for a single period, which this skill composes.
 license: MIT
 metadata:
   targetbay.display_name: Marketing Calendar
-  targetbay.version: "2.0.0"
+  targetbay.version: "2.0.1"
   targetbay.category: planning
   targetbay.requires: email_sms.store_profile, email_sms.order_intelligence, email_sms.product_intelligence, email_sms.customer_intelligence, email_sms.campaign_analytics, email_sms.automation, email_sms.marketing_calendar
   targetbay.composes: monthly-marketing-planner, holiday-marketing, product-launch
