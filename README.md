@@ -157,6 +157,71 @@ yet. That is the quickest way to confirm the install worked.
 Every capability across the four is still unmapped. Each plugin records its own mapping status in its
 `docs/mcp-integration.md`.
 
+## What to ask, and where it goes
+
+You never name a skill. You describe the outcome, and the host picks. This is the short version of the
+routing each plugin documents in its own `skills/README.md`.
+
+| What you ask | What decides it |
+|---|---|
+| *"What should we be working on?"* | [`opportunity-discovery`](plugins/targetbay-email-sms/skills/opportunity-discovery/SKILL.md) |
+| *"Win back our lapsed customers."* | [`customer-winback`](plugins/targetbay-email-sms/skills/customer-winback/SKILL.md) |
+| *"Who should we target for this?"* · *"Which list?"* | [`audience-discovery`](plugins/targetbay-email-sms/skills/audience-discovery/SKILL.md) |
+| *"Plan next month's marketing."* | [`monthly-marketing-planner`](plugins/targetbay-email-sms/skills/monthly-marketing-planner/SKILL.md) |
+| *"Is Diwali worth doing for us?"* | [`holiday-marketing`](plugins/targetbay-email-sms/skills/holiday-marketing/SKILL.md) |
+| *"We've just moved to TargetBay — what should we set up?"* | [`store-onboarding`](plugins/targetbay-email-sms/skills/store-onboarding/SKILL.md) |
+| *"We just signed up — set up everything across all four."* | [`onboarding-blueprint`](plugins/targetbay-onboarding/skills/onboarding-blueprint/SKILL.md) |
+| *"Our widget recommends things people just bought."* | [`personalization-audit`](plugins/targetbay-onboarding/skills/personalization-audit/SKILL.md) |
+| *"Which products need reviews?"* | [`review-coverage`](plugins/targetbay-reviews/skills/review-coverage/SKILL.md) |
+| *"Why did our rating fall?"* | [`rating-diagnosis`](plugins/targetbay-reviews/skills/rating-diagnosis/SKILL.md) |
+| *"Can we double our points earn rate?"* | [`points-economics`](plugins/targetbay-loyalty/skills/points-economics/SKILL.md) |
+| *"Which members are drifting away?"* | [`member-recovery`](plugins/targetbay-loyalty/skills/member-recovery/SKILL.md) |
+
+## Worked examples
+
+Five traces follow one prompt all the way through — which skill was selected and which was passed
+over, what it read, what it decided and why, what needs approval, and what it refused to do. They are
+illustrative: the figures stand in for capability output, not real store data.
+
+| Ask | Trace |
+|---|---|
+| *"Win back our lapsed customers."* | [`customer-winback.md`](plugins/targetbay-email-sms/examples/customer-winback.md) |
+| *"Increase revenue this month."* | [`increase-revenue.md`](plugins/targetbay-email-sms/examples/increase-revenue.md) |
+| *"Plan next month's marketing."* | [`plan-next-month.md`](plugins/targetbay-email-sms/examples/plan-next-month.md) |
+| *"Improve our post-purchase marketing."* | [`automation-strategy.md`](plugins/targetbay-email-sms/examples/automation-strategy.md) |
+| *"Prepare a Diwali campaign."* | [`holiday-drip.md`](plugins/targetbay-email-sms/examples/holiday-drip.md) |
+
+Only `targetbay-email-sms` has traces so far. The other three plugins do not, and inventing them would
+break the rule the traces themselves are written to demonstrate.
+
+### One of them, in short
+
+**You ask:** *"Win back our lapsed customers."*
+
+`customer-winback` runs, composing `audience-discovery`. It passes over `customer-retention` — these
+customers have already lapsed — but raises it as a follow-on, because most of this cohort would never
+have reached win-back had anyone intervened when their purchase interval first lengthened.
+
+It derives "lapsed" from the store's own repeat interval per category, so a customer is late relative
+to *their own* pattern rather than a store-wide number. The lapsed base splits three ways:
+
+| Group | Prior value | Still engaging | Verdict |
+|---|---|---|---|
+| A | High | Opens, no purchases | Three attempts — relevance first, incentive last |
+| B | Moderate | Minimal | One attempt, stop condition set before the first send |
+| C | Low | None, for a long period | **Suppress** |
+
+Then it stops. Creating the campaigns is a `mutation` and needs a preview. Each send is `high_impact`
+and needs approval on its own, with the recipient count. Suppressing Group C is `destructive` and needs
+approval after the count and the prior value being written off are reported.
+
+**And it refuses six things** — mailing the whole lapsed base because it is technically reachable;
+opening with the deepest discount; leaving the attempt count open-ended; re-adding suppressed contacts;
+presenting suppression as a loss-free cleanup; and claiming a recovery rate it cannot evidence.
+
+That last list is the point. [Full trace](plugins/targetbay-email-sms/examples/customer-winback.md) ·
+[how traces are written](plugins/targetbay-email-sms/docs/examples.md)
+
 ## Getting good answers out of these skills
 
 **Ask for the outcome, not the mechanism.** "Win back our lapsed customers" routes better than "build
