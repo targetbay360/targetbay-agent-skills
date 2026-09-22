@@ -5,6 +5,24 @@ All notable changes to TargetBay Onboarding Skills are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this package adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2026-09-22
+
+Packaging only. No skill, rule, capability or schema changed, and no skill version moved.
+
+### Fixed
+
+- **`scripts/install.sh` leaves an installed skill alone unless `--force`.** It copied the whole
+  `skills/` directory over the top on every run, so a local edit to an installed skill was lost
+  without warning. `scripts/install.mjs` has always skipped what is already present.
+- **`scripts/install.sh` rewrites citations only in the skills it wrote.** It swept every `.md` file
+  in the destination, so installing this plugin rewrote the `../../rules/...` citations of any other
+  plugin installed beside it to point into this one.
+- **`scripts/install.mjs` no longer pins citations to a tag that may not exist.** Installing from a
+  clone, whose `VERSION` is ahead of the newest tag, rewrote every citation to a 404. A published
+  package or release tarball still pins to its own tag; a checkout uses the branch.
+- `scripts/install.sh` defaults to `./.claude/skills` rather than `~/.claude/skills`, matching
+  `scripts/install.mjs`, and takes `--global` for the old destination.
+
 ## [0.3.0] - 2026-09-16
 
 ### Changed

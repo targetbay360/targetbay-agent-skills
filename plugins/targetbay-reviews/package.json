@@ -1,6 +1,6 @@
 {
   "name": "@targetbay/reviews-skills",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Agent Skills package teaching AI agents how to build and run a product review and UGC programme on TargetBay Reviews.",
   "keywords": [
     "agent-skills",

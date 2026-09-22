@@ -1,6 +1,6 @@
 {
   "name": "@targetbay/loyalty-skills",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Agent Skills package teaching AI agents how to design, price and run a loyalty and referral programme on TargetBay Loyalty.",
   "keywords": [
     "agent-skills",
