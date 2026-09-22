@@ -20,6 +20,26 @@ which customers to target, what to send, how often, and where to stop and ask yo
 - **A stop before anything reaches a real person** — the blast radius is shown, then the question is
   asked
 
+## Requirements
+
+| You need | Why |
+|---|---|
+| A **TargetBay account** with the product enabled | The skills reason about *your* store — its orders, its catalogue, its sending history. Nothing here ships sample data |
+| That product's **MCP server** connected to your agent host | It supplies the capabilities each skill declares. Contact [support@targetbay.com](mailto:support@targetbay.com) for access |
+| An **agent host that loads Agent Skills** | Claude Code, Cursor, Codex, Gemini CLI, GitHub Copilot, Kimi CLI, and the other clients listed at [agentskills.io](https://agentskills.io/specification) |
+
+> **Mapping status.** Every capability in all four plugins is `mcp_tools: TODO` today — 18 in
+> email-sms, 15 in onboarding, 14 each in loyalty and reviews. Until an MCP is connected, a skill
+> answers **`blocked`** and names the capability it is missing. It plans; it does not execute.
+> Each plugin tracks its own status in `docs/mcp-integration.md`
+> ([email-sms](plugins/targetbay-email-sms/docs/mcp-integration.md) ·
+> [onboarding](plugins/targetbay-onboarding/docs/mcp-integration.md) ·
+> [loyalty](plugins/targetbay-loyalty/docs/mcp-integration.md) ·
+> [reviews](plugins/targetbay-reviews/docs/mcp-integration.md)).
+
+Skills never handle credentials. Authenticating to a TargetBay product is the agent host's and the
+product MCP's responsibility — see [SECURITY.md](SECURITY.md).
+
 ## Install
 
 Add the marketplace once, then install the products you actually use.
@@ -48,8 +68,8 @@ Ask in plain language. No syntax, no skill names:
 > *"Our widget recommends things people just bought."*
 > *"We just signed up — set up everything across email, reviews, loyalty and onsite."*
 
-With no MCP connected, a skill reports itself **`blocked`** and names the capability it is missing.
-That is the correct answer, and the quickest confirmation the skills loaded.
+A `blocked` answer naming a missing capability means the skills loaded and the MCP is not connected
+yet. That is the quickest way to confirm the install worked.
 
 ## The four plugins
 
