@@ -40,7 +40,8 @@ curl -fsSL https://raw.githubusercontent.com/targetbay360/targetbay-agent-skills
 ```
 
 No npm, no plugin system. Writes to `./.claude/skills`, the same default as the npm installer.
-Pass `--global` for `~/.claude/skills`, or a directory of your own.
+Pass `--global` for `~/.claude/skills`, or a directory of your own. A skill already present is left
+alone unless you pass `--force`.
 
 </td></tr>
 <tr><th>manual</th><td>
