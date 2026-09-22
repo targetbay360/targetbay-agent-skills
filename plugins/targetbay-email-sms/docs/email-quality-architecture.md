@@ -76,9 +76,7 @@ than advisory.
 
 Inbox placement. Delivery means the receiving server accepted the message; opens and clicks come only
 from people who found it. No capability in [../capabilities.yaml](../capabilities.yaml) returns
-mailbox-side evidence, and none was invented to make a skill look complete —
-[../../../docs/mcp-capability-gap-analysis.md](../../../docs/mcp-capability-gap-analysis.md) records
-that decision.
+mailbox-side evidence, and none was invented to make a skill look complete.
 
 So [../rules/deliverability-rules.md#D7](../rules/deliverability-rules.md) holds: placement is stated
 as unknown, and what the skills reason from instead is engagement, bounce and complaint movement
@@ -114,4 +112,3 @@ than written and left degraded.
 - [architecture.md](architecture.md) — the package-wide layering, risk model and execution lifecycle
 - [../knowledge/deliverability-principles.md](../knowledge/deliverability-principles.md) — the three-layer model in full
 - [../rules/deliverability-rules.md](../rules/deliverability-rules.md) — D1..D10
-- [../../../docs/email-skills-gap-analysis.md](../../../docs/email-skills-gap-analysis.md) — what was built, merged and rejected

@@ -40,7 +40,7 @@ targetbay-marketing-automation-recipes/
     ├── measurement-recipes.md                  # A/B cycle, KPI summary, event capture
     ├── ai-assisted-recipes.md                  # Approval gate, newsletters, segments, generation
     ├── integration-recipes.md                  # Contact sync, lead capture, webhook primer
-    └── roadmap.md                              # Not built yet, and deliberately not shipped
+    └── not-shipped.md                          # Patterns that were refused, and why
 ```
 
 ## Quick start

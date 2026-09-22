@@ -44,11 +44,8 @@ Ask in plain language: *"Win back our lapsed customers."* · *"Which products ne
 With no MCP connected, a skill reports itself **`blocked`** and names the capability it is missing. That is
 the correct answer, and the quickest confirmation that the skills loaded.
 
-Every capability across the four plugins is still unmapped. The worksheet that closes that gap is
-[docs/mcp-capability-inventory.md](docs/mcp-capability-inventory.md) — one row per capability, filled in
-against the real MCP surface, plus the three answers that decide how far the onboarding pipeline can go.
-[docs/mcp-capability-gap-analysis.md](docs/mcp-capability-gap-analysis.md) narrows that to the shapes the
-email quality layer actually needs, ranked by how many skills each one unblocks.
+Every capability across the four plugins is still unmapped. Each plugin records its own mapping status
+in its `docs/mcp-integration.md`.
 
 ---
 
@@ -107,7 +104,6 @@ No file in this repository makes a network call.
 
 ```
 .claude-plugin/marketplace.json   one entry per plugin
-docs/                             capability inventory and gap analyses, skill priorities
 tests/                            shared validation and golden prompts
 plugins/<name>/                   a product plugin — self-contained
   skills/  rules/  knowledge/  schemas/  docs/  commands/  scripts/

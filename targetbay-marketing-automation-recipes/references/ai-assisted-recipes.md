@@ -180,8 +180,8 @@ than writing the email.
 **Failure modes** — the audience profile is stale and the copy addresses a list that no longer
 exists. Approval fatigue.
 
-**Not verified** — **the important one.** The obvious shape for this pattern creates a
-campaign programmatically, and the platform surface has no campaign-create operation, so they cannot
-run as written. Step 5 selects a campaign built in the interface instead — which means the "fully
+**Not verified** — **the important one.** The obvious shape for this pattern creates a campaign
+programmatically, and the platform surface has no campaign-create operation, so it cannot run as
+written. Step 5 selects a campaign built in the interface instead — which means the "fully
 automated" version does not exist against this surface, and the human is in the loop by construction
 whether or not you wanted them there. Given step 4, that is not a loss.

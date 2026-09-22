@@ -43,7 +43,6 @@ plugins/<name>/                            a product plugin — self-contained
   playbooks/  examples/                    targetbay-email-sms only
   capabilities.yaml  VERSION  CHANGELOG.md  package.json  .claude-plugin/plugin.json
 tests/                                     validate.py, evals/, fixtures/
-docs/mcp-capability-inventory.md           the Phase 0 worksheet — every capability is still unmapped
 targetbay-email-sms-best-practices/        standalone reference skills — NOT plugins,
 targetbay-email-template-design/           not in the marketplace, do not follow the
 targetbay-marketing-automation-recipes/    plugin contract, installed by copying the directory

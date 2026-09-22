@@ -53,11 +53,6 @@ Mapping a capability means: naming the MCP tools or resources that satisfy it, r
 they return, and confirming the access level matches. Until that is done, no skill in this package can
 execute — they can only plan.
 
-The capabilities added in 4.2.0, the one deliberately **not** added, and which unconfirmed shapes block
-which skill are set out in
-[the capability gap analysis](https://github.com/targetbay360/targetbay-agent-skills/blob/main/docs/mcp-capability-gap-analysis.md).
-The headline: contact-level journey membership is the single missing shape that degrades three skills.
-
 ## Authentication
 
 Authentication is the host's concern, not this package's.
@@ -97,7 +92,7 @@ hard frequency caps. Skills plan within these; they do not approximate or bypass
       [../schemas/workflow.schema.json](../schemas/workflow.schema.json)
 - [ ] Confirm whether `email_sms.marketing_calendar` is a real capability or must be assembled from
       campaign and automation reads
-- [ ] Confirm whether campaign creation exists in the MCP surface at all; the inspected node has none,
+- [ ] Confirm whether campaign creation exists in the MCP surface at all; it has not been confirmed,
       and several skills would plan differently if a campaign can only be selected rather than created
 - [ ] Confirm how subscription to `email_sms.event_stream` is configured — through the MCP, or out of band
 - [ ] Confirm whether an event recorded through `email_sms.event_tracking` can trigger a platform

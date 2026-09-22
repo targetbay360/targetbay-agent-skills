@@ -82,7 +82,9 @@ Every recipe here that talks about a segment means a list.
 The campaign resource supports read, list, send and reports. It does not support creation.
 
 This matters more than it sounds. The obvious shape for an automated journey — assemble content,
-create a campaign, send it — cannot be built against this surface.
+create a campaign, send it — cannot be built against this surface, and the failure is quiet: a call
+to an operation that does not exist can return nothing rather than failing loudly, so the workflow
+reports success and no email is sent.
 
 **The working shape:** build the campaign or template once in the interface, and have the recipe
 select it by id and send it. Where content genuinely must vary per recipient, vary it through the
@@ -90,8 +92,8 @@ template's own personalisation rather than by generating a new campaign per pers
 
 Each recipe file states this in its opening lines, and the recipes whose source workflow depended on
 creation carry it in their **Not verified** block. Confirm against TargetBay's own documentation
-before assuming either way — the surface described here is one implementation at
-one moment, and the absence of an operation in it is not proof of absence in the API.
+before assuming either way — the surface described here is one reading at one moment, and the
+absence of an operation from it is not proof of absence in the API.
 
 ### Webhook events
 

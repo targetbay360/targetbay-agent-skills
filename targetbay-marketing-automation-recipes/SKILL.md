@@ -22,12 +22,11 @@ explicitly, and every recipe states what it assumes that has not been verified.
 
 ## The Verified Surface
 
-What follows was established by reading the platform API against the platform API, not from
-product documentation. Treat it as a floor: confirm the real request signatures, field names and
+What follows was established by reading the platform API, not from product documentation. Treat it as a floor: confirm the real request signatures, field names and
 event names in TargetBay's own documentation before shipping.
 
-A naming note. The product is **TargetBay Email & SMS**. The API path
-segment both say `bayengage`, the platform's former name. This skill uses the product name in prose
+A naming note. The product is **TargetBay Email & SMS**. The API path segment says `bayengage`,
+the platform's former name. This skill uses the product name in prose
 and quotes `bayengage` only where it is a literal path or identifier.
 
 **Resources and operations.** Recipes refer to these by name throughout — `contact: upsert`,
@@ -86,7 +85,7 @@ recipe then selects and sends. Each recipe file states the working shape in its 
 | Run an A/B cycle, summarise KPIs, export campaign data | [Measurement Recipes](./references/measurement-recipes.md) |
 | Let a model draft copy, with a human gate before it sends | [AI-Assisted Recipes](./references/ai-assisted-recipes.md) |
 | Sync contacts with a CRM, capture inbound leads, consume webhooks | [Integration Recipes](./references/integration-recipes.md) |
-| See what is not built yet, and what was refused | [Roadmap](./references/roadmap.md) |
+| Understand what was deliberately refused, and why | [Deliberately Not Shipped](./references/not-shipped.md) |
 | Design what the message looks like once the wiring works | [Email Template Design](https://github.com/targetbay360/targetbay-agent-skills/tree/main/targetbay-email-template-design) |
 | Decide which recipes this store should adopt first | [Automation Recipe Selector](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-email-sms/skills/automation-recipe-selector/SKILL.md) |
 
@@ -122,16 +121,16 @@ platform or outside it is decided by
 [Automation Orchestration](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-email-sms/skills/automation-orchestration/SKILL.md);
 this skill covers how to wire it once that is settled.
 
-**Wondering what is not here?**
-[Roadmap](./references/roadmap.md) — the ideas that are not built, what each one needs before it
-could be, and the recipes that were deliberately refused.
+**Wondering why something is not here?**
+[Deliberately Not Shipped](./references/not-shipped.md) — the four patterns that were asked for and
+refused, and the reason for each.
 
 ## What this skill will not do
 
 **No cold outreach.** Nothing here sends marketing email to a contact who did not opt in. Recipes
 that scrape addresses or mail an acquired list are not included, and the reason is recorded in
-[Roadmap](./references/roadmap.md). An ESP's sending reputation is shared across its customers; a
-recipe that damages it damages everyone on the platform.
+[Deliberately Not Shipped](./references/not-shipped.md). An ESP's sending reputation is shared across
+its customers; a recipe that damages it damages everyone on the platform.
 
 **No generated copy reaching a recipient without a human gate.** Any recipe that generates
 customer-facing content carries an approval step, and its failure mode is "send nothing", never

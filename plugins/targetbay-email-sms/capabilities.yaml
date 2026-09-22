@@ -123,7 +123,7 @@ capabilities:
     access: read
     mcp_tools: TODO
     notes: >-
-      Evidenced by an platform surface exposing a signed event subscription covering
+      Evidenced by a signed event subscription on the platform surface, covering
       contact, list, campaign and order activity. See docs/mcp-integration.md. Whether the MCP
       surfaces this stream at all is an open question: a request/response tool surface and a push
       subscription are different shapes. Skills requiring it must degrade to aggregate analytics

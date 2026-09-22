@@ -89,8 +89,8 @@ contacts. Guard: SMS opt-out rate, which is the fastest-moving signal of over-co
 compliance failure and not a bug. The email lands late and the SMS arrives first, making the SMS
 incomprehensible.
 
-**Not verified** — **whether SMS dispatch is exposed on this platform at all.** The inspected
-integration exposes none, and the source workflow used an external gateway. Confirm before building;
+**Not verified** — **whether SMS dispatch is exposed on this platform at all.** The surface read for
+this skill exposes none, and the source workflow used an external gateway. Confirm before building;
 if it is absent, the SMS leg is external and
 [Automation Orchestration](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-email-sms/skills/automation-orchestration/SKILL.md)
 covers what that costs.

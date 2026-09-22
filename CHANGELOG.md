@@ -5,10 +5,40 @@ own changelog under `plugins/<name>/CHANGELOG.md`, and versions independently.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2026-09-22] Internal-only material out of a public repository
+
+This repository is public. A credential and confidentiality review found no secrets and no customer
+data anywhere in the tree or its history. It did find documentation that described platform internals
+and unshipped intent rather than helping a contributor decide anything — which is the standard this
+repository applies to its own content. It is removed.
+
+### Removed
+
+- **`docs/`** — the capability inventory, the two gap analyses and the skill-priorities file. The
+  directory is gone. `validate.py` never required it, so nothing structural depended on it. Mapping
+  status that a reader of a plugin needs stays in that plugin's `docs/mcp-integration.md`.
+- **`targetbay-marketing-automation-recipes/references/roadmap.md`** — replaced by
+  `references/not-shipped.md`. The catalogue of unbuilt ideas and the status legend are gone, along
+  with the framing around them. The four refusals are kept in full: they are a decision on the record,
+  and the reason a pattern is absent is exactly what stops it being asked for again.
+
+### Changed
+
+- `README.md` and `CLAUDE.md` no longer describe a `docs/` directory.
+- `targetbay-marketing-automation-recipes/SKILL.md` routes to the refusals rather than to a roadmap.
+- Three links in `plugins/targetbay-email-sms/` reached the old `docs/` by `../../../` relative path,
+  which hard requirement 7 forbids and `validate.py` does not catch — it checks that a path resolves,
+  not that it stays inside the plugin. Removing the targets closed the violation with them.
+- `targetbay-marketing-automation-recipes` no longer attributes its platform reading to a specific
+  integration, and drops a judgement about third-party tooling that no reader needed. The API surface
+  it documents and the `source workflow` attribution on every timing value are unchanged — the latter
+  is what keeps the skill inside hard requirement 3.
+
 ## [2026-09-19] A third standalone skill, and seven decisions the plugin did not own
 
-A set of requested automation patterns had no route through the skills corpus: webhook-triggered lifecycle journeys, scheduled churn and hygiene sweeps, a human approval
-gate before an AI-written send. A store asking an agent "what should we automate?" got strategy and no
+A set of requested automation patterns had no route through the skills corpus: webhook-triggered
+lifecycle journeys, scheduled churn and hygiene sweeps, a human approval gate before an AI-written
+send. A store asking an agent "what should we automate?" got strategy and no
 path to a running automation.
 
 **The recipes could not go into the plugin.** Hard requirements 1 to 4 in `CONTRIBUTING.md` forbid
@@ -34,7 +64,7 @@ behaviour and had simply never reached `capabilities.yaml`. On the other side, t
 address-scraping workflows are not shipped — they mail people who never opted in, which collides with
 `safety-rules.md#S7` and with the compliance reference this repository already carries, and sending
 reputation on a shared platform is shared. Invoice parsing and attachment routing are out of scope.
-All four refusals are recorded in the library rather than silently omitted.
+All four refusals are recorded in `references/not-shipped.md` rather than silently omitted.
 
 ### Added
 

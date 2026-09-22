@@ -207,7 +207,6 @@ and [template design](https://github.com/targetbay360/targetbay-agent-skills/blo
 reference skills, which the skills here cite rather than restate.
 
 Deliberately **not** covered by this package: acquisition channels outside email and SMS, paid media,
-creative production, pricing strategy, seed-list inbox placement measurement (no capability exists —
-see [../../../docs/mcp-capability-gap-analysis.md](../../../docs/mcp-capability-gap-analysis.md)), and
+creative production, pricing strategy, seed-list inbox placement measurement (no capability exists), and
 anything the TargetBay Email & SMS platform enforces deterministically (consent, suppression, sending
 limits). See [../docs/architecture.md](../docs/architecture.md).

@@ -6,6 +6,32 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). See [docs/versioning.md](docs/versioning.md)
 for how package and per-skill versions relate.
 
+## [4.2.1] - 2026-09-22
+
+Documentation only. No skill, rule, capability or schema changed, and no skill version moved.
+
+### Removed
+
+- **The `Authentication` section of `docs/mcp-integration.md` is now the same text the other three
+  plugins carry** — authentication is the host's concern, no canonical scope list has been inspected,
+  and inventing one would be the error that inventing tool names would be.
+- **A section of the same file describing observed integration patterns.** The two conclusions skills
+  actually depend on survive elsewhere in it: SMS dispatch is unverified in the capability table, and
+  campaign creation is unconfirmed in the TODO list.
+- **Provenance framing in `capabilities.yaml` and two earlier entries in this file.** Two capability
+  `notes` and two changelog paragraphs attributed evidence to a specific integration rather than to
+  the platform surface. The evidence is unchanged; only the attribution is gone.
+- **Links to the repository-level capability and skill gap analyses.** Those documents are no longer in
+  the public repository; mapping status per plugin stays in this plugin's `docs/mcp-integration.md`,
+  which is where a reader of this package can act on it.
+- Three `Known gaps` entries no longer name a scope authority.
+
+### Note
+
+Earlier entries in this file still reference `docs/` paths that the repository no longer carries. They
+are left as written — a changelog records what was true at the time, and rewriting it to hide a filename
+would make it less useful, not more.
+
 ## [4.2.0] - 2026-09-19
 
 The layer between a finished campaign and a real audience, and the intelligence beneath it. Seven
@@ -44,9 +70,7 @@ what makes that look correct.
 Nine skills proposed by the brief behind this release were **not** built, because an existing skill
 or rule family already owned the decision — `send-time-optimization` exists under that name,
 `channel-optimization` is channel orchestration, `opportunity-discovery` is the portfolio analyser,
-`content-optimization` owns subject lines. The full reasoning, including what was rejected from the
-external corpus used as a benchmark, is in
-[docs/email-skills-gap-analysis.md](https://github.com/targetbay360/targetbay-agent-skills/blob/main/docs/email-skills-gap-analysis.md).
+`content-optimization` owns subject lines.
 
 ### Added
 
@@ -148,8 +172,8 @@ only one.
 and list hygiene exercise" and no such skill existed, so the most common follow-up question in the
 corpus dead-ended. `list-hygiene` closes it.
 
-**The same correction, applied to the API.** The campaign resource exposes
-read, list, send and reports — there is no create operation —. That is recorded in `docs/mcp-integration.md` so no skill
+**The same correction, applied to the API.** The campaign resource exposes read, list, send and
+reports — there is no create operation. That is recorded in `docs/mcp-integration.md` so no skill
 plans against an operation nobody has confirmed, and stated in full in the new recipe library, where
 every affected pattern names the workaround.
 
@@ -318,8 +342,6 @@ were at the time; the mapping to the new ones is in this entry.
 - All 24 skill names, versions, capability declarations and composition edges
 - Marketplace name `targetbay`, so the install suffix is the same
 - The six slash command names — only the namespace before the colon changed
-- `docs/mcp-integration.md` still quotes an adjacent repository's `a vendor-prefixed` tool prefix.
-  That is an observation about someone else's code, and renaming it would misreport what was inspected.
 
 ## [2.1.0] - 2026-09-12
 
@@ -496,7 +518,8 @@ needed — all ten new skills declare capabilities that already existed in `capa
 
 ### Known gaps
 
-Unchanged from 1.0.0: no MCP tool mappings, `bayengage.messaging_sms` still unverified, no OAuth scope names, no LLM evaluation harness. *(Evaluation layer added in 1.2.0.)*
+Unchanged from 1.0.0: no MCP tool mappings, `bayengage.messaging_sms` still unverified, no OAuth scope
+names, no LLM evaluation harness. *(Evaluation layer added in 1.2.0.)*
 
 ## [1.0.0] - 2026-09-11
 
