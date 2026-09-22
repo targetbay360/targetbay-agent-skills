@@ -4,8 +4,10 @@
 #   curl -fsSL https://raw.githubusercontent.com/targetbay360/targetbay-agent-skills/main/plugins/targetbay-onboarding/scripts/install.sh | sh
 #   sh scripts/install.sh --global            -> ~/.claude/skills
 #   sh scripts/install.sh /custom/skills/dir  -> that directory
+#   sh scripts/install.sh --force             -> overwrite skills already present
 #
-# Defaults to ./.claude/skills, matching install.mjs.
+# Defaults to ./.claude/skills, and leaves an existing skill alone unless --force,
+# both matching install.mjs.
 #
 # Downloads the latest release tarball for THIS plugin and copies its skills/ into the
 # destination. Releases are tagged <plugin>@<version>, so the lookup filters by prefix
@@ -15,11 +17,17 @@ set -eu
 
 REPO="targetbay360/targetbay-agent-skills"
 PLUGIN="targetbay-onboarding"
-case "${1:-}" in
-  --global) DEST="$HOME/.claude/skills" ;;
-  "")       DEST="./.claude/skills" ;;
-  *)        DEST="$1" ;;
-esac
+FORCE=0
+DEST=""
+for arg in "$@"; do
+  case "$arg" in
+    --force)  FORCE=1 ;;
+    --global) DEST="$HOME/.claude/skills" ;;
+    -*)       echo "unknown option: $arg" >&2; exit 1 ;;
+    *)        DEST="$arg" ;;
+  esac
+done
+[ -n "$DEST" ] || DEST="./.claude/skills"
 
 command -v curl >/dev/null 2>&1 || { echo "curl is required" >&2; exit 1; }
 command -v tar  >/dev/null 2>&1 || { echo "tar is required" >&2; exit 1; }
@@ -48,19 +56,42 @@ if [ -z "$SRC" ]; then
 fi
 
 mkdir -p "$DEST"
-cp -R "$SRC"/. "$DEST"/
 
 # A skill cites ../../rules/, ../../knowledge/ and ../../schemas/ from inside the plugin tree.
 # Flattening skills/ into $DEST puts those targets out of reach, so point them at the released
 # files instead — the same full-URL rule this repository applies to any reference that leaves its
 # own directory. Sibling-skill links (../other-skill/SKILL.md) still resolve and are left alone.
+# Rewriting is scoped to the skill just copied: $DEST may hold skills from another plugin, whose
+# citations resolve against a different plugin directory.
 BLOB="https://github.com/$REPO/blob/$TAG/plugins/$PLUGIN"
-find "$DEST" -name '*.md' -type f -exec sed -i.bak \
-  -e "s#\[\.\./\.\./\([^]]*\)\](\.\./\.\./\([^)]*\))#[\1]($BLOB/\2)#g" \
-  -e "s#](\.\./\.\./\([^)]*\))#]($BLOB/\1)#g" {} +
-find "$DEST" -name '*.md.bak' -type f -delete
 
-echo "$(find "$DEST" -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d ' ') skills installed into $DEST"
+WRITTEN=0
+SKIPPED=0
+
+for skill in "$SRC"/*/; do
+  name=$(basename "$skill")
+
+  if [ "$FORCE" -eq 0 ] && [ -d "$DEST/$name" ]; then
+    SKIPPED=$((SKIPPED + 1))
+    continue
+  fi
+
+  rm -rf "$DEST/$name"
+  cp -R "$skill" "$DEST/$name"
+
+  find "$DEST/$name" -name '*.md' -type f -exec sed -i.bak \
+    -e "s#\[\.\./\.\./\([^]]*\)\](\.\./\.\./\([^)]*\))#[\1]($BLOB/\2)#g" \
+    -e "s#](\.\./\.\./\([^)]*\))#]($BLOB/\1)#g" {} +
+  find "$DEST/$name" -name '*.md.bak' -type f -delete
+
+  WRITTEN=$((WRITTEN + 1))
+done
+
+echo "$WRITTEN skills installed into $DEST"
+
+if [ "$SKIPPED" -gt 0 ]; then
+  echo "$SKIPPED already present, left alone — rerun with --force to overwrite"
+fi
 
 # Parity with install.mjs, which installs slash commands alongside a .claude tree.
 CMD_SRC=$(find "$TMP" -type d -path "*/plugins/$PLUGIN/commands" | head -n 1)
