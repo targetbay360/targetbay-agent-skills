@@ -5,7 +5,7 @@ what this store actually is, what to set up first across all three products, and
 capture is part of that: the placements, offers, search and tracking a store starts with live here rather
 than in a product plugin, because no product owns them.
 
-[![version](https://img.shields.io/badge/version-0.3.0-blue)](VERSION)
+[![version](https://img.shields.io/badge/version-0.3.1-blue)](VERSION)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![agent skills](https://img.shields.io/badge/Agent%20Skills-conformant-7c3aed)](https://agentskills.io/specification)
 

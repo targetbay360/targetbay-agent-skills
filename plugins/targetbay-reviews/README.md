@@ -3,7 +3,7 @@
 A vendor-neutral AI Agent Skills package that teaches agents **how to build and run a product review and
 UGC programme** using TargetBay Reviews.
 
-[![version](https://img.shields.io/badge/version-0.2.0-blue)](VERSION)
+[![version](https://img.shields.io/badge/version-0.2.1-blue)](VERSION)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![agent skills](https://img.shields.io/badge/Agent%20Skills-conformant-7c3aed)](https://agentskills.io/specification)
 
