@@ -3,7 +3,7 @@
 A vendor-neutral AI Agent Skills package that teaches agents **how to accomplish email and SMS marketing
 outcomes** using TargetBay Email & SMS.
 
-[![version](https://img.shields.io/badge/version-4.0.0-blue)](VERSION)
+[![version](https://img.shields.io/badge/version-4.2.1-blue)](VERSION)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![agent skills](https://img.shields.io/badge/Agent%20Skills-conformant-7c3aed)](https://agentskills.io/specification)
 [![validate](https://github.com/targetbay360/targetbay-agent-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/targetbay360/targetbay-agent-skills/actions/workflows/validate.yml)
@@ -197,9 +197,8 @@ The package is defined as much by its constraints as its content. Every skill:
 
 ## Status
 
-**4.0.0 — foundation, published.** Contracts established, reasoning real, workflows not yet hardened
-against a live TargetBay Email & SMS MCP. Every objective area named in the product brief now has a skill, and the
-package now installs four ways.
+**4.2.1 — foundation, published.** Contracts established, reasoning real, workflows not yet hardened
+against a live TargetBay Email & SMS MCP. Every objective area named in the product brief has a skill.
 
 **No capability is mapped to a real MCP tool yet.** Every entry in
 [capabilities.yaml](capabilities.yaml) carries `mcp_tools: TODO`. Skills can plan; they cannot execute
