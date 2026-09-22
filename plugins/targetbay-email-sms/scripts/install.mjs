@@ -58,10 +58,19 @@ async function exists(path) {
 // A skill is authored inside the plugin tree, so it cites `../../rules/...`, `../../knowledge/...`
 // and the schemas by relative path. Installing flattens `skills/` into the destination, which puts
 // those targets out of reach — the citation would resolve to nothing on disk. Rewrite them to the
-// full URL for the installed version, which is what this repository requires of any reference that
-// leaves its own directory. Links to sibling skills (`../other-skill/SKILL.md`) still resolve after
-// flattening and are left alone.
-const REPO_BLOB = `https://github.com/targetbay360/targetbay-agent-skills/blob/${PLUGIN}@${VERSION}/plugins/${PLUGIN}`;
+// full URL, which is what this repository requires of any reference that leaves its own directory.
+// Links to sibling skills (`../other-skill/SKILL.md`) still resolve after flattening and are left
+// alone.
+//
+// Prefer the release tag, so a citation matches the skills that were installed. A release is cut by
+// pushing that tag, so it exists for every published package and for a release tarball. It does not
+// exist in a clone whose VERSION has moved past the newest tag, and pinning to it there rewrites
+// every citation to a 404 — so a checkout falls back to the branch.
+const REPO = "https://github.com/targetbay360/targetbay-agent-skills";
+const REF = (await exists(resolve(PACKAGE_ROOT, "..", "..", ".git")))
+  ? "main"
+  : `${PLUGIN}@${VERSION}`;
+const REPO_BLOB = `${REPO}/blob/${REF}/plugins/${PLUGIN}`;
 
 async function rewriteEscapingLinks(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
