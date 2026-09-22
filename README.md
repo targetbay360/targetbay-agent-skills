@@ -42,7 +42,9 @@ product MCP's responsibility — see [SECURITY.md](SECURITY.md).
 
 ## Install
 
-Add the marketplace once, then install the products you actually use.
+### Claude Code
+
+Add the marketplace once, then install the products you use.
 
 ```
 /plugin marketplace add targetbay360/targetbay-agent-skills
@@ -50,13 +52,85 @@ Add the marketplace once, then install the products you actually use.
 
 ```
 /plugin install targetbay-email-sms@targetbay
-/plugin install targetbay-reviews@targetbay
-/plugin install targetbay-loyalty@targetbay
 /plugin install targetbay-onboarding@targetbay
+/plugin install targetbay-loyalty@targetbay
+/plugin install targetbay-reviews@targetbay
 ```
 
-Each plugin also publishes to npm for hosts without a plugin system —
-`npx @targetbay/reviews-skills --global`, and so on. See the plugin's own README.
+This is the fullest install. It is the only one that also brings the slash commands, and the only one
+where each plugin's `rules/` and `knowledge/` land next to its skills, so a skill's rule citations
+resolve on disk.
+
+### Cursor · Codex · Gemini CLI · Copilot · Kimi · anything else
+
+Any host that reads the [Agent Skills](https://agentskills.io/specification) format loads these
+unmodified. Two routes, both working today.
+
+**GitHub CLI** — one command, knows where your host looks. Needs `gh` 2.90 or later.
+
+```bash
+gh skill install targetbay360/targetbay-agent-skills --all --pin main   --agent kimi-cli --scope user
+```
+
+Swap `--agent` for yours: `claude-code`, `github-copilot`, `cursor`, `codex`, `gemini-cli`,
+`kimi-cli`, `cline`, `continue`, `goose`, `opencode`, `roo`, `warp`, `universal`, and around forty
+more — `gh skill install --help` lists them. `--scope project` installs into the current
+repository instead of your home directory, and `--dir <dir>` overrides both. Drop `--all` to pick
+skills one at a time, and keep `--pin main` — without it `gh` resolves the newest release tag, which
+today is behind the current skills.
+
+**Clone and copy** — Node 18 or later, no dependencies, works for a host `gh` has never heard of.
+
+```bash
+git clone https://github.com/targetbay360/targetbay-agent-skills.git
+node targetbay-agent-skills/plugins/targetbay-email-sms/scripts/install.mjs --dest ~/.kimi/skills
+```
+
+Flags: `--global` (writes to `~/.claude/skills`), `--dest <dir>`, `--force`, `--help`. Prefer this
+route when rule citations matter — it rewrites each skill's relative links to GitHub URLs on the way
+out, which `gh skill install` does not.
+
+#### Where your host looks
+
+| Host | Skills directory |
+|---|---|
+| Claude Code | `~/.claude/skills` |
+| Cursor | `~/.cursor/skills` · `~/.agents/skills` |
+| Codex | `~/.agents/skills` |
+| Gemini CLI | `~/.gemini/skills` |
+| GitHub Copilot | `.github/skills` (project scope) |
+| Kimi CLI | `~/.kimi/skills` · `~/.claude/skills` · `~/.config/agents/skills` · `~/.agents/skills` |
+| Cline · Amp · OpenCode · Warp · Antigravity | `~/.agents/skills` |
+
+`~/.agents/skills` is shared by most of them, so one install there can serve several hosts at once.
+
+#### Kimi CLI
+
+Kimi reads any of the four paths above, plus the project-level `.kimi/`, `.claude/`, `.codex/` and
+`.agents/skills`. For a directory it does not scan, add it to `extra_skill_dirs` in your Kimi config:
+
+```toml
+extra_skill_dirs = ["~/targetbay-agent-skills/plugins/targetbay-email-sms/skills"]
+```
+
+or pass `--skills-dir` at launch. Kimi surfaces each skill as a slash command, so
+`/skill:audience-discovery` loads one directly instead of waiting for the model to reach for it.
+
+### The reference skills
+
+The three skills at the repository root are not in the marketplace. Copy the directory you want into
+your host's skills path — they have no dependencies.
+
+<details>
+<summary>npm and curl</summary>
+
+Each plugin has an npm package name reserved (`@targetbay/email-sms-skills`,
+`@targetbay/reviews-skills`, `@targetbay/loyalty-skills`, `@targetbay/onboarding-skills`) and a
+`scripts/install.sh` that pulls the latest tagged release. Neither is ready to recommend yet: nothing
+is published to npm, and only `targetbay-email-sms` has a release, which is behind the current
+skills. Use the two routes above until that changes.
+
+</details>
 
 ## Your first five minutes
 
