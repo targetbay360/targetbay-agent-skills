@@ -458,6 +458,14 @@ for pl in plugins:
         declared = json.loads(mf.read_text()).get("version")
         check("versioning", declared == version,
               f"{pl.name}: {manifest} is {declared}, VERSION is {version}")
+    # The README badge is the version a visitor reads first, and it is the one field carrying the
+    # version that nothing else asserts — so it drifts silently, and has.
+    readme = pl.path / "README.md"
+    if readme.is_file():
+        badge = re.search(r"img\.shields\.io/badge/version-([^-\s)]+)-", readme.read_text())
+        if badge:
+            check("versioning", badge.group(1) == version,
+                  f"{pl.name}: README.md version badge is {badge.group(1)}, VERSION is {version}")
     for name, s in pl.skills.items():
         v = meta(s["fm"], "version")
         check("versioning", bool(SEMVER.match(v)), f"{pl.name}/{name} version '{v}' is not semver")
