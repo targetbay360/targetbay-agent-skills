@@ -39,7 +39,8 @@ npx @targetbay/email-sms-skills --global
 curl -fsSL https://raw.githubusercontent.com/targetbay360/targetbay-agent-skills/main/plugins/targetbay-email-sms/scripts/install.sh | sh
 ```
 
-No npm, no plugin system. Takes an optional destination argument.
+No npm, no plugin system. Writes to `./.claude/skills`, the same default as the npm installer.
+Pass `--global` for `~/.claude/skills`, or a directory of your own.
 
 </td></tr>
 <tr><th>manual</th><td>
