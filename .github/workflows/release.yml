@@ -14,6 +14,10 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    # `secrets` is not a valid context in a step-level `if:`, so the opt-in publish flag is
+    # surfaced as a job-level env var and the steps below test that instead.
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -64,7 +68,7 @@ jobs:
       # validates, still builds the tarball and still cuts the GitHub release — which is what
       # scripts/install.sh downloads — instead of failing the run on an absent credential.
       - name: Publish to npmjs
-        if: ${{ secrets.NPM_TOKEN != '' }}
+        if: ${{ env.NPM_TOKEN != '' }}
         working-directory: plugins/${{ steps.tag.outputs.plugin }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -76,7 +80,7 @@ jobs:
         #
         # Before switching this on, confirm the scope: GitHub Packages requires the package scope to
         # match the repository owner, and these packages are `@targetbay/*` under `targetbay360`.
-        if: ${{ secrets.NPM_TOKEN != '' }}
+        if: ${{ env.NPM_TOKEN != '' }}
         working-directory: plugins/${{ steps.tag.outputs.plugin }}
         env:
           NODE_AUTH_TOKEN: ${{ github.token }}
