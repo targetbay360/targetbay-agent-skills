@@ -157,6 +157,45 @@ yet. That is the quickest way to confirm the install worked.
 Every capability across the four is still unmapped. Each plugin records its own mapping status in its
 `docs/mcp-integration.md`.
 
+## Getting good answers out of these skills
+
+**Ask for the outcome, not the mechanism.** "Win back our lapsed customers" routes better than "build
+a three-email flow", because the first leaves the skill free to tell you the flow is not the problem.
+When you cannot name the problem at all, that is what
+[`opportunity-discovery`](plugins/targetbay-email-sms/skills/opportunity-discovery/SKILL.md) is for.
+
+**Diagnose before you build.** Each product has an entry point that only looks:
+`/targetbay-email-sms:what-now`, `/targetbay-onboarding:store-context`,
+`/targetbay-reviews:review-audit`, `/targetbay-loyalty:program-health`. Skills are classified across
+seven risk levels from `read_only` to `destructive` (safety rule S1); starting at the bottom costs one
+extra question and saves a plan built on the wrong premise.
+
+**Answer the questions it asks you.** An onboarding intake exists because some things cannot be
+derived — and the answers are stored back onto the store record, so every later skill reads them as
+constraints instead of asking again.
+
+**Treat `blocked` and `partial` as answers.** A skill that names the capability it is missing has told
+you something true about your setup (global rule G15). A skill that returns a confident number it could
+not source would be the failure.
+
+**Read the refusals.** [`docs/examples.md`](plugins/targetbay-email-sms/docs/examples.md) calls "what
+the skill refused to do" the most informative part of a trace, and it is right. A skill declining to
+target on "high income" because the attribute is inferred rather than verified (audience rule A9) is
+working exactly as designed.
+
+**Approve the action, not the objective.** "Send the campaign" is not an approval request; "send to
+41,206 contacts" is — blast radius first, then the question (safety rules S2 and S4). Approval is
+scoped and expires (S3), and is never batched across irreversible steps (S9). An agent that asks you
+to approve a whole quarter in one go is not following this package.
+
+**Tighten rules for your store; never loosen the safety ones.** Precedence runs safety → global →
+domain → playbook → store context. A [playbook](plugins/targetbay-email-sms/playbooks/README.md) or a
+store preference may make any rule stricter. Neither can make a safety rule looser.
+
+**Install the reference skills when an answer needs the operational layer.** The plugins decide what a
+store should do and cite the detail rather than restating it — DNS authentication, A2P 10DLC, dark-mode
+rendering, the wiring of a specific journey. That detail lives in the three reference skills above.
+
 ---
 
 ## How it works
