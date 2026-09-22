@@ -60,7 +60,11 @@ jobs:
             --title "${{ steps.tag.outputs.plugin }} ${{ steps.tag.outputs.version }}" \
             --generate-notes
 
+      # Publishing is opt-in: set the NPM_TOKEN secret to switch it on. Until then a tag still
+      # validates, still builds the tarball and still cuts the GitHub release — which is what
+      # scripts/install.sh downloads — instead of failing the run on an absent credential.
       - name: Publish to npmjs
+        if: ${{ secrets.NPM_TOKEN != '' }}
         working-directory: plugins/${{ steps.tag.outputs.plugin }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -69,6 +73,10 @@ jobs:
       - name: Publish to GitHub Packages
         # Note: GitHub Packages requires a token even to READ a public package,
         # so READMEs point customers at npmjs. This is a secondary mirror.
+        #
+        # Before switching this on, confirm the scope: GitHub Packages requires the package scope to
+        # match the repository owner, and these packages are `@targetbay/*` under `targetbay360`.
+        if: ${{ secrets.NPM_TOKEN != '' }}
         working-directory: plugins/${{ steps.tag.outputs.plugin }}
         env:
           NODE_AUTH_TOKEN: ${{ github.token }}
