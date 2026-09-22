@@ -2,7 +2,10 @@
 # Install TargetBay Onboarding Skills without npm.
 #
 #   curl -fsSL https://raw.githubusercontent.com/targetbay360/targetbay-agent-skills/main/plugins/targetbay-onboarding/scripts/install.sh | sh
-#   sh scripts/install.sh /custom/skills/dir
+#   sh scripts/install.sh --global            -> ~/.claude/skills
+#   sh scripts/install.sh /custom/skills/dir  -> that directory
+#
+# Defaults to ./.claude/skills, matching install.mjs.
 #
 # Downloads the latest release tarball for THIS plugin and copies its skills/ into the
 # destination. Releases are tagged <plugin>@<version>, so the lookup filters by prefix
@@ -12,7 +15,11 @@ set -eu
 
 REPO="targetbay360/targetbay-agent-skills"
 PLUGIN="targetbay-onboarding"
-DEST="${1:-$HOME/.claude/skills}"
+case "${1:-}" in
+  --global) DEST="$HOME/.claude/skills" ;;
+  "")       DEST="./.claude/skills" ;;
+  *)        DEST="$1" ;;
+esac
 
 command -v curl >/dev/null 2>&1 || { echo "curl is required" >&2; exit 1; }
 command -v tar  >/dev/null 2>&1 || { echo "tar is required" >&2; exit 1; }
