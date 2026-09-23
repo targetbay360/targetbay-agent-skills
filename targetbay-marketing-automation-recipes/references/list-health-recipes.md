@@ -23,14 +23,14 @@ The decision about **who leaves the sending population and when** is not a wirin
 compare against — a single snapshot tells you almost nothing; the trend is the signal.
 
 **Steps**
-1. Read the contact base — `contact: list`, paged.
-2. Read recent campaign results — `campaign: list`, then `campaign: getReports` per campaign.
+1. Read the contact base — `email_sms.customer_intelligence`, paged.
+2. Read recent campaign results — `email_sms.campaign_management`, then `email_sms.campaign_analytics` per campaign.
 3. Compute the shape of the list: how it is growing, what share has never engaged, where bounces and
    complaints are concentrated, which acquisition sources produce which quality.
 4. **Compare against the previous run.** Report movement, not levels.
 5. Flag anything moving in the wrong direction against a threshold derived from this store's own
    variance — never a round number borrowed from elsewhere.
-6. Send the report to the team — `campaign: send` to an internal list, or a message to a team channel.
+6. Send the report to the team — `email_sms.messaging_email` to an internal list, or a message to a team channel.
 7. Store the run so the next one has something to compare against.
 
 
@@ -65,12 +65,12 @@ itself** — it reads the platform's verdict and decides the programme's respons
 1. Receive and verify the event.
 2. Read the platform's classification. A permanent failure and a temporary one get different
    responses; treating them alike either keeps mailing a dead address or discards a good one.
-3. Read the contact — `contact: get`.
-4. Permanent failure: update the contact's state — `contact: update` — and remove from active lists —
-   `list: removeContact`.
+3. Read the contact — `email_sms.customer_intelligence`.
+4. Permanent failure: update the contact's state — a contact write, which has no registered capability yet (see [Capabilities](./how-to-read-a-recipe.md#capabilities)) — and remove from active lists —
+   `email_sms.segmentation`.
 5. Repeated temporary failures for the same address: treat as permanent once the count derived from
    the store's own pattern is reached.
-6. Record the outcome — `event: track`.
+6. Record the outcome — `email_sms.event_tracking`.
 7. Separately, on a schedule, compute the bounce and complaint rate and alert if it moves beyond the
    store's own recent variance.
 
@@ -110,12 +110,12 @@ capture mechanics are specified in
 1. Receive the submission. Validate the address shape before anything else.
 2. Generate a single-use code with an expiry.
 3. Store it against the submitted address, pending.
-4. Send the verification message — `campaign: send`.
+4. Send the verification message — `email_sms.messaging_email`.
 5. Wait for the confirmation form.
 6. Check the code: correct, unexpired, unused. Wrong code returns to the form with a bounded number
    of retries; expired means start again.
-7. **Only on success**, create the contact — `contact: upsert` — and add to the list —
-   `list: addContact`.
+7. **Only on success**, create the contact — a contact write, which has no registered capability yet (see [Capabilities](./how-to-read-a-recipe.md#capabilities)) — and add to the list —
+   `email_sms.segmentation`.
 8. Record the verification, with its timestamp, as the consent evidence.
 9. Expire and discard pending records that were never confirmed.
 

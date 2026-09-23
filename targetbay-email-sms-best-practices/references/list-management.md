@@ -51,7 +51,7 @@ async function sendMarketingEmail(to: string, message: Message): Promise<SendRes
     return { ok: false, reason: 'no_consent' };
   }
 
-  // sendEmail() is your own wrapper around the sending platform's API.
+  // sendEmail() is your own wrapper — with TargetBay, the MCP's send capability.
   const id = await sendEmail(to, message);
   return { ok: true, id };
 }

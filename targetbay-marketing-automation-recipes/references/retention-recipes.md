@@ -24,14 +24,14 @@ retention campaign that offers something other than a discount. Agreement on wha
 this store, derived from its own repeat intervals rather than a round number of days.
 
 **Steps**
-1. Read the contact base — `contact: list`, paged.
+1. Read the contact base — `email_sms.customer_intelligence`, paged.
 2. Score each contact against **their own** purchase interval, not a store-wide one. A customer who
    buys quarterly is not at risk after five weeks; a customer who buys weekly is.
 3. Filter to the at-risk set.
 4. Apply the already-messaged guard: drop anyone this recipe touched inside the window.
 5. Check suppression, consent and the frequency budget.
-6. Send — `campaign: send`.
-7. Record the intervention and its date — `event: track`.
+6. Send — `email_sms.messaging_email`.
+7. Record the intervention and its date — `email_sms.event_tracking`.
 8. Alert the team with the day's counts.
 
 
@@ -68,14 +68,14 @@ building, about what happens to the people who do not respond** — if the answe
 them", this recipe makes deliverability worse rather than better.
 
 **Steps**
-1. Read the contact base — `contact: list`, paged.
+1. Read the contact base — `email_sms.customer_intelligence`, paged.
 2. Identify contacts with no engagement across a window derived from the store's own campaign
    cadence. A store that mails monthly needs a longer window than one that mails daily.
 3. Exclude the recently acquired, who have not had a chance to engage.
 4. Apply the already-messaged guard.
 5. Check suppression and consent.
-6. Send — `campaign: send`.
-7. Record the attempt — `event: track`.
+6. Send — `email_sms.messaging_email`.
+7. Record the attempt — `email_sms.event_tracking`.
 8. **Mark non-responders for the sunset path.** This is the step that makes the recipe worth running.
 
 
@@ -111,12 +111,12 @@ kept it in a spreadsheet, and the record is more important than the generation l
 offer set with margin bounds.
 
 **Steps**
-1. Read the lapsed set — `contact: list`, paged, or from a maintained list.
+1. Read the lapsed set — `email_sms.customer_intelligence`, paged, or from a maintained list.
 2. Filter to the eligible: lapsed beyond the store's own repeat interval, **and not already offered**.
 3. If nothing is eligible, log that and stop. A quiet day is a result, not a failure.
 4. For each eligible contact, select an offer from the approved set within margin bounds.
 5. Check suppression, consent and the frequency budget.
-6. Send — `campaign: send`.
+6. Send — `email_sms.messaging_email`.
 7. **Record the offer against the contact before moving on** — this is what step 2 reads tomorrow.
 8. Log the run, including the contacts found ineligible and why.
 

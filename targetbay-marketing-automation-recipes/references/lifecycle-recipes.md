@@ -32,12 +32,12 @@ capture.
 1. Receive and verify the event. Reject unsigned.
 2. Filter: is this a real signup, or a contact created by an import or an order? An import that
    creates thousands of contacts will fire thousands of welcomes.
-3. Read the contact to get the source field — `contact: get`.
+3. Read the contact to get the source field — `email_sms.customer_intelligence`.
 4. Branch on source. Unknown or missing source takes the default branch; it does not stop the
    journey.
-5. Select the campaign for that branch — `campaign: get`.
-6. Check suppression and consent, then send — `campaign: send`.
-7. Record the send against the contact — `event: track`.
+5. Select the campaign for that branch — `email_sms.campaign_management`.
+6. Check suppression and consent, then send — `email_sms.messaging_email`.
+7. Record the send against the contact — `email_sms.event_tracking`.
 
 
 **Guardrails** — dedupe on contact id plus journey name, so a redelivered `contact.created` does not
@@ -70,12 +70,12 @@ or requires the extra read at step 3. The recipe assumes the read, which is safe
 2. Wait. The source workflow used one day.
 3. Check the exit condition and suppression. If the contact has purchased, exit — do not keep
    courting someone who already converted.
-4. Send the first drip message — `campaign: send`.
+4. Send the first drip message — `email_sms.messaging_email`.
 5. Wait. The source workflow used three more days.
-6. Re-check exit and suppression. Send the second — `campaign: send`.
+6. Re-check exit and suppression. Send the second — `email_sms.messaging_email`.
 7. Wait. The source workflow used four more days.
-8. Re-check exit and suppression. Send the third — `campaign: send`.
-9. Record completion — `event: track`.
+8. Re-check exit and suppression. Send the third — `email_sms.messaging_email`.
+9. Record completion — `email_sms.event_tracking`.
 
 
 **Guardrails** — **the exit condition is checked before every send, not only at entry** — the most
@@ -109,13 +109,13 @@ restored-cart link that actually restores the cart. Two pre-built campaigns.
 2. Filter to abandonment rather than completed purchase. Getting this filter wrong mails people who
    already bought, which is the single worst outcome in this document.
 3. Wait. The source workflow used one hour.
-4. Read the contact — `contact: get`. Check suppression, consent and the frequency budget.
+4. Read the contact — `email_sms.customer_intelligence`. Check suppression, consent and the frequency budget.
 5. Check the cart is still purchasable.
-6. Send the first reminder — `campaign: send`.
+6. Send the first reminder — `email_sms.messaging_email`.
 7. Wait. The source workflow used a further twenty-four hours.
 8. Re-check: purchased? cart cleared? suppressed? If any, exit.
-9. Send the second reminder — `campaign: send`.
-10. Record the recovery attempt — `event: track`.
+9. Send the second reminder — `email_sms.messaging_email`.
+10. Record the recovery attempt — `email_sms.event_tracking`.
 
 
 **Guardrails** — exit on purchase, checked at step 8 and not only at entry. Dedupe on cart identifier
@@ -132,7 +132,7 @@ out during the wait.
 
 **Not verified** — whether cart abandonment is distinguishable from order creation on the event
 payload alone, or needs a store-side signal. If the latter, this is a store-pushed trigger and needs
-`event: track` plus an orchestrator.
+`email_sms.event_tracking` plus an orchestrator.
 
 ---
 
@@ -149,10 +149,10 @@ owns the receipt — two systems both sending one is worse than either.
 **Steps**
 1. Receive and verify the event.
 2. Filter to confirmed orders only.
-3. Read the contact — `contact: get`.
+3. Read the contact — `email_sms.customer_intelligence`.
 4. Assemble the order detail for personalisation.
-5. Send — `campaign: send`.
-6. Record — `event: track`.
+5. Send — `email_sms.messaging_email`.
+6. Record — `email_sms.event_tracking`.
 
 
 **Guardrails** — dedupe on order id; a redelivered event must not send a second receipt. **Consent
@@ -187,10 +187,10 @@ built correctly, and gating on order date instead is the thing it exists to avoi
 2. Filter to the delivered transition specifically, not any update.
 3. Wait. The source workflow used three days — long enough to have used the product, short enough to
    still remember buying it.
-4. Read the contact — `contact: get`. Check suppression and the frequency budget.
+4. Read the contact — `email_sms.customer_intelligence`. Check suppression and the frequency budget.
 5. Check no review already exists for this order.
-6. Send — `campaign: send`.
-7. Record — `event: track`.
+6. Send — `email_sms.messaging_email`.
+7. Record — `email_sms.event_tracking`.
 
 
 **Guardrails** — dedupe on order id. Do not ask twice for the same order. Do not ask a customer whose
@@ -226,10 +226,10 @@ worse than silence.
 2. Evaluate the VIP definition against the updated contact.
 3. **Compare against previous state.** Only a *crossing* fires the journey; a contact who was already
    VIP and changed their phone number must not be congratulated again.
-4. Read the contact — `contact: get`.
-5. Add to the VIP list — `list: addContact`.
-6. Check suppression, then send — `campaign: send`.
-7. Record the crossing — `event: track`.
+4. Read the contact — `email_sms.customer_intelligence`.
+5. Add to the VIP list — `email_sms.segmentation`.
+6. Check suppression, then send — `email_sms.messaging_email`.
+7. Record the crossing — `email_sms.event_tracking`.
 
 
 **Guardrails** — **the crossing check at step 3 is the whole recipe.** Without it, every profile

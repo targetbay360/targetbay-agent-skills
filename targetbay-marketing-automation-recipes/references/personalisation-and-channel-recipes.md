@@ -24,14 +24,14 @@ whose personalisation carries the offer.
 
 **Steps**
 1. Receive the trigger; filter to contacts with enough history to be worth differentiating.
-2. Read the contact and their order history — `contact: get`.
+2. Read the contact and their order history — `email_sms.customer_intelligence`.
 3. **Select** an offer from the approved set. Selection, never generation: the model or the rule
    picks from a fixed list and cannot invent a discount.
 4. Check the offer against the margin bound for those products. Out of bounds means no offer, not a
    clamped one.
 5. Check suppression, consent and the frequency budget.
-6. Send the campaign for the selected offer — `campaign: send`.
-7. Record which offer went to whom — `event: track`.
+6. Send the campaign for the selected offer — `email_sms.messaging_email`.
+7. Record which offer went to whom — `email_sms.event_tracking`.
 
 
 **Guardrails** — **selection from an approved set, never generation.** An unbounded per-person offer
@@ -68,12 +68,12 @@ permission to text it. A short SMS body that stands alone — the SMS is not a s
 **Steps**
 1. Branch on whether the contact has a phone number **and** SMS consent. No consent, no branch — the
    email-only path is the complete recipe for them, not a degraded one.
-2. Check suppression and consent for email. Send — `campaign: send`.
+2. Check suppression and consent for email. Send — `email_sms.messaging_email`.
 3. Wait. The source workflow used five minutes.
 4. Re-check: did they act on the email? If so, stop. The SMS exists to catch people who did not.
 5. Check SMS consent again, and the recipient's local time against quiet hours.
-6. Send the SMS.
-7. Record the multi-channel touch — `event: track`.
+6. Send the SMS — `email_sms.messaging_sms`.
+7. Record the multi-channel touch — `email_sms.event_tracking`.
 
 
 **Guardrails** — the two sends spend from **one** frequency budget, not two. Quiet hours are
@@ -89,11 +89,9 @@ contacts. Guard: SMS opt-out rate, which is the fastest-moving signal of over-co
 compliance failure and not a bug. The email lands late and the SMS arrives first, making the SMS
 incomprehensible.
 
-**Not verified** — **whether SMS dispatch is exposed on this platform at all.** The surface read for
-this skill exposes none, and the source workflow used an external gateway. Confirm before building;
-if it is absent, the SMS leg is external and
-[Automation Orchestration](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-email-sms/skills/automation-orchestration/SKILL.md)
-covers what that costs.
+**Not verified** — **whether the MCP exposes SMS dispatch at all.** `email_sms.messaging_sms` is
+declared but unconfirmed. Confirm before building; if it is absent, this recipe degrades to
+email-only rather than sending SMS by another route.
 
 ---
 
@@ -109,15 +107,15 @@ campaign reports. Two follow-up paths with genuinely different content — branc
 messages is complexity with no payoff.
 
 **Steps**
-1. Capture the contact — `contact: upsert`.
-2. Add to the nurture list — `list: addContact`.
-3. Check suppression, then send the first message — `campaign: send`.
+1. Capture the contact — a contact write, which has no registered capability yet (see [Capabilities](./how-to-read-a-recipe.md#capabilities)).
+2. Add to the nurture list — `email_sms.segmentation`.
+3. Check suppression, then send the first message — `email_sms.messaging_email`.
 4. Wait. The source workflow used twenty-four hours.
 5. Determine engagement: a `campaign.clicked` event for this contact, or a report read.
 6. **Branch.** Engaged takes the interested path. Not engaged takes a *different* message — not the
    same one again, and not a more insistent version of it.
-7. Re-check suppression and the budget. Send — `campaign: send`.
-8. Record the branch taken — `event: track`.
+7. Re-check suppression and the budget. Send — `email_sms.messaging_email`.
+8. Record the branch taken — `email_sms.event_tracking`.
 
 
 **Guardrails** — **escalating contact to someone who did not respond is the wrong direction.** The

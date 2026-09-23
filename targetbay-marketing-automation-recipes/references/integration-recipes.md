@@ -1,7 +1,7 @@
 # Integration Recipes
 
-Getting data in and out, and consuming the platform's event stream correctly. The webhook primer is
-last here but should be built first — every event-triggered recipe in this skill assumes it works.
+Getting data in and out, and consuming the platform's event stream correctly. The event-stream recipe
+is last here but should be built first — every event-triggered recipe in this skill assumes it works.
 
 All recipes below inherit [Guardrails](./guardrails.md), select a pre-built campaign rather than
 creating one, and quote the source workflow's intervals rather than recommending them. See
@@ -26,11 +26,12 @@ a poor one, because people change it. A field mapping written down.
 
 **Steps**
 1. Decide direction. One-way is far cheaper to reason about than two-way and is usually enough.
-2. Read the source side — `contact: list`, paged, for a platform-outbound sync.
+2. Read the source side — `email_sms.customer_intelligence`, paged, for a platform-outbound sync.
 3. Filter to what changed since the last watermark. A full sync every run is expensive and, on a
    two-way sync, a reliable way to produce update storms.
 4. Map fields. Drop anything the destination does not need rather than carrying it.
-5. Write to the destination, keyed idempotently — `contact: upsert` for a platform-inbound sync.
+5. Write to the destination, keyed idempotently. For a platform-inbound sync that is
+   a contact write, which has no registered capability yet (see [Capabilities](./how-to-read-a-recipe.md#capabilities)).
 6. **Never sync consent state as an ordinary field.** Consent belongs to the platform, and a CRM
    overwriting it is a compliance incident.
 7. Record the watermark and a per-run reconciliation count.
@@ -48,8 +49,8 @@ many contacts had consent state touched, which should be zero.
 fighting itself. A mapping change silently blanks a field across the base; the reconciliation count
 at step 7 is what catches it. The join key changes and one person becomes two records.
 
-**Not verified** — whether `contact: upsert` matches on email only or on other keys, which decides
-how fragile the join is.
+**Not verified** — whether the MCP exposes contact writes at all, and if it does, whether it matches
+on email only or on other keys, which decides how fragile the join is.
 
 ---
 
@@ -57,7 +58,7 @@ how fragile the join is.
 
 **Problem** — "Leads arrive from a form and someone copies them across by hand."
 
-**Trigger** — inbound form, or a webhook from wherever the form lives.
+**Trigger** — inbound form, delivered by whatever system hosts it.
 
 **Preconditions** — **consent captured at the point of submission**, with a record of what was agreed
 to and when. A destination list. A welcome or nurture that actually follows.
@@ -67,9 +68,9 @@ to and when. A destination list. A welcome or nurture that actually follows.
 2. Validate the address shape. Reject malformed rather than storing them.
 3. **Check what consent was given.** A contact form submission is not marketing consent. A ticked box
    for updates is. Route them differently; do not conflate them.
-4. Create or update the contact — `contact: upsert`, carrying the consent evidence.
-5. Add to the appropriate list — `list: addContact`.
-6. Record the source event — `event: track`. Source is what lets the welcome recipe branch later.
+4. Create or update the contact, carrying the consent evidence — a contact write, which has no registered capability yet (see [Capabilities](./how-to-read-a-recipe.md#capabilities)).
+5. Add to the appropriate list — `email_sms.segmentation`.
+6. Record the source event — `email_sms.event_tracking`. Source is what lets the welcome recipe branch later.
 7. Hand off to the welcome or nurture, which runs its own checks.
 
 
@@ -91,45 +92,41 @@ store needs a confirmation step at all is a policy decision — see
 
 ---
 
-### Signed webhook primer
+### Consuming the event stream
 
 **Problem** — "We want to react to what happens on the platform, and we have never consumed its
 events before."
 
-**Trigger** — platform event. Subscribe to one type while building; subscribing to all of them first
-makes debugging much harder.
+**Trigger** — events from `email_sms.event_stream`, read through the TargetBay MCP. Consume one event
+type while building; taking all of them first makes debugging much harder.
 
-**Preconditions** — an endpoint reachable from the platform, over TLS, that can return quickly. The
-signing secret in a secret store.
+**Preconditions** — the connected MCP exposes `email_sms.event_stream`. If it does not, this recipe is
+blocked, and every event-triggered recipe degrades to a schedule reading aggregate results from
+`email_sms.campaign_analytics`.
 
 **Steps**
-1. Expose the endpoint. It does one thing: verify, enqueue, respond.
-2. **Capture the raw request body before any middleware parses it.** This is the step that is most
-   often got wrong and produces the most confusing failures.
-3. Verify the HMAC-SHA256 signature against those raw bytes, with a constant-time comparison. Reject
-   on mismatch — do not log and continue.
-4. Check the event's identifier against recently processed ones. Redelivery is normal.
-5. Enqueue and **respond immediately.** Processing inside the request is how deliveries time out and
-   get redelivered, which produces duplicate work and looks like a platform fault.
-6. Process from the queue: branch on `event_type`, act, record.
-7. Log every rejected delivery with its reason. A silent rejection is indistinguishable from the
-   platform not sending.
+1. Confirm the stream is available and which event types it carries.
+2. Read events for one type. Keep a cursor or watermark so a restart resumes rather than replays.
+3. Check each event's identifier against recently processed ones. Redelivery is normal.
+4. Process: branch on the event type, act, record.
+5. Advance the cursor only after the event is recorded. Advancing first loses events on a crash.
+6. Log every event skipped as a duplicate or rejected as malformed, with its reason. A silent skip is
+   indistinguishable from the platform not emitting.
 
-**Platform calls** — none; this recipe consumes events. Downstream recipes make the calls.
+**Capabilities** — `email_sms.event_stream` only. Downstream recipes call the rest.
 
-**Guardrails** — verify before parsing. Verify against raw bytes, not a re-serialised object — key
-order and whitespace are not preserved, and the resulting failures are intermittent and mystifying.
-An unverified handler is an open path into the store's contact database. Assume every event may
-arrive twice and out of order.
+**Guardrails** — assume every event may arrive twice and out of order. Act on the state the event
+describes, re-read through the relevant capability, not on the event's own copy of it where the two
+can differ.
 
-**What to measure** — outcome: delivery success rate and processing latency. Guard: rejected
-deliveries — a rise means either an attack or a secret rotation nobody propagated.
+**What to measure** — outcome: events processed and processing latency. Guard: duplicates skipped and
+malformed events — a rise in either means a consumer or cursor fault.
 
-**Failure modes** — a body parser consumes the stream before step 2 and every signature fails. The
-endpoint is slow, the platform times out, and every event is delivered repeatedly. A rotated secret
-is deployed on one side only.
+**Failure modes** — the cursor advances before processing and a crash loses events. The cursor never
+advances and every run reprocesses from the start. A consumer falls behind and event-triggered sends
+go out hours late, which is worse for a cart recovery than not sending.
 
-**Not verified** — whether subscriptions are managed through an API or only in the interface, whether
-the platform retries on a non-2xx response and how often, and the exact signature header name. Confirm
-all three before relying on this in production. General webhook handling patterns are covered in
-[Webhooks & Events](https://github.com/targetbay360/targetbay-agent-skills/blob/main/targetbay-email-sms-best-practices/references/webhooks-events.md).
+**Not verified** — whether the MCP delivers the stream as a subscription or as a readable log, how far
+back it can be read, and whether event names are enumerated. Confirm against the connected MCP's
+tool list before relying on this. The capability is declared in
+[capabilities.yaml](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-email-sms/capabilities.yaml).

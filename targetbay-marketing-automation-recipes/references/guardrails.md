@@ -8,7 +8,7 @@ someone who opted out, or three recipes firing at the same person in the same ho
 was reasonable on its own.
 
 **This file states what an orchestrated recipe must do.** The underlying mechanics — key strategies,
-retry curves, signature verification code, suppression scopes, quiet-hours law — belong to
+retry curves, event-handling patterns, suppression scopes, quiet-hours law — belong to
 [Email & SMS Best Practices](https://github.com/targetbay360/targetbay-agent-skills/blob/main/targetbay-email-sms-best-practices/SKILL.md)
 and are linked per section rather than repeated here. Where the two disagree, that skill is right.
 
@@ -18,8 +18,8 @@ and are linked per section rather than repeated here. Where the two disagree, th
 natural key is the triggering entity plus the step number — a cart or order identifier plus which
 message in the sequence this is.
 
-Retries are the normal case. A webhook delivery that times out after the send succeeded will be
-redelivered; a scheduled job that crashes mid-batch will run again from the start. Check the key
+Retries are the normal case. An event that is re-read after the send succeeded but before it was recorded
+will be processed again; a scheduled job that crashes mid-batch will run again from the start. Check the key
 before sending rather than after — checking after is a race, and two deliveries arriving together
 both find no record and both send.
 
@@ -101,14 +101,12 @@ What may ship unreviewed, and what the reviewer checks, is a policy decision thi
 make. See
 [ai-content-governance](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-email-sms/skills/ai-content-governance/SKILL.md).
 
-## Webhook signature verification
+## Consuming platform events
 
-Verify before parsing, against the raw bytes, with a constant-time comparison, and reject rather than
-log-and-continue. A handler that processes unverified events is an open path into the store's contact
-database.
-
-The raw-body capture, the comparison and the common day-one failures:
-[Webhooks & Events](https://github.com/targetbay360/targetbay-agent-skills/blob/main/targetbay-email-sms-best-practices/references/webhooks-events.md).
+Platform events reach a recipe through the TargetBay MCP (`email_sms.event_stream`), never through a
+handler the recipe exposes itself. Assume every event may arrive twice and out of order, advance the
+cursor only after the event is recorded, and log what was skipped. The recipe:
+[Consuming the event stream](./integration-recipes.md#consuming-the-event-stream).
 
 ## Retry and backoff
 
@@ -119,11 +117,11 @@ whose failures nobody sees.
 Backoff curves, jitter and honouring the platform's retry-after signal:
 [Sending Reliability](https://github.com/targetbay360/targetbay-agent-skills/blob/main/targetbay-email-sms-best-practices/references/sending-reliability.md).
 
-## Secrets
+## Credentials
 
-Credentials live in the orchestrator's secret store, never in a workflow definition — workflow
-definitions are frequently exported and shared. Re-read on rotation rather than caching for the
-process lifetime.
+Platform access is authenticated by the MCP host. No recipe holds, passes or stores TargetBay
+credentials. Credentials for the store's own systems live in the orchestrator's secret store, never
+in a workflow definition — workflow definitions are frequently exported and shared.
 
 ## What the orchestrator must never re-implement
 

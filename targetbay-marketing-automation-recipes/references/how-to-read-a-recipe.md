@@ -1,8 +1,8 @@
 # How to Read a Recipe
 
 Every recipe in this skill uses the same eight fields, in the same order. This file explains what each
-one means, then records the platform surface the recipes are written against — including what that
-surface does not offer.
+one means, then maps the recipes to the TargetBay MCP capabilities they consume — including what those
+capabilities do not offer.
 
 ## The eight fields
 
@@ -14,17 +14,17 @@ well it is built.
 
 | Kind | Fires when | Consequence |
 |---|---|---|
-| Platform event | The platform emits one of its webhook events | Near-real-time; needs a verified signature and an idempotent handler |
+| Platform event | An event arrives through `email_sms.event_stream` | Near-real-time; needs an idempotent consumer, and the MCP must expose the stream |
 | Schedule | A clock in the orchestrator | Predictable and cheap to reason about; latency is the interval |
 | Inbound form | A person submits something | The only trigger that carries a live human at the other end |
-| Store-pushed event | Your systems record an event against a contact | Needs `event: track`, and it is unconfirmed whether the platform can trigger an automation from one |
+| Store-pushed event | Your systems record an event against a contact | Needs `email_sms.event_tracking`, and it is unconfirmed whether the platform can trigger an automation from one |
 
 **Preconditions** — what must already exist before the recipe can run at all: a list, a consent
 state, an approved template, an integration, a field that is actually populated. A recipe whose
 preconditions are unmet is not "ready with caveats" — it is blocked, and the work that meets the
 precondition comes first.
 
-**Steps** — numbered. Each step that touches the platform names the operation it calls.
+**Steps** — numbered. Each step that touches the platform names the capability it consumes.
 
 **Guardrails** — the specific dedupe key, suppression check, frequency budget and approval gate this
 recipe needs. The shared versions are in [Guardrails](./guardrails.md); this field names the
@@ -41,82 +41,70 @@ the next run sends again" is.
 **Not verified** — anything the recipe assumes that reading the integration did not prove. Present
 on most recipes. Read it before building, not after.
 
-## The platform surface
+## Capabilities
 
-**This is the only file in this skill that contains HTTP paths.** Recipes name operations
-(`contact: upsert`) instead, so that when the API moves, this file changes and nothing else does.
+Recipes reach the platform only through the TargetBay MCP. Each step names an abstract capability
+from the
+[capability registry](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-email-sms/capabilities.yaml);
+the MCP host resolves it to a tool and owns authentication. This skill contains no endpoints, request
+shapes or credentials, and a recipe never calls the platform any other way.
 
-Base path: `https://developer.targetbay.com/bayengage/v2`. The `bayengage` segment is the platform's
-former name; the product is TargetBay Email & SMS.
+| Recipes need to... | Capability |
+|---|---|
+| Read a contact, or page through contacts | `email_sms.customer_intelligence` |
+| Create, update or remove a list, or change its members | `email_sms.segmentation` |
+| Find or select a pre-built campaign | `email_sms.campaign_management` |
+| Send a campaign | `email_sms.messaging_email`, `email_sms.messaging_sms` |
+| Read campaign results | `email_sms.campaign_analytics` |
+| Create or read templates | `email_sms.template_management` |
+| Check suppression, consent and frequency configuration | `email_sms.suppression_and_consent` |
+| React to contact, list, campaign and order activity | `email_sms.event_stream` |
+| Record an event against a contact | `email_sms.event_tracking` |
+| Create or update a contact | **none registered** |
 
-| Resource | Operation | Request |
-|---|---|---|
-| `contact` | `create` | `POST /contacts` |
-| `contact` | `upsert` | `POST /contacts/upsert` |
-| `contact` | `get` | `GET /contacts/{contactId}`, or `GET /contacts?email=` |
-| `contact` | `list` | `GET /contacts?limit=&page=` |
-| `contact` | `update` | `PUT /contacts/{contactId}` |
-| `list` | `create` | `POST /lists` |
-| `list` | `get` | `GET /lists/{listId}` |
-| `list` | `list` | `GET /lists?limit=&page=` |
-| `list` | `addContact` | `POST /lists/{listId}/contacts` |
-| `list` | `removeContact` | `DELETE /lists/{listId}/contacts` |
-| `campaign` | `get` | `GET /campaigns/{campaignId}` |
-| `campaign` | `list` | `GET /campaigns?limit=&page=` |
-| `campaign` | `send` | `POST /campaigns/{campaignId}/send` |
-| `campaign` | `getReports` | `GET /campaigns/{campaignId}/reports` |
-| `campaign` | **create** | **Does not exist** — see below |
-| `template` | `create` | `POST /templates` |
-| `template` | `get` | `GET /templates/{templateId}` |
-| `template` | `list` | `GET /templates?limit=&page=` |
-| `event` | `track` | `POST /events` |
+Before building, confirm the connected MCP exposes every capability the recipe names. A recipe whose
+capability is missing is blocked — it is not built against some other route to the platform.
 
-Contact fields observed: email, first name, last name, phone, and arbitrary custom fields flattened
-onto the request body. Confirm the exact field names before relying on them.
+**Contact writes have no capability.** The registry has none for creating or updating a contact, so
+every recipe step that writes a contact is blocked until the MCP exposes one and the registry records
+it. The recipes that depend on it — contact sync, lead capture, bounce and complaint response, double
+opt-in verification and click-branched nurture — say so at the step.
 
-There is **no segment resource**. Segmentation is done as lists: create a list, add contacts to it.
-Every recipe here that talks about a segment means a list.
+**SMS is unverified.** `email_sms.messaging_sms` is declared but unconfirmed. Recipes that sequence
+email and SMS degrade to email-only when it is absent.
 
-### The missing campaign-create operation
+There is **no segment resource distinct from lists.** Segmentation is done as lists: create a list,
+add contacts to it. Every recipe here that talks about a segment means a list.
 
-The campaign resource supports read, list, send and reports. It does not support creation.
+### No campaign creation
+
+Campaign management here covers finding, reading and selecting campaigns. Recipes do not create one.
 
 This matters more than it sounds. The obvious shape for an automated journey — assemble content,
-create a campaign, send it — cannot be built against this surface, and the failure is quiet: a call
-to an operation that does not exist can return nothing rather than failing loudly, so the workflow
-reports success and no email is sent.
+create a campaign, send it — has no supported route, and the failure is quiet: a workflow that
+assumes creation succeeded reports success and no email is sent.
 
 **The working shape:** build the campaign or template once in the interface, and have the recipe
-select it by id and send it. Where content genuinely must vary per recipient, vary it through the
+select it and send it. Where content genuinely must vary per recipient, vary it through the
 template's own personalisation rather than by generating a new campaign per person.
 
 Each recipe file states this in its opening lines, and the recipes whose source workflow depended on
-creation carry it in their **Not verified** block. Confirm against TargetBay's own documentation
-before assuming either way — the surface described here is one reading at one moment, and the
-absence of an operation from it is not proof of absence in the API.
+creation carry it in their **Not verified** block. Confirm against the connected MCP's tool list
+before assuming either way.
 
-### Webhook events
+### Platform events
 
-A subscription receives `contact.created`, `contact.updated`, `contact.deleted`, `list.created`,
-`list.updated`, `list.deleted`, `campaign.sent`, `campaign.opened`, `campaign.clicked`,
-`campaign.bounced`, `campaign.unsubscribed`, `order.created`, `order.updated` — individually or all
-at once.
+Event-triggered recipes name event types such as `contact.created`, `contact.updated`,
+`order.created`, `order.updated`, `campaign.bounced` and `campaign.unsubscribed`. They arrive through
+`email_sms.event_stream`; consuming them correctly is
+[Consuming the event stream](./integration-recipes.md#consuming-the-event-stream).
 
-Observed payload keys: `event_type`, `timestamp`, `data`, `contact_id`, `list_id`, `campaign_id`,
-`order_id`, and the raw body. Filtering by contact id or list id was available at subscription time.
-
-Signature: HMAC-SHA256 over the raw body, presented as `sha256=<hex>` in a signature header. See
-[Guardrails](./guardrails.md) for how to verify it without introducing a timing or re-serialisation
-bug.
-
-**Not verified across the whole surface:** whether subscriptions are configured through an API or
-only in the interface; whether an event recorded through `event: track` can itself trigger a
-platform-side automation; whether event names are free-form or enumerated; and whether SMS dispatch
-is exposed at all. Where a recipe depends on one of these, it says so.
+**Not verified:** whether the MCP exposes the event stream at all, the exact event names it uses,
+whether an event recorded through `email_sms.event_tracking` can itself trigger a platform-side
+automation, and whether SMS dispatch is exposed. Where a recipe depends on one of these, it says so.
 
 ## A standing caution
 
-This skill was written by reading an integration, not a specification. Confirm the real request
-signatures, webhook headers, field names and event names in TargetBay's own documentation before
-shipping anything here to production. Where a recipe and the documentation disagree, the
-documentation is right and this file needs a correction.
+The capability map above is a contract, not an inspection of the MCP. Confirm the tools, field names
+and event names the connected TargetBay MCP actually exposes before shipping anything here to
+production. Where a recipe and the MCP disagree, the MCP is right and this file needs a correction.
