@@ -361,11 +361,11 @@ deliberately excludes, which skills cite rather than restate.
 | [**targetbay-email-template-design**](targetbay-email-template-design/README.md) | What an email should look like: layout, email-safe typography, colour and dark mode, CTAs, imagery, the review before a template ships |
 | [**targetbay-marketing-automation-recipes**](targetbay-marketing-automation-recipes/README.md) | How an automation is wired: lifecycle journeys, personalisation, retention sweeps, list health, measurement, integration — each with trigger, preconditions, guardrails and what to measure |
 
-All three hold the same two boundaries as the plugins: **no invented API** (code calls your own
-wrapper; unconfirmed headers are flagged as unconfirmed) and **no borrowed numbers** (published
+All three hold the same two boundaries as the plugins: **no invented API** (the platform is
+reached only through the TargetBay MCP; code calls your own wrapper) and **no borrowed numbers** (published
 requirements are attributed; anything else is labelled illustrative). The design skill adds a third —
-**no markup**, design decisions only. The recipes skill adds its own — the platform surface is
-described once, in a single reference, and every recipe names operations rather than paths.
+**no markup**, design decisions only. The recipes skill adds its own — every recipe names MCP
+capabilities from the plugin registry, never API paths.
 
 They do not follow the plugin contract and are not in the marketplace. Install one by copying its
 directory into your agent host's skills path; they have no dependencies. They link to each other and

@@ -104,7 +104,7 @@ re-ranks it on store evidence. Each entry names the signal to check before belie
 1. **Consent verification and inbound lead capture** — the pair that makes everything else lawful and
    useful here. *Check:* that a contact-form submission is not being treated as marketing consent;
    conflating the two is the most common failure in this vertical.
-2. **Integration recipes** — CRM sync, and the signed-webhook primer it depends on. *Check:* that a
+2. **Integration recipes** — CRM sync, and the event-stream recipe it depends on. *Check:* that a
    conflict rule between the CRM and the platform has been decided before the sync is built, and that
    consent state is excluded from the synced fields.
 3. **Long-cycle nurture** — the click-branched pattern, at a cadence matched to the buying cycle

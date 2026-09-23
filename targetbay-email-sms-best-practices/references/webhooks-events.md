@@ -3,9 +3,13 @@
 A successful API call means the platform accepted the message. It says nothing about whether it
 arrived. Everything you know after that comes from events.
 
-> **Map these to your platform's real names.** The event names below are the canonical set the
-> industry uses; confirm the exact names, payload shape, signature header and signing algorithm in
-> TargetBay's own documentation before implementing. Do not guess a header name.
+> **TargetBay events reach an agent through the TargetBay MCP**, as the `email_sms.event_stream`
+> capability in the
+> [capability registry](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-email-sms/capabilities.yaml),
+> not through a webhook you expose. The event names below are the canonical set the industry uses;
+> map them to the names the MCP actually returns. The webhook code in this file applies only to
+> events your own systems receive directly from a sender — it is generic, and every header name in
+> it is a placeholder.
 
 ## Event types
 
@@ -66,14 +70,14 @@ signed — vary by platform and must come from its documentation.
 ```ts
 import crypto from 'node:crypto';
 
-// Header names and the signed-payload format are platform-specific.
-// Confirm them in TargetBay's webhook documentation before relying on this.
+// Header names and the signed-payload format are sender-specific placeholders.
+// Replace them with the ones your sender documents.
 function verifySignature(headers: Record<string, string>, rawBody: Buffer): boolean {
-  const secret = process.env.TARGETBAY_WEBHOOK_SECRET;
-  if (!secret) throw new Error('TARGETBAY_WEBHOOK_SECRET is not set');
+  const secret = process.env.WEBHOOK_SECRET;
+  if (!secret) throw new Error('WEBHOOK_SECRET is not set');
 
-  const timestamp = headers['x-webhook-timestamp'];
-  const provided  = headers['x-webhook-signature'];
+  const timestamp = headers['<timestamp-header>'];
+  const provided  = headers['<signature-header>'];
   if (!timestamp || !provided) return false;
 
   // Reject old timestamps so a captured request cannot be replayed later.

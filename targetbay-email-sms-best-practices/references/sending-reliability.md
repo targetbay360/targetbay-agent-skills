@@ -2,10 +2,10 @@
 
 Making sure each message goes exactly once, even when the network does not cooperate.
 
-> The code here uses your own thin wrapper around the sending platform's API —
-> `sendEmail(...)`, `sendSms(...)` — rather than a specific SDK call. The patterns are what
-> transfer; check your platform's actual request signature, idempotency support and error codes
-> before shipping.
+> The code here uses your own thin wrapper — `sendEmail(...)`, `sendSms(...)` — rather than a
+> specific SDK call. With TargetBay, that wrapper is the TargetBay MCP, never a direct API. The
+> patterns are what transfer; check the connected MCP's actual idempotency support and error
+> behaviour before shipping.
 
 ## Idempotency
 

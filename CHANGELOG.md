@@ -5,6 +5,23 @@ own changelog under `plugins/<name>/CHANGELOG.md`, and versions independently.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2026-09-23] Platform consumed through MCP only
+
+The standalone recipes skill documented the platform's HTTP API directly — base URL, endpoint table,
+authentication, webhook signature format and payload keys — and asked readers to stand up a signed
+webhook endpoint. That contradicts the repository's premise that skills declare capabilities and the
+TargetBay MCP supplies them.
+
+- **`targetbay-marketing-automation-recipes` 2.0.0.** The endpoint table, base URL, auth notes and
+  webhook signature details are gone. Every recipe step names an `email_sms.*` capability from the
+  plugin's registry instead of an HTTP-shaped operation. The signed-webhook primer is replaced by a
+  recipe for consuming `email_sms.event_stream` through the MCP. Contact writes have no registered
+  capability, so the recipes that need them now say they are blocked rather than naming an endpoint.
+- **`targetbay-email-sms-best-practices`.** The webhook reference no longer carries TargetBay-specific
+  secret and header names; it states that TargetBay events arrive through the MCP, and its code is a
+  generic pattern for a store's own senders. The API-wrapper notes name the MCP as the wrapper.
+- **`targetbay-email-sms` 4.2.3.** Wording in `capabilities.yaml` and the B2B playbook only.
+
 ## [2026-09-22] Internal-only material out of a public repository
 
 This repository is public. A credential and confidentiality review found no secrets and no customer

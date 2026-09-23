@@ -22,15 +22,15 @@ large enough that a difference could be detected at all — this is a preconditi
 most stores fail it for most tests. Agreement on the decision rule before the test runs.
 
 **Steps**
-1. Read the test audience — `list: get`, or `contact: list` filtered.
+1. Read the test audience — `email_sms.segmentation`, or `email_sms.customer_intelligence` filtered.
 2. **Check the audience can resolve the difference you are looking for.** If it cannot, stop here and
    report that: running the test anyway produces a number that means nothing and a decision made on
    noise.
 3. Split randomly. Random, not by any attribute that correlates with the outcome.
-4. Send variant A to one half and variant B to the other — `campaign: send` twice.
+4. Send variant A to one half and variant B to the other — `email_sms.messaging_email` twice.
 5. Wait. The source workflow waited twenty-four hours — long enough that late openers are not
    systematically excluded.
-6. Read both results — `campaign: getReports`.
+6. Read both results — `email_sms.campaign_analytics`.
 7. Apply the decision rule agreed at step 0. **"No detectable difference" is a result**, and the
    correct action is to keep the simpler variant.
 8. Log the test, the variants, the numbers and the decision.
@@ -67,13 +67,13 @@ long, what rule — belongs to
 recipient list that wants it.
 
 **Steps**
-1. Read the campaigns in the period — `campaign: list`.
-2. Read each campaign's results — `campaign: getReports`.
+1. Read the campaigns in the period — `email_sms.campaign_management`.
+2. Read each campaign's results — `email_sms.campaign_analytics`.
 3. Aggregate. State the denominator for every rate; a rate without its base is unreadable.
 4. **Compare against the previous period, and against the same period last year** where seasonality
    matters. A number alone says nothing.
 5. Render the report.
-6. Send — `campaign: send` to an internal list.
+6. Send — `email_sms.messaging_email` to an internal list.
 7. Store the period's figures for the next run's comparison.
 
 
@@ -103,13 +103,12 @@ somewhere else, so nobody can join them up."
 whatever the destination holds — usually contact email or an internal id.
 
 **Steps**
-1. Receive the event, or read the campaigns for the period — `campaign: list`.
-2. Verify the signature, on the event path.
-3. Read results — `campaign: getReports`.
-4. Transform to the destination's shape. Keep the platform's own identifiers; they are how a
+1. Receive the event, or read the campaigns for the period — `email_sms.campaign_management`.
+2. Read results — `email_sms.campaign_analytics`.
+3. Transform to the destination's shape. Keep the platform's own identifiers; they are how a
    discrepancy gets traced later.
-5. Write to the destination, **keyed so that a re-run overwrites rather than appends**.
-6. Record the watermark so the next run knows where it stopped.
+4. Write to the destination, **keyed so that a re-run overwrites rather than appends**.
+5. Record the watermark so the next run knows where it stopped.
 
 
 **Guardrails** — idempotent writes. An append-only export that re-runs will double-count, and the

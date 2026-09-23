@@ -10,7 +10,7 @@ All recipes below inherit [Guardrails](./guardrails.md), select a pre-built camp
 creating one, and quote the source workflow's intervals rather than recommending them. See
 [How to Read a Recipe](./how-to-read-a-recipe.md).
 
-The missing campaign-create operation constrains this group more than any other: the
+The absence of campaign creation constrains this group more than any other: the
 "generate content, create a campaign, send it" shape cannot run at all.
 
 Which message classes may ship unreviewed is a policy decision, not a wiring one. See
@@ -81,9 +81,9 @@ personalisation can carry the assembled content. **The approval gate above.**
 3. Generate only the connective material — the intro, the section framing. The items themselves are
    quoted and linked, not rewritten.
 4. **Approval gate.**
-5. Read the recipients — `contact: list`, or `list: get`.
-6. Check suppression and the frequency budget. Send — `campaign: send`.
-7. Record — `event: track`.
+5. Read the recipients — `email_sms.customer_intelligence`, or `email_sms.segmentation`.
+6. Check suppression and the frequency budget. Send — `email_sms.messaging_email`.
+7. Record — `email_sms.event_tracking`.
 
 
 **Guardrails** — generate the framing, not the facts. The narrower the generated surface, the less
@@ -97,7 +97,7 @@ Guard: unsubscribe rate per issue, which rises quickly when the curation slips.
 Duplicate items across issues because the watermark is not stored.
 
 **Not verified** — whether campaign personalisation can carry a full assembled body, which is the
-constraint the missing campaign-create operation imposes. If it cannot, the newsletter must be built
+constraint the absence of campaign creation imposes. If it cannot, the newsletter must be built
 in the interface per issue and this recipe reduces to assembling a draft for a human to paste.
 
 ---
@@ -113,7 +113,7 @@ definitions should change.
 rich enough to cluster meaningfully.
 
 **Steps**
-1. Read the contact base — `contact: list`, paged.
+1. Read the contact base — `email_sms.customer_intelligence`, paged.
 2. Prepare the attributes the clustering may use. **Exclude sensitive attributes, and attributes that
    proxy for them** — this exclusion belongs at step 2, before the model sees the data, not as a
    filter on the output.
@@ -121,9 +121,9 @@ rich enough to cluster meaningfully.
 4. **Stop for review.** A proposed cluster is a hypothesis, not a segment: it needs a name a person
    understands, a reason to be treated differently from its neighbours, and a size worth acting on.
    Review also checks it has not reconstructed a sensitive attribute from proxies.
-5. On approval, create the list — `list: create`.
-6. Add members — `list: addContact`.
-7. Record — `event: track`.
+5. On approval, create the list — `email_sms.segmentation`.
+6. Add members — `email_sms.segmentation`.
+7. Record — `email_sms.event_tracking`.
 
 
 **Guardrails** — **clusters do not become lists without review**, and the tests a proposal must pass
@@ -160,13 +160,13 @@ discover them.
 **Preconditions** — everything the other three need, plus a tolerance for the gap below.
 
 **Steps**
-1. Read the audience — `contact: list` or `list: get`.
+1. Read the audience — `email_sms.customer_intelligence` or `email_sms.segmentation`.
 2. Profile the audience, so the draft is written against who is actually on the list today.
 3. Generate the draft.
 4. **Approval gate**, at full strictness. This send carries products, prices and offers.
-5. On approval, select the campaign the approved content was built into — `campaign: get`.
-6. Check suppression and the frequency budget. Send — `campaign: send`.
-7. Record — `event: track`.
+5. On approval, select the campaign the approved content was built into — `email_sms.campaign_management`.
+6. Check suppression and the frequency budget. Send — `email_sms.messaging_email`.
+7. Record — `email_sms.event_tracking`.
 
 
 **Guardrails** — the approval gate is not optional here and cannot be reduced to a notification. The
@@ -181,7 +181,7 @@ than writing the email.
 exists. Approval fatigue.
 
 **Not verified** — **the important one.** The obvious shape for this pattern creates a campaign
-programmatically, and the platform surface has no campaign-create operation, so it cannot run as
-written. Step 5 selects a campaign built in the interface instead — which means the "fully
-automated" version does not exist against this surface, and the human is in the loop by construction
+programmatically, and no MCP capability creates campaigns, so it cannot run as written. Step 5
+selects a campaign built in the interface instead — which means the "fully automated" version does
+not exist, and the human is in the loop by construction
 whether or not you wanted them there. Given step 4, that is not a loss.

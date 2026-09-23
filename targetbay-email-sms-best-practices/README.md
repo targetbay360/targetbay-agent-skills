@@ -76,8 +76,9 @@ starting SMS, running campaigns, and production-grade sending.
 ## Two things this skill deliberately does not do
 
 **It does not invent an API.** Code examples call your own thin wrapper — `sendEmail(...)`,
-`verifySignature(...)` — rather than a specific SDK method. The patterns transfer; confirm the real
-request signatures, webhook headers and event names in TargetBay's own documentation.
+`verifySignature(...)` — rather than a specific SDK method. With TargetBay, that wrapper is the
+TargetBay MCP: sends, suppression and events are consumed through its capabilities, never through a
+direct API. Confirm the tools and event names in the MCP the agent is connected to.
 
 **It does not present benchmarks as your numbers.** Published external requirements are named as
 such. Illustrative figures are labelled illustrative. Thresholds you should derive from the store's

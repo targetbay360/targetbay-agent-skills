@@ -1,17 +1,17 @@
 ---
 name: targetbay-marketing-automation-recipes
-description: Use when wiring a concrete marketing automation against TargetBay Email & SMS — building a welcome, cart-recovery, order, review-request or VIP journey on platform webhook events, running a scheduled churn, re-engagement, list-hygiene or KPI job, syncing contacts with a CRM or a spreadsheet, verifying a webhook signature, adding a human approval gate before a generated message is sent, or deciding which steps belong inside the platform and which belong in an external workflow tool.
+description: Use when wiring a concrete marketing automation against TargetBay Email & SMS — building a welcome, cart-recovery, order, review-request or VIP journey on platform events, running a scheduled churn, re-engagement, list-hygiene or KPI job, syncing contacts with a CRM or a spreadsheet, consuming the platform event stream through MCP, adding a human approval gate before a generated message is sent, or deciding which steps belong inside the platform and which belong in an external workflow tool.
 license: MIT
 metadata:
   author: TargetBay
-  version: "1.0.0"
+  version: "2.0.0"
   homepage: https://targetbay.com
 ---
 
 # TargetBay Marketing Automation Recipes
 
 Runnable patterns for wiring marketing automations against TargetBay Email & SMS. Each recipe names
-its trigger, its preconditions, the platform operations it calls, the guardrails it must carry and
+its trigger, its preconditions, the MCP capabilities it consumes, the guardrails it must carry and
 what to measure afterwards.
 
 A recipe is a pattern with its guardrails, not a product feature. The guardrails are the part that
@@ -20,38 +20,28 @@ suppression check mails someone who opted out, and a recipe that generates its o
 approval gate will eventually say something untrue about a product. Every recipe here carries them
 explicitly, and every recipe states what it assumes that has not been verified.
 
-## The Verified Surface
+## The MCP Contract
 
-What follows was established by reading the platform API, not from product documentation. Treat it as a floor: confirm the real request signatures, field names and
-event names in TargetBay's own documentation before shipping.
+Recipes reach TargetBay Email & SMS only through the TargetBay MCP. Every platform step names an
+abstract capability from the
+[capability registry](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-email-sms/capabilities.yaml)
+— `email_sms.segmentation`, `email_sms.messaging_email` — and the MCP host resolves it to a tool and
+owns authentication. This skill contains no endpoints, request shapes or credentials. The full map
+from recipe step to capability is in
+[How to Read a Recipe](./references/how-to-read-a-recipe.md#capabilities).
 
-A naming note. The product is **TargetBay Email & SMS**. The API path segment says `bayengage`,
-the platform's former name. This skill uses the product name in prose
-and quotes `bayengage` only where it is a literal path or identifier.
+Before building, confirm the connected MCP exposes every capability the recipe names. A recipe whose
+capability is missing is blocked; it is not built against another route to the platform.
 
-**Resources and operations.** Recipes refer to these by name throughout — `contact: upsert`,
-`campaign: send`. The HTTP shapes appear in exactly one file,
-[How to Read a Recipe](./references/how-to-read-a-recipe.md), so that endpoint drift is a one-file fix.
+**Three gaps shape the recipes.** No capability creates a campaign: the working shape is a campaign
+or template built once in the interface, which the recipe then selects and sends, and each recipe
+file states this in its opening lines. No capability creates or updates a contact, so recipes that
+write contacts are blocked until the MCP exposes one. SMS dispatch (`email_sms.messaging_sms`) is
+unverified, and recipes that use it degrade to email-only.
 
-| Resource | Operations |
-|---|---|
-| `contact` | `create`, `upsert`, `get`, `list`, `update` |
-| `list` | `create`, `get`, `list`, `addContact`, `removeContact` |
-| `campaign` | `get`, `list`, `send`, `getReports` |
-| `template` | `create`, `get`, `list` |
-| `event` | `track` |
-
-**Webhook events.** A subscription covers contact, list, campaign and order activity — thirteen event
-types, individually or all at once. **Authentication** is OAuth client credentials or a header key
-pair, and is the host's concern; no recipe handles credentials itself. Deliveries are signed. The
-event names, the payload keys, the signature format and the subscription filters are listed in
-[How to Read a Recipe](./references/how-to-read-a-recipe.md); verifying one correctly is in
-[Guardrails](./references/guardrails.md).
-
-**There is no campaign-create operation.** The campaign resource exposes read, list, send and
-reports. A recipe that ends "and then it creates and sends a campaign" cannot run as written against
-this surface. The working shape is a campaign or template built once in the interface, which the
-recipe then selects and sends. Each recipe file states the working shape in its opening lines.
+**Platform events** — contact, list, campaign and order activity — arrive through
+`email_sms.event_stream`. Consuming them correctly is in
+[Integration Recipes](./references/integration-recipes.md#consuming-the-event-stream).
 
 ## Architecture Overview
 
@@ -65,9 +55,9 @@ recipe then selects and sends. Each recipe file states the working shape in its 
                               ↓
                               ├── refused → log and stop, never send
                               ↓
-   [Platform operations]   contacts · lists · templates · send · events
+   [MCP capabilities]   contacts · lists · templates · send · events
                               ↓
-              [Platform event stream — signed]
+              [email_sms.event_stream]
                               ↓
    [Measurement]   outcome metric · guard metric · write-back
 ```
@@ -84,7 +74,7 @@ recipe then selects and sends. Each recipe file states the working shape in its 
 | Audit the list, react to bounces, verify opt-ins | [List Health Recipes](./references/list-health-recipes.md) |
 | Run an A/B cycle, summarise KPIs, export campaign data | [Measurement Recipes](./references/measurement-recipes.md) |
 | Let a model draft copy, with a human gate before it sends | [AI-Assisted Recipes](./references/ai-assisted-recipes.md) |
-| Sync contacts with a CRM, capture inbound leads, consume webhooks | [Integration Recipes](./references/integration-recipes.md) |
+| Sync contacts with a CRM, capture inbound leads, consume platform events | [Integration Recipes](./references/integration-recipes.md) |
 | Understand what was deliberately refused, and why | [Deliberately Not Shipped](./references/not-shipped.md) |
 | Design what the message looks like once the wiring works | [Email Template Design](https://github.com/targetbay360/targetbay-agent-skills/tree/main/targetbay-email-template-design) |
 | Decide which recipes this store should adopt first | [Automation Recipe Selector](https://github.com/targetbay360/targetbay-agent-skills/blob/main/plugins/targetbay-email-sms/skills/automation-recipe-selector/SKILL.md) |
@@ -94,9 +84,9 @@ recipe then selects and sends. Each recipe file states the working shape in its 
 **New store, nothing wired yet?**
 [How to Read a Recipe](./references/how-to-read-a-recipe.md) →
 [Guardrails](./references/guardrails.md) →
-[Integration Recipes](./references/integration-recipes.md) for the signed-webhook primer, then one
-lifecycle recipe. Wire the webhook and verify its signature before building anything on top of it;
-every event-triggered recipe assumes that layer works.
+[Integration Recipes](./references/integration-recipes.md) for the event-stream recipe, then one
+lifecycle recipe. Confirm the MCP exposes `email_sms.event_stream` and consume it idempotently before
+building anything on top of it; every event-triggered recipe assumes that layer works.
 
 **After the cart and lifecycle revenue?**
 [Lifecycle Recipes](./references/lifecycle-recipes.md). Cart recovery first — it is the highest

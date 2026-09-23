@@ -6,6 +6,17 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). See [docs/versioning.md](docs/versioning.md)
 for how package and per-skill versions relate.
 
+## [4.2.3] - 2026-09-23
+
+Wording only. No skill, rule or schema changed, and no skill version moved.
+
+### Changed
+
+- **Everything is consumed through MCP.** `capabilities.yaml` (registry `1.3.1`) no longer describes
+  `email_sms.event_stream` and `email_sms.event_tracking` as evidenced by a signed subscription on the
+  platform's HTTP surface; both are MCP capabilities like the rest. The B2B playbook now points at the
+  recipes skill's event-stream recipe instead of the removed signed-webhook primer.
+
 ## [4.2.2] - 2026-09-22
 
 Packaging only. No skill, rule, capability or schema changed, and no skill version moved.
