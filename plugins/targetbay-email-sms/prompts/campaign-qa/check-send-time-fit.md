@@ -14,4 +14,4 @@ Tell me:
 - whether my data supports per-contact timing
 - a one-variable test to confirm it, or "change nothing" if the data can't tell
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Analysis only: change nothing.

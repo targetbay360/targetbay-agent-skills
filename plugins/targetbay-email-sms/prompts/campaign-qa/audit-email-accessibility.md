@@ -14,4 +14,4 @@ Return:
 - the share of my recipients each defect reaches, from my client and device data
 - anything you couldn't check
 
-If data is missing, say so and ask; don't estimate.
+Analysis only: change nothing.
