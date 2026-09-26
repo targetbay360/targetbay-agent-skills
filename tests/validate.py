@@ -66,6 +66,19 @@ PLAYBOOK_KEYS = {"name", "display_name", "version", "applies_to", "overrides"}
 
 PROMPT_KEYS = {"title", "summary", "skill"}
 PROMPT_MAX_WORDS = 150
+PROMPT_APPROVAL = "until i approve"
+PROMPT_NEGATED_APPROVAL = re.compile(r"\b(no|without|skip|don't)\b[^.]*\bapprov", re.IGNORECASE)
+
+# fixture file -> fragment of the error it must produce
+BROKEN_PROMPTS = {
+    "list-skill.md": "is not a skill",
+    "empty-summary.md": "'summary' must be a non-empty string",
+    "extra-key.md": "unknown frontmatter keys",
+    "empty-body.md": "body is empty",
+    "too-long.md": "limit",
+    "no-approval.md": "does not say",
+    "negated-approval.md": "does not say",
+}
 
 # Repo-level: governance, CI and the marketplace manifest. Product content lives in plugins.
 REPO_REQUIRED_FILES = [
@@ -330,32 +343,93 @@ for pl in plugins:
 # A prompt is a copy-paste entry point that routes to one skill. It carries no reasoning of
 # its own, so it stays short and inherits requires/risk from the skill it names.
 print("prompts")
+
+
+def prompt_errors(pl: Plugin, text: str) -> list[str]:
+    fm, body, err = split_frontmatter(text)
+    if err:
+        return [err]
+    errs = []
+    for key in sorted(PROMPT_KEYS):
+        if not isinstance(fm.get(key), str) or not fm[key].strip():
+            errs.append(f"'{key}' must be a non-empty string")
+    extra = set(fm) - PROMPT_KEYS
+    if extra:
+        errs.append(f"unknown frontmatter keys: {', '.join(sorted(map(str, extra)))}")
+    name = fm.get("skill")
+    skill = pl.skills.get(name) if isinstance(name, str) else None
+    if skill is None:
+        errs.append(f"skill '{name}' is not a skill in {pl.name}")
+    elif meta(skill["fm"], "status") == "deprecated":
+        errs.append(f"skill '{name}' is deprecated; route to {meta(skill['fm'], 'deprecated_by')}")
+    words = len(body.split())
+    if words == 0:
+        errs.append("body is empty")
+    if words > PROMPT_MAX_WORDS:
+        errs.append(f"body is {words} words, limit {PROMPT_MAX_WORDS}")
+    if skill and meta(skill["fm"], "risk_level") in {"high_impact", "destructive"} \
+            and (PROMPT_APPROVAL not in body.lower() or PROMPT_NEGATED_APPROVAL.search(body)):
+        errs.append(f"routes to a high_impact/destructive skill but does not say '{PROMPT_APPROVAL}'")
+    return errs
+
+
+def linked_files(readme: Path) -> set[str]:
+    return {t.split("#")[0] for t in MD_LINK.findall(FENCE.sub("", readme.read_text()))
+            if not EXTERNAL.match(t)}
+
+
 for pl in plugins:
-    for pf in sorted(pl.path.glob("prompts/*/*.md")):
-        if pf.name == "README.md":
+    root = pl.path / "prompts"
+    if not root.is_dir():
+        continue
+    titles: dict[str, Path] = {}
+    categories = sorted(p for p in root.iterdir() if p.is_dir())
+    for f in sorted(root.rglob("*")):
+        if f.is_dir():
             continue
-        rel = pf.relative_to(ROOT)
-        fm, body, err = split_frontmatter(pf.read_text())
-        if err:
-            check("prompts", False, f"{rel}: {err}")
+        depth = len(f.relative_to(root).parts)
+        placed = (depth == 1 and f.name == "README.md") or (depth == 2 and f.suffix == ".md")
+        check("prompts", placed,
+              f"{f.relative_to(ROOT)}: only prompts/README.md and prompts/<category>/<slug>.md belong here")
+    # The top-level index is optional so a category can land on its own; once present, it must
+    # link every category.
+    if (root / "README.md").is_file():
+        missing = {f"{c.name}/README.md" for c in categories} - linked_files(root / "README.md")
+        check("prompts", not missing,
+              f"{root.relative_to(ROOT)}/README.md does not link: {', '.join(sorted(missing))}")
+    for cat in categories:
+        prompts = sorted(f for f in cat.glob("*.md") if f.name != "README.md")
+        check("prompts", bool(prompts), f"{cat.relative_to(ROOT)}/ holds no prompts")
+        for pf in prompts:
+            rel = pf.relative_to(ROOT)
+            text = pf.read_text()
+            errs = prompt_errors(pl, text)
+            fm, _, _ = split_frontmatter(text)
+            title = fm.get("title") if fm else None
+            if isinstance(title, str):
+                if title in titles:
+                    errs.append(f"title duplicates {titles[title].relative_to(ROOT)}")
+                titles[title] = pf
+            check("prompts", not errs, f"{rel}: " + "; ".join(errs))
+        readme = cat / "README.md"
+        if not check("prompts", readme.is_file(), f"{cat.relative_to(ROOT)}/ has no README.md index"):
             continue
-        errs = []
-        missing = PROMPT_KEYS - set(fm)
-        if missing:
-            errs.append(f"missing frontmatter keys: {', '.join(sorted(missing))}")
-        skill = pl.skills.get(fm.get("skill"))
-        if not skill:
-            errs.append(f"skill '{fm.get('skill')}' is not a skill in {pl.name}")
-        words = len(body.split())
-        if words > PROMPT_MAX_WORDS:
-            errs.append(f"body is {words} words, limit {PROMPT_MAX_WORDS}")
-        if skill and meta(skill["fm"], "risk_level") in {"high_impact", "destructive"} \
-                and "approv" not in body.lower():
-            errs.append("routes to a high_impact/destructive skill but never asks for approval")
-        check("prompts", not errs, f"{rel}: " + "; ".join(errs))
-    for readme_dir in sorted(p for p in pl.path.glob("prompts/*") if p.is_dir()):
-        check("prompts", (readme_dir / "README.md").is_file(),
-              f"{readme_dir.relative_to(ROOT)}/ has no README.md index")
+        listed, present = linked_files(readme), {f.name for f in prompts}
+        unlisted = present - listed
+        check("prompts", not unlisted,
+              f"{readme.relative_to(ROOT)} does not list: {', '.join(sorted(unlisted))}")
+
+# Every broken fixture must be rejected, and rejected with a message rather than a crash.
+for fixture in sorted((FIXTURES / "broken-prompts").glob("*.md")):
+    fm, _, _ = split_frontmatter(fixture.read_text())
+    name = fm.get("skill") if fm else None
+    owner = next((pl for pl in plugins if isinstance(name, str) and name in pl.skills), plugins[0])
+    expect = BROKEN_PROMPTS.get(fixture.name, "")
+    errs = prompt_errors(owner, fixture.read_text())
+    check("prompts", any(expect in e for e in errs),
+          f"broken-prompts/{fixture.name} was not rejected with '{expect}' (got: {errs})")
+check("prompts", set(BROKEN_PROMPTS) <= {f.name for f in (FIXTURES / "broken-prompts").glob("*.md")},
+      "tests/fixtures/broken-prompts/ is missing a fixture named in BROKEN_PROMPTS")
 
 
 # ------------------------------------------------------------------------ references
@@ -557,6 +631,7 @@ if failures:
 
 print(f"PASSED — {total} checks across {len(group_counts)} groups")
 for pl in plugins:
+    prompt_count = sum(1 for f in pl.path.glob("prompts/*/*.md") if f.name != "README.md")
     print(f"  {pl.name}: {len(pl.skills)} skills, {len(pl.capabilities)} capabilities, "
-          f"{len(pl.playbooks)} playbooks")
+          f"{len(pl.playbooks)} playbooks, {prompt_count} prompts")
 sys.exit(0)
