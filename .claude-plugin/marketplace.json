@@ -10,7 +10,7 @@
       "name": "targetbay-email-sms",
       "source": "./plugins/targetbay-email-sms",
       "description": "Email and SMS marketing skills for TargetBay Email & SMS: planning, audience selection, automation design, win-back, holiday sequencing and campaign diagnosis.",
-      "version": "4.2.3",
+      "version": "4.3.0",
       "author": {
         "name": "TargetBay"
       },
@@ -26,7 +26,7 @@
       "name": "targetbay-reviews",
       "source": "./plugins/targetbay-reviews",
       "description": "Review and UGC skills for TargetBay Reviews: when to ask for a review, which products lack social proof, recovering from a falling rating, auditing the whole programme, and where proof belongs.",
-      "version": "0.2.1",
+      "version": "0.3.0",
       "author": {
         "name": "TargetBay"
       },
@@ -43,7 +43,7 @@
       "name": "targetbay-loyalty",
       "source": "./plugins/targetbay-loyalty",
       "description": "Loyalty and referral skills for TargetBay Loyalty: program and tier design, points economics, referral programmes, diagnosing an underperforming programme, and recovering members who are going quiet.",
-      "version": "0.2.1",
+      "version": "0.3.0",
       "author": {
         "name": "TargetBay"
       },

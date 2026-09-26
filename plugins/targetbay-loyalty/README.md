@@ -3,7 +3,7 @@
 A vendor-neutral AI Agent Skills package that teaches agents **how to design, price and run a loyalty and
 referral programme** using TargetBay Loyalty.
 
-[![version](https://img.shields.io/badge/version-0.2.1-blue)](VERSION)
+[![version](https://img.shields.io/badge/version-0.3.0-blue)](VERSION)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![agent skills](https://img.shields.io/badge/Agent%20Skills-conformant-7c3aed)](https://agentskills.io/specification)
 
@@ -67,7 +67,8 @@ Loyalty Skills =  how the agent SHOULD accomplish a loyalty objective
 - **Not** the TargetBay Loyalty MCP — no tools, no resources, no server
 - **Not** the TargetBay Loyalty API — no clients, endpoints or request code
 - **Not** a points engine, tier engine or redemption engine
-- **Not** a collection of prompt files — it is a versioned package with contracts, schemas and validation
+- **Not** just a collection of prompt files — the [prompt library](prompts/README.md) is an entry point; the package is
+  versioned, with contracts, schemas and validation
 
 No file in this package makes a network call.
 

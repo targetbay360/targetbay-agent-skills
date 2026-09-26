@@ -3,7 +3,7 @@
 A vendor-neutral AI Agent Skills package that teaches agents **how to accomplish email and SMS marketing
 outcomes** using TargetBay Email & SMS.
 
-[![version](https://img.shields.io/badge/version-4.2.3-blue)](VERSION)
+[![version](https://img.shields.io/badge/version-4.3.0-blue)](VERSION)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![agent skills](https://img.shields.io/badge/Agent%20Skills-conformant-7c3aed)](https://agentskills.io/specification)
 [![validate](https://github.com/targetbay360/targetbay-agent-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/targetbay360/targetbay-agent-skills/actions/workflows/validate.yml)
@@ -110,7 +110,8 @@ TargetBay Email & SMS Skills =  how the agent SHOULD accomplish a marketing obje
 - **Not** TargetBay Email & SMS MCP — no tools, no resources, no server
 - **Not** the TargetBay Email & SMS API — no clients, endpoints or request code
 - **Not** a campaign engine, customer database or automation engine
-- **Not** a collection of prompt files — it is a versioned package with contracts, schemas and validation
+- **Not** just a collection of prompt files — the [prompt library](prompts/README.md) is an entry point; the package is
+  versioned, with contracts, schemas and validation
 
 No file in this repository makes a network call.
 
@@ -177,6 +178,7 @@ commands/      6 slash commands that route a plain request to the right skill
 docs/          architecture, authoring, MCP integration, rules, versioning, examples,
                email quality architecture
 examples/      5 narrated traces of skills reasoning end to end
+prompts/       81 copy-paste prompts by category, each routed to one skill
 scripts/       install.mjs (npm) and install.sh (curl) — no dependencies
 capabilities.yaml   the abstract capability registry
 .claude-plugin/     plugin and marketplace manifests

@@ -177,6 +177,17 @@ routing each plugin documents in its own `skills/README.md`.
 | *"Can we double our points earn rate?"* | [`points-economics`](plugins/targetbay-loyalty/skills/points-economics/SKILL.md) |
 | *"Which members are drifting away?"* | [`member-recovery`](plugins/targetbay-loyalty/skills/member-recovery/SKILL.md) |
 
+## Prompt library
+
+Copy-paste prompts for merchants who want a result without learning the skill names. Each prompt routes
+to one skill, derives its thresholds from store data, and stops for approval before anything changes.
+
+| Product | Library | Prompts |
+|---|---|---|
+| TargetBay Email & SMS | [`targetbay-email-sms/prompts/`](plugins/targetbay-email-sms/prompts/README.md) | 77 |
+| TargetBay Reviews | [`targetbay-reviews/prompts/`](plugins/targetbay-reviews/prompts/README.md) | 15 |
+| TargetBay Rewards | [`targetbay-loyalty/prompts/`](plugins/targetbay-loyalty/prompts/README.md) | 15 |
+
 ## Worked examples
 
 Five traces follow one prompt all the way through — which skill was selected and which was passed
@@ -335,6 +346,7 @@ No file in this repository makes a network call.
 tests/                            shared validation and golden prompts
 plugins/<name>/                   a product plugin — self-contained
   skills/  rules/  knowledge/  schemas/  docs/  commands/  scripts/
+  prompts/                        copy-paste prompts, one skill each
   playbooks/  examples/           targetbay-email-sms only
   .claude-plugin/plugin.json  capabilities.yaml  VERSION  CHANGELOG.md  package.json
 targetbay-email-sms-best-practices/       standalone reference skills — see below
