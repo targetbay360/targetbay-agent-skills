@@ -16,4 +16,4 @@ For each new segment give:
 
 Rank by expected value. List the ideas you rejected (too small, overlapping, no evidence) and why.
 
-If data is missing, say so and ask; don't estimate.
+Analysis only: change nothing.

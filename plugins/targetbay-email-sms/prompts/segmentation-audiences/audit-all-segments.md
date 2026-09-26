@@ -16,4 +16,4 @@ Then group them:
 
 End with the consolidated set you'd keep and where each retired segment maps.
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Analysis only: change nothing.

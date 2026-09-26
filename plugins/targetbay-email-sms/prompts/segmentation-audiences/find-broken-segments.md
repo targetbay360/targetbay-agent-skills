@@ -15,4 +15,4 @@ Look for:
 
 For each broken segment: the defect, who it wrongly includes or misses, the fix, size before and after, and which campaigns or automations use it.
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Analysis only: change nothing.

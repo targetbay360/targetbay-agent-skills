@@ -13,4 +13,4 @@ For the upcoming window on my calendar, give:
 
 Tell me where the real fix is consolidating automations rather than arbitrating. Name any automation whose audience you couldn't read.
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Change nothing until I approve.

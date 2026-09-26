@@ -1,18 +1,17 @@
 ---
-title: Spot Fatigue and Rebalance Email vs SMS
-summary: Segments showing contact fatigue, with a per-channel cadence budget that eases the load.
-skill: channel-optimization
+title: Set a Contact Ceiling for Tired Segments
+summary: Segments showing contact fatigue, with a per-segment ceiling across email and SMS and what yields at it.
+skill: consent-verification
 ---
-Using TargetBay Email & SMS (`channel-optimization` skill), find which segments hear from me too much and rebalance how email and SMS share the load.
+Using TargetBay Email & SMS (`consent-verification` skill), find which segments hear from me too much and set how many messages each should receive per period across email and SMS combined.
 
 Derive from my data: messages received per segment per channel across campaigns and automations, and how unsubscribes, complaints and clicks move as contact rises.
 
 Give me:
 - segments showing fatigue, with evidence
-- segments that could take more
-- messages duplicated on both channels
-- a cadence budget per segment per channel
-- messages to move to email only, and SMS cost at the recommended volume
-- quiet-hours and local-time limits that apply
+- segments with headroom
+- a contact ceiling per segment, covering both channels, with its derivation
+- which class of message yields when a contact nears the ceiling
+- what changes for my current schedule
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Change nothing until I approve.

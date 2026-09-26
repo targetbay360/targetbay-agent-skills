@@ -15,4 +15,4 @@ Give me:
 - exclusions, such as recent buyers and people already in a live automation
 - the angle, offer need and channel to brief for converting them
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Analysis only: change nothing.
