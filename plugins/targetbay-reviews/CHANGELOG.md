@@ -5,6 +5,16 @@ All notable changes to TargetBay Reviews Skills are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this package adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-09-26
+
+No skill, rule, capability or schema changed, and no skill version moved.
+
+### Added
+
+- **Prompt library.** [`prompts/`](prompts/README.md) holds 16 copy-paste prompts across 4 categories.
+  Each routes to one skill, derives thresholds from store data and asks for approval before acting.
+  `tests/validate.py` checks them in its new `prompts` group.
+
 ## [0.2.1] - 2026-09-22
 
 Packaging only. No skill, rule, capability or schema changed, and no skill version moved.

@@ -1,7 +1,7 @@
 {
   "name": "targetbay-reviews",
   "description": "Skills that decide when a store should ask for a review, which products are short of proof, how to answer a falling rating, where proof belongs on the storefront, and where existing proof earns its place. Vendor-neutral reasoning; the TargetBay Reviews MCP supplies the capabilities.",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": {
     "name": "TargetBay",
     "email": "support@targetbay.com",
