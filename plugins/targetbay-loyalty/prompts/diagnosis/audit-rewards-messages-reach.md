@@ -13,4 +13,4 @@ Give me:
 - funnel drop-offs where messaging could matter
 - an effect statement naming its method and confidence
 
-If data is missing, say so and ask; don't estimate. Analysis only: change nothing and send nothing.
+Analysis only: change nothing.

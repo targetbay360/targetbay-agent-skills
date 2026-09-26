@@ -15,4 +15,4 @@ For each segment sent to in that window give:
 
 Rank by revenue per recipient, not opens. Flag segments that overlap enough to double-contact the same people.
 
-If data is missing, say so and ask; don't estimate.
+Analysis only: change nothing.

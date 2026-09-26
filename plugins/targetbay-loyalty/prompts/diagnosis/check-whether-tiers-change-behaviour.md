@@ -13,4 +13,4 @@ Give me:
 - the evidence method and its confidence
 - the skill to use if a restructure looks warranted
 
-If data is missing, say so and ask; don't estimate. Analysis only: change nothing and send nothing.
+Analysis only: change nothing.

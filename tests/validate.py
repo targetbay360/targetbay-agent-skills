@@ -391,7 +391,8 @@ for pl in plugins:
         placed = (depth == 1 and f.name == "README.md") or (depth == 2 and f.suffix == ".md")
         check("prompts", placed,
               f"{f.relative_to(ROOT)}: only prompts/README.md and prompts/<category>/<slug>.md belong here")
-    check("prompts", (root / "README.md").is_file(), f"{root.relative_to(ROOT)}/ has no README.md index")
+    # The top-level index is optional so a category can land on its own; once present, it must
+    # link every category.
     if (root / "README.md").is_file():
         missing = {f"{c.name}/README.md" for c in categories} - linked_files(root / "README.md")
         check("prompts", not missing,

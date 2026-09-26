@@ -7,11 +7,11 @@ Using TargetBay Email & SMS (`content-optimization` skill), give me subject line
 
 Base them on what my past subject lines show this audience responds to.
 
-Cover distinct angles: curiosity, exclusivity, plain value and editorial. For each variant:
+Cover distinct angles derived from what this audience responds to. For each variant:
 - the angle and the audience instinct it targets
 - a sample line and matching preheader
 - any claim or offer wording that needs verifying
 
 Then tell me which pair to test first and why, and whether my audience is large enough to resolve that test.
 
-If data is missing, say so and ask; don't estimate.
+Change nothing until I approve.

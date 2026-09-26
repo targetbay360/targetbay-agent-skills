@@ -13,4 +13,4 @@ Give me:
 - ranked findings: problem, evidence, value, effort, owning skill
 - what's healthy and what couldn't be assessed
 
-If data is missing, say so and ask; don't estimate. Analysis only: change nothing and send nothing.
+Analysis only: change nothing.

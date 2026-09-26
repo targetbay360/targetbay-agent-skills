@@ -13,4 +13,4 @@ Give me:
 - ranked gaps with exposure and estimated value
 - what was examined and deliberately not flagged
 
-If data is missing, say so and ask; don't estimate. Analysis only: change nothing and send nothing.
+Analysis only: change nothing.

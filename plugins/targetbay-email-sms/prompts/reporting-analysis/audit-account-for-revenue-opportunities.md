@@ -13,4 +13,4 @@ Group findings into quick wins, medium-term and strategic. Separately list what 
 
 End with: top opportunities ranked by value ÷ effort, and the one change to make first.
 
-If data is missing, say so and ask; don't estimate.
+Analysis only: change nothing.

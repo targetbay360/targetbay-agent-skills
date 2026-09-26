@@ -15,4 +15,4 @@ For each candidate test give:
 
 Rank by impact versus effort. List tests I should decide on reasoning instead because they can't resolve.
 
-If data is missing, say so and ask; don't estimate. Launch no test until I approve.
+Change nothing until I approve.

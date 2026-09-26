@@ -14,4 +14,4 @@ Give me:
 - Recommended instrument and depth, derived from my data, with cost and habit effect
 - Instruments rejected and what each would have cost
 
-If data is missing, say so and ask; don't estimate.
+Analysis only: change nothing.

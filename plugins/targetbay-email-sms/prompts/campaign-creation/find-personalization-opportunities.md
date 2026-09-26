@@ -15,4 +15,4 @@ For each variable element give:
 
 Also list elements you rejected, ones dropped because the fallback is as good, fields I'd need but don't have, and a preview of a populated and an empty version.
 
-If data is missing, say so and ask; don't estimate.
+Change nothing until I approve.

@@ -14,4 +14,6 @@ Structure it as:
 - Automation performance by channel
 - What explains the movement, and alternatives ruled out
 
-Plain language a stakeholder can read in two minutes. If data is missing, say so and ask; don't estimate.
+Keep it short, in plain language a stakeholder can follow.
+
+Analysis only: change nothing.

@@ -13,4 +13,4 @@ Give me:
 - where current timing is too early or too late
 - a staged rollout with the measurement that decides the next stage
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Change nothing until I approve.

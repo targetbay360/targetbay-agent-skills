@@ -13,4 +13,4 @@ Give me:
 - channel and eligible population size
 - how I'll measure whether media submissions rose
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Change nothing until I approve.

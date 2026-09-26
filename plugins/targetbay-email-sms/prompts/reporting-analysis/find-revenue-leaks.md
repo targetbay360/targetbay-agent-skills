@@ -15,4 +15,4 @@ In a table ranked by revenue a fix could recover, give for each:
 
 Mark any campaign whose sample is too small to diagnose. Triggered journeys belong in a separate automation review, so leave them out.
 
-If data is missing, say so and ask; don't estimate.
+Change nothing until I approve.

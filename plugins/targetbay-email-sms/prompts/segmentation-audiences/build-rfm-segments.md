@@ -14,4 +14,4 @@ Group customers into champions, loyal, at-risk and lost, merging or splitting gr
 - exclusions
 - what the group should be sent, and what it shouldn't
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Analysis only: change nothing.

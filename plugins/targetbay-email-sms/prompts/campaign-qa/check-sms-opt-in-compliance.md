@@ -5,7 +5,7 @@ skill: consent-verification
 ---
 Using TargetBay Email & SMS (`consent-verification` skill), check whether I can prove SMS consent for everyone I text.
 
-Derive from my data: consent state and provenance per contact, which capture points collected SMS consent and what each asked for, complaint and opt-out rates by source, and where my contacts are located.
+Derive from my data: consent state and provenance per contact, which capture points collected SMS consent and what each asked for, and complaint and opt-out rates by source.
 
 Give me:
 - confirmed, unconfirmed and unevidenced populations with sizes
@@ -13,6 +13,6 @@ Give me:
 - whether each capture point should require confirmation, with the signup cost
 - what to do with the unevidenced group, including not texting them
 - the consent record I should keep
-- jurisdictions assumed
+- the jurisdictions assumed, and why
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Change nothing until I approve.

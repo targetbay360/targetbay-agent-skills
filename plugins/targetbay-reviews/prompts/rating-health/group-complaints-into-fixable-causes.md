@@ -13,4 +13,4 @@ Give me:
 - who should own each fix
 - themes not worth acting on and why
 
-If data is missing, say so and ask; don't estimate. Analysis only: change nothing and send nothing.
+Change nothing until I approve.

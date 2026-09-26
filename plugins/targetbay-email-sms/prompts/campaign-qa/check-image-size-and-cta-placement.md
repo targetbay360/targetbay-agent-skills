@@ -15,4 +15,4 @@ Weight each defect by the share of my opens from phones and each mail client, fr
 
 Return a must-fix list and a may-ship list, each with the fix.
 
-If data is missing, say so and ask; don't estimate.
+Analysis only: change nothing.

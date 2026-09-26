@@ -13,4 +13,4 @@ Give me:
 - confidence, and what data would raise it
 - liability and point value context
 
-If data is missing, say so and ask; don't estimate. Analysis only: change nothing and send nothing.
+Analysis only: change nothing.

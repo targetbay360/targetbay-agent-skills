@@ -14,4 +14,4 @@ Give me:
 - Alternative explanations checked (seasonality, product mix, one large order, attribution artefacts)
 - Confidence, and what the data could not separate
 
-If data is missing, say so and ask; don't estimate.
+Analysis only: change nothing.

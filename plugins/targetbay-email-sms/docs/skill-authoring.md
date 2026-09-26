@@ -155,7 +155,8 @@ skill: customer-winback
 - Derive every threshold, date and count from store data, never state one
 - A prompt whose skill can write or send ends with "Change nothing until I approve."; an analysis
   prompt ends with "Analysis only: change nothing."
-- `prompts/README.md` links every category; each category's `README.md` lists every prompt in it
+- Each category's `README.md` lists every prompt in it; `prompts/README.md`, once present, links every
+  category
 
 `validate.py` checks the frontmatter (three non-empty strings, no other keys), that the skill exists
 and is not deprecated, the word limit, the file layout, both README indexes, unique titles, and the
