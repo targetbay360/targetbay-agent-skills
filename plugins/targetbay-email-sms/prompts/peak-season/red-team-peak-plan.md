@@ -18,4 +18,4 @@ If the right answer is fewer sends or no offer, say so.
 
 [paste plan]
 
-If data is missing, say so and ask; don't estimate.
+Change nothing until I approve.

@@ -11,4 +11,4 @@ Per stage: name and purpose, date, audience with size and exclusions (including 
 
 Also: the stage-count derivation, stages rejected, cadence summary, recovery window after the peak, and dependencies such as stock and delivery cut-offs.
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Change nothing until I approve.

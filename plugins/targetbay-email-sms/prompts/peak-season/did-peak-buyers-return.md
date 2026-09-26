@@ -13,4 +13,4 @@ Give me:
 - whether first-order discount depth predicts who returned
 - what this means for how I acquire at peak
 
-If data is missing, say so and ask; don't estimate.
+Change nothing until I approve.

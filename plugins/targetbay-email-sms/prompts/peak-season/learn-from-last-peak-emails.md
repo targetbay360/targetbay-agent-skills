@@ -13,4 +13,4 @@ Give me:
 - hypotheses in the form: we believe X improves Y for Z because W, measured by M
 - test design for each, or a note that the sample is too small
 
-If data is missing, say so and ask; don't estimate.
+Change nothing until I approve.

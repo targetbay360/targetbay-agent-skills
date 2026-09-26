@@ -14,4 +14,4 @@ Give me:
 - attribution with an explicit unattributed share
 - confidence and limitations
 
-If data is missing, say so and ask; don't estimate.
+Analysis only: change nothing.
