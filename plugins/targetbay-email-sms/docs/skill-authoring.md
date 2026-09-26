@@ -137,6 +137,27 @@ references, the acyclic composition graph, name uniqueness, and every relative l
 - Add an entry to [../CHANGELOG.md](../CHANGELOG.md)
 - If it changes how the package is used, update [../README.md](../README.md)
 
+## Prompts
+
+A prompt is a copy-paste entry point a merchant pastes into their AI assistant. It lives at
+`prompts/<category>/<slug>.md`, routes to exactly one skill, and carries no reasoning of its own.
+
+```yaml
+---
+title: Win Back Lapsed Customers
+summary: Decide which lapsed customers are worth recovering, and where to stop.
+skill: customer-winback
+---
+```
+
+- Body is at most 150 words: the objective, the output shape, and what to ask when data is missing
+- Name the TargetBay product and the skill; let the skill cite the rules
+- Derive every threshold, date and count from store data, never state one
+- A prompt routing to a `high_impact` or `destructive` skill asks for approval before acting
+- Every category directory has a `README.md` table listing its prompts
+
+`validate.py` enforces all of the above except wording, in its `prompts` group.
+
 ## Checklist
 
 - [ ] The objective is one a store owner would state

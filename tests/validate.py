@@ -11,7 +11,7 @@ plugin, not at the repository root. Most checks therefore run once per plugin; t
 handful that are genuinely repo-wide (the relative-link sweep, the marketplace manifest)
 run once at the root.
 
-Check groups: structure, spec, skill-validation, playbooks, references, duplication,
+Check groups: structure, spec, skill-validation, playbooks, prompts, references, duplication,
 schemas, versioning, marketplace.
 
 `spec` runs the Agent Skills reference validator (https://agentskills.io/specification)
@@ -63,6 +63,9 @@ PLAYBOOK_SECTIONS = [
 ]
 
 PLAYBOOK_KEYS = {"name", "display_name", "version", "applies_to", "overrides"}
+
+PROMPT_KEYS = {"title", "summary", "skill"}
+PROMPT_MAX_WORDS = 150
 
 # Repo-level: governance, CI and the marketplace manifest. Product content lives in plugins.
 REPO_REQUIRED_FILES = [
@@ -320,6 +323,39 @@ for pl in plugins:
             errs.append(f"version '{fm.get('version')}' is not semver")
         errs += section_errors(body, PLAYBOOK_SECTIONS)
         check("playbooks", not errs, f"{rel}: " + "; ".join(errs))
+
+
+# ---------------------------------------------------------------------------- prompts
+
+# A prompt is a copy-paste entry point that routes to one skill. It carries no reasoning of
+# its own, so it stays short and inherits requires/risk from the skill it names.
+print("prompts")
+for pl in plugins:
+    for pf in sorted(pl.path.glob("prompts/*/*.md")):
+        if pf.name == "README.md":
+            continue
+        rel = pf.relative_to(ROOT)
+        fm, body, err = split_frontmatter(pf.read_text())
+        if err:
+            check("prompts", False, f"{rel}: {err}")
+            continue
+        errs = []
+        missing = PROMPT_KEYS - set(fm)
+        if missing:
+            errs.append(f"missing frontmatter keys: {', '.join(sorted(missing))}")
+        skill = pl.skills.get(fm.get("skill"))
+        if not skill:
+            errs.append(f"skill '{fm.get('skill')}' is not a skill in {pl.name}")
+        words = len(body.split())
+        if words > PROMPT_MAX_WORDS:
+            errs.append(f"body is {words} words, limit {PROMPT_MAX_WORDS}")
+        if skill and meta(skill["fm"], "risk_level") in {"high_impact", "destructive"} \
+                and "approval" not in body.lower():
+            errs.append("routes to a high_impact/destructive skill but never asks for approval")
+        check("prompts", not errs, f"{rel}: " + "; ".join(errs))
+    for readme_dir in sorted(p for p in pl.path.glob("prompts/*") if p.is_dir()):
+        check("prompts", (readme_dir / "README.md").is_file(),
+              f"{readme_dir.relative_to(ROOT)}/ has no README.md index")
 
 
 # ------------------------------------------------------------------------ references

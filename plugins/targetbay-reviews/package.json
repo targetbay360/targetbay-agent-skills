@@ -42,6 +42,7 @@
     "docs",
     "schemas",
     "commands",
+    "prompts",
     ".claude-plugin",
     "scripts/install.mjs",
     "scripts/install.sh",
