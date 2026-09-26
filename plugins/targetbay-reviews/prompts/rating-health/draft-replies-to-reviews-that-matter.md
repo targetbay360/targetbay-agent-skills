@@ -13,4 +13,4 @@ Give me:
 - reviews deliberately left without a reply
 - the underlying fix each pattern needs
 
-If data is missing, say so and ask; don't estimate. Publish nothing until I approve each reply individually; a reply is public the moment it posts.
+Publish nothing until I approve each reply individually; a reply is public the moment it posts.
