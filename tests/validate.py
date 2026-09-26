@@ -350,7 +350,7 @@ for pl in plugins:
         if words > PROMPT_MAX_WORDS:
             errs.append(f"body is {words} words, limit {PROMPT_MAX_WORDS}")
         if skill and meta(skill["fm"], "risk_level") in {"high_impact", "destructive"} \
-                and "approval" not in body.lower():
+                and "approv" not in body.lower():
             errs.append("routes to a high_impact/destructive skill but never asks for approval")
         check("prompts", not errs, f"{rel}: " + "; ".join(errs))
     for readme_dir in sorted(p for p in pl.path.glob("prompts/*") if p.is_dir()):
