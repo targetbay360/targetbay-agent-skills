@@ -13,4 +13,4 @@ Give me:
 - ranked fixes routed to their owning skill
 - what's working and should stay
 
-If data is missing, say so and ask; don't estimate. Analysis only: change nothing and send nothing.
+Analysis only: change nothing.
