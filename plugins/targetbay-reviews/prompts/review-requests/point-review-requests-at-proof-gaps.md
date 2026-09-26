@@ -13,4 +13,4 @@ Give me:
 - any customers who should not be asked, such as those with an open problem
 - eligible population size per stage
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Change nothing until I approve.
