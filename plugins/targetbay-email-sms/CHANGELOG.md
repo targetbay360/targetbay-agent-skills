@@ -12,7 +12,7 @@ No skill, rule, capability or schema changed, and no skill version moved.
 
 ### Added
 
-- **Prompt library.** [`prompts/`](prompts/README.md) holds 81 copy-paste prompts across 7 categories.
+- **Prompt library.** [`prompts/`](prompts/README.md) holds 77 copy-paste prompts across 7 categories.
   Each routes to one skill, derives thresholds from store data and asks for approval before acting.
   `tests/validate.py` checks them in its new `prompts` group.
 

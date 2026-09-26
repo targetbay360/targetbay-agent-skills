@@ -184,8 +184,8 @@ to one skill, derives its thresholds from store data, and stops for approval bef
 
 | Product | Library | Prompts |
 |---|---|---|
-| TargetBay Email & SMS | [`targetbay-email-sms/prompts/`](plugins/targetbay-email-sms/prompts/README.md) | 81 |
-| TargetBay Reviews | [`targetbay-reviews/prompts/`](plugins/targetbay-reviews/prompts/README.md) | 16 |
+| TargetBay Email & SMS | [`targetbay-email-sms/prompts/`](plugins/targetbay-email-sms/prompts/README.md) | 77 |
+| TargetBay Reviews | [`targetbay-reviews/prompts/`](plugins/targetbay-reviews/prompts/README.md) | 15 |
 | TargetBay Rewards | [`targetbay-loyalty/prompts/`](plugins/targetbay-loyalty/prompts/README.md) | 15 |
 
 ## Worked examples

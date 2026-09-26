@@ -1,6 +1,7 @@
 # TargetBay Rewards prompt library
 
-Copy-paste prompts for an AI assistant connected to the TargetBay Rewards MCP. Each one routes to a
+Copy-paste prompts for an AI assistant connected to the TargetBay Loyalty MCP (Rewards is the
+merchant-facing name for this plugin). Each one routes to a
 single skill in this plugin, derives every threshold from your store data, and stops for your approval
 before anything changes or sends. Replace any `[BRACKETED]` placeholder before pasting.
 
