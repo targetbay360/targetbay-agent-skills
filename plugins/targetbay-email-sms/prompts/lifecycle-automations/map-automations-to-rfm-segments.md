@@ -1,5 +1,5 @@
 ---
-title: Design Flows for Each RFM Segment
+title: Design Automations for Each RFM Segment
 summary: Which automation variants each RFM segment deserves, with nodes, timing, channels and exit rules.
 skill: automation-architect
 ---
@@ -16,4 +16,4 @@ Give me, per variant:
 
 Also list variants you considered and rejected, and why.
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Change nothing until I approve.
