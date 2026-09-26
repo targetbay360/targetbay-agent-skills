@@ -150,13 +150,18 @@ skill: customer-winback
 ---
 ```
 
-- Body is at most 150 words: the objective, the output shape, and what to ask when data is missing
-- Name the TargetBay product and the skill; let the skill cite the rules
+- Body is at most 150 words: the objective, what to derive from store data, and the output shape
+- Name the TargetBay product and the skill; let the skill cite the rules and handle missing data
 - Derive every threshold, date and count from store data, never state one
-- A prompt routing to a `high_impact` or `destructive` skill asks for approval before acting
-- Every category directory has a `README.md` table listing its prompts
+- A prompt whose skill can write or send ends with "Change nothing until I approve."; an analysis
+  prompt ends with "Analysis only: change nothing."
+- Each category's `README.md` lists every prompt in it; `prompts/README.md`, once present, links every
+  category
 
-`validate.py` enforces all of the above except wording, in its `prompts` group.
+`validate.py` checks the frontmatter (three non-empty strings, no other keys), that the skill exists
+and is not deprecated, the word limit, the file layout, both README indexes, unique titles, and the
+approval sentence for `high_impact` and `destructive` skills. Routing and wording are for review.
+Broken examples in `tests/fixtures/broken-prompts/` prove each check rejects.
 
 ## Checklist
 
