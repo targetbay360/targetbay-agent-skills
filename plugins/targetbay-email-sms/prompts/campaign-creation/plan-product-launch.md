@@ -11,4 +11,4 @@ For each wave give: audience, size, exclusions, channel, timing, and content dir
 
 Also give: the stock dependency, the follow-through plan once the launch spike fades, expected outcome per wave, and risks.
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Change nothing until I approve.

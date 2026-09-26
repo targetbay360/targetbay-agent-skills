@@ -17,4 +17,4 @@ Give me, block by block in order:
 
 Then: what to fix outright, what to test, and claims needing verification. Direction, not finished design.
 
-If data is missing, say so and ask; don't estimate.
+Change nothing until I approve.
