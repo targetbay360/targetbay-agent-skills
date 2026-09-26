@@ -15,4 +15,4 @@ For each change:
 
 Rank by expected value versus effort. Skip anything needing more than a quick edit, and say what you left out.
 
-If data is missing, say so and ask; don't estimate. Change nothing until I approve; show who and how many it affects first.
+Change nothing until I approve.

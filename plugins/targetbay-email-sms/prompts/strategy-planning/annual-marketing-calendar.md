@@ -15,4 +15,6 @@ Give me:
 - Moments considered and declined, with reasons
 - The assumptions each entry rests on
 
-Keep it at the horizon level; I'll plan each month separately. If data is missing, say so and ask; don't estimate. Schedule nothing until I approve.
+Keep it at the horizon level; I'll plan each month separately.
+
+Change nothing until I approve.

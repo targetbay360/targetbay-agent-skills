@@ -14,4 +14,4 @@ Give me:
 - Any threshold level, with its derivation shown
 - Price-sensitive customers to exclude, and levers rejected
 
-If data is missing, say so and ask; don't estimate.
+Change nothing until I approve.

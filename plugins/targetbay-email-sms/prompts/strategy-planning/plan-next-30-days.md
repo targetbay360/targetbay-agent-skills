@@ -11,6 +11,6 @@ For each send give: date, channel, objective, segment, offer (none unless justif
 
 Balance promotional and non-promotional sends. Flag sends that should be automations and missing automations that would beat a campaign.
 
-End with: top 3 sends for revenue, top 3 for retention, biggest missed opportunity.
+End with: the sends that matter most for revenue and for retention, as many as the data supports, and the biggest missed opportunity.
 
-If data is missing, say so and ask; don't estimate. Schedule nothing until I approve.
+Change nothing until I approve.

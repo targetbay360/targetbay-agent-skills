@@ -14,4 +14,4 @@ Then give me:
 - Risks my plan creates (fatigue, overlap, deliverability)
 - The one change that would most improve the plan
 
-If data is missing, say so and ask; don't estimate.
+Analysis only: change nothing.
