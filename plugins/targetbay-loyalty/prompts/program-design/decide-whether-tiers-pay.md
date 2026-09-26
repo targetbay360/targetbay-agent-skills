@@ -13,4 +13,4 @@ Give me:
 - qualification window and downgrade policy with derivation
 - any existing member whose tier would change
 
-If data is missing, say so and ask; don't estimate. Change nothing and send nothing until I approve; show who and how many it affects first.
+Change nothing until I approve.
