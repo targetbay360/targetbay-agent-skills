@@ -13,4 +13,4 @@ Give me:
 - The step with the largest drop, then the diagnosis: entry, timing, dead links or discontinued products, or overlap with other sends
 - One hypothesis and the smallest change to test it, with the volume needed to read it
 
-If data is missing, say so and ask; don't estimate. Change nothing until I approve.
+Change nothing until I approve.

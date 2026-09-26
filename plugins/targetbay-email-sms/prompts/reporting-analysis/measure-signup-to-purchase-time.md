@@ -1,6 +1,6 @@
 ---
 title: Track How Fast Subscribers Become Buyers
-summary: The time from sign-up to first purchase, how it is trending, and where new subscribers stall.
+summary: The distribution of time from sign-up to first purchase, how it is shifting across cohorts, and the share who never buy.
 skill: customer-lifecycle
 ---
 Using TargetBay Email & SMS (`customer-lifecycle` skill), measure how long it takes new subscribers to make their first purchase.
@@ -8,10 +8,11 @@ Using TargetBay Email & SMS (`customer-lifecycle` skill), measure how long it ta
 Derive from my store data: time from email or SMS sign-up to first order, as a distribution rather than just an average, by sign-up cohort across my full history.
 
 Give me:
-- The distribution and how it has shifted across cohorts
-- The share who never purchase, and where they stall
-- The subscriber-to-first-purchase stage boundary this implies for my store
-- Coverage of that transition: which automations reach these subscribers, and the gaps
-- The gap sized in customers and value, with the owning skill
+- the distribution, with sample size, and how it has shifted across cohorts
+- the share who never purchase
+- differences between email and SMS subscribers, if both exist
+- the subscriber-to-first-purchase stage boundary this implies for my store
 
-If data is missing, say so and ask; don't estimate.
+Report the numbers only; no automation recommendations.
+
+Analysis only: change nothing.

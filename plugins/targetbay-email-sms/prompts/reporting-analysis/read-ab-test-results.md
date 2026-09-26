@@ -12,4 +12,6 @@ Structure the output as three short sections I can present:
 - Results: verdict per test (real winner, no difference, or unresolvable at this volume), with lift in clicks, conversion and revenue where real, and the guard metric checked
 - Actions: what the creative team should adopt, what to retest, what to stop testing
 
-Never call a winner on opens alone. If data is missing, say so and ask; don't estimate.
+Never call a winner on opens alone.
+
+Change nothing until I approve.

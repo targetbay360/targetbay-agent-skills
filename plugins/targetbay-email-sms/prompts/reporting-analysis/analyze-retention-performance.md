@@ -13,4 +13,6 @@ Give me:
 - Recommendations for the largest leak: audience and size, automation or campaign, expected effect from my data, effort, risks
 - What you considered and rejected
 
-Diagnosis first; don't build anything. If data is missing, say so and ask; don't estimate.
+Diagnosis first; don't build anything.
+
+Change nothing until I approve.

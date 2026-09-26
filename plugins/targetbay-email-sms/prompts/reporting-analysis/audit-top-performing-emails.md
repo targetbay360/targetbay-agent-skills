@@ -12,6 +12,8 @@ For each winner, walk the funnel and show which stage beat my baseline: reach, o
 End with:
 - The patterns shared across winners
 - What was likely luck or seasonality rather than repeatable
+- Briefing rules for my next campaigns
+- Results too small or noisy to act on
 - One hypothesis to test next, with its test design
 
-If data is missing, say so and ask; don't estimate.
+Change nothing until I approve.

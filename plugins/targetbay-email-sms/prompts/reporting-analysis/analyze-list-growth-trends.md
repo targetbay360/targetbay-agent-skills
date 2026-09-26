@@ -14,4 +14,4 @@ Give me:
 - List health signals that growth hides (unengaged share, complaints)
 - Ranked opportunities, each with size, effort and owning skill
 
-If data is missing, say so and ask; don't estimate.
+Analysis only: change nothing.
